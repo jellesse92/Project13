@@ -62,8 +62,11 @@ public class DialogueControllerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        WatchForSkipButton();
-        WatchForProceedButton();
+        if (dialogueUI.activeSelf)
+        {
+            WatchForSkipButton();
+            WatchForProceedButton();
+        }
     }
 
     void FixedUpdate()
