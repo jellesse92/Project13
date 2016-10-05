@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
 
 public class DialogueControllerScript : MonoBehaviour {
 
@@ -61,6 +62,15 @@ public class DialogueControllerScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         WatchForSkipButton();
+        WatchForProceedButton();
+    }
+
+    void FixedUpdate()
+    {
+        if (dialogueUI.activeSelf)
+        {
+            //TypingLine();
+        }
     }
 
     //Construct dictionaries
@@ -83,6 +93,10 @@ public class DialogueControllerScript : MonoBehaviour {
         skipUIPanel.SetActive(false);
     }
 
+    /*
+     *  ------ COMMAND FUNCTIONS
+     */ 
+
     //Watches for input to activate or deactivate skip panel
     void WatchForSkipButton()
     {
@@ -97,6 +111,24 @@ public class DialogueControllerScript : MonoBehaviour {
         }
     }
 
+    //Proceeds dialogue along or faster with input
+    void WatchForProceedButton()
+    {
+        if (Input.GetKeyDown(PROCEED_KEY) && !isTyping)
+        {
+            //ProceedDialogue();
+        }
+        else if (Input.GetKeyDown(PROCEED_KEY) && isTyping)
+        {
+            textShown = dialogueArray[currentLine].Length;
+        }
+    }
+
+    /*
+     *  ------ END COMMAND FUNCTIONS
+     */
+
+
     //Cancel skip action
     public void CancelSkip()
     {
@@ -104,6 +136,31 @@ public class DialogueControllerScript : MonoBehaviour {
         Time.timeScale = 1.0f;
     }
 
+    //Begin reading text. First line should always be a command or have [] and a blank line underneath it
+    void BeginRead()
+    {
+        currentLine = 0;
+        //InterpretTxtCommands();
+        currentLine = 2;
+    }
+
+    //Loads text to be read to current dialogue 
+    public void LoadTextAsset(int index)
+    {
+        dialogueUI.SetActive(true);
+        currentAsset = index;
+        dialogueArray = dialogueText[index].ToString().Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
+        BeginRead();
+    }
 
 
+    //Types in dialogue text
+    void typeDialogue()
+    {
+        int length = dialogueArray[currentLine].Length;
+        textShown += 1;
+        textShown = Math.Min(length, textShown);
+        dialogueUIText.text = dialogueArray[currentLine].Substring(0, textShown);
+        isTyping = !(textShown == length);
+    }
 }
