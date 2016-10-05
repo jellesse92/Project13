@@ -56,7 +56,7 @@ public class DialogueControllerScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-	
+        LoadTextAsset(0);
 	}
 	
 	// Update is called once per frame
@@ -69,7 +69,7 @@ public class DialogueControllerScript : MonoBehaviour {
     {
         if (dialogueUI.activeSelf)
         {
-            //TypingLine();
+            typeDialogue();
         }
     }
 
@@ -116,7 +116,7 @@ public class DialogueControllerScript : MonoBehaviour {
     {
         if (Input.GetKeyDown(PROCEED_KEY) && !isTyping)
         {
-            //ProceedDialogue();
+            ProceedDialogue();
         }
         else if (Input.GetKeyDown(PROCEED_KEY) && isTyping)
         {
@@ -136,13 +136,9 @@ public class DialogueControllerScript : MonoBehaviour {
         Time.timeScale = 1.0f;
     }
 
-    //Begin reading text. First line should always be a command or have [] and a blank line underneath it
-    void BeginRead()
-    {
-        currentLine = 0;
-        //InterpretTxtCommands();
-        currentLine = 2;
-    }
+    /*
+     *  ------ DIALOGUE READING FUNCTIONS
+     */
 
     //Loads text to be read to current dialogue 
     public void LoadTextAsset(int index)
@@ -153,6 +149,13 @@ public class DialogueControllerScript : MonoBehaviour {
         BeginRead();
     }
 
+    //Begin reading text. First line should always be a command or have [] and a blank line underneath it
+    void BeginRead()
+    {
+        currentLine = 0;
+        InterpretTxtCommands();
+        currentLine = 2;
+    }
 
     //Types in dialogue text
     void typeDialogue()
@@ -163,4 +166,73 @@ public class DialogueControllerScript : MonoBehaviour {
         dialogueUIText.text = dialogueArray[currentLine].Substring(0, textShown);
         isTyping = !(textShown == length);
     }
+
+    //Execute commands given from currenty examined line of text
+    void InterpretTxtCommands()
+    {
+
+        string examinedLine = dialogueArray[currentLine];
+        if (examinedLine.Length > 2)
+        {
+            string[] commands = examinedLine.Substring(1, examinedLine.Length - 2).Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string str in commands)
+            {
+                string[] commandInput = str.Split(new[] { ':', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                ExecuteTxtCommand(commandInput);
+            }
+        }
+        currentLine++;
+    }
+
+    void ExecuteTxtCommand(string[] command)
+    {
+
+    }
+
+    //Proceeds with Dialogue
+    void ProceedDialogue()
+    {
+        textShown = 0;
+        currentLine++;
+        if (currentLine >= dialogueArray.Length)
+        {
+            EndDialogue();
+            return;
+        }
+        if (currentLine < dialogueArray.Length)
+        {
+            if (String.IsNullOrEmpty(dialogueArray[currentLine]))
+                ProceedDialogue();
+            else if (dialogueArray[currentLine][0] == '[')
+            {
+                InterpretTxtCommands();
+                ProceedDialogue();
+            }
+        }
+    }
+
+    //Gives character active color and reveals their nameplate
+    void setCharSpeaker(Image portrait, GameObject namePanel)
+    {
+        portrait.color = SPEAKING_COLOR;
+        namePanel.SetActive(true);
+    }
+
+    void setCharListener(Image portrait, GameObject namePanel)
+    {
+        portrait.color = FADE_COLOR;
+        namePanel.SetActive(false);
+    }
+
+    //Ends current dialogue display
+    public void EndDialogue()
+    {
+        Reset();
+        dialogueUI.SetActive(false);
+        //sceneFC.NextSequence();
+    }
+
+    /*
+     *  ------ DIALOGUE READING FUNCTIONS
+     */
 }
