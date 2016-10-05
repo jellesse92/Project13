@@ -360,7 +360,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 65953098}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 162469736}
+        m_MethodName: CancelSkip
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &65953098
@@ -611,7 +633,7 @@ Prefab:
     - target: {fileID: 224000014116789526, guid: cca5dc01e147fa54db0b0305d0ed3037,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 141.375
+      value: 127.5
       objectReference: {fileID: 0}
     - target: {fileID: 224000014116789526, guid: cca5dc01e147fa54db0b0305d0ed3037,
         type: 2}
@@ -621,7 +643,7 @@ Prefab:
     - target: {fileID: 224000014116789526, guid: cca5dc01e147fa54db0b0305d0ed3037,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 44.25
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 224000014116789526, guid: cca5dc01e147fa54db0b0305d0ed3037,
         type: 2}
@@ -716,7 +738,7 @@ MonoBehaviour:
   nameTag: {fileID: 1378122445}
   dialogueUIText: {fileID: 603655140}
   dialogueText:
-  - {fileID: 4900000, guid: a9b2be5a575152c478ce0e10a3cbae8f, type: 3}
+  - {fileID: 4900000, guid: 84ef9a4d927904c42b33aaabbf705389, type: 3}
   portraitEntries:
   - name: Scientist
     smallPortrait: {fileID: 21300000, guid: 8aacb479f48be274290e12c50561cce4, type: 3}
@@ -1757,7 +1779,7 @@ Prefab:
     - target: {fileID: 224000014116789526, guid: cca5dc01e147fa54db0b0305d0ed3037,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 22.125
+      value: 17.5
       objectReference: {fileID: 0}
     - target: {fileID: 224000014116789526, guid: cca5dc01e147fa54db0b0305d0ed3037,
         type: 2}
@@ -1767,7 +1789,7 @@ Prefab:
     - target: {fileID: 224000014116789526, guid: cca5dc01e147fa54db0b0305d0ed3037,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 44.25
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 224000014116789526, guid: cca5dc01e147fa54db0b0305d0ed3037,
         type: 2}
@@ -2606,7 +2628,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1552995733}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 162469736}
+        m_MethodName: EndDialogue
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1552995733
