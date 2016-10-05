@@ -21,6 +21,7 @@ public class DialogueControllerScript : MonoBehaviour {
     public GameObject skipUIPanel;                              //For skipping dialogue. Jazz's favorite feature
     public GameObject leftPortrait;                             //Left speaking portrait
     public GameObject rightPortrait;                            //Right speaking portrait
+    public GameObject proceedArrow;                             //Arrow to indicate end of current dialogue line
     public Image speakingPortrait;                              //Portrait of character currently speaking
     public Text nameTag;                                        //Speaking character name tag
     public Text dialogueUIText;                                 //Typed text for dialogue
@@ -91,6 +92,7 @@ public class DialogueControllerScript : MonoBehaviour {
         leftPortrait.SetActive(false);
         rightPortrait.SetActive(false);
         skipUIPanel.SetActive(false);
+        proceedArrow.SetActive(false);
     }
 
     /*
@@ -160,6 +162,8 @@ public class DialogueControllerScript : MonoBehaviour {
     //Types in dialogue text
     void typeDialogue()
     {
+        proceedArrow.SetActive(!isTyping);
+
         int length = dialogueArray[currentLine].Length;
         textShown += 1;
         textShown = Math.Min(length, textShown);
@@ -229,7 +233,6 @@ public class DialogueControllerScript : MonoBehaviour {
     {
         Reset();
         dialogueUI.SetActive(false);
-        //sceneFC.NextSequence();
     }
 
     /*
