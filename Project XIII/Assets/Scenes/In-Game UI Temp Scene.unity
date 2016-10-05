@@ -431,13 +431,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ac7779a172fd5947b4002835b75b78a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogueUI: {fileID: 0}
+  dialogueUI: {fileID: 1313672114}
   skipUIPanel: {fileID: 0}
   leftPortrait: {fileID: 0}
   rightPortrait: {fileID: 0}
-  leftNameTag: {fileID: 0}
-  rightNameTag: {fileID: 0}
-  dialogueText: {fileID: 0}
+  speakingPortrait: {fileID: 486947889}
+  nameTag: {fileID: 1378122445}
+  dialogueUIText: {fileID: 0}
+  dialogueText: []
+  portraitEntries:
+  - name: The Scientist
+    smallPortrait: {fileID: 0}
+  - name: 
+    smallPortrait: {fileID: 0}
+  - name: 
+    smallPortrait: {fileID: 0}
+  - name: 
+    smallPortrait: {fileID: 0}
 --- !u!224 &162469737
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1648,7 +1658,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.684}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.203}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1716,7 +1726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.03676468, g: 0.0029736145, b: 0.0029736145, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
