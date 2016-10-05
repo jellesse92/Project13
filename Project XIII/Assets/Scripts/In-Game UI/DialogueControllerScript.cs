@@ -10,15 +10,16 @@ public class DialogueControllerScript : MonoBehaviour {
     [System.Serializable]
     public class PortraitEntry                                  //For making an dictionary entry for Portraits
     {
-        public string name;
-        public Image smallPortrait;
+        public string name;                                     //Name of the character
+        public Sprite smallPortrait;                            //Small face portrait of character
+        public Sprite fullPortrait;                             //Full portrait of character
     }
 
     //---UI objects for Dialogue
     public GameObject dialogueUI;                               //UI for dialogue to be activated when dialogue is played
     public GameObject skipUIPanel;                              //For skipping dialogue. Jazz's favorite feature
-    public Image leftPortrait;                                  //Left speaking portrait
-    public Image rightPortrait;                                 //Right speaking portrait
+    public GameObject leftPortrait;                             //Left speaking portrait
+    public GameObject rightPortrait;                            //Right speaking portrait
     public Image speakingPortrait;                              //Portrait of character currently speaking
     public Text nameTag;                                        //Speaking character name tag
     public Text dialogueUIText;                                 //Typed text for dialogue
@@ -40,6 +41,7 @@ public class DialogueControllerScript : MonoBehaviour {
     private string[] dialogueArray;                             //Array storing dialogue to be read
     private int textShown;                                      //Amount of text of current line shown
     private bool isTyping;                                      //Determines if current dialogue still being typed
+    private bool autoType;                                      //Typing is set to automatically proceed
 
     //---Command keys for Dialogue
     static KeyCode PROCEED_KEY = KeyCode.C;                     //Proceed with dialogue at normal speed
@@ -47,6 +49,7 @@ public class DialogueControllerScript : MonoBehaviour {
 
     void Awake()
     {
+        Reset();
         ConstructDict();
     }
 
@@ -57,9 +60,10 @@ public class DialogueControllerScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
-	}
+        WatchForSkipButton();
+    }
 
+    //Construct dictionaries
     void ConstructDict()
     {
         portraitDict = new Dictionary<string, PortraitEntry>();
@@ -68,4 +72,38 @@ public class DialogueControllerScript : MonoBehaviour {
             portraitDict[entry.name] = entry;
         }
     }
+
+    //Reset dialogue reading and interface
+    void Reset()
+    {
+        Time.timeScale = 1.0f;
+        textShown = 0;
+        leftPortrait.SetActive(false);
+        rightPortrait.SetActive(false);
+        skipUIPanel.SetActive(false);
+    }
+
+    //Watches for input to activate or deactivate skip panel
+    void WatchForSkipButton()
+    {
+        if (Input.GetKeyDown(SKIP_KEY) && !skipUIPanel.activeSelf)
+        {
+            skipUIPanel.SetActive(true);
+            Time.timeScale = 0.0f;
+        }
+        else if (Input.GetKeyDown(SKIP_KEY) && skipUIPanel.activeSelf)
+        {
+            CancelSkip();
+        }
+    }
+
+    //Cancel skip action
+    public void CancelSkip()
+    {
+        skipUIPanel.SetActive(false);
+        Time.timeScale = 1.0f;
+    }
+
+
+
 }
