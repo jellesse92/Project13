@@ -18,7 +18,7 @@ public class BasicEnemy : Enemy {
 	void FixedUpdate () {
         if (isVisible && inPursuit)
         {
-            transform.position = Vector2.MoveTowards(transform.position, target.transform.position, .03f);
+            transform.position = Vector2.MoveTowards(transform.position, target.transform.position, .01f);
             AnimationCheck();
         }
         else
