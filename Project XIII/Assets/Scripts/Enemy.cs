@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Class to be inherited by all enemy scripts
 public class Enemy : MonoBehaviour {
 
     //In-Game information
@@ -45,5 +46,11 @@ public class Enemy : MonoBehaviour {
     {
         isVisible = false;
         inPursuit = false;
+    }
+
+    //Damage script to be applied when enemy takes damage
+    public void Damage(int damage)
+    {
+        health -= damage;
     }
 }
