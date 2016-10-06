@@ -191,9 +191,37 @@ public class DialogueControllerScript : MonoBehaviour {
         currentLine++;
     }
 
+    //Execute given text commands for dialogue
     void ExecuteTxtCommand(string[] command)
     {
+        Debug.Log(command[1]);
+        switch (command[0])
+        {
+            case ("Name"): SetNameTag(command[1]);
+                break;
+            case ("Face"): SetFace(command[1]);
+                break;
+            case ("Clear"):
+                break;
+            default: break;
+        }
+    }
 
+    //Sets name tag of speaker
+    void SetNameTag(string name)
+    {
+        nameTag.text = name;
+    }
+
+    void Clear()
+    {
+
+    }
+
+    //Sets face to appear in dialogue box
+    void SetFace(string name)
+    {
+        speakingPortrait.sprite = portraitDict[name].smallPortrait;
     }
 
     //Proceeds with Dialogue
