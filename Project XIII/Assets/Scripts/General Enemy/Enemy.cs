@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour {
     void Awake()
     {
         Reset();
+        isVisible = true;
     }
 
     // Call when enemy becomes visible on screen
@@ -46,6 +47,7 @@ public class Enemy : MonoBehaviour {
     {
         isVisible = false;
         inPursuit = false;
+        target = null;
     }
 
     //Damage script to be applied when enemy takes damage

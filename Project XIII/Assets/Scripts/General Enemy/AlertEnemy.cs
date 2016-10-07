@@ -5,6 +5,11 @@ public class AlertEnemy : Enemy {
 
 	void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log(inPursuit);
+        if (col.tag == "Detection Field")
+        {
+            inPursuit = true;
+            target = col.transform.parent.gameObject;
+            transform.FindChild("Enemy Alert Field").GetComponent<AlertFieldScript>().AlertAllies();
+        }
     }
 }

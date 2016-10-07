@@ -1,27 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BasicEnemy : Enemy {
+public class BasicAlertEnemy : AlertEnemy {
 
     Animator anim;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         fullHealth = 100;
         health = 100;
 
         anim = GetComponent<Animator>();
-	}
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
         if (isVisible && inPursuit)
         {
             transform.position = Vector2.MoveTowards(transform.position, target.transform.position, .01f);
             Animate();
         }
         else
-            anim.SetBool("isIdle",true);
+            anim.SetBool("isIdle", true);
     }
 
     //Checks what animation to play
@@ -52,5 +54,4 @@ public class BasicEnemy : Enemy {
         anim.SetInteger("y", y);
 
     }
-
 }
