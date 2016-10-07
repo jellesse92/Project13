@@ -40,6 +40,8 @@ public class BasicEnemy : Enemy {
         else if (target.transform.position.x < transform.position.x)
             x = -1;
 
+        Debug.Log("x: " + x + "y" + y);
+
         if (y == 0 && x == 0)
         {
             anim.SetBool("isIdle", true);
