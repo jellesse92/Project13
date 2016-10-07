@@ -10,7 +10,6 @@ public class BasicEnemy : Enemy {
         fullHealth = 100;
         health = 100;
 
-
         anim = GetComponent<Animator>();
 	}
 	
@@ -19,14 +18,14 @@ public class BasicEnemy : Enemy {
         if (isVisible && inPursuit)
         {
             transform.position = Vector2.MoveTowards(transform.position, target.transform.position, .01f);
-            AnimationCheck();
+            Animate();
         }
         else
             anim.SetBool("isIdle",true);
     }
 
     //Checks what animation to play
-    void AnimationCheck()
+    void Animate()
     {
         int x = 0;
         int y = 0;
