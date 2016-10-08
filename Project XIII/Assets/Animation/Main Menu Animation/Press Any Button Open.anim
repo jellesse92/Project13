@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Audio Panel Open
+  m_Name: Press Any Button Open
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -18,10 +18,20 @@ AnimationClip:
   - curve:
       serializedVersion: 2
       m_Curve:
-      - time: 0.1
-        value: {x: 1, y: 1, z: 1}
+      - time: 0
+        value: {x: 0, y: 0, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      - time: 1.9833333
+        value: {x: 0, y: 0, z: 0}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      - time: 2
+        value: {x: 1, y: 1, z: 1}
+        inSlope: {x: 60.000057, y: 60.000057, z: 4}
+        outSlope: {x: 60.000057, y: 60.000057, z: 4}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -31,20 +41,20 @@ AnimationClip:
   - curve:
       serializedVersion: 2
       m_Curve:
-      - time: 0.1
+      - time: 0
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 0.11666667
+      - time: 2
         value: 0
-        inSlope: 2.3076923
-        outSlope: 2.3076923
-        tangentMode: 10
-      - time: 0.33333334
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 3.9
         value: 1
-        inSlope: 4.6153846
-        outSlope: 4.6153846
+        inSlope: 0.52631575
+        outSlope: 0.52631575
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -62,15 +72,15 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - path: 0
-      attribute: 1574349066
-      script: {fileID: 0}
-      classID: 225
-      customType: 0
-      isPPtrCurve: 0
-    - path: 0
       attribute: 3
       script: {fileID: 0}
       classID: 4
+      customType: 0
+      isPPtrCurve: 0
+    - path: 0
+      attribute: 1574349066
+      script: {fileID: 0}
+      classID: 225
       customType: 0
       isPPtrCurve: 0
     pptrCurveMapping: []
@@ -79,7 +89,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.33333334
+    m_StopTime: 3.9
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -98,20 +108,20 @@ AnimationClip:
   - curve:
       serializedVersion: 2
       m_Curve:
-      - time: 0.1
+      - time: 0
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 10
-      - time: 0.11666667
+      - time: 2
         value: 0
-        inSlope: 2.3076923
-        outSlope: 2.3076923
-        tangentMode: 10
-      - time: 0.33333334
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 3.9
         value: 1
-        inSlope: 4.6153846
-        outSlope: 4.6153846
+        inSlope: 0.52631575
+        outSlope: 0.52631575
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -123,10 +133,20 @@ AnimationClip:
   - curve:
       serializedVersion: 2
       m_Curve:
-      - time: 0.1
-        value: 1
+      - time: 0
+        value: 0
         inSlope: 0
         outSlope: 0
+        tangentMode: 10
+      - time: 1.9833333
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2
+        value: 1
+        inSlope: 60.000057
+        outSlope: 60.000057
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -138,10 +158,20 @@ AnimationClip:
   - curve:
       serializedVersion: 2
       m_Curve:
-      - time: 0.1
-        value: 1
+      - time: 0
+        value: 0
         inSlope: 0
         outSlope: 0
+        tangentMode: 10
+      - time: 1.9833333
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2
+        value: 1
+        inSlope: 60.000057
+        outSlope: 60.000057
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -153,11 +183,21 @@ AnimationClip:
   - curve:
       serializedVersion: 2
       m_Curve:
-      - time: 0.1
-        value: 1
+      - time: 0
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 10
+      - time: 1.9833333
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 2
+        value: 1
+        inSlope: 4
+        outSlope: 4
+        tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
