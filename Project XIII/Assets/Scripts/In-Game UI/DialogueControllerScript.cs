@@ -12,18 +12,17 @@ public class DialogueControllerScript : MonoBehaviour {
     public class PortraitEntry                                  //For making an dictionary entry for Portraits
     {
         public string name;                                     //Name of the character
-        public Sprite smallPortrait;                            //Small face portrait of character
-        public Sprite fullPortrait;                             //Full portrait of character
+        public Sprite sprite;                                   //Portrait sprite of character
     }
 
     //---UI objects for Dialogue
     public GameObject dialogueUI;                               //UI for dialogue to be activated when dialogue is played
     public GameObject skipUIPanel;                              //For skipping dialogue. Jazz's favorite feature
-    public GameObject leftPortrait;                             //Left speaking portrait
-    public GameObject rightPortrait;                            //Right speaking portrait
+    public Image leftPortrait;                                  //Left speaking portrait
+    public Image rightPortrait;                                 //Right speaking portrait
+    public GameObject leftNameTag;                              //Name tag of left speaking character
+    public GameObject rightNameTag;                             //Name tag of right speaking character
     public GameObject proceedArrow;                             //Arrow to indicate end of current dialogue line
-    public Image speakingPortrait;                              //Portrait of character currently speaking
-    public Text nameTag;                                        //Speaking character name tag
     public Text dialogueUIText;                                 //Typed text for dialogue
 
     //---Colors for large portraits
@@ -92,10 +91,9 @@ public class DialogueControllerScript : MonoBehaviour {
     {
         Time.timeScale = 1.0f;
         textShown = 0;
-        leftPortrait.SetActive(false);
-        rightPortrait.SetActive(false);
         skipUIPanel.SetActive(false);
         proceedArrow.SetActive(false);
+        Clear();
     }
 
     /*
@@ -194,34 +192,95 @@ public class DialogueControllerScript : MonoBehaviour {
     //Execute given text commands for dialogue
     void ExecuteTxtCommand(string[] command)
     {
-        Debug.Log(command[1]);
+
         switch (command[0])
         {
-            case ("Name"): SetNameTag(command[1]);
+            //Set portrait images
+            case ("LPort"): LoadPortraitImage(leftPortrait, command[1]);
                 break;
-            case ("Face"): SetFace(command[1]);
+            case ("RPort"): LoadPortraitImage(rightPortrait, command[1]);
                 break;
-            case ("Clear"):
+
+            //SET NAME TAGS
+            case ("LName"):
+                leftNameTag.SetActive(true);
+                leftNameTag.transform.GetChild(0).GetComponent<Text>().text = command[1];
+                if (command[1] == "None")
+                    leftNameTag.SetActive(false);
+                break;
+            case ("RName"):
+                rightNameTag.SetActive(true);
+                rightNameTag.transform.GetChild(0).GetComponent<Text>().text = command[1];
+                if (command[1] == "None")
+                    rightNameTag.SetActive(false);
+                break;
+
+            //Set speaking state. Fade out color if not speaking. Otherwise brighten/stay normal color if speaking
+            case ("LSpeaking"):
+                if (command[1] == "T") {
+                    setCharSpeaker(leftPortrait, leftNameTag);
+                    if (command[1] == "None")
+                        leftNameTag.SetActive(false);
+                }
+                else { setCharListener(leftPortrait, leftNameTag); }
+                break;
+            case ("RSpeaking"):
+                if (command[1] == "T") {
+                    setCharSpeaker(rightPortrait, rightNameTag);
+                    if (command[1] == "None")
+                        rightNameTag.SetActive(false);
+                }
+                else { setCharListener(rightPortrait, rightNameTag); }
+                break;
+
+            //Clear out character information in dialogue
+            case ("Clear"): Clear();
                 break;
             default: break;
         }
     }
 
-    //Sets name tag of speaker
-    void SetNameTag(string name)
-    {
-        nameTag.text = name;
-    }
 
     void Clear()
     {
+        DeactivatePortrait(leftPortrait, leftNameTag);
+        DeactivatePortrait(rightPortrait, rightNameTag);
+    }
+
+    //Deactivates character portrait image and name tag
+    void DeactivatePortrait(Image img, GameObject nameTag)
+    {
+        img.gameObject.SetActive(false);
+        nameTag.SetActive(false);
+    }
+
+    //Loads character portrait image
+    void LoadPortraitImage(Image img, string key)
+    {
+        if (key != "None")
+        {
+            img.gameObject.SetActive(true);
+            img.sprite = portraitDict[key].sprite;
+        }
+        else
+        {
+            img.gameObject.SetActive(false);
+        }
 
     }
 
-    //Sets face to appear in dialogue box
-    void SetFace(string name)
+    //Sets speaker character
+    void setCharSpeaker(Image img, GameObject nameTag)
     {
-        speakingPortrait.sprite = portraitDict[name].smallPortrait;
+        img.color = SPEAKING_COLOR;
+        nameTag.SetActive(true);
+    }
+
+    //Sets character to be listener
+    void setCharListener(Image img, GameObject nameTag)
+    {
+        img.color = FADE_COLOR;
+        nameTag.SetActive(false);
     }
 
     //Proceeds with Dialogue
@@ -246,18 +305,6 @@ public class DialogueControllerScript : MonoBehaviour {
         }
     }
 
-    //Gives character active color and reveals their nameplate
-    void setCharSpeaker(Image portrait, GameObject namePanel)
-    {
-        portrait.color = SPEAKING_COLOR;
-        namePanel.SetActive(true);
-    }
-
-    void setCharListener(Image portrait, GameObject namePanel)
-    {
-        portrait.color = FADE_COLOR;
-        namePanel.SetActive(false);
-    }
 
     //Ends current dialogue display
     public void EndDialogue()
