@@ -19,15 +19,25 @@ public class BasicAlertEnemy : AlertEnemy {
     {
         if (isVisible && inPursuit)
         {
-            transform.position = Vector2.MoveTowards(transform.position, target.transform.position, .01f);
-            Animate();
+            if (!inAttackRange)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, target.transform.position, .01f);
+                RunApproachAnim();
+            }
+            else
+            {
+                //Should begin attack animation
+                anim.SetInteger("x", 0);
+                anim.SetInteger("y", 0);
+                anim.SetBool("isIdle", true);
+            }
         }
         else
             anim.SetBool("isIdle", true);
     }
 
     //Checks what animation to play
-    void Animate()
+    void RunApproachAnim()
     {
         int x = 0;
         int y = 0;

@@ -8,10 +8,13 @@ public class Enemy : MonoBehaviour {
     public int fullHealth;                              //Full health to reset to                      
     public int health;                                  //Enemy health
 
-    //Detection Variables
+    //Detection and Pursuit Variables
     public bool isVisible;                              //Determine if enemy is visible on screen
     public bool inPursuit;                              //Determine if enemy is in pursuit of player character
     public GameObject target;                           //Target to chase
+
+    //Attack Variables
+    public bool inAttackRange;                          //Detects if in range to begin attacking
 
     // Use this for initialization
     void Awake()
@@ -48,6 +51,7 @@ public class Enemy : MonoBehaviour {
         isVisible = false;
         inPursuit = false;
         target = null;
+        inAttackRange = false;
     }
 
     //Damage script to be applied when enemy takes damage
