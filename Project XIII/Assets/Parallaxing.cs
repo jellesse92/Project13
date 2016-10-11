@@ -31,5 +31,6 @@ public class Parallaxing : MonoBehaviour {
 
             backgrounds[i].position = new Vector3(backgrounds[i].position.x + parallax.x, backgrounds[i].position.y + parallax.y, backgrounds[i].position.z);
         }
+        previousCameraPosition = transform.position;
     }
 }
