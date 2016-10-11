@@ -4,7 +4,8 @@ using System.Collections;
 public class Player : MonoBehaviour {
     public int PlayerNumber = -1;
 	public bool sidePerspective;
-	public KeyCode Up;
+    private bool isJumping = false;
+    public KeyCode Up;
 	public KeyCode Down;
 	public KeyCode Left;
 	public KeyCode Right;
@@ -75,27 +76,25 @@ public class Player : MonoBehaviour {
 	{
 		sidePerspective = false;
 	}
-	void Update()
-	{
+    void Update()
+    {
         if (PlayerNumber != -1 || true) //or true for testing purposes.
         {
             SelectClass(0);
-            if (sidePerspective == false && (Input.GetKeyDown(Up) || Input.GetKeyDown(Down)))
+            if (sidePerspective == false && (Input.GetKey(Up) || Input.GetKey(Down)))
             {
-                var move = new Vector3(0, Input.GetKeyDown(Up)? 1 : -1, 0);
+                var move = new Vector3(0, Input.GetKey(Up) ? 1 : -1, 0);
                 transform.position += move * 2 * Time.deltaTime;
             }
-            else if (Input.GetKeyDown(Left) || Input.GetKeyDown(Right))
+            else if (Input.GetKey(Left) || Input.GetKey(Right))
             {
-                var move = new Vector3(Input.GetKeyDown(Left) ? -1 : 1, 0, 0);
+                var move = new Vector3(Input.GetKey(Left) ? -1 : 1, 0, 0);
                 transform.position += move * 4 * Time.deltaTime;
             }
-            if (Input.GetKeyDown(Jump))
+            if (Input.GetKeyDown(Jump) && GetComponent<Collider2D>().IsTouching(GameObject.FindGameObjectWithTag("Ground").GetComponent<Collider2D>()))
             {
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
-                print("Jumping");
             }
         }
-
     }
 }
