@@ -13,7 +13,7 @@ public class Player : MonoBehaviour {
     public KeyCode Attack1;
     public KeyCode Attack2;
     public KeyCode Block;
-    public PlayerCharacter character;
+    public PlayerCharacter character = null;
     Animator anim;
 
 	void Start()
@@ -26,7 +26,6 @@ public class Player : MonoBehaviour {
     {
         PlayerNumber = num;
         SetInput();
-        //anim.SetInteger("x", 1)
     }
     private void SetInput()
     {
@@ -71,6 +70,7 @@ public class Player : MonoBehaviour {
 				character = new CowBoyClass();
 				break;
 		}
+        anim = GetComponent<Animator>();
 	}
 	void swapPerspective()
 	{
@@ -80,16 +80,28 @@ public class Player : MonoBehaviour {
     {
         if (PlayerNumber != -1 || true) //or true for testing purposes.
         {
-            SelectClass(0);
+            int dir = 0;
+            if(character == null)
+            {
+                SelectClass(0);
+            }
             if (sidePerspective == false && (Input.GetKey(Up) || Input.GetKey(Down)))
             {
-                var move = new Vector3(0, Input.GetKey(Up) ? 1 : -1, 0);
+                dir = Input.GetKey(Up) ? 1 : -1;
+                var move = new Vector3(0, dir, 0);
                 transform.position += move * 2 * Time.deltaTime;
             }
             else if (Input.GetKey(Left) || Input.GetKey(Right))
             {
-                var move = new Vector3(Input.GetKey(Left) ? -1 : 1, 0, 0);
+                dir = Input.GetKey(Left) ? -1 : 1;
+                var move = new Vector3(dir, 0, 0);
+
+                anim.SetInteger("x", dir);
                 transform.position += move * 4 * Time.deltaTime;
+            }
+            if(dir == 0)
+            {
+                anim.SetInteger("idle", dir);
             }
             if (Input.GetKeyDown(Jump) && GetComponent<Collider2D>().IsTouching(GameObject.FindGameObjectWithTag("Ground").GetComponent<Collider2D>()))
             {
