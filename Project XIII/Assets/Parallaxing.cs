@@ -3,34 +3,70 @@ using System.Collections;
 
 
 public class Parallaxing : MonoBehaviour {
+    public bool scrolling;
+    public bool parallax;
 
-    public Transform[] backgrounds;
-    public float[] parallaxScales;
-    public float smoothing;
+    public float backgroundSize;
+    public float parallaxSpeed;
 
-    private Vector3 previousCameraPosition;
-
-    // Use this for initialization
+    private Transform cameraTransform;
+    private Transform[] layers;
+    private float viewZone = 10;
+    private int leftIndex;
+    private int rightIndex;
+    private float lastCameraX;
+    
     void Start()
     {
-        previousCameraPosition = transform.position;
-
-        parallaxScales = new float[backgrounds.Length];
-        for (int i = 0; i < parallaxScales.Length; i++)
+        cameraTransform = Camera.main.transform;
+        lastCameraX = cameraTransform.position.x;
+        layers = new Transform[transform.childCount];
+        for(int i = 0; i < transform.childCount; i++)
         {
-            parallaxScales[i] = backgrounds[i].position.z * -1;
+            layers[i] = transform.GetChild(i);
         }
+        leftIndex = 0;
+        rightIndex = layers.Length - 1;
+
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        for (int i = 0; i < backgrounds.Length; i++)
+        if (parallax)
         {
-            Vector3 parallax = (previousCameraPosition - transform.position) * (parallaxScales[i] / smoothing);
-
-            backgrounds[i].position = new Vector3(backgrounds[i].position.x + parallax.x, backgrounds[i].position.y + parallax.y, backgrounds[i].position.z);
+            float deltaX = cameraTransform.position.x - lastCameraX;
+            transform.position += Vector3.right * (deltaX * parallaxSpeed);
         }
-        previousCameraPosition = transform.position;
+        lastCameraX = cameraTransform.position.x;
+
+        if (scrolling)
+        {
+            if (cameraTransform.position.x < (layers[leftIndex].transform.position.x + viewZone))
+                ScrollLeft();
+
+            if (cameraTransform.position.x > (layers[rightIndex].transform.position.x - viewZone))
+                ScrollRight();
+        }
+    }
+
+    private void ScrollLeft()
+    {
+        int lastRight = rightIndex;
+        layers[rightIndex].position = Vector3.right * (layers[leftIndex].position.x - backgroundSize);
+        leftIndex = rightIndex;
+        rightIndex--;
+        if (rightIndex < 0)
+            rightIndex = layers.Length - 1;
+    }
+
+    private void ScrollRight()
+    {
+        int lastLeft = leftIndex;
+        layers[leftIndex].position = Vector3.right * (layers[rightIndex].position.x + backgroundSize);
+        rightIndex = leftIndex;
+        leftIndex++;
+        if (leftIndex == layers.Length)
+            leftIndex = 0;
     }
 }
