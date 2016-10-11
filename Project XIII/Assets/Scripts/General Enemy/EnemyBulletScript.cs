@@ -3,13 +3,18 @@ using System.Collections;
 
 public class EnemyBulletScript : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+	void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.tag != "Enemy")
+        {
+            transform.parent.parent.GetComponent<BasicRangeEnemy>().ReloadAmmo();
+            if (col.tag == "Player")
+            {
+                //Apply damage to player
+            }
+            gameObject.SetActive(false);
+        }
+
+
+    }
 }

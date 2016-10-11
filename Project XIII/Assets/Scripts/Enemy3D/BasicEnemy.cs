@@ -9,7 +9,6 @@ public class BasicEnemy : Enemy {
 	void Start () {
         fullHealth = 100;
         health = 100;
-
         anim = GetComponent<Animator>();
 	}
 	

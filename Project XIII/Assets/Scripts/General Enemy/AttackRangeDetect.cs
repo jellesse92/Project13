@@ -11,7 +11,7 @@ public class AttackRangeDetect : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D col)
     {
-        if (col.tag == "Player")
+        if (col.tag == "Player" && !transform.parent.FindChild("Exit Attack Range"))
             transform.parent.GetComponent<Enemy>().inAttackRange = false;
     }
 }
