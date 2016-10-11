@@ -16,7 +16,8 @@ public class Player : MonoBehaviour {
     public PlayerCharacter character = null;
     Animator anim;
 
-	void Start()
+
+    void Start()
 	{
         sidePerspective = true;
         SetPlayerNumber(-1);
@@ -103,10 +104,19 @@ public class Player : MonoBehaviour {
             {
                 anim.SetInteger("idle", dir);
             }
-            if (Input.GetKeyDown(Jump) && GetComponent<Collider2D>().IsTouching(GameObject.FindGameObjectWithTag("Ground").GetComponent<Collider2D>()))
+            if (Input.GetKeyDown(Jump) && !isJumping)
             {
+                isJumping = true;
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
             }
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if(col.collider.tag == "Ground")
+        {
+            isJumping = false;
         }
     }
 }
