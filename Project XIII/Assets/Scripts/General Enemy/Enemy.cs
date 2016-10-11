@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour {
     //In-Game information
     public int fullHealth;                              //Full health to reset to                      
     public int health;                                  //Enemy health
+    public float speed;                                 //Speed of enemy
 
     //Detection and Pursuit Variables
     public bool isVisible;                              //Determine if enemy is visible on screen
