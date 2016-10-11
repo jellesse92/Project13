@@ -10,7 +10,7 @@ public class TEST_InputScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        /*
+        
         if(Input.GetAxis("1_LeftJoyStickX") != 0)
             Debug.Log("Getting P1 - LeftX: " + Input.GetAxis("1_LeftJoyStickX"));
         if(Input.GetAxis("1_LeftJoyStickY") != 0)
@@ -19,7 +19,7 @@ public class TEST_InputScript : MonoBehaviour {
             Debug.Log("Getting P1 - RightX: " + Input.GetAxis("1_RightJoyStickX"));
         if (Input.GetAxis("1_RightJoyStickY") != 0)
             Debug.Log("Getting P1 - RightY: " + Input.GetAxis("1_RightJoyStickY1"));
-         */
+            
 
         if (Input.GetButtonDown("1_X"))
             Debug.Log("Player 1: X Pressed!");
