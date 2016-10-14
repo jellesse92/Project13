@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 //Class to be inherited by all enemy scripts
 public class Enemy : MonoBehaviour {
@@ -7,7 +8,10 @@ public class Enemy : MonoBehaviour {
     //In-Game information
     public int fullHealth;                              //Full health to reset to                      
     public int health;                                  //Enemy health
+
+    //Buffable elements
     public float speed;                                 //Speed of enemy
+    public int attackPower;                             //Base attack power of enemy
 
     //Detection and Pursuit Variables
     public bool isVisible;                              //Determine if enemy is visible on screen
@@ -43,6 +47,23 @@ public class Enemy : MonoBehaviour {
         {
             inPursuit = true;
             target = col.transform.parent.gameObject;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            col.gameObject.GetComponent<PlayerCharacter>().TakeDamage(attackPower);
+        }
+    }
+
+    //NOTE: Might change for efficiency issue
+    void OnCollisionStay2D(Collision2D col)
+    {
+        if(col.gameObject.tag == "Player")
+        {
+            col.gameObject.GetComponent<PlayerCharacter>().TakeDamage(attackPower);
         }
     }
 
