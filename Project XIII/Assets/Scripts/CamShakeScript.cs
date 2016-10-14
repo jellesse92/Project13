@@ -13,23 +13,24 @@ public class CamShakeScript : MonoBehaviour {
     void Start()
     {
         origin = transform.position;
-        //StartShake(.1f);
     }
 
     public void StartShake(float magnitude)
     {
         shakeAmount = magnitude;
         InvokeRepeating("CameraShake", 0, .01f);
-        Invoke("StopShaking", 0.3f);
+        Invoke("StopShaking", .5f);
     }
 
 
 
     void CameraShake()
     {
-        float quakeAmt = Random.value * shakeAmount * 2 - shakeAmount;
+        float quakeAmtY = Random.value * shakeAmount * 2 - shakeAmount;
+        float quakeAmtX = Random.value * shakeAmount * 2 - shakeAmount;
         Vector3 pp = transform.position;
-        pp.y += quakeAmt; // can also add to x and/or z
+        pp.y += quakeAmtY;
+        pp.x += quakeAmtX;
         transform.position = pp;
     }
 

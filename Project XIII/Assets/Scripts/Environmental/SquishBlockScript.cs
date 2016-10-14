@@ -2,14 +2,18 @@
 using System.Collections;
 
 public class SquishBlockScript : MonoBehaviour {
-    public Transform destination;
-    public Transform block;
 
-    Vector3 origin;
+    //Heirarchy objects
+    public Transform destination;               //Destination location
+    public Transform block;                     //Moving block
+    GameObject camera;                   //Game camera
 
-    public float moveSpeed;
-    public float returnSpeed;
-    public float returnDelay;
+    Vector3 origin;                             //Origin position of block to return to
+
+    //Adjustable variables for balance
+    public float moveSpeed;                     //Speed which block moves "down" towards destination
+    public float returnSpeed;                   //Speed which block returns to origin location
+    public float returnDelay;                   //Delay before initiating return
 
     //Determine if block is moving towards destination or returning to origin
     bool moving = false;
@@ -17,9 +21,11 @@ public class SquishBlockScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
         origin = block.position;
 
         //Testing. Remove so parent script may control
+        
         TriggerMove();
 	}
 
@@ -56,6 +62,7 @@ public class SquishBlockScript : MonoBehaviour {
         if (block.position.x == destination.position.x && block.position.y == destination.position.y)
         {
             moving = false;
+            camera.GetComponent<CamShakeScript>().StartShake(.005f);
             StartCoroutine("DelayReturn");
         }
     }
