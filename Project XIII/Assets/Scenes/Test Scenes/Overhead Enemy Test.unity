@@ -140,11 +140,10 @@ GameObject:
   m_Component:
   - 4: {fileID: 352498867}
   - 212: {fileID: 352498871}
-  - 114: {fileID: 352498870}
   - 50: {fileID: 352498869}
   - 61: {fileID: 352498868}
   m_Layer: 0
-  m_Name: Squish Block
+  m_Name: Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -156,13 +155,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 352498866}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children:
-  - {fileID: 1254837989}
-  m_Father: {fileID: 1342623678}
+  m_Children: []
+  m_Father: {fileID: 1820334446}
   m_RootOrder: 0
 --- !u!61 &352498868
 BoxCollider2D:
@@ -195,21 +193,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 5
---- !u!114 &352498870
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 352498866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d40fb92e80520664b9cd9dbf6b9e620a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 0.08
-  returnSpeed: 0.05
-  startDelay: 1
-  returnDelay: 1
 --- !u!212 &352498871
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -895,13 +878,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1254837988}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -9, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.90000004, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
-  m_Father: {fileID: 352498867}
-  m_RootOrder: 0
+  m_Father: {fileID: 1820334446}
+  m_RootOrder: 1
 --- !u!1 &1308863470
 GameObject:
   m_ObjectHideFlags: 0
@@ -954,11 +937,11 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1342623677}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.0697228, y: 0.32886636, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 352498867}
+  - {fileID: 1820334446}
   m_Father: {fileID: 0}
   m_RootOrder: 4
 --- !u!1001 &1346755422
@@ -1232,6 +1215,53 @@ Transform:
   m_PrefabParentObject: {fileID: 4000013166752548, guid: 24ad02fa5274f5240aa12d545fd2b40e,
     type: 2}
   m_PrefabInternal: {fileID: 1346755422}
+--- !u!1 &1820334445
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1820334446}
+  - 114: {fileID: 1820334447}
+  m_Layer: 0
+  m_Name: Squish Block
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1820334446
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1820334445}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 352498867}
+  - {fileID: 1254837989}
+  m_Father: {fileID: 1342623678}
+  m_RootOrder: 0
+--- !u!114 &1820334447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1820334445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d40fb92e80520664b9cd9dbf6b9e620a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  destination: {fileID: 1254837989}
+  block: {fileID: 352498867}
+  moveSpeed: 0.025
+  returnSpeed: 0.015
+  returnDelay: 1
 --- !u!1001 &1911138463
 Prefab:
   m_ObjectHideFlags: 0

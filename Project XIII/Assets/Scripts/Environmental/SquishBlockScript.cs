@@ -2,9 +2,10 @@
 using System.Collections;
 
 public class SquishBlockScript : MonoBehaviour {
+    public Transform destination;
+    public Transform block;
 
     Vector3 origin;
-    Vector3 destination;
 
     public float moveSpeed;
     public float returnSpeed;
@@ -16,7 +17,7 @@ public class SquishBlockScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        origin = transform.position;
+        origin = block.position;
 
         //Testing. Remove so parent script may control
         TriggerMove();
@@ -24,12 +25,12 @@ public class SquishBlockScript : MonoBehaviour {
 
     void OnBecameVisible()
     {
-        transform.position = origin;
+        block.position = origin;
     }
 
     void OnBecameInvisible()
     {
-        transform.position = origin;
+        block.position = origin;
         moving = false;
         returning = false;
     }
@@ -50,8 +51,9 @@ public class SquishBlockScript : MonoBehaviour {
 
     void MoveTowardsDestination()
     {
-        transform.position = Vector2.MoveTowards(transform.position, destination, moveSpeed);
-        if(transform.position == destination)
+        block.position = Vector2.MoveTowards(block.position, destination.position, moveSpeed);
+
+        if (block.position.x == destination.position.x && block.position.y == destination.position.y)
         {
             moving = false;
             StartCoroutine("DelayReturn");
@@ -61,8 +63,8 @@ public class SquishBlockScript : MonoBehaviour {
     void ReturnToOrigin()
     {
         returning = true;
-        transform.position = Vector2.MoveTowards(transform.position, origin, returnSpeed);
-        if (transform.position == origin)
+        block.position = Vector2.MoveTowards(block.position, origin, returnSpeed);
+        if (block.position == origin)
         {
             returning = false;
         }
