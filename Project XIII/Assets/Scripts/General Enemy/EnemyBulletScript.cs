@@ -10,7 +10,7 @@ public class EnemyBulletScript : MonoBehaviour {
             transform.parent.parent.GetComponent<BasicRangeEnemy>().ReloadAmmo();
             if (col.tag == "Player")
             {
-                //Apply damage to player
+                col.gameObject.GetComponent<Player>().TakeDamage(10);
             }
             gameObject.SetActive(false);
         }

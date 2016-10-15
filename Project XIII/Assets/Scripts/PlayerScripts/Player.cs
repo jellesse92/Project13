@@ -15,7 +15,9 @@ public class Player : MonoBehaviour {
     public KeyCode Block;
     public PlayerCharacter character = null;
     Animator anim;
-
+    private bool isAttacking;
+    int AttackPower;
+    int AttackSpeed;
 
     void Start()
 	{
@@ -109,6 +111,42 @@ public class Player : MonoBehaviour {
                 isJumping = true;
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
             }
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                print("ATTACKIN MAHSELF.");
+                TakeDamage(10);
+            }
+            if (Input.GetKeyDown(KeyCode.K))
+            {
+                print("ATTACKIN MAHSELFMORE.");
+                TakeDamage(10, 4);
+                print(character.GetCurrentHealth());
+            }
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                //AnimateAttack
+                AttackPower = character.Attack(0);
+                isAttacking = AttackPower < 0 ? false : true;
+            }
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                //AnimateAttack
+                AttackPower = character.Attack(1);
+                isAttacking = AttackPower < 0 ? false : true;
+            }
+        }
+    }
+
+
+    public void TakeDamage(int dmg, int knockBackForce = 0)
+    {
+        character.TakeDamage(dmg);
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(knockBackForce, 0), ForceMode2D.Impulse);
+        if(character.GetCurrentHealth() <= 0)
+        {
+            //Animate Death
+            //Reset Location
+            character.PlayerDeath();
         }
     }
 
@@ -117,6 +155,11 @@ public class Player : MonoBehaviour {
         if(col.collider.tag == "Ground")
         {
             isJumping = false;
+        }
+        if(isAttacking && col.collider.tag == "Enemy")
+        {
+            col.gameObject.GetComponent<Enemy>().Damage(AttackPower);
+            isAttacking = false;
         }
     }
 }

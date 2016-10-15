@@ -23,7 +23,7 @@ public class PlayerCharacter {
     public int PrimaryAP = 20; //Attack Power
     public int SecondaryAP = 40;
     public int Cash = 0;
-    public static int MaxHealth = 100;
+    public int MaxHealth = 100;
     public float PlayerSpeed = 2.0f;
     public float PrimaryAS = 1.0f; //Attack Speed
     public float SecondaryAS = 2.0f;
@@ -66,7 +66,7 @@ public class PlayerCharacter {
     {
         Cash = 0;
     }
-    public static int GetMaxHealth()
+    public int GetMaxHealth()
     {
         return MaxHealth;
     }
@@ -74,8 +74,18 @@ public class PlayerCharacter {
     {
         return CurrentHealth;
     }
+    public int Attack(int attackType)
+    {
+        if(attackType == 1)
+        {
+            return PrimaryAP;
+        } else
+        {
+            return SecondaryAP;
+        }
+    }
 
 
-	
+
 
 }
