@@ -4,6 +4,10 @@ using System.Collections;
 
 public class GameController : MonoBehaviour
 {
+    /// <summary>
+    /// Any changes to this script have to be given a pass-through function in FindDontDestroy
+    /// </summary>
+    
     public struct PlayerInfo
     {
         bool Alive;
@@ -50,6 +54,7 @@ public class GameController : MonoBehaviour
             if (PlayerCharacters[i] == 0)
             {
                 PlayerCharacters[i] = CharType;
+                break;
             }
         }
     }
