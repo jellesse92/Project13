@@ -14,7 +14,7 @@ using System.Collections;
 /// Take Damage
 /// ---
 /// </summary>
-public class PlayerCharacter {
+public class PlayerCharacter : MonoBehaviour{
 
     public bool Alive = true;
     public int PlayerNumber = 0;
@@ -36,6 +36,7 @@ public class PlayerCharacter {
             Alive = true;
         }
     }
+
     public void PlayerDeath()
     {
         LivesLeft--;
@@ -74,9 +75,9 @@ public class PlayerCharacter {
     {
         return CurrentHealth;
     }
-    public int Attack(int attackType)
+    public virtual int Attack2D(int attackType, char direction = ' ')
     {
-        if(attackType == 1)
+        if (attackType == 1)
         {
             return PrimaryAP;
         } else

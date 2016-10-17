@@ -91,8 +91,6 @@ public class BasicRangeEnemy : Enemy {
                 StartCoroutine("FireRateRegulator");
                 return;
             }
-
-
         }
     }
 

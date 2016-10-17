@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class Player : MonoBehaviour {
+    public Transform projectiles;
     public int PlayerNumber = -1;
 	public bool sidePerspective;
     private bool isJumping = false;
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour {
     private bool isAttacking;
     int AttackPower;
     int AttackSpeed;
+    char direction = 'R'; //direction player is facing UDLR
 
     void Start()
 	{
@@ -67,10 +69,10 @@ public class Player : MonoBehaviour {
 		switch (choice)
 		{
 			case 0:
-				character = new CowBoyClass();
+				character = GetComponent<CowBoyClass>();
 				break;
 			default:
-				character = new CowBoyClass();
+				character = GetComponent<CowBoyClass>();
 				break;
 		}
         anim = GetComponent<Animator>();
@@ -96,9 +98,10 @@ public class Player : MonoBehaviour {
             }
             else if (Input.GetKey(Left) || Input.GetKey(Right))
             {
+
                 dir = Input.GetKey(Left) ? -1 : 1;
                 var move = new Vector3(dir, 0, 0);
-
+                direction = dir == -1 ? 'L' : 'R';
                 anim.SetInteger("x", dir);
                 transform.position += move * 4 * Time.deltaTime;
             }
@@ -125,29 +128,35 @@ public class Player : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.A))
             {
                 //AnimateAttack
-                AttackPower = character.Attack(0);
+                AttackPower = character.Attack2D(0, direction);
+                print("Attacking with Attack Power: " + AttackPower);
                 isAttacking = AttackPower < 0 ? false : true;
             }
             if (Input.GetKeyDown(KeyCode.S))
             {
                 //AnimateAttack
-                AttackPower = character.Attack(1);
+                AttackPower = character.Attack2D(1, direction);
                 isAttacking = AttackPower < 0 ? false : true;
             }
+
         }
     }
 
 
     public void TakeDamage(int dmg, int knockBackForce = 0)
     {
-        character.TakeDamage(dmg);
-        GetComponent<Rigidbody2D>().AddForce(new Vector2(knockBackForce, 0), ForceMode2D.Impulse);
-        if(character.GetCurrentHealth() <= 0)
+        if (!Input.GetKeyDown(KeyCode.D))
         {
-            //Animate Death
-            //Reset Location
-            character.PlayerDeath();
+            character.TakeDamage(dmg);
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(knockBackForce, 0), ForceMode2D.Impulse);
+            if (character.GetCurrentHealth() <= 0)
+            {
+                //Animate Death
+                //Reset Location
+                character.PlayerDeath();
+            }
         }
+
     }
 
     void OnCollisionEnter2D(Collision2D col)
