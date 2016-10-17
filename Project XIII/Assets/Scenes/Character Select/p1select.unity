@@ -4332,7 +4332,7 @@ MonoBehaviour:
           m_StringArgument: Fade
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 986827673}
+      - m_Target: {fileID: 1204856591}
         m_MethodName: SetChar
         m_Mode: 3
         m_Arguments:
@@ -4441,52 +4441,6 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
---- !u!1 &986827672
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 224: {fileID: 986827674}
-  - 114: {fileID: 986827673}
-  m_Layer: 5
-  m_Name: GlobalController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &986827673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 986827672}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fea8b3c9f1917374eba30febdea49918, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  character: 0
---- !u!224 &986827674
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 986827672}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0.49739584, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 143.25, y: 39.800003}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1188654315
 GameObject:
   m_ObjectHideFlags: 0
@@ -4549,6 +4503,47 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!1 &1204856590
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1204856592}
+  - 114: {fileID: 1204856591}
+  m_Layer: 0
+  m_Name: GameControllerFinder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1204856591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1204856590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5031c03172e923e4abf75cf7f60c88a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GameController: {fileID: 0}
+--- !u!4 &1204856592
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1204856590}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
 --- !u!1 &1248030141
 GameObject:
   m_ObjectHideFlags: 0
@@ -4702,7 +4697,7 @@ MonoBehaviour:
           m_StringArgument: Fade
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 986827673}
+      - m_Target: {fileID: 1204856591}
         m_MethodName: SetChar
         m_Mode: 3
         m_Arguments:
@@ -4931,7 +4926,7 @@ Animator:
   m_GameObject: {fileID: 1343217034}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a38698239b64812468cf63bfe9e9cf79, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7a90be683a0ecdd43b0983e912aef8af, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5828,7 +5823,7 @@ MonoBehaviour:
           m_StringArgument: Fade
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 986827673}
+      - m_Target: {fileID: 1204856591}
         m_MethodName: SetChar
         m_Mode: 3
         m_Arguments:
@@ -6125,7 +6120,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 986827673}
+      - m_Target: {fileID: 1204856591}
         m_MethodName: SetChar
         m_Mode: 3
         m_Arguments:

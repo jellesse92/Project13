@@ -23,10 +23,6 @@ public class SquishBlockScript : MonoBehaviour {
 	void Start () {
         camera = GameObject.FindGameObjectWithTag("MainCamera");
         origin = block.position;
-
-        //Testing. Remove so parent script may control
-        
-        TriggerMove();
 	}
 
     void OnBecameVisible()
