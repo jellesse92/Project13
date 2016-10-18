@@ -9,14 +9,13 @@ public class PlayerMage : MonoBehaviour {
     private bool facingRight;
     private bool attack;
     private bool isGrounded;
-    private bool jump = false;
-    private bool jumpButtonDown = false;
+    private bool isJumping = false;
    
     [SerializeField]
     private float movementSpeed = 10;
 
     [SerializeField]
-    private float jumpForce;
+    private float jumpForce = 5;
 
     [SerializeField]
     private float jumpTime;
@@ -55,7 +54,11 @@ public class PlayerMage : MonoBehaviour {
 
     private void HandleMovement(float horizontal)
     {
-        
+        if (isJumping)
+        {
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        }
+
         myRigidbody.velocity = new Vector2(horizontal * movementSpeed ,myRigidbody.velocity.y);
         myAnimator.SetFloat("speed",Mathf.Abs(horizontal));
         
@@ -74,7 +77,7 @@ public class PlayerMage : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            jump = true;
+            isJumping = true;
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
@@ -102,7 +105,7 @@ public class PlayerMage : MonoBehaviour {
     private void ResetValues()
     {
         attack = false;
-        jump = false;
+        isJumping = false;
     }
     
 }
