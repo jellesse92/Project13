@@ -5,6 +5,8 @@ public class ReticleScript : MonoBehaviour {
 
     const float RETICLE_SPEED = 10f;        //Speed reticle set to move at
 
+    public GameObject selectedCharPanel;    //Panel for selected characters
+
     public int player;                      //Player to control reticle
     Vector2 moveDir;                        //Direction to move
 
@@ -30,7 +32,11 @@ public class ReticleScript : MonoBehaviour {
         moveDir = new Vector2(x * RETICLE_SPEED, y * RETICLE_SPEED);
         transform.position = new Vector2(transform.position.x,transform.position.y) + moveDir;
 
+    }
 
+    void FixedUpdate()
+    {
+        gameObject.GetComponent<CircleCollider2D>().radius = gameObject.GetComponent<RectTransform>().sizeDelta.x / 2f - 10f;
     }
 
     void OnTriggerEnter2D(Collider2D col)

@@ -4,7 +4,7 @@ using System.Collections;
 public class SelectableCharacterScript : MonoBehaviour {
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 
         //Can't make it more efficient for some reason. Resizes collider 
         gameObject.GetComponent<BoxCollider2D>().size = new Vector2(
