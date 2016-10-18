@@ -72,17 +72,21 @@ public class PlayerProjectile : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        bool isHit = false;
         if(col.collider.tag == "Enemy")
         {
             col.gameObject.GetComponent<Enemy>().Damage(damageAmnt);
+            isHit = true;
         } else if (col.collider.tag == "Player" && isFriendlyFireOn)
         {
             col.gameObject.GetComponent<Player>().TakeDamage(damageAmnt, knockbackAmnt);
+            isHit = true;
         }
-        if (!isPiercing)
+        if (!isPiercing && isHit)
         {
             gameObject.SetActive(false);
         }
+
     }
 	// Use this for initialization
 	void Start () {
