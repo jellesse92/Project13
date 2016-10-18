@@ -86,7 +86,7 @@ public class Player : MonoBehaviour {
         if (PlayerNumber != -1 || true) //or true for testing purposes.
         {
             int dir = 0;
-            if(character == null)
+            if (character == null)
             {
                 SelectClass(0);
             }
@@ -105,7 +105,7 @@ public class Player : MonoBehaviour {
                 anim.SetInteger("x", dir);
                 transform.position += move * 4 * Time.deltaTime;
             }
-            if(dir == 0)
+            if (dir == 0)
             {
                 anim.SetInteger("idle", dir);
             }
@@ -114,22 +114,10 @@ public class Player : MonoBehaviour {
                 isJumping = true;
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
             }
-            if (Input.GetKeyDown(KeyCode.J))
-            {
-                print("ATTACKIN MAHSELF.");
-                TakeDamage(10);
-            }
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                print("ATTACKIN MAHSELFMORE.");
-                TakeDamage(10, 4);
-                print(character.GetCurrentHealth());
-            }
             if (Input.GetKeyDown(KeyCode.A))
             {
                 //AnimateAttack
                 AttackPower = character.Attack2D(0, direction);
-                print("Attacking with Attack Power: " + AttackPower);
                 isAttacking = AttackPower < 0 ? false : true;
             }
             if (Input.GetKeyDown(KeyCode.S))
@@ -138,7 +126,12 @@ public class Player : MonoBehaviour {
                 AttackPower = character.Attack2D(1, direction);
                 isAttacking = AttackPower < 0 ? false : true;
             }
-
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                //AnimateBlock
+                print("Blocking");
+                character.Block(direction);
+            }
         }
     }
 
@@ -155,7 +148,7 @@ public class Player : MonoBehaviour {
                 //Reset Location
                 character.PlayerDeath();
             }
-        }
+        } 
 
     }
 

@@ -5,20 +5,51 @@ public class PlayerProjectile : MonoBehaviour {
 
     private bool isPiercing = false;
     private bool isFriendlyFireOn = false;
+    private bool isDamageFading = false;
+    private int maxDistance = 0;
     private int damageAmnt = 0;
+    private float reduceBy = .15f;
     private int knockbackAmnt = 0;
     private float xOrigin = 0;
     
     void Awake()
     {
-        xOrigin = transform.position.x;
         gameObject.SetActive(false);
     }
-
+    void OnEnable()
+    {
+        xOrigin = gameObject.transform.position.x;
+    }
     void Update()
     {
-    }
+        if(isDamageFading)
+        {
+            if(Mathf.Abs(transform.position.x - xOrigin) > .01f)
+            {
+                
+                damageAmnt -= (int)(damageAmnt * reduceBy);
 
+            }
+        }
+        
+        if (maxDistance != 0 && Mathf.Abs(transform.position.x - xOrigin) >= maxDistance)
+        {
+            gameObject.SetActive(false);
+        }
+    }
+    void OnBecameInvisible()
+    {
+        gameObject.SetActive(false);
+    }
+    public void DamageFadeActive(bool status, float reduceby = .15f)
+    {
+        isDamageFading = status;
+        reduceBy = reduceby;
+    }
+    public void SetMaxDistance(int distance)
+    {
+        maxDistance = distance;
+    }
     public void SetKnockBackAmnt(int knockBack)
     {
         knockbackAmnt = knockBack;
@@ -44,10 +75,12 @@ public class PlayerProjectile : MonoBehaviour {
         if(col.collider.tag == "Enemy")
         {
             col.gameObject.GetComponent<Enemy>().Damage(damageAmnt);
-            gameObject.SetActive(false);
         } else if (col.collider.tag == "Player" && isFriendlyFireOn)
         {
             col.gameObject.GetComponent<Player>().TakeDamage(damageAmnt, knockbackAmnt);
+        }
+        if (!isPiercing)
+        {
             gameObject.SetActive(false);
         }
     }

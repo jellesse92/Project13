@@ -48,6 +48,11 @@ public class PlayerCharacter : MonoBehaviour{
         }
     }
 
+    public virtual void Block(char dir)
+    {
+        
+    }
+
     public void TakeDamage(int dmg)
     {
         CurrentHealth -= dmg;
