@@ -63,7 +63,6 @@ public class PlayerProjectile : MonoBehaviour {
     public void SetFriendlyFire(bool status)
     {
         isFriendlyFireOn = status;
-        if status == fal
     }
 
     void SetPiercing()

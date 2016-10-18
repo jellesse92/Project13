@@ -40,11 +40,11 @@ public class PlayerCharacter : MonoBehaviour{
     public void PlayerDeath()
     {
         LivesLeft--;
+        CurrentHealth = MaxHealth;
         if(LivesLeft == -1)
         {
             Alive = false;
             Cash = 0;
-            CurrentHealth = MaxHealth;
         }
     }
 

@@ -5,19 +5,27 @@ public class CowBoyClass : PlayerCharacter{
 
     public Transform PrimaryBullets;
     public Transform SecondaryAtk;
+    public float SecondaryCoolDown = 1.2f;
+    public float dodgeCoolDown = 1.0f;
+    private float specialAttackTimestamp;
+    private float dodgeTimeStamp;
     public int AttackBoost = 0;
     public float SpeedBoost = 0;
 
     void Start()
     {
         this.PlayerSpeed += 1;
+        specialAttackTimestamp = Time.time;
+        dodgeTimeStamp = Time.time;
         this.SecondaryAS = 2.1f;
     }
     public override void Block(char dir)
     {
-        print(dir);
-
-        GetComponent<Rigidbody2D>().AddForce(new Vector2(dir == 'R' ? -4 : 4, 0), ForceMode2D.Impulse);
+        if(dodgeTimeStamp <= Time.time)
+        {
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(dir == 'R' ? -4 : 4, 0), ForceMode2D.Impulse);
+            dodgeTimeStamp = Time.time + dodgeCoolDown;
+        }
     }
     public override int Attack2D(int attackType, char direction)
     {
@@ -29,7 +37,12 @@ public class CowBoyClass : PlayerCharacter{
         }
         if(attackType == 1)
         {
-            Shoot2dSecondary(AttackPower, direction);
+            if(specialAttackTimestamp <= Time.time)
+            {
+                Shoot2dSecondary(AttackPower, direction);
+                specialAttackTimestamp = Time.time + SecondaryCoolDown;
+
+            }
         }
         //Do Attack Animation based off of attackType. Send them AttackPower, which is the amnt of damage it causes.
         return -1; 
