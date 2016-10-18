@@ -14,6 +14,8 @@ public class ReticleScript : MonoBehaviour {
     string xInputAxis;                      //X-axis input name for player
     string yInputAxis;                      //Y-axis input name for player
 
+    int currentChar;                        //Number representing character currently being examined by reticle
+
     void Start()
     {
         xInputAxis = player.ToString() + "_LeftJoyStickX";
@@ -44,21 +46,24 @@ public class ReticleScript : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.name == "Gunner Portrait")
-            ExamineChar("gunnerSelected", 0);
+            ExamineChar("gunnerSelected", 1);
         else if (col.name == "Swordsman Portrait")
-            ExamineChar("swordsmanSelected", 1);
+            ExamineChar("swordsmanSelected", 2);
         else if (col.name == "Mage Portrait")
-            ExamineChar("mageSelected", 2);
+            ExamineChar("mageSelected", 3);
         else if (col.name == "Mech Portrait")
-            ExamineChar("mechSelected", 3);
+            ExamineChar("mechSelected", 4);
     }
 
     //Character last examined or passed over
-    void ExamineChar(string animName,int charNum)
+    void ExamineChar(string animName, int charType)
     {
         selectedCharAnim.SetTrigger(animName);
-        //Do something with second parameter to determine character selected
+        currentChar = charType;
     }
+
+    //Retrieve information from reticle about character being currently examined for selection
+    
 
     //Watch for mouse movement and input if player 1
     void WatchForMouseInput()
@@ -73,10 +78,4 @@ public class ReticleScript : MonoBehaviour {
         //If you want to add an animation to the selected character panel upon joining a game
     }
 
-    //Function to call when player decided to leave game
-    public void LeaveSelect()
-    {
-        selectedCharAnim.SetTrigger("exit");
-        //gameObject.SetActive(false);
-    }
 }

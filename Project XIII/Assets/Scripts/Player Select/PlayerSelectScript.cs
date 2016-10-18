@@ -19,29 +19,41 @@ public class PlayerSelectScript : MonoBehaviour {
 
     void Update()
     {
-        if (players < 4)
-            WatchForPlayerJoin();
+        WatchForPlayerInput();
     }
 
-    void WatchForPlayerJoin()
+    void WatchForPlayerInput()
     {
-        WatchForPlayer1Join();
+        WatchForPlayer1Input();
  
-        if (Input.GetButtonDown("2_X") && !selectReticles[1].activeSelf)
-            JoinPlayer(1);
-        if (Input.GetButtonDown("3_X") && !selectReticles[2].activeSelf)
-            JoinPlayer(2);
-        if (Input.GetButtonDown("4_X") && !selectReticles[3].activeSelf)
-            JoinPlayer(3);
+        if (Input.GetButtonDown("2_X"))
+        {
+            if (!selectReticles[1].activeSelf)
+                JoinPlayer(1);
+        }
+        if (Input.GetButtonDown("3_X"))
+        {
+            if (!selectReticles[2].activeSelf)
+                JoinPlayer(2);
+        }
+
+        if (Input.GetButtonDown("4_X"))
+        {
+            if(!selectReticles[3].activeSelf)
+                JoinPlayer(3);
+        }
+
 
     }
+
 
     //Watches specifically for player 1 to join based on keyboard or controller
-    void WatchForPlayer1Join()
+    void WatchForPlayer1Input()
     {
-        if ((Input.GetMouseButton(0) || Input.GetButtonDown("1_X")) && !selectReticles[0].activeSelf)
+        if ((Input.GetMouseButton(0) || Input.GetButtonDown("1_X")))
         {
-            JoinPlayer(0);
+            if(!selectReticles[0].activeSelf)
+                JoinPlayer(0);
         }
     }
 
@@ -50,5 +62,6 @@ public class PlayerSelectScript : MonoBehaviour {
     {
         selectReticles[index].SetActive(true);
         players++;
+        
     }
 }
