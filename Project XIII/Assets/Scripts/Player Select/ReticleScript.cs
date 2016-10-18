@@ -33,6 +33,11 @@ public class ReticleScript : MonoBehaviour {
 
     }
 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        Debug.Log(col.name);
+    }
+
     void WatchForMouseInput()
     {
         if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
