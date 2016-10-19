@@ -99,6 +99,7 @@ public class ReticleScript : MonoBehaviour {
     public void CharacterSelected()
     {
         charSelected = true;
+        gameObject.SetActive(false);
     }
 
     //Get if character has been selected

@@ -19,7 +19,7 @@ public class PlayerSelectScript : MonoBehaviour {
         Cursor.visible = false;
         for (int i = 0; i < 4; i++)
         {
-            selected[i] = 0;
+            selected[i] = -1;
             charAvailable[i] = true;
         }
 
@@ -59,56 +59,39 @@ public class PlayerSelectScript : MonoBehaviour {
     void WatchForCircleButton()
     {
         if (Input.GetButtonDown("2_Circle"))
-        {
-            if (selectReticles[1].activeSelf)
-                ExecuteCircleFuncs(1);
-        }
-        if (Input.GetButtonDown("3_Circle") && selectReticles[2].activeSelf)
-        {
-            if (selectReticles[2].activeSelf)
-                ExecuteCircleFuncs(2);
-        }
-        if (Input.GetButtonDown("4_Circle") && selectReticles[3].activeSelf)
-        {
-            if (selectReticles[3].activeSelf)
-                ExecuteCircleFuncs(3);
-        }
+            ExecuteCircleFuncs(1);
+        if (Input.GetButtonDown("3_Circle"))
+            ExecuteCircleFuncs(2);
+        if (Input.GetButtonDown("4_Circle"))
+            ExecuteCircleFuncs(3);
     }
 
     //Execute circle command functions
-    void ExecuteCircleFuncs(int index)
-    {
-        if (selected[index] == 0)
-            CheckQuitPlayer(index);
-        else
+    void ExecuteCircleFuncs(int index) {
+        if (selected[index] > 0 && !selectReticles[index].activeSelf)
             CheckForDeselect(index);
+        else if(selectReticles[index].activeSelf)
+            CheckQuitPlayer(index);
     }
 
     //Watches specifically for player 1 to join based on keyboard or controller
     void WatchForPlayer1Input()
     {
-        if ((Input.GetMouseButton(0) || Input.GetButtonDown("1_X"))){
+        if (Input.GetMouseButton(0) || Input.GetButtonDown("1_X"))
             ExecuteXFuncs(0);
-        }
 
         if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("1_Circle")))
-        {
-            if (selectReticles[0].activeSelf)
-            {
-                ExecuteCircleFuncs(0);
-            }
-
-        }
-
+            ExecuteCircleFuncs(0);
     }
 
     //Check if player should join
     void CheckJoinPlayer(int index)
     {
-        if (!selectReticles[index].activeSelf)
+        if (!selectReticles[index].activeSelf && selected[index] == -1)
         {
             selectReticles[index].SetActive(true);
             players++;
+            selected[index] = 0;
             //Play join sound?
         }
     }
@@ -142,12 +125,14 @@ public class PlayerSelectScript : MonoBehaviour {
     void CheckQuitPlayer(int index)
     {
         selectReticles[index].GetComponent<ReticleScript>().Leave();
+        selected[index] = -1;
         players--;
         //Play Leave sound?
     }
 
     void CheckForDeselect(int index)
     {
+        selectReticles[index].SetActive(true);
         ReticleScript rs = selectReticles[index].GetComponent<ReticleScript>();
         int character = rs.GetCharExamine();
         charAvailable[character - 1] = true;
