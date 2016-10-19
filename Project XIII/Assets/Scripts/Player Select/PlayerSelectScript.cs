@@ -10,7 +10,7 @@ public class PlayerSelectScript : MonoBehaviour {
     //Determine if game should be able to start
     int players = 0;                                //Amount of players joined in the game
     int charactersSelected = 0;                     //Determines number of characters selected to check if all players are ready
-    bool[] selected = new bool[4];                  //Determines if player has selected a character
+    int[] selected = new int[4];                    //Determines if player has selected a character
     bool[] charAvailable = new bool[4];             //Determines if character is available for selection
 
 
@@ -19,7 +19,7 @@ public class PlayerSelectScript : MonoBehaviour {
         Cursor.visible = false;
         for (int i = 0; i < 4; i++)
         {
-            selected[i] = false;
+            selected[i] = 0;
             charAvailable[i] = true;
         }
 
@@ -42,52 +42,60 @@ public class PlayerSelectScript : MonoBehaviour {
     void WatchForXButton()
     {
         if (Input.GetButtonDown("2_X"))
-        {
-            CheckJoinPlayer(1);
-        }
+            ExecuteXFuncs(1);
         if (Input.GetButtonDown("3_X"))
-        {
-            CheckJoinPlayer(2);
-        }
+            ExecuteXFuncs(2);
         if (Input.GetButtonDown("4_X"))
-        {
-            CheckJoinPlayer(3);
-        }
+            ExecuteXFuncs(3);
+    }
+
+    //Execute functions based on "x" button input
+    void ExecuteXFuncs(int index )
+    {
+        CheckJoinPlayer(index);
+        CheckSelectCharacter(index);
     }
 
     void WatchForCircleButton()
     {
         if (Input.GetButtonDown("2_Circle"))
         {
-            if (selected[1] == false && selectReticles[1].activeSelf)
-                QuitPlayer(1);
+            if (selectReticles[1].activeSelf)
+                ExecuteCircleFuncs(1);
         }
         if (Input.GetButtonDown("3_Circle") && selectReticles[2].activeSelf)
         {
-            if (selected[1] == false)
-                QuitPlayer(2);
+            if (selectReticles[2].activeSelf)
+                ExecuteCircleFuncs(2);
         }
         if (Input.GetButtonDown("4_Circle") && selectReticles[3].activeSelf)
         {
-            if (selected[1] == false)
-                QuitPlayer(3);
+            if (selectReticles[3].activeSelf)
+                ExecuteCircleFuncs(3);
         }
     }
 
+    //Execute circle command functions
+    void ExecuteCircleFuncs(int index)
+    {
+        if (selected[index] == 0)
+            CheckQuitPlayer(index);
+        else
+            CheckForDeselect(index);
+    }
 
     //Watches specifically for player 1 to join based on keyboard or controller
     void WatchForPlayer1Input()
     {
         if ((Input.GetMouseButton(0) || Input.GetButtonDown("1_X"))){
-            CheckJoinPlayer(0);
+            ExecuteXFuncs(0);
         }
 
         if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("1_Circle")))
         {
             if (selectReticles[0].activeSelf)
             {
-                if (selected[0] == false)
-                    QuitPlayer(0);
+                ExecuteCircleFuncs(0);
             }
 
         }
@@ -101,15 +109,51 @@ public class PlayerSelectScript : MonoBehaviour {
         {
             selectReticles[index].SetActive(true);
             players++;
+            //Play join sound?
         }
     }
 
     //Check if player should be able to select chosen character
+    void CheckSelectCharacter(int index)
+    {
+        int character = selectReticles[index].GetComponent<ReticleScript>().GetCharExamine();
 
+        if (character <= 0)
+            return;
 
-    void QuitPlayer(int index)
+        if (selectReticles[index].activeSelf)
+        {
+            if (charAvailable[character-1])
+            {
+                selectReticles[index].GetComponent<ReticleScript>().CharacterSelected();
+                charAvailable[character-1] = false;
+                selected[index] = character;
+                //Play player accept sound and/or animation
+            }
+            else
+            {
+                //Play rejection sound?
+            }
+
+        }
+    }
+
+    //Check for input if player is leaving game
+    void CheckQuitPlayer(int index)
     {
         selectReticles[index].GetComponent<ReticleScript>().Leave();
         players--;
+        //Play Leave sound?
     }
+
+    void CheckForDeselect(int index)
+    {
+        ReticleScript rs = selectReticles[index].GetComponent<ReticleScript>();
+        int character = rs.GetCharExamine();
+        charAvailable[character - 1] = true;
+        rs.CharacterDeselected();
+        selected[index] = 0;
+        //Play Deselect sound
+    }
+
 }

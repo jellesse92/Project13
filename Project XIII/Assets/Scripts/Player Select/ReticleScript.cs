@@ -17,6 +17,7 @@ public class ReticleScript : MonoBehaviour {
     string yInputAxis;                      //Y-axis input name for player
 
     int currentChar;                        //Number representing character currently being examined by reticle
+    bool charSelected;                      //Determines if character has already been selected by player
 
     void Start()
     {
@@ -26,6 +27,7 @@ public class ReticleScript : MonoBehaviour {
         selectedCharAnim = selectedCharPanel.GetComponent<Animator>();
         currentChar = 0;
         origin = transform.position;
+        charSelected = false;
     }
 
     void Update()
@@ -49,15 +51,19 @@ public class ReticleScript : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.name == "Gunner Portrait")
-            ExamineChar("gunnerSelected", 1);
-        else if (col.name == "Swordsman Portrait")
-            ExamineChar("swordsmanSelected", 2);
-        else if (col.name == "Mage Portrait")
-            ExamineChar("mageSelected", 3);
-        else if (col.name == "Mech Portrait")
-            ExamineChar("mechSelected", 4);
+        if (!charSelected)
+        {
+            if (col.name == "Gunner Portrait")
+                ExamineChar("gunnerSelected", 1);
+            else if (col.name == "Swordsman Portrait")
+                ExamineChar("swordsmanSelected", 2);
+            else if (col.name == "Mage Portrait")
+                ExamineChar("mageSelected", 3);
+            else if (col.name == "Mech Portrait")
+                ExamineChar("mechSelected", 4);
+        }
     }
+
 
     //Character last examined or passed over
     void ExamineChar(string animName, int charType)
@@ -72,9 +78,28 @@ public class ReticleScript : MonoBehaviour {
         return currentChar;
     }
 
+    //Set character as selected and disable animation switching of selected character panel
+    public void CharacterSelected()
+    {
+        charSelected = true;
+    }
+
+    //Get if character has been selected
+    public bool GetSelectedStatus()
+    {
+        return charSelected;
+    }
+
+    //Set character as deselected and reenable animation swithcing of selected character panel
+    public void CharacterDeselected()
+    {
+        charSelected = false;
+    }
+
     public void Leave()
     {
         currentChar = 0;
+        charSelected = false;
         transform.position = origin;
         selectedCharAnim.SetTrigger("exit");
         gameObject.SetActive(false);
@@ -86,6 +111,8 @@ public class ReticleScript : MonoBehaviour {
         if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
             transform.position = Input.mousePosition;
     }
+
+
 
 
 }
