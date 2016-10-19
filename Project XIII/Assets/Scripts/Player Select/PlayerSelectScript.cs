@@ -10,11 +10,19 @@ public class PlayerSelectScript : MonoBehaviour {
     //Determine if game should be able to start
     int players = 0;                                //Amount of players joined in the game
     int charactersSelected = 0;                     //Determines number of characters selected to check if all players are ready
+    bool[] selected = new bool[4];                  //Determines if player has selected a character
+    bool[] charAvailable = new bool[4];             //Determines if character is available for selection
 
 
     void Start()
     {
         Cursor.visible = false;
+        for (int i = 0; i < 4; i++)
+        {
+            selected[i] = false;
+            charAvailable[i] = true;
+        }
+
     }
 
     void Update()
@@ -25,43 +33,83 @@ public class PlayerSelectScript : MonoBehaviour {
     void WatchForPlayerInput()
     {
         WatchForPlayer1Input();
- 
+        WatchForXButton();
+        WatchForCircleButton();
+
+    }
+
+    //Reacts to "X" button input
+    void WatchForXButton()
+    {
         if (Input.GetButtonDown("2_X"))
         {
-            if (!selectReticles[1].activeSelf)
-                JoinPlayer(1);
+            CheckJoinPlayer(1);
         }
         if (Input.GetButtonDown("3_X"))
         {
-            if (!selectReticles[2].activeSelf)
-                JoinPlayer(2);
+            CheckJoinPlayer(2);
         }
-
         if (Input.GetButtonDown("4_X"))
         {
-            if(!selectReticles[3].activeSelf)
-                JoinPlayer(3);
+            CheckJoinPlayer(3);
         }
+    }
 
-
+    void WatchForCircleButton()
+    {
+        if (Input.GetButtonDown("2_Circle"))
+        {
+            if (selected[1] == false && selectReticles[1].activeSelf)
+                QuitPlayer(1);
+        }
+        if (Input.GetButtonDown("3_Circle") && selectReticles[2].activeSelf)
+        {
+            if (selected[1] == false)
+                QuitPlayer(2);
+        }
+        if (Input.GetButtonDown("4_Circle") && selectReticles[3].activeSelf)
+        {
+            if (selected[1] == false)
+                QuitPlayer(3);
+        }
     }
 
 
     //Watches specifically for player 1 to join based on keyboard or controller
     void WatchForPlayer1Input()
     {
-        if ((Input.GetMouseButton(0) || Input.GetButtonDown("1_X")))
+        if ((Input.GetMouseButton(0) || Input.GetButtonDown("1_X"))){
+            CheckJoinPlayer(0);
+        }
+
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("1_Circle")))
         {
-            if(!selectReticles[0].activeSelf)
-                JoinPlayer(0);
+            if (selectReticles[0].activeSelf)
+            {
+                if (selected[0] == false)
+                    QuitPlayer(0);
+            }
+
+        }
+
+    }
+
+    //Check if player should join
+    void CheckJoinPlayer(int index)
+    {
+        if (!selectReticles[index].activeSelf)
+        {
+            selectReticles[index].SetActive(true);
+            players++;
         }
     }
 
+    //Check if player should be able to select chosen character
 
-    void JoinPlayer(int index)
+
+    void QuitPlayer(int index)
     {
-        selectReticles[index].SetActive(true);
-        players++;
-        
+        selectReticles[index].GetComponent<ReticleScript>().Leave();
+        players--;
     }
 }

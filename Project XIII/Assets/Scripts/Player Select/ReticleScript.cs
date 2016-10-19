@@ -5,6 +5,8 @@ public class ReticleScript : MonoBehaviour {
 
     const float RETICLE_SPEED = 10f;        //Speed reticle set to move at
 
+    Vector2 origin;                         //Original position to return to on reset
+
     public GameObject selectedCharPanel;    //Panel for selected characters
     Animator selectedCharAnim;              //Selected Character Animation
 
@@ -22,6 +24,8 @@ public class ReticleScript : MonoBehaviour {
         yInputAxis = player.ToString() + "_LeftJoyStickY";
         moveDir = new Vector2();
         selectedCharAnim = selectedCharPanel.GetComponent<Animator>();
+        currentChar = 0;
+        origin = transform.position;
     }
 
     void Update()
@@ -63,7 +67,18 @@ public class ReticleScript : MonoBehaviour {
     }
 
     //Retrieve information from reticle about character being currently examined for selection
-    
+    public int GetCharExamine()
+    {
+        return currentChar;
+    }
+
+    public void Leave()
+    {
+        currentChar = 0;
+        transform.position = origin;
+        selectedCharAnim.SetTrigger("exit");
+        gameObject.SetActive(false);
+    }
 
     //Watch for mouse movement and input if player 1
     void WatchForMouseInput()
@@ -72,10 +87,5 @@ public class ReticleScript : MonoBehaviour {
             transform.position = Input.mousePosition;
     }
 
-
-    public void ActivateSelectedPanel()
-    {
-        //If you want to add an animation to the selected character panel upon joining a game
-    }
 
 }
