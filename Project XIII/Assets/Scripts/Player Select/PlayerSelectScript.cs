@@ -111,7 +111,11 @@ public class PlayerSelectScript : MonoBehaviour {
                 selectReticles[index].GetComponent<ReticleScript>().CharacterSelected();
                 charAvailable[character-1] = false;
                 selected[index] = character;
+                charactersSelected++;
                 //Play player accept sound and/or animation
+
+                if (charactersSelected == players)
+                    PlayerSelectComplete();
             }
             else
             {
@@ -130,6 +134,7 @@ public class PlayerSelectScript : MonoBehaviour {
         //Play Leave sound?
     }
 
+    //Check for input if player is deselecint a character
     void CheckForDeselect(int index)
     {
         selectReticles[index].SetActive(true);
@@ -138,7 +143,13 @@ public class PlayerSelectScript : MonoBehaviour {
         charAvailable[character - 1] = true;
         rs.CharacterDeselected();
         selected[index] = 0;
+        charactersSelected--;
         //Play Deselect sound
     }
 
+    //Function to play when all joined players have selected a character
+    void PlayerSelectComplete()
+    {
+        Debug.Log("All players ready! Transition to next scene!");
+    }
 }
