@@ -19,6 +19,9 @@ public class ReticleScript : MonoBehaviour {
     int currentChar;                        //Number representing character currently being examined by reticle
     bool charSelected;                      //Determines if character has already been selected by player
 
+    //For exiting animation after leaving all character selections with reticle
+    int lastChar;
+
     void Start()
     {
         xInputAxis = player.ToString() + "_LeftJoyStickX";
@@ -26,6 +29,7 @@ public class ReticleScript : MonoBehaviour {
         moveDir = new Vector2();
         selectedCharAnim = selectedCharPanel.GetComponent<Animator>();
         currentChar = 0;
+        lastChar = 0;
         origin = transform.position;
         charSelected = false;
     }
@@ -51,6 +55,7 @@ public class ReticleScript : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
+
         if (!charSelected)
         {
             if (col.name == "Gunner Portrait")
@@ -62,6 +67,18 @@ public class ReticleScript : MonoBehaviour {
             else if (col.name == "Mech Portrait")
                 ExamineChar("mechSelected", 4);
         }
+
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (currentChar == lastChar && !charSelected)
+        {
+            currentChar = 0;
+            selectedCharAnim.SetTrigger("exit");
+        }
+        else
+            lastChar = currentChar;
     }
 
 
@@ -102,6 +119,7 @@ public class ReticleScript : MonoBehaviour {
         charSelected = false;
         transform.position = origin;
         selectedCharAnim.SetTrigger("exit");
+        lastChar = 0;
         gameObject.SetActive(false);
     }
 
