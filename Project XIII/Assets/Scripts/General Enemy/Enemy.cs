@@ -5,8 +5,7 @@ using System.Collections.Generic;
 //Class to be inherited by all enemy scripts
 public class Enemy : MonoBehaviour {
 
-    //In-Game information
-    public int fullHealth;                              //Full health to reset to                      
+    //In-Game information                 
     public int health;                                  //Enemy health
 
     //Buffable elements
@@ -14,9 +13,9 @@ public class Enemy : MonoBehaviour {
     public int attackPower;                             //Base attack power of enemy
 
     //Detection and Pursuit Variables
-    public bool isVisible;                              //Determine if enemy is visible on screen
-    public bool inPursuit;                              //Determine if enemy is in pursuit of player character
-    public GameObject target;                           //Target to chase
+    bool isVisible;                                     //Determine if enemy is visible on screen
+    bool inPursuit;                                     //Determine if enemy is in pursuit of player character
+    GameObject target;                           //Target to chase
 
     //Attack Variables
     public bool inAttackRange;                          //Detects if in range to begin attacking
@@ -80,5 +79,35 @@ public class Enemy : MonoBehaviour {
     public void Damage(int damage)
     {
         health -= damage;
+    }
+
+    //Gets if enemy is visible or not
+    public bool GetVisibleState()
+    {
+        return isVisible;
+    }
+
+    //Get the info whether enemy is in pursuit or not
+    public bool GetPursuitState()
+    {
+        return inPursuit;
+    }
+
+    //Sets whether or not enemy is in pursuit
+    public void SetPursuitState(bool state)
+    {
+        inPursuit = state;
+    }
+
+    //Gets the character currently targeted
+    public GameObject GetTarget()
+    {
+        return target;
+    }
+
+    //Sets the target player
+    public void SetTarget(GameObject tar)
+    {
+        target = tar;
     }
 }

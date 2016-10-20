@@ -8,7 +8,6 @@ public class BasicAlertEnemy : AlertEnemy {
     // Use this for initialization
     void Start()
     {
-        fullHealth = 100;
         health = 100;
 
         anim = GetComponent<Animator>();
@@ -17,11 +16,11 @@ public class BasicAlertEnemy : AlertEnemy {
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (isVisible && inPursuit)
+        if (GetVisibleState() && GetPursuitState())
         {
             if (!inAttackRange)
             {
-                transform.position = Vector2.MoveTowards(transform.position, target.transform.position, .01f);
+                transform.position = Vector2.MoveTowards(transform.position, GetTarget().transform.position, .01f);
                 RunApproachAnim();
             }
             else
@@ -42,13 +41,13 @@ public class BasicAlertEnemy : AlertEnemy {
         int x = 0;
         int y = 0;
 
-        if (target.transform.position.y > transform.position.y)
+        if (GetTarget().transform.position.y > transform.position.y)
             y = 1;
-        else if (target.transform.position.y < transform.position.y)
+        else if (GetTarget().transform.position.y < transform.position.y)
             y = -1;
-        else if (target.transform.position.x > transform.position.x)
+        else if (GetTarget().transform.position.x > transform.position.x)
             x = 1;
-        else if (target.transform.position.x < transform.position.x)
+        else if (GetTarget().transform.position.x < transform.position.x)
             x = -1;
 
         if (y == 0 && x == 0)

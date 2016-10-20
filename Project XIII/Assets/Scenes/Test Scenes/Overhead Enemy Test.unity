@@ -90,6 +90,29 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &17623456 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000013333228472, guid: 505026bd9660e45408eb909e00a94b99,
+    type: 2}
+  m_PrefabInternal: {fileID: 635979307}
+--- !u!114 &17623457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 17623456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c41871df6719c44d8f152d0c52c190b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  speed: 0
+  attackPower: 10
+  isVisible: 0
+  inPursuit: 0
+  target: {fileID: 0}
+  inAttackRange: 0
 --- !u!4 &69853214 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000010788590416, guid: 784b4fbe3bab02943a86c21bae04ac60,
@@ -527,7 +550,8 @@ Prefab:
       propertyPath: m_Name
       value: Basic Enemy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114000010883663144, guid: 505026bd9660e45408eb909e00a94b99, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 505026bd9660e45408eb909e00a94b99, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &713070692
@@ -701,6 +725,10 @@ Prefab:
     - target: {fileID: 4000014084717240, guid: 01e1501e9c8914f4d99c1b4752881cd9, type: 2}
       propertyPath: m_RootOrder
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000014084717240, guid: 01e1501e9c8914f4d99c1b4752881cd9, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 01e1501e9c8914f4d99c1b4752881cd9, type: 2}
@@ -1004,7 +1032,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82459114360e0824cb6c070809452b08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullHealth: 100
   health: 100
   speed: 0
   attackPower: 0
