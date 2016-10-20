@@ -10,6 +10,7 @@ public class PlayerMage : MonoBehaviour {
     private bool attack;
     private bool isGrounded;
     private bool isJumping = false;
+    private bool jumpPressed = false;
    
     [SerializeField]
     private float movementSpeed = 10;
@@ -37,6 +38,7 @@ public class PlayerMage : MonoBehaviour {
 	
 	void FixedUpdate ()
     {
+        //Debug.Log("no");
         float horizontal = Input.GetAxis("Horizontal");
 
         if(!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
@@ -54,8 +56,13 @@ public class PlayerMage : MonoBehaviour {
 
     private void HandleMovement(float horizontal)
     {
-        if (isJumping)
+        if (jumpPressed && !isJumping)
         {
+            isJumping = true;
+            if (Mathf.Abs(horizontal) > 0.1)
+                myAnimator.SetTrigger("jumpForward");
+            else
+                myAnimator.SetTrigger("jumpIdle");
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
 
@@ -77,7 +84,7 @@ public class PlayerMage : MonoBehaviour {
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            isJumping = true;
+            jumpPressed = true;
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
@@ -105,7 +112,16 @@ public class PlayerMage : MonoBehaviour {
     private void ResetValues()
     {
         attack = false;
-        isJumping = false;
+        jumpPressed = false;
     }
-    
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.collider.tag == "Ground")
+        {
+            Debug.Log("collison enter");
+            myAnimator.SetTrigger("landing");
+            isJumping = false;
+        }
+    }
 }
