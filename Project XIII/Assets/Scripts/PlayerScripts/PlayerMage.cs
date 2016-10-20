@@ -113,14 +113,16 @@ public class PlayerMage : MonoBehaviour {
     {
         attack = false;
         jumpPressed = false;
+        myAnimator.SetBool("landing", false);
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
         if (col.collider.tag == "Ground")
         {
+            
             Debug.Log("collison enter");
-            myAnimator.SetTrigger("landing");
+            myAnimator.SetBool("landing", true);
             isJumping = false;
         }
     }
