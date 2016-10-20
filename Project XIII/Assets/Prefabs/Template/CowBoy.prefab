@@ -142,7 +142,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1000010624991870
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -1139,7 +1139,7 @@ Transform:
   m_Children:
   - {fileID: 4000011134828760}
   m_Father: {fileID: 4000014084717240}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!4 &4000010223999838
 Transform:
   m_ObjectHideFlags: 1
@@ -1174,10 +1174,10 @@ Transform:
   m_GameObject: {fileID: 1000010624991870}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0.33675283}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
-  m_Father: {fileID: 4000014084717240}
+  m_Father: {fileID: 4000012479896036}
   m_RootOrder: 0
 --- !u!4 &4000010407384598
 Transform:
@@ -1540,9 +1540,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 2.969537}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
+  m_Children:
+  - {fileID: 4000010391357854}
   m_Father: {fileID: 4000014084717240}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!4 &4000012597311662
 Transform:
   m_ObjectHideFlags: 1
@@ -1775,7 +1776,7 @@ Transform:
   - {fileID: 4000011231400720}
   - {fileID: 4000012003106872}
   m_Father: {fileID: 4000014084717240}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &4000013530097020
 Transform:
   m_ObjectHideFlags: 1
@@ -1891,7 +1892,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 4000010391357854}
   - {fileID: 4000010142248204}
   - {fileID: 4000013492648304}
   - {fileID: 4000012479896036}
@@ -1924,7 +1924,7 @@ Transform:
   m_Children:
   - {fileID: 4000013970898478}
   m_Father: {fileID: 4000014084717240}
-  m_RootOrder: 4
+  m_RootOrder: 3
 --- !u!4 &4000014282216940
 Transform:
   m_ObjectHideFlags: 1
@@ -2904,7 +2904,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
