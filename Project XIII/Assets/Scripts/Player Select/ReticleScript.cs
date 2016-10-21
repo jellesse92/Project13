@@ -98,6 +98,7 @@ public class ReticleScript : MonoBehaviour {
     //Set character as selected and disable animation switching of selected character panel
     public void CharacterSelected()
     {
+        selectedCharAnim.SetTrigger("selected");
         charSelected = true;
         gameObject.SetActive(false);
     }
