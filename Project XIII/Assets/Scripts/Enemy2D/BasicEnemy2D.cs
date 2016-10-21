@@ -4,19 +4,15 @@ using System.Collections;
 public class BasicEnemy2D : Enemy {
 
 
-    Animator anim;
-
     public float attProjectionTime = 0f;                    //Determine how long before enemy should execute attack
     bool isAttacking;                                       //Determine if enemy is in the middle of an attack animation to stop movement    
     bool attEnded;                                          //Determine if the attack ended
     bool gotAttackAnim;                                     //Determines if attack animation has been registered
-
     bool facingRight = true;                                //Determine direction facing
 
     // Use this for initialization
     void Start()
     {
-        anim = GetComponent<Animator>();
         isAttacking = false;
         attEnded = true;
         gotAttackAnim = true;
@@ -25,9 +21,9 @@ public class BasicEnemy2D : Enemy {
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (GetVisibleState() && GetPursuitState())
+        if (GetVisibleState() && GetPursuitState() && !stunned)
         {
-            if (!isAttacking && !GetAttackInRange())
+            if (!isAttacking && !inAttackRange)
                 Approach();
             else if(!isAttacking && attEnded)
             {
@@ -45,7 +41,7 @@ public class BasicEnemy2D : Enemy {
                 CheckAttackEnd();
             }
         }
-        else
+        else if(!stunned)
             anim.SetInteger("x", 0);
 
     }
@@ -54,20 +50,20 @@ public class BasicEnemy2D : Enemy {
     void Approach()
     {
 
-        if (GetTarget().transform.position.x > transform.position.x)
+        if (target.transform.position.x > transform.position.x)
         {
             if (!facingRight)
                 Flip();
             anim.SetInteger("x", 1);
         }
-        else if (GetTarget().transform.position.x < transform.position.x)
+        else if (target.transform.position.x < transform.position.x)
         {
             if (facingRight)
                 Flip();
             anim.SetInteger("x", 1);
         }
 
-        Vector2 target_location = new Vector2(GetTarget().transform.position.x, transform.position.y);
+        Vector2 target_location = new Vector2(target.transform.position.x, transform.position.y);
         transform.position = Vector2.MoveTowards(transform.position, target_location, speed);
 
     }

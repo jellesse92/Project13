@@ -3,14 +3,11 @@ using System.Collections;
 
 public class BasicAlertEnemy : AlertEnemy {
 
-    Animator anim;
 
     // Use this for initialization
     void Start()
     {
         health = 100;
-
-        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -18,9 +15,9 @@ public class BasicAlertEnemy : AlertEnemy {
     {
         if (GetVisibleState() && GetPursuitState())
         {
-            if (!GetAttackInRange())
+            if (!inAttackRange)
             {
-                transform.position = Vector2.MoveTowards(transform.position, GetTarget().transform.position, .01f);
+                transform.position = Vector2.MoveTowards(transform.position, target.transform.position, .01f);
                 RunApproachAnim();
             }
             else
@@ -41,13 +38,13 @@ public class BasicAlertEnemy : AlertEnemy {
         int x = 0;
         int y = 0;
 
-        if (GetTarget().transform.position.y > transform.position.y)
+        if (target.transform.position.y > transform.position.y)
             y = 1;
-        else if (GetTarget().transform.position.y < transform.position.y)
+        else if (target.transform.position.y < transform.position.y)
             y = -1;
-        else if (GetTarget().transform.position.x > transform.position.x)
+        else if (target.transform.position.x > transform.position.x)
             x = 1;
-        else if (GetTarget().transform.position.x < transform.position.x)
+        else if (target.transform.position.x < transform.position.x)
             x = -1;
 
         if (y == 0 && x == 0)
