@@ -40,7 +40,7 @@ GameObject:
   - 95: {fileID: 95000013695872404}
   - 61: {fileID: 61000013231920210}
   - 50: {fileID: 50000010716464386}
-  - 114: {fileID: 114000010883663144}
+  - 114: {fileID: 114000012979805064}
   m_Layer: 9
   m_Name: BasicEnemy2D
   m_TagString: Enemy
@@ -68,8 +68,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013333228472}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalPosition: {x: 10, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000011467175252}
@@ -91,7 +91,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 5
 --- !u!58 &58000012131670140
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -105,7 +105,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.15
+  m_Radius: 0.08
 --- !u!61 &61000013231920210
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -119,7 +119,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: -2, y: 1.2}
   serializedVersion: 2
-  m_Size: {x: 3, y: 2.4}
+  m_Size: {x: 2, y: 2}
 --- !u!95 &95000013695872404
 Animator:
   serializedVersion: 3
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62b7143ff14211a4ea224b96a7176da8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114000010883663144
+--- !u!114 &114000012979805064
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -159,14 +159,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c41871df6719c44d8f152d0c52c190b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fullHealth: 100
   health: 100
-  speed: 0
+  speed: 0.15
   attackPower: 10
-  isVisible: 0
-  inPursuit: 0
-  target: {fileID: 0}
-  inAttackRange: 0
+  attProjectionTime: 0.25
 --- !u!212 &212000011366957544
 SpriteRenderer:
   m_ObjectHideFlags: 1

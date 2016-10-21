@@ -15,7 +15,7 @@ public class BasicEnemy : Enemy {
 	void FixedUpdate () {
         if (GetVisibleState() && GetPursuitState())
         {
-            if (!inAttackRange)
+            if (!GetAttackInRange())
             {
                 transform.position = Vector2.MoveTowards(transform.position, GetTarget().transform.position, .01f);
                 RunApproachAnim();

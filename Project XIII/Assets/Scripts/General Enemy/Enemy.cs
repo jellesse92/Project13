@@ -15,10 +15,10 @@ public class Enemy : MonoBehaviour {
     //Detection and Pursuit Variables
     bool isVisible;                                     //Determine if enemy is visible on screen
     bool inPursuit;                                     //Determine if enemy is in pursuit of player character
-    GameObject target;                           //Target to chase
+    GameObject target;                                  //Target to chase
 
     //Attack Variables
-    public bool inAttackRange;                          //Detects if in range to begin attacking
+    bool inAttackRange;                                 //Detects if in range to begin attacking
 
     // Use this for initialization
     void Awake()
@@ -53,7 +53,7 @@ public class Enemy : MonoBehaviour {
     {
         if (col.gameObject.tag == "Player")
         {
-            col.gameObject.GetComponent<PlayerCharacter>().TakeDamage(attackPower);
+            //col.gameObject.GetComponent<PlayerCharacter>().TakeDamage(attackPower);
         }
     }
 
@@ -62,7 +62,7 @@ public class Enemy : MonoBehaviour {
     {
         if(col.gameObject.tag == "Player")
         {
-            col.gameObject.GetComponent<PlayerCharacter>().TakeDamage(attackPower);
+            //col.gameObject.GetComponent<PlayerCharacter>().TakeDamage(attackPower);
         }
     }
 
@@ -109,5 +109,15 @@ public class Enemy : MonoBehaviour {
     public void SetTarget(GameObject tar)
     {
         target = tar;
+    }
+
+    public void SetAttackInRange(bool b)
+    {
+        inAttackRange = b;
+    }
+
+    public bool GetAttackInRange()
+    {
+        return inAttackRange;
     }
 }

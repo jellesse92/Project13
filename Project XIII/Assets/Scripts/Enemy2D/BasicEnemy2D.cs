@@ -6,12 +6,20 @@ public class BasicEnemy2D : Enemy {
 
     Animator anim;
 
-    bool flipped = false;                       //Determine direction facing
+    public float attProjectionTime = 0f;                    //Determine how long before enemy should execute attack
+    bool isAttacking;                                       //Determine if enemy is in the middle of an attack animation to stop movement    
+    bool attEnded;                                          //Determine if the attack ended
+    bool gotAttackAnim;                                     //Determines if attack animation has been registered
+
+    bool facingRight = true;                                //Determine direction facing
 
     // Use this for initialization
     void Start()
     {
         anim = GetComponent<Animator>();
+        isAttacking = false;
+        attEnded = true;
+        gotAttackAnim = true;
     }
 
     // Update is called once per frame
@@ -19,49 +27,81 @@ public class BasicEnemy2D : Enemy {
     {
         if (GetVisibleState() && GetPursuitState())
         {
-            if (!inAttackRange)
+            if (!isAttacking && !GetAttackInRange())
+                Approach();
+            else if(!isAttacking && attEnded)
             {
-                Vector2 target_location = new Vector2(GetTarget().transform.position.x, transform.position.y);
-                transform.position = Vector2.MoveTowards(transform.position, target_location, .01f);
-                RunApproachAnim();
+                anim.SetInteger("x", 0);
+                anim.SetTrigger("projectAttack");
+                isAttacking = true;
+
+                if (attProjectionTime == 0f)
+                    ExecuteAttack();
+                else
+                    Invoke("ExecuteAttack", attProjectionTime);
             }
-            else
+            else if(!attEnded)
             {
-                //Should begin attack animation
-                //anim.SetInteger("x", 0);
-                //anim.SetInteger("y", 0);
-                //anim.SetBool("isIdle", true);
+                CheckAttackEnd();
             }
         }
         else
-        {
-            //            anim.SetBool("isIdle", true);
-        }
+            anim.SetInteger("x", 0);
 
     }
 
-    //Checks what animation to play
-    void RunApproachAnim()
+    //Plays out enemy approach
+    void Approach()
     {
-        int x = 0;
-        int y = 0;
 
         if (GetTarget().transform.position.x > transform.position.x)
-            x = 1;
+        {
+            if (!facingRight)
+                Flip();
+            anim.SetInteger("x", 1);
+        }
         else if (GetTarget().transform.position.x < transform.position.x)
-            x = -1;
-
-        if (y == 0 && x == 0)
         {
-            //anim.SetBool("isIdle", true);
-        }
-        else
-        {
-            //anim.SetBool("isIdle", false);
+            if (facingRight)
+                Flip();
+            anim.SetInteger("x", 1);
         }
 
-        //anim.SetInteger("x", x);
-        //anim.SetInteger("y", y);
+        Vector2 target_location = new Vector2(GetTarget().transform.position.x, transform.position.y);
+        transform.position = Vector2.MoveTowards(transform.position, target_location, speed);
+
+    }
+
+    //Flips the sprite
+    void Flip()
+    {
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+        facingRight = !facingRight;
+    }
+
+    //Execute attack
+    void ExecuteAttack()
+    {
+        anim.SetTrigger("attack");
+        attEnded = false;
+        gotAttackAnim = false;
+    }
+
+    //Determines when done attacking
+    void CheckAttackEnd()
+    {
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        {
+            gotAttackAnim = true;
+        }
+
+        if (gotAttackAnim && !anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        {
+            isAttacking = false;
+            attEnded = true;
+        }
 
     }
 }
