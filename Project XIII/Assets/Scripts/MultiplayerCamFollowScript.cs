@@ -5,6 +5,8 @@ using System.Collections.Generic;
 public class MultiplayerCamFollowScript : MonoBehaviour {
 
 
+    const float DEFAULT_ORTHO_SIZE = 7f;
+
     float zoomMultiplier = 1.5f;
     float followDelay = .8f;
 
@@ -17,10 +19,47 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+        if (!GetComponent<CamShakeScript>().GetIsShaking())
+        {
+            int activePlayers = ActivePlayerCount();
+            if (activePlayers == 1)
+                SinglePlayerCamera();
+            if (activePlayers > 1)
+                MultiplayerCamera();
+        }
+	}
+
+    void SinglePlayerCamera()
+    {
+        Transform singlePlayerTrans = transform;
+        GetComponent<Camera>().orthographicSize = DEFAULT_ORTHO_SIZE;
+
+        foreach(GameObject player in players)
+        {
+            if (player.activeSelf)
+            {
+                singlePlayerTrans = player.transform;
+                break;
+            }
+        }
+
+        Vector3 destination = new Vector3();
+        destination.x = singlePlayerTrans.position.x;
+        destination.y = singlePlayerTrans.position.y;
+        destination.z = transform.position.z;
+
+        transform.position = Vector3.Slerp(transform.position, destination, followDelay);
+
+        if ((destination - transform.position).magnitude <= 0.05f)
+            transform.position = destination;
+    }
+
+    void MultiplayerCamera()
+    {
         Vector3 midpoint = GetPlayersMidpoint();
 
 
-        if(midpoint != new Vector3())
+        if (midpoint != new Vector3())
         {
             float distance = GetDistance();
 
@@ -32,8 +71,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
             if ((cameraDestination - transform.position).magnitude <= 0.05f)
                 transform.position = cameraDestination;
         }
-
-	}
+    }
 
     //Get midpoint position between all players
     Vector3 GetPlayersMidpoint()
@@ -90,5 +128,14 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
         }
         return (pointArray[1] - pointArray[0]).magnitude;
 
+    }
+
+    int ActivePlayerCount()
+    {
+        int active = 0;
+        foreach (GameObject player in players)
+            if (player.activeSelf)
+                active++;
+        return active;
     }
 }

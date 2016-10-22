@@ -8,7 +8,7 @@ public class CamShakeScript : MonoBehaviour {
     Vector3 origin;
 
     float shakeAmount;
-
+    bool isShaking = false;
 
     void Start()
     {
@@ -26,6 +26,8 @@ public class CamShakeScript : MonoBehaviour {
 
     void CameraShake()
     {
+        isShaking = true;
+
         float quakeAmtY = Random.value * shakeAmount * 2 - shakeAmount;
         float quakeAmtX = Random.value * shakeAmount * 2 - shakeAmount;
         Vector3 pp = transform.position;
@@ -37,6 +39,12 @@ public class CamShakeScript : MonoBehaviour {
     void StopShaking()
     {
         CancelInvoke("CameraShake");
+        isShaking = false;
         transform.position = origin;
+    }
+
+    public bool GetIsShaking()
+    {
+        return isShaking;
     }
 }
