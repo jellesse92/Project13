@@ -65,7 +65,7 @@ public class ReticleScript : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (characterPanel)
+        if (characterPanel != null)
             lastCharacterPanel = characterPanel;
         characterPanel = col.GetComponent<Animator>();
 
