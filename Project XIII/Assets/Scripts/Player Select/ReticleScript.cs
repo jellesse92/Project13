@@ -86,7 +86,8 @@ public class ReticleScript : MonoBehaviour {
     void OnTriggerExit2D(Collider2D col)
     {
         characterPanel.SetTrigger("deselect");
-        lastCharacterPanel.SetTrigger("deselect");
+        if (lastCharacterPanel != null)
+            lastCharacterPanel.SetTrigger("deselect");
 
         if (currentChar == lastChar && !charSelected)
         {
