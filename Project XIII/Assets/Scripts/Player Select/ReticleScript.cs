@@ -24,6 +24,9 @@ public class ReticleScript : MonoBehaviour {
 
     Camera cam;
 
+    Animator characterPanel;
+    Animator lastCharacterPanel;
+
     void Start()
     {
         xInputAxis = player.ToString() + "_LeftJoyStickX";
@@ -62,6 +65,9 @@ public class ReticleScript : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        if (characterPanel)
+            lastCharacterPanel = characterPanel;
+        characterPanel = col.GetComponent<Animator>();
 
         if (!charSelected)
         {
@@ -79,6 +85,9 @@ public class ReticleScript : MonoBehaviour {
 
     void OnTriggerExit2D(Collider2D col)
     {
+        characterPanel.SetTrigger("deselect");
+        lastCharacterPanel.SetTrigger("deselect");
+
         if (currentChar == lastChar && !charSelected)
         {
             currentChar = 0;
@@ -92,6 +101,7 @@ public class ReticleScript : MonoBehaviour {
     //Character last examined or passed over
     void ExamineChar(string animName, int charType)
     {
+        characterPanel.SetTrigger("selected");
         selectedCharAnim.SetTrigger(animName);
         currentChar = charType;
     }
