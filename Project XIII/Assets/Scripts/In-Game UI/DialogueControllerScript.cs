@@ -56,7 +56,7 @@ public class DialogueControllerScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        LoadTextAsset(0);
+        //LoadTextAsset(0);
 	}
 	
 	// Update is called once per frame
