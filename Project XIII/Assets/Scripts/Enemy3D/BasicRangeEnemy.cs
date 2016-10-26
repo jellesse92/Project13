@@ -3,7 +3,6 @@ using System.Collections;
 
 public class BasicRangeEnemy : Enemy {
 
-    Animator anim;
 
     //Projectile Variables
     public Transform projectileList;                        //Transform containing list of available bullets
@@ -16,9 +15,7 @@ public class BasicRangeEnemy : Enemy {
     // Use this for initialization
     void Start()
     {
-        fullHealth = 100;
         health = 100;
-        anim = GetComponent<Animator>();
         fireReady = true;
         ammo = projectileList.childCount;
     }
@@ -26,7 +23,7 @@ public class BasicRangeEnemy : Enemy {
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (isVisible && inPursuit)
+        if (GetVisibleState() && GetPursuitState())
         {
             if (!inAttackRange)
             {

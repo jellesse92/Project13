@@ -10,8 +10,8 @@ public class EnrageZoneScript : MonoBehaviour {
         {
             foreach (Transform child in transform)
             {
-                child.gameObject.GetComponent<Enemy>().target = col.gameObject;
-                child.gameObject.GetComponent<Enemy>().inPursuit = true;
+                child.gameObject.GetComponent<Enemy>().SetTarget(col.gameObject);
+                child.gameObject.GetComponent<Enemy>().SetPursuitState(true);
             }
         }
     }

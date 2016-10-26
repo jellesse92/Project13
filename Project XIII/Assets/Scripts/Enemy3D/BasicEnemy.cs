@@ -3,18 +3,14 @@ using System.Collections;
 
 public class BasicEnemy : Enemy {
 
-    Animator anim;
-
 	// Use this for initialization
 	void Start () {
-        fullHealth = 100;
         health = 100;
-        anim = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        if (isVisible && inPursuit)
+        if (GetVisibleState() && GetPursuitState())
         {
             if (!inAttackRange)
             {

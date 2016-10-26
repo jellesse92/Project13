@@ -7,7 +7,8 @@ public class PlayerMage : MonoBehaviour {
     private Animator myAnimator;
 
     private bool facingRight;
-    private bool attack;
+    private bool quickAttack;
+    private bool heavyAttack;
     private bool isGrounded;
     private bool isJumping = false;
     private bool jumpPressed = false;
@@ -38,13 +39,13 @@ public class PlayerMage : MonoBehaviour {
 	
 	void FixedUpdate ()
     {
-        //Debug.Log("no");
         float horizontal = Input.GetAxis("Horizontal");
 
         if(!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
             HandleMovement(horizontal);
-            Flip(horizontal);
+            if(!isJumping)
+                Flip(horizontal);
             HandleAttacks();
         }
         else
@@ -73,9 +74,22 @@ public class PlayerMage : MonoBehaviour {
     
     private void HandleAttacks()
     {
-        if (attack)
+        if (quickAttack || heavyAttack)
         {
-            myAnimator.SetTrigger("quickAttack");
+            if (quickAttack)
+            {
+                if (isJumping)
+                    myAnimator.SetTrigger("airQuickAttack");
+                else
+                    myAnimator.SetTrigger("quickAttack");
+            }
+            if (heavyAttack)
+            {
+                if (isJumping)
+                    myAnimator.SetTrigger("airHeavyAttack");
+                else
+                    myAnimator.SetTrigger("heavyAttack");
+            }
             myRigidbody.velocity = Vector2.zero;
         }
     }
@@ -88,7 +102,11 @@ public class PlayerMage : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
-            attack = true;
+            quickAttack = true;
+        }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            heavyAttack = true;
         }
 
     }
@@ -111,7 +129,8 @@ public class PlayerMage : MonoBehaviour {
 
     private void ResetValues()
     {
-        attack = false;
+        quickAttack = false;
+        heavyAttack = false;
         jumpPressed = false;
     }
 

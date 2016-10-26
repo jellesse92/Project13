@@ -33,8 +33,9 @@ public class PlayerSelectScript : MonoBehaviour {
     void WatchForPlayerInput()
     {
         WatchForPlayer1Input();
-        WatchForXButton();
         WatchForCircleButton();
+        WatchForXButton();
+
 
     }
 
@@ -52,6 +53,7 @@ public class PlayerSelectScript : MonoBehaviour {
     //Execute functions based on "x" button input
     void ExecuteXFuncs(int index )
     {
+        Debug.Log("Who: " + index);
         CheckJoinPlayer(index);
         CheckSelectCharacter(index);
     }
@@ -87,8 +89,9 @@ public class PlayerSelectScript : MonoBehaviour {
     //Check if player should join
     void CheckJoinPlayer(int index)
     {
-        if (!selectReticles[index].activeSelf && selected[index] == -1)
+        if (!selectReticles[index].activeSelf && selected[index] <= 0)
         {
+            Debug.Log("rejoin?");
             selectReticles[index].SetActive(true);
             players++;
             selected[index] = 0;
@@ -131,6 +134,8 @@ public class PlayerSelectScript : MonoBehaviour {
         selectReticles[index].GetComponent<ReticleScript>().Leave();
         selected[index] = -1;
         players--;
+        Debug.Log("quit?");
+        Debug.Log(selected[index]);
         //Play Leave sound?
     }
 

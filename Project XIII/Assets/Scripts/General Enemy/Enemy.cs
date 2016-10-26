@@ -5,27 +5,33 @@ using System.Collections.Generic;
 //Class to be inherited by all enemy scripts
 public class Enemy : MonoBehaviour {
 
-    //In-Game information
-    public int fullHealth;                              //Full health to reset to                      
-    public int health;                                  //Enemy health
+    //Animator
+    protected Animator anim;
 
-    //Buffable elements
+    //In-Game information                 
+    public int health;                                  //Enemy health
     public float speed;                                 //Speed of enemy
     public int attackPower;                             //Base attack power of enemy
+    public bool stunnable;                              //Able to be stunned
+    public float stunEffectiveness;                     //Effectiveness of stun
+
+    protected bool stunned;                             //Determines if enemy is stunned
+    float currentStunMultiplier;                        //Current stun time multiplier to be applied
 
     //Detection and Pursuit Variables
-    public bool isVisible;                              //Determine if enemy is visible on screen
-    public bool inPursuit;                              //Determine if enemy is in pursuit of player character
-    public GameObject target;                           //Target to chase
+    protected bool isVisible;                           //Determine if enemy is visible on screen
+    protected bool inPursuit;                           //Determine if enemy is in pursuit of player character
+    protected GameObject target;                        //Target to chase
 
     //Attack Variables
-    public bool inAttackRange;                          //Detects if in range to begin attacking
+    protected bool inAttackRange;                                 //Detects if in range to begin attacking
 
     // Use this for initialization
     void Awake()
     {
         Reset();
         isVisible = true;
+        anim = GetComponent<Animator>();
     }
 
     // Call when enemy becomes visible on screen
@@ -54,7 +60,7 @@ public class Enemy : MonoBehaviour {
     {
         if (col.gameObject.tag == "Player")
         {
-            col.gameObject.GetComponent<PlayerCharacter>().TakeDamage(attackPower);
+            //col.gameObject.GetComponent<PlayerCharacter>().TakeDamage(attackPower);
         }
     }
 
@@ -63,7 +69,7 @@ public class Enemy : MonoBehaviour {
     {
         if(col.gameObject.tag == "Player")
         {
-            col.gameObject.GetComponent<PlayerCharacter>().TakeDamage(attackPower);
+            //col.gameObject.GetComponent<PlayerCharacter>().TakeDamage(attackPower);
         }
     }
 
@@ -77,8 +83,62 @@ public class Enemy : MonoBehaviour {
     }
 
     //Damage script to be applied when enemy takes damage
-    public void Damage(int damage)
+    public void Damage(int damage, int knockBack = 0, float stunMultiplier = 0f)
     {
         health -= damage;
+        if (stunnable && stunMultiplier > 0)
+        {
+            currentStunMultiplier = stunMultiplier;
+            StopCoroutine(ApplyStun());
+            StartCoroutine(ApplyStun());
+        }
     }
+
+    IEnumerator ApplyStun()
+    {
+        anim.SetTrigger("stun");
+        stunned = true;
+        yield return new WaitForSeconds(currentStunMultiplier * stunEffectiveness);
+        anim.SetTrigger("stunRecovery");
+        stunned = false;
+    }
+
+    //Gets if enemy is visible or not
+    public bool GetVisibleState()
+    {
+        return isVisible;
+    }
+
+    //Get the info whether enemy is in pursuit or not
+    public bool GetPursuitState()
+    {
+        return inPursuit;
+    }
+
+    //Sets whether or not enemy is in pursuit
+    public void SetPursuitState(bool state)
+    {
+        inPursuit = state;
+    }
+
+    //Gets the character currently targeted
+    public GameObject GetTarget()
+    {
+        return target;
+    }
+    
+    //Sets the target player
+    public void SetTarget(GameObject tar)
+    {
+        target = tar;
+    }
+    
+
+    //Sets if enemy is in attack range
+    public void SetAttackInRange(bool b)
+    {
+        inAttackRange = b;
+    }
+
+
 }
