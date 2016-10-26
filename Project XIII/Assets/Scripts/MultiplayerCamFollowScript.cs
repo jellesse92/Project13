@@ -19,14 +19,11 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        if (!GetComponent<CamShakeScript>().GetIsShaking())
-        {
-            int activePlayers = ActivePlayerCount();
-            if (activePlayers == 1)
-                SinglePlayerCamera();
-            if (activePlayers > 1)
-                MultiplayerCamera();
-        }
+        int activePlayers = ActivePlayerCount();
+        if (activePlayers == 1)
+            SinglePlayerCamera();
+        if (activePlayers > 1)
+            MultiplayerCamera();
 	}
 
     void SinglePlayerCamera()
