@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class AnimationEventSound : MonoBehaviour {
     private AudioSource myAudio;
     
