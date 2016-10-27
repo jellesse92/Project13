@@ -152,7 +152,7 @@ public class Player : MonoBehaviour {
             if (sidePerspective && Input.GetKeyDown(Jump) && !isJumping)
             {
                 isJumping = true;
-                GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
+                GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 15), ForceMode2D.Impulse);
                 if (dir != 0)
                     anim.SetTrigger("jumpForward");
                 else
@@ -186,7 +186,7 @@ public class Player : MonoBehaviour {
         if (!Input.GetKeyDown(KeyCode.D))
         {
             character.TakeDamage(dmg);
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(knockBackForce, 0), ForceMode2D.Impulse);
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(knockBackForce*2, 0), ForceMode2D.Impulse);
             if (character.GetCurrentHealth() <= 0)
             {
                 //Animate Death
