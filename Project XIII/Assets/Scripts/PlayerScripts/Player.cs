@@ -4,7 +4,7 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
     const int BASE_TOP_SPEED = 2;                               //Base speed for top down perspective
-    const int BASE_SIDE_SPEED = 4;                              //Base speed for side-scroll perspective
+    const int BASE_SIDE_SPEED = 8;                              //Base speed for side-scroll perspective
 
     Animator anim;
     bool isFacingRight;
@@ -99,8 +99,7 @@ public class Player : MonoBehaviour {
     {
         if (PlayerNumber != -1 || true) //or true for testing purposes.
         {
-            if (!sidePerspective)
-                AnimateTopDown(0, 0);
+
 
             int dir = 0;
             if (character == null)
@@ -128,9 +127,14 @@ public class Player : MonoBehaviour {
 
                 var move = new Vector3(dir, 0, 0);
                 direction = dir == -1 ? 'L' : 'R';
-                //anim.SetInteger("x", dir);
+
                 if (sidePerspective)
+                {
                     transform.position += move * BASE_SIDE_SPEED * Time.deltaTime;
+                    if(!isJumping)
+                        AnimateSideScroll(1f);
+                }
+
                 else
                 {
                     transform.position += move * BASE_TOP_SPEED * Time.deltaTime;
@@ -140,18 +144,26 @@ public class Player : MonoBehaviour {
             }
             if (dir == 0)
             {
-                //anim.SetInteger("idle", dir);
+                if (!sidePerspective)
+                    AnimateTopDown(0, 0);
+                else
+                    AnimateSideScroll(0f);
             }
             if (sidePerspective && Input.GetKeyDown(Jump) && !isJumping)
             {
                 isJumping = true;
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
+                if (dir != 0)
+                    anim.SetTrigger("jumpForward");
+                else
+                    anim.SetTrigger("jumpIdle");
             }
             if (Input.GetKeyDown(KeyCode.A))
             {
                 //AnimateAttack
                 AttackPower = character.Attack2D(0, direction);
                 isAttacking = AttackPower < 0 ? false : true;
+                anim.SetTrigger("quickAttack");
             }
             if (Input.GetKeyDown(KeyCode.S))
             {
@@ -190,6 +202,8 @@ public class Player : MonoBehaviour {
         if(col.collider.tag == "Ground")
         {
             isJumping = false;
+            anim.SetTrigger("landing");
+            Debug.Log("landed?");
         }
         if(isAttacking && col.collider.tag == "Enemy")
         {
@@ -198,10 +212,16 @@ public class Player : MonoBehaviour {
         }
     }
 
+
     void AnimateTopDown(int x, int y)
     {
         anim.SetInteger("velocityX", x);
         anim.SetInteger("velocityY", y);
+    }
+
+    void AnimateSideScroll(float x)
+    {
+        anim.SetFloat("speed", x);
     }
 
     //Flips character to match direction of movement
