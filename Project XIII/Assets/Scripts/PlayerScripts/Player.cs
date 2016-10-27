@@ -33,9 +33,7 @@ public class Player : MonoBehaviour {
 	{
         anim = GetComponent<Animator>();
         isFacingRight = true;
-        sidePerspective = false;
         SetPlayerNumber(0);
-        AnimateTopDown(0, 0);
 	}
 
     public void SetPlayerNumber(int num)

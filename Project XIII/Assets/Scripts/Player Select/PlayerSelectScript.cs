@@ -156,5 +156,12 @@ public class PlayerSelectScript : MonoBehaviour {
     void PlayerSelectComplete()
     {
         Debug.Log("All players ready! Transition to next scene!");
+
+        Invoke("LoadNextScene", 5f);
+    }
+
+    void LoadNextScene()
+    {
+        Application.LoadLevel(2);
     }
 }
