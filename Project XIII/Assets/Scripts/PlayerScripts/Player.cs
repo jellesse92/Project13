@@ -2,6 +2,14 @@
 using System.Collections;
 
 public class Player : MonoBehaviour {
+
+    const int BASE_TOP_SPEED = 2;                               //Base speed for top down perspective
+    const int BASE_SIDE_SPEED = 4;                              //Base speed for side-scroll perspective
+
+    Animator anim;
+    bool isFacingRight;
+
+
     public Transform projectiles;
     public int PlayerNumber = -1;
 	public bool sidePerspective;
@@ -15,7 +23,7 @@ public class Player : MonoBehaviour {
     public KeyCode Attack2;
     public KeyCode Block;
     public PlayerCharacter character = null;
-    Animator anim;
+
     private bool isAttacking;
     int AttackPower;
     int AttackSpeed;
@@ -23,8 +31,11 @@ public class Player : MonoBehaviour {
 
     void Start()
 	{
-        sidePerspective = true;
-        SetPlayerNumber(-1);
+        anim = GetComponent<Animator>();
+        isFacingRight = true;
+        sidePerspective = false;
+        SetPlayerNumber(0);
+        AnimateTopDown(0, 0);
 	}
 
     public void SetPlayerNumber(int num)
@@ -79,12 +90,20 @@ public class Player : MonoBehaviour {
 	}
 	void swapPerspective()
 	{
-		sidePerspective = false;
+		sidePerspective = !sidePerspective;
+
+        if (sidePerspective)
+            isFacingRight = true;
+        else
+            isFacingRight = false;
 	}
     void Update()
     {
         if (PlayerNumber != -1 || true) //or true for testing purposes.
         {
+            if (!sidePerspective)
+                AnimateTopDown(0, 0);
+
             int dir = 0;
             if (character == null)
             {
@@ -94,22 +113,38 @@ public class Player : MonoBehaviour {
             {
                 dir = Input.GetKey(Up) ? 1 : -1;
                 var move = new Vector3(0, dir, 0);
-                transform.position += move * 2 * Time.deltaTime;
+                transform.position += move * BASE_TOP_SPEED * Time.deltaTime;
+
+
+                Debug.Log("Dir:" + dir);
+                AnimateTopDown(0, dir);
+
             }
             else if (Input.GetKey(Left) || Input.GetKey(Right))
             {
 
                 dir = Input.GetKey(Left) ? -1 : 1;
+
+                if ((dir == 1 && !isFacingRight) || (dir == -1 && isFacingRight))
+                    Flip();
+
                 var move = new Vector3(dir, 0, 0);
                 direction = dir == -1 ? 'L' : 'R';
-                anim.SetInteger("x", dir);
-                transform.position += move * 4 * Time.deltaTime;
+                //anim.SetInteger("x", dir);
+                if (sidePerspective)
+                    transform.position += move * BASE_SIDE_SPEED * Time.deltaTime;
+                else
+                {
+                    transform.position += move * BASE_TOP_SPEED * Time.deltaTime;
+                    AnimateTopDown(1, 0);
+                }
+
             }
             if (dir == 0)
             {
-                anim.SetInteger("idle", dir);
+                //anim.SetInteger("idle", dir);
             }
-            if (Input.GetKeyDown(Jump) && !isJumping)
+            if (sidePerspective && Input.GetKeyDown(Jump) && !isJumping)
             {
                 isJumping = true;
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 5), ForceMode2D.Impulse);
@@ -163,5 +198,22 @@ public class Player : MonoBehaviour {
             col.gameObject.GetComponent<Enemy>().Damage(AttackPower);
             isAttacking = false;
         }
+    }
+
+    void AnimateTopDown(int x, int y)
+    {
+        anim.SetInteger("velocityX", x);
+        anim.SetInteger("velocityY", y);
+    }
+
+    //Flips character to match direction of movement
+    void Flip()
+    {
+        isFacingRight = !isFacingRight;
+
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+
+        transform.localScale = scale;
     }
 }
