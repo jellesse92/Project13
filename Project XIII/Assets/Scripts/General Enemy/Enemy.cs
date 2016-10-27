@@ -15,6 +15,7 @@ public class Enemy : MonoBehaviour {
     public bool stunnable;                              //Able to be stunned
     public float stunEffectiveness;                     //Effectiveness of stun
 
+    protected bool dead;                                //Determines if enemy is dead
     protected bool stunned;                             //Determines if enemy is stunned
     float currentStunMultiplier;                        //Current stun time multiplier to be applied
 
@@ -85,13 +86,28 @@ public class Enemy : MonoBehaviour {
     //Damage script to be applied when enemy takes damage
     public void Damage(int damage, int knockBack = 0, float stunMultiplier = 0f)
     {
+        if (dead)
+            return;
         health -= damage;
-        if (stunnable && stunMultiplier > 0)
+        if(health <= 0)
+        {
+            PlayDeath();
+
+        }
+        else if (stunnable && stunMultiplier > 0)
         {
             currentStunMultiplier = stunMultiplier;
             StopCoroutine(ApplyStun());
             StartCoroutine(ApplyStun());
         }
+    }
+
+    void PlayDeath()
+    {
+        StopCoroutine("ApplyStun");
+        anim.SetTrigger("death");
+        dead = true;
+        gameObject.layer = 14;
     }
 
     IEnumerator ApplyStun()

@@ -60,7 +60,12 @@ public class CowBoyClass : PlayerCharacter{
             {
                 child.gameObject.SetActive(true);
                 child.gameObject.GetComponent<PlayerProjectile>().SetDamageAmount(AttackPower);
-                child.position = transform.position;
+
+                Vector3 gunPoint = transform.position;
+                gunPoint.x += 1f;
+                gunPoint.y += .7f;
+
+                child.position = gunPoint;
                 child.GetComponent<Rigidbody2D>().velocity = velocity * bulletSpeed;
                 return;
             }
@@ -76,6 +81,7 @@ public class CowBoyClass : PlayerCharacter{
            
             if (!child.gameObject.activeSelf)
             {
+                GetComponent<Animator>().SetTrigger("heavyAttack");
                 GetComponent<Player>().TakeDamage(0, dir == 'R' ? -3 : 3);
                 PlayerProjectile bullet = child.gameObject.GetComponent<PlayerProjectile>();
                 bullet.gameObject.transform.position = gameObject.transform.position;

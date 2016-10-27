@@ -21,28 +21,32 @@ public class BasicEnemy2D : Enemy {
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (GetVisibleState() && GetPursuitState() && !stunned)
+        if (!dead)
         {
-            if (!isAttacking && !inAttackRange)
-                Approach();
-            else if(!isAttacking && attEnded)
+            if (GetVisibleState() && GetPursuitState() && !stunned)
             {
-                anim.SetInteger("x", 0);
-                anim.SetTrigger("projectAttack");
-                isAttacking = true;
+                if (!isAttacking && !inAttackRange)
+                    Approach();
+                else if (!isAttacking && attEnded)
+                {
+                    anim.SetInteger("x", 0);
+                    anim.SetTrigger("projectAttack");
+                    isAttacking = true;
 
-                if (attProjectionTime == 0f)
-                    ExecuteAttack();
-                else
-                    Invoke("ExecuteAttack", attProjectionTime);
+                    if (attProjectionTime == 0f)
+                        ExecuteAttack();
+                    else
+                        Invoke("ExecuteAttack", attProjectionTime);
+                }
+                else if (!attEnded)
+                {
+                    CheckAttackEnd();
+                }
             }
-            else if(!attEnded)
-            {
-                CheckAttackEnd();
-            }
+            else if (!stunned)
+                anim.SetInteger("x", 0);
         }
-        else if(!stunned)
-            anim.SetInteger("x", 0);
+
 
     }
 
