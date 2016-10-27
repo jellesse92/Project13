@@ -12,10 +12,13 @@ public class PlayerSelectScript : MonoBehaviour {
     int charactersSelected = 0;                     //Determines number of characters selected to check if all players are ready
     int[] selected = new int[4];                    //Determines if player has selected a character
     bool[] charAvailable = new bool[4];             //Determines if character is available for selection
+    public AudioClip buttonSelected;
 
+    AudioSource myAudio;
 
     void Start()
     {
+        myAudio = GetComponent<AudioSource>();
         Cursor.visible = false;
         for (int i = 0; i < 4; i++)
         {
@@ -116,7 +119,8 @@ public class PlayerSelectScript : MonoBehaviour {
                 selected[index] = character;
                 charactersSelected++;
                 //Play player accept sound and/or animation
-
+                myAudio.clip = buttonSelected;
+                myAudio.Play();
                 if (charactersSelected == players)
                     PlayerSelectComplete();
             }

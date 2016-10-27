@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ReticleScript : MonoBehaviour {
+public class ReticleScript : MonoBehaviour
+{
 
     const float RETICLE_SPEED = 1f;        //Speed reticle set to move at
 
@@ -22,6 +23,9 @@ public class ReticleScript : MonoBehaviour {
     //For exiting animation after leaving all character selections with reticle
     int lastChar;
 
+    public AudioClip buttonHighlight;
+
+    AudioSource myAudio;
     Camera cam;
 
     Animator characterPanel;
@@ -29,6 +33,7 @@ public class ReticleScript : MonoBehaviour {
 
     void Start()
     {
+        myAudio = GetComponent<AudioSource>();
         xInputAxis = player.ToString() + "_LeftJoyStickX";
         yInputAxis = player.ToString() + "_LeftJoyStickY";
         moveDir = new Vector3();
@@ -48,7 +53,7 @@ public class ReticleScript : MonoBehaviour {
             WatchForMouseInput();
 
         //For poor calibration issues with controllers set to 0f
-        float x = (Mathf.Abs(Input.GetAxis(xInputAxis)) > 0.05) ? Input.GetAxis(xInputAxis) : 0f; 
+        float x = (Mathf.Abs(Input.GetAxis(xInputAxis)) > 0.05) ? Input.GetAxis(xInputAxis) : 0f;
         float y = (Mathf.Abs(Input.GetAxis(yInputAxis)) > 0.05) ? Input.GetAxis(yInputAxis) : 0f;
 
         moveDir = new Vector3(x * RETICLE_SPEED, y * RETICLE_SPEED, 0f);
@@ -65,6 +70,9 @@ public class ReticleScript : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        myAudio.clip = buttonHighlight;
+        myAudio.Play();
+
         if (characterPanel != null)
             lastCharacterPanel = characterPanel;
         characterPanel = col.GetComponent<Animator>();
@@ -98,7 +106,7 @@ public class ReticleScript : MonoBehaviour {
             lastChar = currentChar;
     }
 
-
+    
     //Character last examined or passed over
     void ExamineChar(string animName, int charType)
     {
@@ -116,6 +124,7 @@ public class ReticleScript : MonoBehaviour {
     //Set character as selected and disable animation switching of selected character panel
     public void CharacterSelected()
     {
+
         selectedCharAnim.SetTrigger("selected");
         charSelected = true;
         gameObject.SetActive(false);
@@ -145,7 +154,7 @@ public class ReticleScript : MonoBehaviour {
     //Watch for mouse movement and input if player 1
     void WatchForMouseInput()
     {
-        
+
         if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
         {
             Vector3 currentPos = transform.position;
