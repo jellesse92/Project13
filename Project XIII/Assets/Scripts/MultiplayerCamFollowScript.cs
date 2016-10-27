@@ -6,11 +6,14 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
 
     const float DEFAULT_ORTHO_SIZE = 7f;
+    const float DEFAULT_ORTHO_SIZE_3D = 1.5f;
 
     float zoomMultiplier = 1.5f;
     float followDelay = .8f;
 
     GameObject[] players;
+
+    public bool in2DMode = true;
 
 	// Use this for initialization
 	void Start () {
@@ -18,7 +21,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void LateUpdate () {
         int activePlayers = ActivePlayerCount();
         if (activePlayers == 1)
             SinglePlayerCamera();
@@ -29,9 +32,13 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     void SinglePlayerCamera()
     {
         Transform singlePlayerTrans = transform;
-        GetComponent<Camera>().orthographicSize = DEFAULT_ORTHO_SIZE;
+        
+        if(in2DMode)
+            GetComponent<Camera>().orthographicSize = DEFAULT_ORTHO_SIZE;
+        else
+            GetComponent<Camera>().orthographicSize = DEFAULT_ORTHO_SIZE_3D;
 
-        foreach(GameObject player in players)
+        foreach (GameObject player in players)
         {
             if (player.activeSelf)
             {
