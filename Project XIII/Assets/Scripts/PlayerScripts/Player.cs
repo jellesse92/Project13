@@ -203,7 +203,6 @@ public class Player : MonoBehaviour {
         {
             isJumping = false;
             anim.SetTrigger("landing");
-            Debug.Log("landed?");
         }
         if(isAttacking && col.collider.tag == "Enemy")
         {

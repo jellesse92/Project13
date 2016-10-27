@@ -4,6 +4,7 @@ using System.Collections;
 public class InGameUIScript : MonoBehaviour {
 
     public GameObject pausePanel;               //Panel made to appear on pause
+    public GameObject playerStatusPanel;        //Player status panel made to appear on combat
 
 
 
@@ -45,5 +46,10 @@ public class InGameUIScript : MonoBehaviour {
                 Time.timeScale = 1.0f;
             }
         } 
+    }
+
+    public void ActivateCombatUI()
+    {
+        playerStatusPanel.SetActive(true);
     }
 }
