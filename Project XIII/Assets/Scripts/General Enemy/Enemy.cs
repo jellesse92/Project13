@@ -33,6 +33,7 @@ public class Enemy : MonoBehaviour {
         Reset();
         isVisible = true;
         anim = GetComponent<Animator>();
+
     }
 
     // Call when enemy becomes visible on screen
