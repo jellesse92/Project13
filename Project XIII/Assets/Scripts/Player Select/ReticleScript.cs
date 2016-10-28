@@ -11,7 +11,7 @@ public class ReticleScript : MonoBehaviour
     public GameObject selectedCharPanel;    //Panel for selected characters
     Animator selectedCharAnim;              //Selected Character Animation
 
-    public int player;                      //Player to control reticle
+    public int joystick;                    //Joystick to control reticle
     Vector3 moveDir;                        //Direction to move
 
     string xInputAxis;                      //X-axis input name for player
@@ -34,8 +34,7 @@ public class ReticleScript : MonoBehaviour
     void Start()
     {
         myAudio = GetComponent<AudioSource>();
-        xInputAxis = player.ToString() + "_LeftJoyStickX";
-        yInputAxis = player.ToString() + "_LeftJoyStickY";
+
         moveDir = new Vector3();
         selectedCharAnim = selectedCharPanel.GetComponent<Animator>();
         currentChar = 0;
@@ -49,16 +48,21 @@ public class ReticleScript : MonoBehaviour
 
     void Update()
     {
-        if (player == 1)
+        if (joystick == 0)
             WatchForMouseInput();
+        else
+        {
+            //For poor calibration issues with controllers set to 0f
+            float x = (Mathf.Abs(Input.GetAxis(xInputAxis)) > 0.05) ? Input.GetAxis(xInputAxis) : 0f;
+            float y = (Mathf.Abs(Input.GetAxis(yInputAxis)) > 0.05) ? Input.GetAxis(yInputAxis) : 0f;
 
-        //For poor calibration issues with controllers set to 0f
-        float x = (Mathf.Abs(Input.GetAxis(xInputAxis)) > 0.05) ? Input.GetAxis(xInputAxis) : 0f;
-        float y = (Mathf.Abs(Input.GetAxis(yInputAxis)) > 0.05) ? Input.GetAxis(yInputAxis) : 0f;
+            moveDir = new Vector3(x * RETICLE_SPEED, y * RETICLE_SPEED, 0f);
 
-        moveDir = new Vector3(x * RETICLE_SPEED, y * RETICLE_SPEED, 0f);
+            transform.position = transform.position + moveDir;
+        }
 
-        transform.position = transform.position + moveDir;
+
+
 
 
     }
@@ -166,7 +170,17 @@ public class ReticleScript : MonoBehaviour
 
     }
 
+    //Joystick which the reticle should be taking input from
+    public void SetJoystick(int num)
+    {
+        joystick = num;
 
+        if(num != 0)
+        {
+            xInputAxis = num.ToString() + "_LeftJoyStickX";
+            yInputAxis = num.ToString() + "_LeftJoyStickY";
+        }
+    }
 
 
 }
