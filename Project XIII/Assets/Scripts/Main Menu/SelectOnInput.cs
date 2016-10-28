@@ -21,6 +21,7 @@ public class SelectOnInput : MonoBehaviour
     {
         if (Input.GetAxisRaw("Vertical") != 0 && buttonSelected == false)
         {
+            Debug.Log("move!");
             eventSystem.SetSelectedGameObject(selectedObject);
             buttonSelected = true;
         }

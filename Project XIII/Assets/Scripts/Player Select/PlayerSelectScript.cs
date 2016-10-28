@@ -56,7 +56,6 @@ public class PlayerSelectScript : MonoBehaviour {
     //Execute functions based on "x" button input
     void ExecuteXFuncs(int index )
     {
-        Debug.Log("Who: " + index);
         CheckJoinPlayer(index);
         CheckSelectCharacter(index);
     }
@@ -94,7 +93,6 @@ public class PlayerSelectScript : MonoBehaviour {
     {
         if (!selectReticles[index].activeSelf && selected[index] <= 0)
         {
-            Debug.Log("rejoin?");
             selectReticles[index].SetActive(true);
             players++;
             selected[index] = 0;
@@ -138,8 +136,6 @@ public class PlayerSelectScript : MonoBehaviour {
         selectReticles[index].GetComponent<ReticleScript>().Leave();
         selected[index] = -1;
         players--;
-        Debug.Log("quit?");
-        Debug.Log(selected[index]);
         //Play Leave sound?
     }
 
@@ -159,8 +155,6 @@ public class PlayerSelectScript : MonoBehaviour {
     //Function to play when all joined players have selected a character
     void PlayerSelectComplete()
     {
-        Debug.Log("All players ready! Transition to next scene!");
-
         Invoke("LoadNextScene", 5f);
     }
 
