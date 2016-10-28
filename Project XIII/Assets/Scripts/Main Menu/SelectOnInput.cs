@@ -24,6 +24,7 @@ public class SelectOnInput : MonoBehaviour
             Debug.Log("move!");
             eventSystem.SetSelectedGameObject(selectedObject);
             buttonSelected = true;
+
         }
     }
 

@@ -14,6 +14,7 @@ public class MenuControllerScript : MonoBehaviour {
     int currentIndex;                               //Current index of child being viewed
 
     bool waitForSelect = false;                     //Wait for time to select
+    bool newPanel = true;                           //Determines if on new panel
 
     void Start()
     {
@@ -52,7 +53,7 @@ public class MenuControllerScript : MonoBehaviour {
             {
                 OpenAnim(MainMenuPanel);
                 CloseAnim(PressAnyButton);
-                currentPanel = MainMenuPanel;
+                SetCurrentPanel(MainMenuPanel);
             }
         }
 
@@ -71,15 +72,25 @@ public class MenuControllerScript : MonoBehaviour {
         if (currentPanel.name == "Setting Panel")
             minIndex = 1;
         else if (currentPanel.name == "Help Panel")
-            minIndex = 2;
+        {
+            currentIndex = 2;
+            SelectIndex();
+            return;
+        }
 
-        currentIndex += dir;
 
-        if (currentIndex <= minIndex)
+        if (newPanel)
+        {
+            currentIndex = minIndex;
+            newPanel = !newPanel;
+        }
+        else
+            currentIndex += dir;
+
+        if (currentIndex < minIndex)
             currentIndex = currentPanel.transform.childCount - 1;
         if (currentIndex >= currentPanel.transform.childCount)
             currentIndex = minIndex;
-
 
         if(currentIndex > -1)
             SelectIndex();
@@ -91,6 +102,7 @@ public class MenuControllerScript : MonoBehaviour {
     void SelectIndex()
     {
         currentPanel.transform.GetChild(currentIndex).GetComponent<Button>().Select();
+        Debug.Log("Current Index" + currentIndex);
     }
 
     IEnumerator WaitTime()
@@ -104,6 +116,7 @@ public class MenuControllerScript : MonoBehaviour {
     {
         currentPanel = panel;
         currentIndex = 0;
+        newPanel = true;
     }
 
 
