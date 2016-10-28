@@ -9,7 +9,6 @@ public class PlayerMage : MonoBehaviour {
     private bool facingRight;
     private bool quickAttack;
     private bool heavyAttack;
-    private bool isGrounded;
     private bool isJumping = false;
     private bool jumpPressed = false;
    
@@ -49,7 +48,7 @@ public class PlayerMage : MonoBehaviour {
             HandleAttacks();
         }
         else
-            myRigidbody.velocity = Vector2.zero;
+            myRigidbody.velocity = new Vector2(0, -0.01f);
 
         ResetValues();
 
@@ -69,7 +68,6 @@ public class PlayerMage : MonoBehaviour {
 
         myRigidbody.velocity = new Vector2(horizontal * movementSpeed ,myRigidbody.velocity.y);
         myAnimator.SetFloat("speed",Mathf.Abs(horizontal));
-        
     }
     
     private void HandleAttacks()
@@ -90,7 +88,7 @@ public class PlayerMage : MonoBehaviour {
                 else
                     myAnimator.SetTrigger("heavyAttack");
             }
-            myRigidbody.velocity = Vector2.zero;
+            
         }
     }
 
@@ -114,15 +112,14 @@ public class PlayerMage : MonoBehaviour {
     {
         if (horizontal > 0 && !facingRight || horizontal < 0 && facingRight)
         {
-
+            myAnimator.SetTrigger("switch");
             facingRight = !facingRight;
 
             Vector3 scale = transform.localScale;
             scale.x *= -1;
 
             transform.localScale = scale;
-            if (isGrounded)
-                myRigidbody.velocity = Vector2.zero;
+           
 
         }
     }
@@ -132,15 +129,18 @@ public class PlayerMage : MonoBehaviour {
         quickAttack = false;
         heavyAttack = false;
         jumpPressed = false;
+        if(myRigidbody.velocity.y == 0)
+            isJumping = false;
+        else
+            isJumping = true;
+        if (!isJumping)
+        {
+            myAnimator.SetTrigger("landing");
+            myAnimator.SetBool("land", true);
+        }
+        else
+            myAnimator.SetBool("land", false);
     }
 
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.collider.tag == "Ground")
-        {
-            Debug.Log("collison enter");
-            myAnimator.SetTrigger("landing");
-            isJumping = false;
-        }
-    }
+
 }
