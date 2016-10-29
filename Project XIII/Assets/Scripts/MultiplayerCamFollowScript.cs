@@ -34,11 +34,8 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     void SinglePlayerCamera()
     {
         Transform singlePlayerTrans = transform;
-        
-        if(in2DMode)
-            cam.orthographicSize = DEFAULT_ORTHO_SIZE;
-        else
-            cam.orthographicSize = DEFAULT_ORTHO_SIZE_3D;
+
+        SetOrthographicSize(0);
 
         foreach (GameObject player in players)
         {
@@ -69,19 +66,25 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
         {
             float distance = GetDistance();
 
-            Vector3 cameraDestination = midpoint - transform.forward * distance * zoomMultiplier;
+            Vector3 cameraDestination;
 
-            if (in2DMode)
-                cam.orthographicSize = Mathf.Max(distance, DEFAULT_ORTHO_SIZE);
-            else
-                cam.orthographicSize = Mathf.Max(distance, DEFAULT_ORTHO_SIZE_3D);
-
-
+            cameraDestination = midpoint - transform.forward * distance * zoomMultiplier;
+            SetOrthographicSize(distance);
+            
             transform.position = Vector3.Slerp(transform.position, cameraDestination, followDelay);
 
             if ((cameraDestination - transform.position).magnitude <= 0.05f)
                 transform.position = cameraDestination;
         }
+    }
+
+    //Sets orthographic size of camera based on given parameter f
+    void SetOrthographicSize(float f)
+    {
+        if (in2DMode)
+            cam.orthographicSize = Mathf.Max(f, DEFAULT_ORTHO_SIZE);
+        else
+            cam.orthographicSize = Mathf.Max(f, DEFAULT_ORTHO_SIZE_3D);
     }
 
     //Get midpoint position between all players
