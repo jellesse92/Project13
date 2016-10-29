@@ -58,7 +58,7 @@ public class SquishBlockScript : MonoBehaviour {
         if (block.position.x == destination.position.x && block.position.y == destination.position.y)
         {
             moving = false;
-            cam.GetComponent<CamShakeScript>().StartShake(.01f);
+            cam.GetComponent<CamShakeScript>().StartShake(.1f);
             StartCoroutine("DelayReturn");
         }
     }
