@@ -65,6 +65,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
         if (midpoint != new Vector3())
         {
             float distance = GetDistance();
+            distance = Mathf.Max(1f, distance);
 
             Vector3 cameraDestination;
 
@@ -142,6 +143,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
             }
         }
+
         return (pointArray[1] - pointArray[0]).magnitude;
 
     }
