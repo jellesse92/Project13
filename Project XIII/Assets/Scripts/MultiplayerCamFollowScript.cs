@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class MultiplayerCamFollowScript : MonoBehaviour {
 
-
     const float DEFAULT_ORTHO_SIZE = 7f;
     const float DEFAULT_ORTHO_SIZE_3D = 1.5f;
 
@@ -14,6 +13,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     GameObject[] players;
 
     public bool in2DMode = true;
+    public float lowestPointY = 0f;                             //Lowest point of the map the camera should be able to show
     Camera cam;
 
 	// Use this for initialization
@@ -70,7 +70,12 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
             float distance = GetDistance();
 
             Vector3 cameraDestination = midpoint - transform.forward * distance * zoomMultiplier;
-            cam.orthographicSize = distance;
+
+            if (in2DMode)
+                cam.orthographicSize = Mathf.Max(distance, DEFAULT_ORTHO_SIZE);
+            else
+                cam.orthographicSize = Mathf.Max(distance, DEFAULT_ORTHO_SIZE_3D);
+
 
             transform.position = Vector3.Slerp(transform.position, cameraDestination, followDelay);
 
