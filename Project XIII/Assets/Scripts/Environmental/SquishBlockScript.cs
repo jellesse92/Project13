@@ -6,7 +6,7 @@ public class SquishBlockScript : MonoBehaviour {
     //Heirarchy objects
     public Transform destination;               //Destination location
     public Transform block;                     //Moving block
-    //GameObject camera;                   //Game camera
+    GameObject cam;                             //Game camera
 
     Vector3 origin;                             //Origin position of block to return to
 
@@ -21,7 +21,7 @@ public class SquishBlockScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        //camera = GameObject.FindGameObjectWithTag("MainCamera");
+        cam = GameObject.FindGameObjectWithTag("MainCamera");
         origin = block.position;
 	}
 
@@ -58,7 +58,7 @@ public class SquishBlockScript : MonoBehaviour {
         if (block.position.x == destination.position.x && block.position.y == destination.position.y)
         {
             moving = false;
-            //camera.GetComponent<CamShakeScript>().StartShake(.005f);
+            cam.GetComponent<CamShakeScript>().StartShake(.01f);
             StartCoroutine("DelayReturn");
         }
     }

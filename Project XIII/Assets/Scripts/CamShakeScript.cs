@@ -4,16 +4,8 @@ using System.Collections;
 public class CamShakeScript : MonoBehaviour {
     //Credit: http://newbquest.com/2014/06/the-art-of-screenshake-with-unity-2d-script/
 
-
-    Vector3 origin;
-
     float shakeAmount;
     bool isShaking = false;
-
-    void Start()
-    {
-        origin = transform.position;
-    }
 
     public void StartShake(float magnitude)
     {
@@ -40,7 +32,7 @@ public class CamShakeScript : MonoBehaviour {
     {
         CancelInvoke("CameraShake");
         isShaking = false;
-        transform.position = origin;
+        transform.position = transform.parent.position;
     }
 
     public bool GetIsShaking()

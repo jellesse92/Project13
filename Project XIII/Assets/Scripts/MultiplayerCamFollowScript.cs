@@ -14,10 +14,12 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     GameObject[] players;
 
     public bool in2DMode = true;
+    Camera cam;
 
 	// Use this for initialization
 	void Start () {
         players = GameObject.FindGameObjectsWithTag("Player");
+        cam = transform.GetChild(0).GetComponent<Camera>();
 	}
 	
 	// Update is called once per frame
@@ -34,9 +36,9 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
         Transform singlePlayerTrans = transform;
         
         if(in2DMode)
-            GetComponent<Camera>().orthographicSize = DEFAULT_ORTHO_SIZE;
+            cam.orthographicSize = DEFAULT_ORTHO_SIZE;
         else
-            GetComponent<Camera>().orthographicSize = DEFAULT_ORTHO_SIZE_3D;
+            cam.orthographicSize = DEFAULT_ORTHO_SIZE_3D;
 
         foreach (GameObject player in players)
         {
@@ -68,7 +70,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
             float distance = GetDistance();
 
             Vector3 cameraDestination = midpoint - transform.forward * distance * zoomMultiplier;
-            GetComponent<Camera>().orthographicSize = distance;
+            cam.orthographicSize = distance;
 
             transform.position = Vector3.Slerp(transform.position, cameraDestination, followDelay);
 
