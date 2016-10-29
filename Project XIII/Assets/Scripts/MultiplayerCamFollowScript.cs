@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 public class MultiplayerCamFollowScript : MonoBehaviour {
 
-    const float DEFAULT_ORTHO_SIZE = 7f;
+    const float DEFAULT_ORTHO_SIZE = 5f;
     const float DEFAULT_ORTHO_SIZE_3D = 1.5f;
 
-    float zoomMultiplier = 1.5f;
+    float zoomMultiplier = 1f;
     float followDelay = .8f;
 
     GameObject[] players;
@@ -48,7 +48,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
         Vector3 destination = new Vector3();
         destination.x = singlePlayerTrans.position.x;
-        destination.y = singlePlayerTrans.position.y;
+        destination.y = singlePlayerTrans.position.y + 2f;
         destination.z = transform.position.z;
 
         transform.position = Vector3.Slerp(transform.position, destination, followDelay);
@@ -70,7 +70,9 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
             cameraDestination = midpoint - transform.forward * distance * zoomMultiplier;
             SetOrthographicSize(distance);
-            
+
+            cameraDestination.y = Mathf.Max(lowestPointY + cam.orthographicSize-5, cameraDestination.y);
+                    
             transform.position = Vector3.Slerp(transform.position, cameraDestination, followDelay);
 
             if ((cameraDestination - transform.position).magnitude <= 0.05f)
