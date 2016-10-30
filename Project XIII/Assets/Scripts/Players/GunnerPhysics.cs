@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CowBoyClass : PlayerCharacter{
-
+public class GunnerPhysics : PlayerPhysics{
+    /*
     public Transform PrimaryBullets;
     public Transform SecondaryAtk;
     public float SecondaryCoolDown = 1.2f;
@@ -95,5 +95,5 @@ public class CowBoyClass : PlayerCharacter{
         }
         
     }
-
+    */
 }

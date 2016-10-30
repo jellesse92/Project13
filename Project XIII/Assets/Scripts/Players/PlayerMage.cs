@@ -106,8 +106,8 @@ public class PlayerMage : MonoBehaviour {
         {
             heavyAttack = true;
         }
-
     }
+
     private void Flip(float horizontal)
     {
         if (horizontal > 0 && !facingRight || horizontal < 0 && facingRight)

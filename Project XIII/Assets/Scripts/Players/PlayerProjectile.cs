@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class PlayerProjectile : MonoBehaviour {
-
+    /*
     private bool isPiercing = false;
     private bool isFriendlyFireOn = false;
     private bool isDamageFading = false;
@@ -93,5 +93,5 @@ public class PlayerProjectile : MonoBehaviour {
        
     }
 	
-
+    */
 }
