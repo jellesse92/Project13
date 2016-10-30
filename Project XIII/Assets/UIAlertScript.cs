@@ -12,7 +12,6 @@ public class UIAlertScript : MonoBehaviour {
 	
 	void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log("test");
         if (col.tag == "Enemy")
             iguScript.ActivateCombatUI();
     }

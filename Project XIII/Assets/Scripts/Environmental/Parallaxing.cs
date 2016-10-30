@@ -52,8 +52,7 @@ public class Parallaxing : MonoBehaviour {
 
     private void ScrollLeft()
     {
-        int lastRight = rightIndex;
-        layers[rightIndex].position = Vector3.right * (layers[leftIndex].position.x - backgroundSize);
+        layers[rightIndex].position = new Vector3 ((layers[leftIndex].position.x - backgroundSize), layers[leftIndex].position.y, layers[leftIndex].position.z);
         leftIndex = rightIndex;
         rightIndex--;
         if (rightIndex < 0)
@@ -62,8 +61,7 @@ public class Parallaxing : MonoBehaviour {
 
     private void ScrollRight()
     {
-        int lastLeft = leftIndex;
-        layers[leftIndex].position = Vector3.right * (layers[rightIndex].position.x + backgroundSize);
+        layers[leftIndex].position = new Vector3((layers[rightIndex].position.x + backgroundSize), layers[rightIndex].position.y, layers[rightIndex].position.z);
         rightIndex = leftIndex;
         leftIndex++;
         if (leftIndex == layers.Length)

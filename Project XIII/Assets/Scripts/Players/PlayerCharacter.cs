@@ -14,6 +14,7 @@ using System.Collections;
 /// Take Damage
 /// ---
 /// </summary>
+
 public class PlayerCharacter : MonoBehaviour{
 
     public bool Alive = true;
@@ -32,9 +33,7 @@ public class PlayerCharacter : MonoBehaviour{
     {
         LivesLeft++;
         if(Alive == false)
-        {
             Alive = true;
-        }
     }
 
     public void PlayerDeath()
