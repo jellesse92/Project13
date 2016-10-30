@@ -847,12 +847,12 @@ GameObject:
   - 4: {fileID: 4000012322880426}
   - 212: {fileID: 212000012843488452}
   - 114: {fileID: 114000012805284810}
-  - 114: {fileID: 114000013122669804}
   - 50: {fileID: 50000014278908596}
   - 95: {fileID: 95000013925467432}
   - 61: {fileID: 61000013523540916}
   - 82: {fileID: 82000010153985100}
   - 114: {fileID: 114000011428159208}
+  - 114: {fileID: 114000012760434424}
   m_Layer: 15
   m_Name: CowBoy
   m_TagString: Player
@@ -3970,6 +3970,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8443a95acecce1847ac21ac8e5a8599c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114000012760434424
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013491658950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae577d8dbb0a582409fe8f55b86f0a5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectiles: {fileID: 0}
+  PlayerNumber: -1
+  sidePerspective: 1
+  Up: 0
+  Down: 0
+  Left: 0
+  Right: 0
+  Jump: 0
+  Attack1: 0
+  Attack2: 0
+  Block: 0
+  character: {fileID: 114000012805284810}
 --- !u!114 &114000012805284810
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4031,29 +4054,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8443a95acecce1847ac21ac8e5a8599c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114000013122669804
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013491658950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcff83776fbf92b4aa0efc8f60883126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectiles: {fileID: 0}
-  PlayerNumber: -1
-  sidePerspective: 1
-  Up: 0
-  Down: 0
-  Left: 0
-  Right: 0
-  Jump: 0
-  Attack1: 0
-  Attack2: 0
-  Block: 0
-  character: {fileID: 0}
 --- !u!114 &114000013182055918
 MonoBehaviour:
   m_ObjectHideFlags: 1

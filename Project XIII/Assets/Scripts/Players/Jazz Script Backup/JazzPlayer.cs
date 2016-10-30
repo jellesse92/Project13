@@ -214,8 +214,8 @@ public class JazzPlayer : MonoBehaviour {
 
     void AnimateTopDown(int x, int y)
     {
-        anim.SetInteger("velocityX", x);
-        anim.SetInteger("velocityY", y);
+        //anim.SetInteger("velocityX", x);
+        //anim.SetInteger("velocityY", y);
     }
 
     void AnimateSideScroll(float x)

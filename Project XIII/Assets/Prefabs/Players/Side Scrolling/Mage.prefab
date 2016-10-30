@@ -22,15 +22,19 @@ GameObject:
   - 212: {fileID: 212000013569626584}
   - 95: {fileID: 95000010000941338}
   - 50: {fileID: 50000011605196704}
-  - 114: {fileID: 114000011289060208}
   - 61: {fileID: 61000010350563588}
+  - 82: {fileID: 82000011577475338}
+  - 114: {fileID: 114000010465634676}
+  - 114: {fileID: 114000013273367382}
+  - 114: {fileID: 114000013211599296}
+  - 114: {fileID: 114000012594423768}
   m_Layer: 0
   m_Name: Mage
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4000013294628118
 Transform:
   m_ObjectHideFlags: 1
@@ -54,13 +58,13 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 1
+  m_AngularDrag: 0.05
+  m_GravityScale: 4
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &61000010350563588
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -75,6 +79,80 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1.79, y: 3.63}
+--- !u!82 &82000011577475338
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013394753432}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!95 &95000010000941338
 Animator:
   serializedVersion: 3
@@ -92,7 +170,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114000011289060208
+--- !u!114 &114000010465634676
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -100,12 +178,62 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000013394753432}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9864d122e19fba4db1dddb13bd56236, type: 3}
+  m_Script: {fileID: 11500000, guid: d4124e0e9cd477049972ef80584e6384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 10
-  jumpForce: 5
-  jumpTime: 0.5
+--- !u!114 &114000012594423768
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013394753432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcff83776fbf92b4aa0efc8f60883126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player1:
+    horizontalAxisName: Horizontal
+    jumpKey: 32
+    quickAttackKey: 122
+    heavyAttackKey: 120
+    blockKey: 0
+    dashKey: 0
+--- !u!114 &114000013211599296
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013394753432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec8b5d84520f13e4bbbfa61b19cf8e78, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114000013273367382
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013394753432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 909ed5caba6823f498567029ee516e53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alive: 1
+  playerNumber: 0
+  lives: 3
+  maxHealth: 100
+  currentHealth: 100
+  cash: 0
+  PhysicStats:
+    primaryAttackStrength: 20
+    secondaryAttackStrength: 40
+    primaryAttackSpeed: 1
+    secondaryAttackSpeed: 1
+    movementSpeed: 10
+    jumpForce: 15
 --- !u!212 &212000013569626584
 SpriteRenderer:
   m_ObjectHideFlags: 1

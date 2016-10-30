@@ -72,10 +72,12 @@ public class PlayerProperties : MonoBehaviour{
     {
         cash = 0;
     }
+
     public int GetMaxHealth()
     {
         return maxHealth;
     }
+
     public int GetCurrentHealth()
     {
         return currentHealth;
