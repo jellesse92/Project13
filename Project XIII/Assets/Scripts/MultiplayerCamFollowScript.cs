@@ -21,7 +21,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         players = GameObject.FindGameObjectsWithTag("Player");
-        cam = transform.GetChild(0).GetComponent<Camera>();
+        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 	}
 	
 	// Update is called once per frame
@@ -50,7 +50,12 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
         Vector3 destination = new Vector3();
         destination.x = singlePlayerTrans.position.x;
-        destination.y = singlePlayerTrans.position.y + 2f;
+
+        if (in2DMode)
+            destination.y = singlePlayerTrans.position.y + 2f;
+        else
+            destination.y = singlePlayerTrans.position.y;
+
         destination.z = transform.position.z;
 
         transform.position = Vector3.Slerp(transform.position, destination, followDelay);
