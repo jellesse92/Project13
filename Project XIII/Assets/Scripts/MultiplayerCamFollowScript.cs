@@ -6,6 +6,8 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
     const float DEFAULT_ORTHO_SIZE = 5f;
     const float DEFAULT_ORTHO_SIZE_3D = 1.5f;
+    const float MAX_ORTHO_SIZE = 9f;
+    const float MAX_ORTHO_SIZE_3D = 6f;
 
     float zoomMultiplier = 1f;
     float followDelay = .8f;
@@ -84,10 +86,21 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     //Sets orthographic size of camera based on given parameter f
     void SetOrthographicSize(float f)
     {
+        float size;
         if (in2DMode)
-            cam.orthographicSize = Mathf.Max(f, DEFAULT_ORTHO_SIZE);
+        {
+            size = Mathf.Max(f, DEFAULT_ORTHO_SIZE);
+            size = Mathf.Min(size, MAX_ORTHO_SIZE);
+            cam.orthographicSize = size;
+            
+        }
         else
-            cam.orthographicSize = Mathf.Max(f, DEFAULT_ORTHO_SIZE_3D);
+        {
+            size = Mathf.Max(f, DEFAULT_ORTHO_SIZE_3D);
+            size = Mathf.Min(size, MAX_ORTHO_SIZE_3D);
+            cam.orthographicSize = size;
+        }
+
     }
 
     //Get midpoint position between all players
