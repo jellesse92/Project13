@@ -15,7 +15,7 @@ using System.Collections;
 /// ---
 /// </summary>
 
-public class PlayerCharacter : MonoBehaviour{
+public class JazzPlayerCharacter : MonoBehaviour{
 
     public bool Alive = true;
     public int PlayerNumber = 0;

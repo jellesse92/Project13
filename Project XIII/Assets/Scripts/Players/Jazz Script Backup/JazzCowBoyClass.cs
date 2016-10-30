@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GunnerPhysics : PlayerPhysics{
-    /*
+public class JazzCowBoyClass : JazzPlayerCharacter
+{
+   
     public Transform PrimaryBullets;
     public Transform SecondaryAtk;
     public float SecondaryCoolDown = 1.2f;
@@ -82,7 +83,7 @@ public class GunnerPhysics : PlayerPhysics{
             if (!child.gameObject.activeSelf)
             {
                 GetComponent<Animator>().SetTrigger("heavyAttack");
-                GetComponent<Player>().TakeDamage(0, dir == 'R' ? -3 : 3);
+                GetComponent<JazzPlayer>().TakeDamage(0, dir == 'R' ? -3 : 3);
                 PlayerProjectile bullet = child.gameObject.GetComponent<PlayerProjectile>();
                 bullet.gameObject.transform.position = gameObject.transform.position;
                 child.gameObject.SetActive(true);
@@ -95,5 +96,5 @@ public class GunnerPhysics : PlayerPhysics{
         }
         
     }
-    */
+    
 }

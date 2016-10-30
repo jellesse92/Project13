@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Player : MonoBehaviour {
+public class JazzPlayer : MonoBehaviour {
 
     const int BASE_TOP_SPEED = 2;                               //Base speed for top down perspective
     const int BASE_SIDE_SPEED = 8;                              //Base speed for side-scroll perspective
@@ -22,7 +22,7 @@ public class Player : MonoBehaviour {
     public KeyCode Attack1;
     public KeyCode Attack2;
     public KeyCode Block;
-    public PlayerCharacter character = null;
+    public JazzPlayerCharacter character = null;
 
     private bool isAttacking;
     int AttackPower;
@@ -78,10 +78,10 @@ public class Player : MonoBehaviour {
 		switch (choice)
 		{
 			case 0:
-				character = GetComponent<CowBoyClass>();
+				character = GetComponent<JazzCowBoyClass>();
 				break;
 			default:
-				character = GetComponent<CowBoyClass>();
+				character = GetComponent<JazzCowBoyClass>();
 				break;
 		}
         anim = GetComponent<Animator>();

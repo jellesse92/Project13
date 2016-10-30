@@ -2,7 +2,6 @@
 using System.Collections;
 
 public class PlayerProjectile : MonoBehaviour {
-    /*
     private bool isPiercing = false;
     private bool isFriendlyFireOn = false;
     private bool isDamageFading = false;
@@ -79,7 +78,7 @@ public class PlayerProjectile : MonoBehaviour {
             isHit = true;
         } else if (col.collider.tag == "Player" && isFriendlyFireOn)
         {
-            col.gameObject.GetComponent<Player>().TakeDamage(damageAmnt, knockbackAmnt);
+            col.gameObject.GetComponent<JazzPlayer>().TakeDamage(damageAmnt, knockbackAmnt);
             isHit = true;
         }
         if (!isPiercing && isHit)
@@ -93,5 +92,5 @@ public class PlayerProjectile : MonoBehaviour {
        
     }
 	
-    */
+   
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerMage : MonoBehaviour {
+public class MagePhysics : MonoBehaviour {
 
     private Rigidbody2D myRigidbody;
     private Animator myAnimator;
