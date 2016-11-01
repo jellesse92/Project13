@@ -23,6 +23,7 @@ public class PlayerPhysics : MonoBehaviour {
 
     void Update()
     {
+        myPlayerInput.GetInput();
         myKeyPress = myPlayerInput.getKeyPress();
     }
 
@@ -36,6 +37,8 @@ public class PlayerPhysics : MonoBehaviour {
         if (myKeyPress.heavyAttackPress)
             HeavyAttack();
         Landing();
+
+        myPlayerInput.ResetKeyPress();
     }
 
     void Movement()
@@ -85,7 +88,6 @@ public class PlayerPhysics : MonoBehaviour {
 
     void QuickAttack()
     {
-        Debug.Log("attack");
         if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
             if (isJumping)

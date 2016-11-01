@@ -39,18 +39,8 @@ public class PlayerInput : MonoBehaviour {
         keyConfig = player1;
         playerNumber = GetComponent<PlayerProperties>().GetPlayerNumber();
     }
-
-    void Update()
-    {
-        HandleInput();
-    }
-
-    void FixedUpdate()
-    {
-        ResetKeyPress();
-    }
-
-    void HandleInput()
+    
+    public void GetInput()
     {
         keyPress.horizontalAxisValue = Input.GetAxis(keyConfig.horizontalAxisName);
         if (Input.GetKeyDown(keyConfig.jumpKey))
@@ -65,7 +55,7 @@ public class PlayerInput : MonoBehaviour {
             keyPress.dashPress = true;
     }
 
-    void ResetKeyPress()
+    public void ResetKeyPress()
     {
         keyPress.jumpPress = false;
         keyPress.quickAttackPress = false;
