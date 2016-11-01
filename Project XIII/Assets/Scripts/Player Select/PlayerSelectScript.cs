@@ -140,7 +140,6 @@ public class PlayerSelectScript : MonoBehaviour {
         {
             if (charAvailable[character-1])
             {
-                Debug.Log("here?");
                 selectReticles[index].GetComponent<ReticleScript>().CharacterSelected();
                 charAvailable[character-1] = false;
                 selected[index] = character;
@@ -185,13 +184,13 @@ public class PlayerSelectScript : MonoBehaviour {
     //Function to play when all joined players have selected a character
     void PlayerSelectComplete()
     {
-        gcScript.SetPlayerCount(players);
 
         for (int i = 0; i < players; i++)
         {
-            gcScript.SetChar(i, selected[i]);
-            gcScript.SetInput(i, playerJoystick[i]);
+            gcScript.SetPlayer(i, selected[i], playerJoystick[i]);
         }
+
+
 
         Invoke("LoadNextScene", 3f);
     }
