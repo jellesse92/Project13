@@ -14,45 +14,41 @@ public class KeyPress {
 public class KeyConfig
 {
     public string horizontalAxisName = "Horizontal"; //name of the horizontal axis in the input manager
-    public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode quickAttackKey = KeyCode.Z;
-    public KeyCode heavyAttackKey = KeyCode.X;
-    public KeyCode blockKey;
-    public KeyCode dashKey;
+    public string jumpButton = "1_Circle";
+    public string quickAttackButton = "1_X";
+    public string heavyAttackButton = "1_Triangle";
+    public string blockButton = "1_Square";
+
+    //public string dashkey
+
 }
 
 public class PlayerInput : MonoBehaviour {
 
-    public KeyConfig player1;
-    public KeyConfig player2;
-
-    public KeyConfig player3;
-    public KeyConfig player4;
-
     private KeyConfig keyConfig = new KeyConfig();
-    private int playerNumber;
-
     private KeyPress keyPress = new KeyPress();
-    
+    private int joystickNum = 0;
+
     void Start()
 	{
-        keyConfig = player1;
-        playerNumber = GetComponent<PlayerProperties>().GetPlayerNumber();
+        SetJoystickNum(0);  //Temporary
     }
     
     public void GetInput()
     {
         keyPress.horizontalAxisValue = Input.GetAxis(keyConfig.horizontalAxisName);
-        if (Input.GetKeyDown(keyConfig.jumpKey))
+        if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.Space)) ||(joystickNum !=0 && Input.GetButtonDown(keyConfig.jumpButton)))
             keyPress.jumpPress = true;
-        if (Input.GetKeyDown(keyConfig.quickAttackKey))
+        if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.Z)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.quickAttackButton)))
             keyPress.quickAttackPress = true;
-        if (Input.GetKeyDown(keyConfig.heavyAttackKey))
+        if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.X)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.heavyAttackButton)))
             keyPress.heavyAttackPress = true;
-        if (Input.GetKeyDown(keyConfig.blockKey))
+        if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.C)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.blockButton)))
             keyPress.blockPress = true;
+        /*
         if (Input.GetKeyDown(keyConfig.dashKey))
             keyPress.dashPress = true;
+            */
     }
 
     public void ResetKeyPress()
@@ -67,6 +63,30 @@ public class PlayerInput : MonoBehaviour {
     public KeyPress getKeyPress()
     {
         return keyPress;
+    }
+
+    //Sets the joystick which will be controlling the attached player.
+    //0 = keyboard + mouse input
+    //1 - 11 = Joystick pad input
+    public void SetJoystickNum(int num)
+    {
+        if (num == 0) return;
+        
+        if (num < 0 || num > 11)
+        {
+            joystickNum = 0;
+            return;
+        }
+
+        joystickNum = num;
+
+        keyConfig.jumpButton = num.ToString() + "_Circle";
+        keyConfig.quickAttackButton = num.ToString() + "_X";
+        keyConfig.heavyAttackButton = num.ToString() + "_Triangle";
+        keyConfig.blockButton = num.ToString() + "_Square";
+        //keyConfig.dashButton = ?
+
+
     }
 
 }
