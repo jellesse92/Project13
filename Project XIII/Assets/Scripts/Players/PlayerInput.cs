@@ -8,12 +8,14 @@ public class KeyPress {
     public bool blockPress;
     public bool dashPress;
     public float horizontalAxisValue;
+    public float verticalAxisValue;
 }
 
 [System.Serializable]
 public class KeyConfig
 {
     public string horizontalAxisName = "Horizontal_Key"; //name of the horizontal axis in the input manager
+    public string verticalAxisName = "Vertical_Key";
     public string jumpButton = "1_Circle";
     public string quickAttackButton = "1_X";
     public string heavyAttackButton = "1_Triangle";
@@ -38,12 +40,18 @@ public class PlayerInput : MonoBehaviour {
     {
 
         if(joystickNum == 0)
+        {
             keyPress.horizontalAxisValue = Input.GetAxis(keyConfig.horizontalAxisName);
+            keyPress.verticalAxisValue = Input.GetAxis(keyConfig.verticalAxisName);
+        }
         else
         {
             //For bad calibration
-            float x = (Mathf.Abs(Input.GetAxis(keyConfig.horizontalAxisName)) > 0.05) ? Input.GetAxis(keyConfig.horizontalAxisName) : 0f;
+            float x = (Mathf.Abs(Input.GetAxis(keyConfig.horizontalAxisName)) > 0.06) ? Input.GetAxis(keyConfig.horizontalAxisName) : 0f;
+            float y = (Mathf.Abs(Input.GetAxis(keyConfig.verticalAxisName)) > 0.06) ? Input.GetAxis(keyConfig.verticalAxisName) : 0f;
+
             keyPress.horizontalAxisValue = x;
+            keyPress.verticalAxisValue = y;
         }
 
         if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.Space)) ||(joystickNum !=0 && Input.GetButtonDown(keyConfig.jumpButton)))
@@ -90,6 +98,7 @@ public class PlayerInput : MonoBehaviour {
         joystickNum = num;
 
         keyConfig.horizontalAxisName = num.ToString() + "_LeftJoyStickX";
+        keyConfig.verticalAxisName = num.ToString() + "_LeftJoyStickY";
         keyConfig.jumpButton = num.ToString() + "_Circle";
         keyConfig.quickAttackButton = num.ToString() + "_X";
         keyConfig.heavyAttackButton = num.ToString() + "_Triangle";

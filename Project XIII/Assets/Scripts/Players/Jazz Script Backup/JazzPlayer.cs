@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class JazzPlayer : MonoBehaviour {
+public class JazzPlayer : MonoBehaviour
+{
 
     const int BASE_TOP_SPEED = 2;                               //Base speed for top down perspective
     const int BASE_SIDE_SPEED = 8;                              //Base speed for side-scroll perspective
@@ -12,13 +13,13 @@ public class JazzPlayer : MonoBehaviour {
 
     public Transform projectiles;
     public int PlayerNumber = -1;
-	public bool sidePerspective;
+    public bool sidePerspective;
     private bool isJumping = false;
     public KeyCode Up;
-	public KeyCode Down;
-	public KeyCode Left;
-	public KeyCode Right;
-	public KeyCode Jump;
+    public KeyCode Down;
+    public KeyCode Left;
+    public KeyCode Right;
+    public KeyCode Jump;
     public KeyCode Attack1;
     public KeyCode Attack2;
     public KeyCode Block;
@@ -30,11 +31,11 @@ public class JazzPlayer : MonoBehaviour {
     char direction = 'R'; //direction player is facing UDLR
 
     void Start()
-	{
+    {
         anim = GetComponent<Animator>();
         isFacingRight = true;
         SetPlayerNumber(0);
-	}
+    }
 
     public void SetPlayerNumber(int num)
     {
@@ -73,28 +74,28 @@ public class JazzPlayer : MonoBehaviour {
                 break;
         }
     }
-	public void SelectClass(int choice  = 0)
-	{
-		switch (choice)
-		{
-			case 0:
-				character = GetComponent<JazzCowBoyClass>();
-				break;
-			default:
-				character = GetComponent<JazzCowBoyClass>();
-				break;
-		}
+    public void SelectClass(int choice = 0)
+    {
+        switch (choice)
+        {
+            case 0:
+                character = GetComponent<JazzCowBoyClass>();
+                break;
+            default:
+                character = GetComponent<JazzCowBoyClass>();
+                break;
+        }
         anim = GetComponent<Animator>();
-	}
-	void swapPerspective()
-	{
-		sidePerspective = !sidePerspective;
+    }
+    void swapPerspective()
+    {
+        sidePerspective = !sidePerspective;
 
         if (sidePerspective)
             isFacingRight = true;
         else
             isFacingRight = false;
-	}
+    }
     void Update()
     {
         if (PlayerNumber != -1 || true) //or true for testing purposes.
@@ -131,7 +132,7 @@ public class JazzPlayer : MonoBehaviour {
                 if (sidePerspective)
                 {
                     transform.position += move * BASE_SIDE_SPEED * Time.deltaTime;
-                    if(!isJumping)
+                    if (!isJumping)
                         AnimateSideScroll(1f);
                 }
 
@@ -186,25 +187,25 @@ public class JazzPlayer : MonoBehaviour {
         if (!Input.GetKeyDown(KeyCode.D))
         {
             character.TakeDamage(dmg);
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(knockBackForce*2, 0), ForceMode2D.Impulse);
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(knockBackForce * 2, 0), ForceMode2D.Impulse);
             if (character.GetCurrentHealth() <= 0)
             {
                 //Animate Death
                 //Reset Location
                 character.PlayerDeath();
             }
-        } 
+        }
 
     }
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.collider.tag == "Ground")
+        if (col.collider.tag == "Ground")
         {
             isJumping = false;
             anim.SetTrigger("landing");
         }
-        if(isAttacking && col.collider.tag == "Enemy")
+        if (isAttacking && col.collider.tag == "Enemy")
         {
             col.gameObject.GetComponent<Enemy>().Damage(AttackPower);
             isAttacking = false;
@@ -233,4 +234,5 @@ public class JazzPlayer : MonoBehaviour {
 
         transform.localScale = scale;
     }
+
 }
