@@ -31,12 +31,21 @@ public class PlayerInput : MonoBehaviour {
 
     void Start()
 	{
-        SetJoystickNum(0);  //Temporary
+        //SetJoystickNum(0);  //Temporary
     }
     
     public void GetInput()
     {
-        keyPress.horizontalAxisValue = Input.GetAxis(keyConfig.horizontalAxisName);
+
+        if(joystickNum == 0)
+            keyPress.horizontalAxisValue = Input.GetAxis(keyConfig.horizontalAxisName);
+        else
+        {
+            //For bad calibration
+            float x = (Mathf.Abs(Input.GetAxis(keyConfig.horizontalAxisName)) > 0.05) ? Input.GetAxis(keyConfig.horizontalAxisName) : 0f;
+            keyPress.horizontalAxisValue = x;
+        }
+
         if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.Space)) ||(joystickNum !=0 && Input.GetButtonDown(keyConfig.jumpButton)))
             keyPress.jumpPress = true;
         if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.Z)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.quickAttackButton)))
@@ -80,6 +89,7 @@ public class PlayerInput : MonoBehaviour {
 
         joystickNum = num;
 
+        keyConfig.horizontalAxisName = num.ToString() + "_LeftJoyStickX";
         keyConfig.jumpButton = num.ToString() + "_Circle";
         keyConfig.quickAttackButton = num.ToString() + "_X";
         keyConfig.heavyAttackButton = num.ToString() + "_Triangle";

@@ -108,8 +108,6 @@ public class ReticleScript : MonoBehaviour
         }
         else
             lastChar = currentChar;
-
-        Debug.Log("current = " + currentChar);
     }
 
 
@@ -119,7 +117,6 @@ public class ReticleScript : MonoBehaviour
         characterPanel.SetTrigger("selected");
         selectedCharAnim.SetTrigger(animName);
         currentChar = charType;
-        Debug.Log("current = " + currentChar);
     }
 
     //Retrieve information from reticle about character being currently examined for selection
