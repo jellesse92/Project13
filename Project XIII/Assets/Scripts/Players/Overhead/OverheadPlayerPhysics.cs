@@ -8,7 +8,7 @@ public class OverheadPlayerPhysics : MonoBehaviour {
     private PlayerInput myPlayerInput;
 
     private bool isFacingRight;
-    private float movementSpeed = .5f;
+    private float movementSpeed = 10f;
 
     // Use this for initialization
     void Start () {
@@ -36,9 +36,9 @@ public class OverheadPlayerPhysics : MonoBehaviour {
     {
         int dir = 0;
 
-        if (Mathf.Abs(myKeyPress.verticalAxisValue) > 0.1f)
+        if (Mathf.Abs(myKeyPress.verticalAxisValue) > .1f)
         {
-            if (myKeyPress.verticalAxisValue > 0f)
+            if (myKeyPress.verticalAxisValue > .1f)
                 dir = 1;
             else
                 dir = -1;
@@ -50,7 +50,7 @@ public class OverheadPlayerPhysics : MonoBehaviour {
 
             AnimateTopDown(0, dir);
         }
-        else if(Mathf.Abs(myKeyPress.horizontalAxisValue) > 0.1f)
+        else if(Mathf.Abs(myKeyPress.horizontalAxisValue) > 0f)
         {
             if (myKeyPress.horizontalAxisValue > 0f)
                 dir = 1;

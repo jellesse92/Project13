@@ -74,7 +74,7 @@ public class BulletProjectile : MonoBehaviour {
         bool isHit = false;
         if(col.collider.tag == "Enemy")
         {
-            col.gameObject.GetComponent<Enemy>().Damage(damageAmnt,0,4f);
+            col.gameObject.GetComponent<Enemy>().Damage(damageAmnt,0,.5f);
             isHit = true;
         } else if (col.collider.tag == "Player" && isFriendlyFireOn)
         {
