@@ -4,13 +4,22 @@ using System.Collections;
 [System.Serializable]
 public class PlayerPhysicStats
 {
-    public int primaryAttackStrength = 20; //Attack Power
-    public int secondaryAttackStrength = 40;
+    public int quickAttackStrength = 20; //Attack Power
+    public int heavyAttackStrength = 40;
 
-    public float primaryAttackSpeed = 1f; //Attack Speed
-    public float secondaryAttackSpeed = 1f;
+    public float quickAttackSpeed = 1f; //Attack Speed
+    public float heavyAttackSpeed = 1f;
+
     public float movementSpeed =10f;
     public float jumpForce = 15f;
+}
+
+[System.Serializable]
+public class PlayerBoostStats
+{
+    public int attackBoost = 0;
+    public float speedBoost = 0;
+
 }
 
 public class PlayerProperties : MonoBehaviour{
@@ -23,7 +32,8 @@ public class PlayerProperties : MonoBehaviour{
     public int currentHealth = 100;
     public int cash = 0;
 
-    public PlayerPhysicStats PhysicStats;
+    public PlayerPhysicStats physicStats;
+    public PlayerBoostStats boostStats;
 
     public int GetPlayerNumber()
     {
@@ -32,7 +42,12 @@ public class PlayerProperties : MonoBehaviour{
 
     public PlayerPhysicStats GetPhysicStats()
     {
-        return PhysicStats;
+        return physicStats;
+    }
+
+    public PlayerBoostStats GetBoostStats()
+    {
+        return boostStats;
     }
 
     public void AddLife()

@@ -2,32 +2,35 @@
 using System.Collections;
 
 public class PlayerPhysics : MonoBehaviour {
-    private Rigidbody2D myRigidbody;
-    private Animator myAnimator;
-    private PlayerPhysicStats physicStats;
-    private KeyPress myKeyPress;
-    private PlayerInput myPlayerInput;
+    public Rigidbody2D myRigidbody;
+    public Animator myAnimator;
+    public PlayerPhysicStats physicStats;
+    public PlayerBoostStats boostStats;
+    public KeyPress myKeyPress;
+    public PlayerInput myPlayerInput;
 
-    private bool isJumping;
-    private bool isFacingRight;
-    
-    void Start () {
+    public bool isJumping;
+    public bool isFacingRight;
+
+    public void Start () {
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
         physicStats = GetComponent<PlayerProperties>().GetPhysicStats();
+        boostStats = GetComponent<PlayerProperties>().GetBoostStats();
         myPlayerInput = GetComponent<PlayerInput>();
         myKeyPress = myPlayerInput.getKeyPress();
         isFacingRight = true;
         isJumping = false;
+        ClassSpecificStart();
     }
 
-    void Update()
+    public void Update()
     {
         myPlayerInput.GetInput();
         myKeyPress = myPlayerInput.getKeyPress();
     }
 
-    void FixedUpdate()
+    public void FixedUpdate()
     {
         Movement();
         if (myKeyPress.jumpPress)
@@ -38,12 +41,24 @@ public class PlayerPhysics : MonoBehaviour {
             HeavyAttack();
         Landing();
 
+        ClassSpecificUpdate();
+
         myPlayerInput.ResetKeyPress();
     }
 
-    void Movement()
+    public virtual void ClassSpecificStart()
     {
-        if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+        //This function is used when a specific class need to use Start
+    }
+
+    public virtual void ClassSpecificUpdate()
+    {
+        //This function is used when a specific class need to use FixedUpdate
+    }
+
+    public void Movement()
+    {
+        if (!myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
             myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
             myAnimator.SetFloat("speed", Mathf.Abs(myKeyPress.horizontalAxisValue));
@@ -52,11 +67,12 @@ public class PlayerPhysics : MonoBehaviour {
         }
         else
         {
-            myRigidbody.velocity = new Vector2(0, -0.01f);
+            myRigidbody.velocity = new Vector2(0, 0);
+            isJumping = true;
         }
     }
 
-    void Jump()
+    public void Jump()
     {
         if (!isJumping)
         {
@@ -70,7 +86,7 @@ public class PlayerPhysics : MonoBehaviour {
 
     }
 
-    void Landing()
+    public void Landing()
     {
         if (myRigidbody.velocity.y == 0)
             isJumping = false;
@@ -86,7 +102,7 @@ public class PlayerPhysics : MonoBehaviour {
             myAnimator.SetBool("land", false);
     }
 
-    void QuickAttack()
+    public virtual void QuickAttack()
     {
         if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
@@ -96,7 +112,7 @@ public class PlayerPhysics : MonoBehaviour {
                 myAnimator.SetTrigger("quickAttack");
         }
     }
-    void HeavyAttack()
+    public virtual void HeavyAttack()
     {
         if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
@@ -107,7 +123,7 @@ public class PlayerPhysics : MonoBehaviour {
         }
     }
 
-    void Flip()
+    public void Flip()
     {
         if (myKeyPress.horizontalAxisValue > 0 && !isFacingRight || myKeyPress.horizontalAxisValue < 0 && isFacingRight)
         {

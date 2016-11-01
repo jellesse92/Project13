@@ -8,10 +8,12 @@ public class JazzCowBoyClass : JazzPlayerCharacter
     public Transform SecondaryAtk;
     public float SecondaryCoolDown = 1.2f;
     public float dodgeCoolDown = 1.0f;
-    private float specialAttackTimestamp;
-    private float dodgeTimeStamp;
     public int AttackBoost = 0;
     public float SpeedBoost = 0;
+
+    private float specialAttackTimestamp;
+    private float dodgeTimeStamp;
+
 
     void Start()
     {
@@ -60,7 +62,7 @@ public class JazzCowBoyClass : JazzPlayerCharacter
             if (!child.gameObject.activeSelf)
             {
                 child.gameObject.SetActive(true);
-                child.gameObject.GetComponent<PlayerProjectile>().SetDamageAmount(AttackPower);
+                child.gameObject.GetComponent<BulletProjectile>().SetDamageAmount(AttackPower);
 
                 Vector3 gunPoint = transform.position;
                 gunPoint.x += 1f;
@@ -84,7 +86,7 @@ public class JazzCowBoyClass : JazzPlayerCharacter
             {
                 GetComponent<Animator>().SetTrigger("heavyAttack");
                 GetComponent<JazzPlayer>().TakeDamage(0, dir == 'R' ? -3 : 3);
-                PlayerProjectile bullet = child.gameObject.GetComponent<PlayerProjectile>();
+                BulletProjectile bullet = child.gameObject.GetComponent<BulletProjectile>();
                 bullet.gameObject.transform.position = gameObject.transform.position;
                 child.gameObject.SetActive(true);
                 bullet.SetDamageAmount(AttackPower);

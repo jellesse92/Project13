@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerProjectile : MonoBehaviour {
+public class BulletProjectile : MonoBehaviour {
     private bool isPiercing = false;
     private bool isFriendlyFireOn = false;
     private bool isDamageFading = false;
