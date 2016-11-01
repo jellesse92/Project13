@@ -2,24 +2,16 @@
 using System.Collections;
 
 public class PlayerPhysics : MonoBehaviour {
-    [HideInInspector]
-    public Rigidbody2D myRigidbody;
-    [HideInInspector]
-    public Animator myAnimator;
-    [HideInInspector]
-    public PlayerPhysicStats physicStats;
-    [HideInInspector]
-    public PlayerBoostStats boostStats;
-    [HideInInspector]
-    public KeyPress myKeyPress;
-    [HideInInspector]
-    public PlayerInput myPlayerInput;
-    [HideInInspector]
-    public bool isJumping;
-    [HideInInspector]
-    public bool isFacingRight;
+    protected Rigidbody2D myRigidbody;
+    protected Animator myAnimator;
+    protected PlayerPhysicStats physicStats;
+    protected PlayerBoostStats boostStats;
+    protected KeyPress myKeyPress;
+    protected PlayerInput myPlayerInput;
+    protected bool isJumping;
+    protected bool isFacingRight;
 
-    public void Start () {
+    protected void Start () {
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
         physicStats = GetComponent<PlayerProperties>().GetPhysicStats();
@@ -31,13 +23,13 @@ public class PlayerPhysics : MonoBehaviour {
         ClassSpecificStart();
     }
 
-    public void Update()
+    protected void Update()
     {
         myPlayerInput.GetInput();
         myKeyPress = myPlayerInput.getKeyPress();
     }
 
-    public void FixedUpdate()
+    protected void FixedUpdate()
     {
         Movement();
         if (myKeyPress.jumpPress)
@@ -63,7 +55,7 @@ public class PlayerPhysics : MonoBehaviour {
         //This function is used when a specific class need to use FixedUpdate
     }
 
-    public void Movement()
+    protected void Movement()
     {
         if (!myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
@@ -79,7 +71,7 @@ public class PlayerPhysics : MonoBehaviour {
         }
     }
 
-    public void Jump()
+    protected void Jump()
     {
         if (!isJumping)
         {
@@ -93,7 +85,7 @@ public class PlayerPhysics : MonoBehaviour {
 
     }
 
-    public void Landing()
+    protected void Landing()
     {
         if (myRigidbody.velocity.y == 0)
             isJumping = false;
@@ -130,7 +122,7 @@ public class PlayerPhysics : MonoBehaviour {
         }
     }
 
-    public void Flip()
+    protected void Flip()
     {
         if (myKeyPress.horizontalAxisValue > 0 && !isFacingRight || myKeyPress.horizontalAxisValue < 0 && isFacingRight)
         {
