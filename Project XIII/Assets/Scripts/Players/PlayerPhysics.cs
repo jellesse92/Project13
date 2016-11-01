@@ -41,8 +41,12 @@ public class PlayerPhysics : MonoBehaviour {
         Landing();
 
         ClassSpecificUpdate();
-
         myPlayerInput.ResetKeyPress();
+
+    }
+    protected void LateUpdate()
+    {
+
     }
 
     public virtual void ClassSpecificStart()
