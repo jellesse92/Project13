@@ -2,14 +2,21 @@
 using System.Collections;
 
 public class PlayerPhysics : MonoBehaviour {
+    [HideInInspector]
     public Rigidbody2D myRigidbody;
+    [HideInInspector]
     public Animator myAnimator;
+    [HideInInspector]
     public PlayerPhysicStats physicStats;
+    [HideInInspector]
     public PlayerBoostStats boostStats;
+    [HideInInspector]
     public KeyPress myKeyPress;
+    [HideInInspector]
     public PlayerInput myPlayerInput;
-
+    [HideInInspector]
     public bool isJumping;
+    [HideInInspector]
     public bool isFacingRight;
 
     public void Start () {

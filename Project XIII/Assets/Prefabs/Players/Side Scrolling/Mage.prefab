@@ -25,16 +25,16 @@ GameObject:
   - 61: {fileID: 61000010350563588}
   - 82: {fileID: 82000011577475338}
   - 114: {fileID: 114000010465634676}
-  - 114: {fileID: 114000013273367382}
-  - 114: {fileID: 114000013211599296}
-  - 114: {fileID: 114000012594423768}
+  - 114: {fileID: 114000011420620546}
+  - 114: {fileID: 114000013180458702}
+  - 114: {fileID: 114000013930071204}
   m_Layer: 0
   m_Name: Mage
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4000013294628118
 Transform:
   m_ObjectHideFlags: 1
@@ -181,7 +181,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4124e0e9cd477049972ef80584e6384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114000012594423768
+--- !u!114 &114000011420620546
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013394753432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9864d122e19fba4db1dddb13bd56236, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myRigidbody: {fileID: 0}
+  myAnimator: {fileID: 0}
+  physicStats:
+    quickAttackStrength: 20
+    heavyAttackStrength: 40
+    quickAttackSpeed: 1
+    heavyAttackSpeed: 1
+    movementSpeed: 10
+    jumpForce: 15
+  boostStats:
+    attackBoost: 0
+    speedBoost: 0
+  myPlayerInput: {fileID: 0}
+  isJumping: 0
+  isFacingRight: 0
+--- !u!114 &114000013180458702
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -192,25 +218,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcff83776fbf92b4aa0efc8f60883126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1:
-    horizontalAxisName: Horizontal
-    jumpKey: 32
-    quickAttackKey: 122
-    heavyAttackKey: 120
-    blockKey: 0
-    dashKey: 0
---- !u!114 &114000013211599296
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013394753432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec8b5d84520f13e4bbbfa61b19cf8e78, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114000013273367382
+--- !u!114 &114000013930071204
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -227,13 +235,16 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 100
   cash: 0
-  PhysicStats:
-    primaryAttackStrength: 20
-    secondaryAttackStrength: 40
-    primaryAttackSpeed: 1
-    secondaryAttackSpeed: 1
+  physicStats:
+    quickAttackStrength: 20
+    heavyAttackStrength: 40
+    quickAttackSpeed: 1
+    heavyAttackSpeed: 1
     movementSpeed: 10
     jumpForce: 15
+  boostStats:
+    attackBoost: 0
+    speedBoost: 0
 --- !u!212 &212000013569626584
 SpriteRenderer:
   m_ObjectHideFlags: 1
