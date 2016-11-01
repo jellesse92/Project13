@@ -74,9 +74,14 @@ public class GameController : MonoBehaviour
         for(int i = 0; i < 4; i++)
         {
             Transform character = playerList.GetChild(i);
+            if (PlayerCharacters[i].player == -1)
+                character.gameObject.SetActive(false);
+            else
+            {
+                character.GetComponent<PlayerProperties>().playerNumber = PlayerCharacters[i].player;
+                character.GetComponent<PlayerInput>().SetJoystickNum(PlayerCharacters[i].joystickNum);
+            }
 
-            character.GetComponent<PlayerProperties>().playerNumber = PlayerCharacters[i].player;
-            character.GetComponent<PlayerInput>().SetJoystickNum(PlayerCharacters[i].joystickNum);
         }
     }
 
