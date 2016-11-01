@@ -13,7 +13,7 @@ public class KeyPress {
 [System.Serializable]
 public class KeyConfig
 {
-    public string horizontalAxisName = "Horizontal"; //name of the horizontal axis in the input manager
+    public string horizontalAxisName = "Horizontal_Key"; //name of the horizontal axis in the input manager
     public string jumpButton = "1_Circle";
     public string quickAttackButton = "1_X";
     public string heavyAttackButton = "1_Triangle";

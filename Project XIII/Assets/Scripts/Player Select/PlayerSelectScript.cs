@@ -5,8 +5,10 @@ using System;
 
 public class PlayerSelectScript : MonoBehaviour {
 
+    GameController gcScript;                        //Script which carries information of what player controls what character
+
     public GameObject[] selectReticles;             //Reticles to be activated upon player join
-    int[] playerJoystick = new int[4];     //Player slot and its assigned joystick
+    int[] playerJoystick = new int[4];              //Player slot and its assigned joystick
 
 
     //Determine if game should be able to start
@@ -18,8 +20,10 @@ public class PlayerSelectScript : MonoBehaviour {
 
     AudioSource myAudio;
 
+
     void Start()
     {
+        gcScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         myAudio = GetComponent<AudioSource>();
         Cursor.visible = false;
         for (int i = 0; i < 4; i++)
@@ -49,15 +53,19 @@ public class PlayerSelectScript : MonoBehaviour {
     {
         for(int i = 1; i < 12; i++)
             if(Input.GetButtonDown(i.ToString() + "_X"))
+            {
                 ExecuteXFuncs(i);
-
+            }
     }
 
     //Execute functions based on "x" button input
     void ExecuteXFuncs(int index )
     {
         CheckJoinPlayer(index);
-        CheckSelectCharacter(index);
+
+        int pIndex = Array.IndexOf(playerJoystick, index);
+        if(pIndex > -1)
+            CheckSelectCharacter(pIndex);
     }
 
     void WatchForCircleButton()
@@ -122,6 +130,7 @@ public class PlayerSelectScript : MonoBehaviour {
     //Check if player should be able to select chosen character
     void CheckSelectCharacter(int index)
     {
+
         int character = selectReticles[index].GetComponent<ReticleScript>().GetCharExamine();
 
         if (character <= 0)
@@ -131,6 +140,7 @@ public class PlayerSelectScript : MonoBehaviour {
         {
             if (charAvailable[character-1])
             {
+                Debug.Log("here?");
                 selectReticles[index].GetComponent<ReticleScript>().CharacterSelected();
                 charAvailable[character-1] = false;
                 selected[index] = character;
@@ -175,11 +185,20 @@ public class PlayerSelectScript : MonoBehaviour {
     //Function to play when all joined players have selected a character
     void PlayerSelectComplete()
     {
-        Invoke("LoadNextScene", 5f);
+        gcScript.SetPlayerCount(players);
+
+        for (int i = 0; i < players; i++)
+        {
+            gcScript.SetChar(i, selected[i]);
+            gcScript.SetInput(i, playerJoystick[i]);
+        }
+
+        Invoke("LoadNextScene", 3f);
     }
 
     void LoadNextScene()
     {
+      
         Application.LoadLevel(2);
     }
 }

@@ -40,6 +40,10 @@ public class GameController : MonoBehaviour
     {
         DontDestroyOnLoad(transform.gameObject);
         Instance = this;
+
+        //Destroys copy of this on scene
+        if (FindObjectsOfType(GetType()).Length > 1)
+            Destroy(gameObject);
     }
     
     public void SetPlayerCount(int count)
@@ -47,15 +51,16 @@ public class GameController : MonoBehaviour
         PlayerCount = count;
         PlayerCharacters = new int[count];
     } 
-    public void SetChar(int CharType)
+
+
+    //1 = Swordsman; 2 = Gunner; 3 = Mage; 4 = Mech
+    public void SetChar(int player, int CharType)
     {
-        for(int i = 0; i < PlayerCount; i++)
-        {
-            if (PlayerCharacters[i] == 0)
-            {
-                PlayerCharacters[i] = CharType;
-                break;
-            }
-        }
+        PlayerCharacters[player] = CharType;
+    }
+
+    public void SetInput(int player, int joystickNum)
+    {
+        PlayerCharacters[player] = joystickNum;
     }
 }

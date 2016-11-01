@@ -84,9 +84,9 @@ public class ReticleScript : MonoBehaviour
         if (!charSelected)
         {
             if (col.name == "Gunner Portrait")
-                ExamineChar("gunnerSelected", 1);
+                ExamineChar("gunnerSelected", 2);
             else if (col.name == "Swordsman Portrait")
-                ExamineChar("swordsmanSelected", 2);
+                ExamineChar("swordsmanSelected", 1);
             else if (col.name == "Mage Portrait")
                 ExamineChar("mageSelected", 3);
             else if (col.name == "Mech Portrait")
@@ -108,15 +108,18 @@ public class ReticleScript : MonoBehaviour
         }
         else
             lastChar = currentChar;
+
+        Debug.Log("current = " + currentChar);
     }
 
-    
+
     //Character last examined or passed over
     void ExamineChar(string animName, int charType)
     {
         characterPanel.SetTrigger("selected");
         selectedCharAnim.SetTrigger(animName);
         currentChar = charType;
+        Debug.Log("current = " + currentChar);
     }
 
     //Retrieve information from reticle about character being currently examined for selection

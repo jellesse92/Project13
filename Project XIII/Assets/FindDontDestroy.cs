@@ -14,8 +14,8 @@ public class FindDontDestroy : MonoBehaviour {
         GameController.GetComponent<GameController>().SetPlayerCount(count);
     }
 
-    public void SetChar(int CharType)
+    public void SetChar(int player, int CharType)
     {
-        GameController.GetComponent<GameController>().SetChar(CharType);
+        GameController.GetComponent<GameController>().SetChar(player,CharType);
     }
 }
