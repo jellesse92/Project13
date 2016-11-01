@@ -85,6 +85,7 @@ public class PlayerPhysics : MonoBehaviour {
 
     void QuickAttack()
     {
+        Debug.Log("attack");
         if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
             if (isJumping)

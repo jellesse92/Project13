@@ -23,7 +23,12 @@ public class KeyConfig
 
 public class PlayerInput : MonoBehaviour {
 
-    public KeyConfig player1 = new KeyConfig();
+    public KeyConfig player1;
+    public KeyConfig player2;
+
+    public KeyConfig player3;
+    public KeyConfig player4;
+
     private KeyConfig keyConfig = new KeyConfig();
     private int playerNumber;
 
