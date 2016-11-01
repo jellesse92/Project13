@@ -7,12 +7,14 @@ public class UIAlertScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        iguScript = GameObject.FindGameObjectWithTag("UIController").GetComponent<InGameUIScript>();
+        //iguScript = GameObject.FindGameObjectWithTag("UIController").GetComponent<InGameUIScript>();
 	}
 	
 	void OnTriggerEnter2D(Collider2D col)
     {
+        /*
         if (col.tag == "Enemy")
             iguScript.ActivateCombatUI();
+            */
     }
 }
