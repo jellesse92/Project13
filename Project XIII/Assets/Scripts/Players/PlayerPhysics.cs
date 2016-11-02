@@ -4,22 +4,26 @@ using System.Collections;
 public class PlayerPhysics : MonoBehaviour {
     protected Rigidbody2D myRigidbody;
     protected Animator myAnimator;
+    protected PlayerProperties playerProperties;
     protected PlayerPhysicStats physicStats;
     protected PlayerBoostStats boostStats;
     protected KeyPress myKeyPress;
     protected PlayerInput myPlayerInput;
     protected bool isJumping;
     protected bool isFacingRight;
-
+    protected bool cannotMove;
+     
     protected void Start () {
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
-        physicStats = GetComponent<PlayerProperties>().GetPhysicStats();
-        boostStats = GetComponent<PlayerProperties>().GetBoostStats();
+        playerProperties = GetComponent<PlayerProperties>();
+        physicStats = playerProperties.GetPhysicStats();
+        boostStats = playerProperties.GetBoostStats();
         myPlayerInput = GetComponent<PlayerInput>();
         myKeyPress = myPlayerInput.getKeyPress();
         isFacingRight = true;
         isJumping = false;
+        cannotMove = false;
         ClassSpecificStart();
     }
 
@@ -65,12 +69,13 @@ public class PlayerPhysics : MonoBehaviour {
         {
             myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
             myAnimator.SetFloat("speed", Mathf.Abs(myKeyPress.horizontalAxisValue));
+            cannotMove = false;
             if (!isJumping)
                 Flip();
         }
-        else
+        else if(cannotMove)
         {
-            myRigidbody.velocity = new Vector2(0, 0);
+            myRigidbody.velocity = new Vector2(0, -0.001f);
             isJumping = true;
         }
     }
@@ -105,22 +110,32 @@ public class PlayerPhysics : MonoBehaviour {
             myAnimator.SetBool("land", false);
     }
 
-    public virtual void QuickAttack()
+    protected virtual void QuickAttack()
     {
+        myRigidbody.velocity = new Vector2(0, 0);
+
         if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
             if (isJumping)
+            {
                 myAnimator.SetTrigger("airQuickAttack");
+                cannotMove = true;
+            }
             else
                 myAnimator.SetTrigger("quickAttack");
         }
     }
-    public virtual void HeavyAttack()
+    protected virtual void HeavyAttack()
     {
+        myRigidbody.velocity = new Vector2(0, 0);
+
         if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
             if (isJumping)
+            {
                 myAnimator.SetTrigger("airHeavyAttack");
+                cannotMove = true;
+            }
             else
                 myAnimator.SetTrigger("heavyAttack");
         }
@@ -138,5 +153,14 @@ public class PlayerPhysics : MonoBehaviour {
 
             transform.localScale = scale;
         }
+    }
+
+    protected void knockBack(float knockBackForce)
+    {
+        knockBackForce *= isFacingRight ? -1 : 1;
+        Debug.Log(knockBackForce);
+
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(knockBackForce * 2, 0), ForceMode2D.Impulse);
+
     }
 }

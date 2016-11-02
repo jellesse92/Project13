@@ -6,8 +6,9 @@ public class GunnerStats
 {
     public float quickBulletSpeed = 1f;
     public float heavyBulletSpeed = 1f;
-    public float HeavyAttackCoolDown = 1.2f;
+    public float heavyAttackCoolDown = 1.2f;
     public float dodgeCoolDown = 1.0f;
+    public float heavyAttackKnockBackForce = 10f;
 }
 
 [System.Serializable]

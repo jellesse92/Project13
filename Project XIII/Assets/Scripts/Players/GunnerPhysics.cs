@@ -52,7 +52,7 @@ public class GunnerPhysics : PlayerPhysics{
             {
                 bullet.gameObject.transform.position = gameObject.transform.position;
                 bullet.gameObject.SetActive(true);
-
+                knockBack(gunnerStat.heavyAttackKnockBackForce);
                 bulletScript = bullet.gameObject.GetComponent<BulletProjectile>();
                 bulletScript.SetDamageAmount(physicStats.quickAttackStrength);
                 bulletScript.DamageFadeActive(true);
