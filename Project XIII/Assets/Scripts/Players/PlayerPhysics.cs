@@ -12,7 +12,8 @@ public class PlayerPhysics : MonoBehaviour {
     protected bool isJumping;
     protected bool isFacingRight;
     protected bool cannotMove;
-     
+    protected bool cannotJump;
+
     protected void Start () {
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -24,6 +25,7 @@ public class PlayerPhysics : MonoBehaviour {
         isFacingRight = true;
         isJumping = false;
         cannotMove = false;
+        cannotJump = false;
         ClassSpecificStart();
     }
 
@@ -67,6 +69,7 @@ public class PlayerPhysics : MonoBehaviour {
     {
         if (!myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
+            cannotJump = false;
             myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
             myAnimator.SetFloat("speed", Mathf.Abs(myKeyPress.horizontalAxisValue));
             cannotMove = false;
@@ -82,7 +85,7 @@ public class PlayerPhysics : MonoBehaviour {
 
     protected void Jump()
     {
-        if (!isJumping)
+        if (!isJumping && !cannotJump)
         {
             isJumping = true;
             if (Mathf.Abs(myKeyPress.horizontalAxisValue) > 0.1)
@@ -123,21 +126,24 @@ public class PlayerPhysics : MonoBehaviour {
             }
             else
                 myAnimator.SetTrigger("quickAttack");
+            cannotJump = true;
         }
     }
     protected virtual void HeavyAttack()
     {
-        myRigidbody.velocity = new Vector2(0, 0);
+        
 
         if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
         {
             if (isJumping)
             {
+                myRigidbody.velocity = new Vector2(0, 0);
                 myAnimator.SetTrigger("airHeavyAttack");
                 cannotMove = true;
             }
             else
                 myAnimator.SetTrigger("heavyAttack");
+            cannotJump = true;
         }
     }
 
