@@ -102,6 +102,23 @@ public class BasicEnemy2D : Enemy {
             isAttacking = false;
             attEnded = true;
         }
-
     }
+
+
+    /*
+     *   Melee Damage Control
+     */ 
+
+    //Applies damage to player
+    void ApplyDamage()
+    {
+        transform.GetChild(1).GetComponent<EnemyMeleeDamage>().ApplyDamage();
+    }
+
+    //Resets list of players attacked during last attack
+    void ResetDamageApply()
+    {
+        transform.GetChild(1).GetComponent<EnemyMeleeDamage>().ResetAttackApplied();
+    }
+
 }
