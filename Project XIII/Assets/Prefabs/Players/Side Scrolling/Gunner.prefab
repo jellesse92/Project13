@@ -35,6 +35,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1000013040075764
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000011865433278}
+  - 58: {fileID: 58000013767655414}
+  - 114: {fileID: 114000012976668758}
+  m_Layer: 8
+  m_Name: Enemy Detection Field
+  m_TagString: Detection Field
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4000010897350588
 Transform:
   m_ObjectHideFlags: 1
@@ -45,8 +62,22 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
+  m_Children:
+  - {fileID: 4000011865433278}
   m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!4 &4000011865433278
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013040075764}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4000010897350588}
   m_RootOrder: 0
 --- !u!50 &50000013844989750
 Rigidbody2D:
@@ -65,6 +96,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!58 &58000013767655414
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013040075764}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 15
 --- !u!61 &61000012844186316
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -181,21 +226,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77a2a9d59be01c9448feb4f0c9d1f478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myRigidbody: {fileID: 0}
-  myAnimator: {fileID: 0}
-  physicStats:
-    quickAttackStrength: 20
-    heavyAttackStrength: 40
-    quickAttackSpeed: 1
-    heavyAttackSpeed: 1
-    movementSpeed: 10
-    jumpForce: 15
-  boostStats:
-    attackBoost: 0
-    speedBoost: 0
-  myPlayerInput: {fileID: 0}
-  isJumping: 0
-  isFacingRight: 0
 --- !u!114 &114000012160316626
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -219,15 +249,16 @@ MonoBehaviour:
     quickAttackSpeed: 1
     heavyAttackSpeed: 1
     movementSpeed: 10
-    jumpForce: 15
+    jumpForce: 20
   boostStats:
     attackBoost: 1
     speedBoost: 1
   gunnerStats:
     quickBulletSpeed: 10
     heavyBulletSpeed: 1
-    HeavyAttackCoolDown: 1.2
+    heavyAttackCoolDown: 1.2
     dodgeCoolDown: 1
+    heavyAttackKnockBackForce: 10
   gunnerbullets:
     quickBullets: {fileID: 1000013815239410, guid: 0c6e4273032a95f47ae7f9ecf911a7f4,
       type: 2}
@@ -242,6 +273,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcff83776fbf92b4aa0efc8f60883126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114000012976668758
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013040075764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 296fd69c267e1c3478a9ddd0e005a73f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114000013793910032

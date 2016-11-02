@@ -158,7 +158,6 @@ public class PlayerPhysics : MonoBehaviour {
     protected void knockBack(float knockBackForce)
     {
         knockBackForce *= isFacingRight ? -1 : 1;
-        Debug.Log(knockBackForce);
 
         GetComponent<Rigidbody2D>().AddForce(new Vector2(knockBackForce * 2, 0), ForceMode2D.Impulse);
 
