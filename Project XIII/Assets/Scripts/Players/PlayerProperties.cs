@@ -35,6 +35,13 @@ public class PlayerProperties : MonoBehaviour{
     public PlayerPhysicStats physicStats;
     public PlayerBoostStats boostStats;
 
+    protected GameObject psScript;
+
+    void Start()
+    {
+        psScript = GameObject.FindGameObjectWithTag("In Game Status Panel");
+    }
+
     public int GetPlayerNumber()
     {
         return playerNumber;
@@ -71,6 +78,9 @@ public class PlayerProperties : MonoBehaviour{
     public void TakeDamage(int dmg)
     {
         currentHealth -= dmg;
+
+        if (psScript != null)
+            psScript.GetComponent<PlayerStatusUIScript>().ApplyHealthDamage(playerNumber, dmg);
     }
 
     public int GetCash()
