@@ -55,7 +55,7 @@ public class GameController : MonoBehaviour
             PlayerCharacters[i].player = -1;
 
         //Default settings. 1 Player set to gunner with keyboard + mouse input
-        SetPlayer(0, 2, 0);
+        //SetPlayer(0, 2, 0);
 
     }
 

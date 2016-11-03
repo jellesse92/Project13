@@ -40,7 +40,7 @@ GameObject:
   - 114: {fileID: 114000012293184308}
   m_Layer: 9
   m_Name: HitBox
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -102,7 +102,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013333228472}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 28.14466, y: -1.7301365, z: 0}
+  m_LocalPosition: {x: -13, y: -1.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -386,6 +386,7 @@ MonoBehaviour:
   stunnable: 1
   stunEffectiveness: 1
   attProjectionTime: 0.25
+  facingRight: 1
 --- !u!114 &114000014283544048
 MonoBehaviour:
   m_ObjectHideFlags: 1
