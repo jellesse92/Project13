@@ -45,6 +45,7 @@ GameObject:
   - 114: {fileID: 114000011420620546}
   - 114: {fileID: 114000013180458702}
   - 114: {fileID: 114000013930071204}
+  - 114: {fileID: 114000013785542674}
   m_Layer: 15
   m_Name: Mage
   m_TagString: Player
@@ -259,6 +260,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcff83776fbf92b4aa0efc8f60883126, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114000013785542674
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013394753432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9b6aec16b41cdc4eb41d3423f42f3b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mageQuickAttackVoiceList:
+  - {fileID: 8300000, guid: 20962c231b0586a4aac19b4e7ef6e87c, type: 3}
+  - {fileID: 8300000, guid: d6f71df1fe628b34ba9ec852432db9e4, type: 3}
+  - {fileID: 8300000, guid: a59516c5d3eb6304eb2de9e18a133f6a, type: 3}
+  mageHeavyAttackVoiceList:
+  - {fileID: 8300000, guid: bedb9a5fef21a6a44b91b934d7326c0a, type: 3}
+  - {fileID: 8300000, guid: a1adfb37037ba9f46af83a4e6fbcb414, type: 3}
+  - {fileID: 8300000, guid: f15cdf969224bd747adff34360732423, type: 3}
+  - {fileID: 8300000, guid: 14c95f90da6fbef4798f8799686c59cd, type: 3}
+  mageDamageVoiceList:
+  - {fileID: 8300000, guid: a38eb9b5a302c5d40a2df62a20ffd671, type: 3}
+  - {fileID: 8300000, guid: b2ccb53896eb3ae41bd2b867b8bfc5e4, type: 3}
+  - {fileID: 8300000, guid: f90a2d92804cfcf4cb1b7c801a4938a3, type: 3}
+  mageDeathVoiceList:
+  - {fileID: 8300000, guid: 91eaf432dd7739b468a57cf0a8934ecd, type: 3}
+  - {fileID: 8300000, guid: d3127c5c5ac1a4848ad39258e99b78d9, type: 3}
+  - {fileID: 8300000, guid: 7ac01330cb6546c429414a7503d15b0b, type: 3}
 --- !u!114 &114000013930071204
 MonoBehaviour:
   m_ObjectHideFlags: 1
