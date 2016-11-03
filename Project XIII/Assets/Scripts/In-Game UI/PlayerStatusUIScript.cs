@@ -26,6 +26,10 @@ public class PlayerStatusUIScript : MonoBehaviour {
     public void ApplyHealthDamage(int index, int damageAmount)
     {
         index -= 1;
+
+        if (index < 0)  //For when testing characters unassigned to player
+            index = 0;
+
         //Jump to last known health amount
         healthBars[index].transform.GetChild(0).GetComponent<Image>().fillAmount = 1.1f - healthLast[index] * .01f;
 

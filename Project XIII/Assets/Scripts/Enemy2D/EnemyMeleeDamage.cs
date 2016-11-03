@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class EnemyMeleeDamage : MonoBehaviour {
 
+    public float knockBackForce = 10f;
+    public float stunDuration = .1f;
     int damage = 10;
 
     HashSet<GameObject> playersinRange = new HashSet<GameObject>();
@@ -33,7 +35,7 @@ public class EnemyMeleeDamage : MonoBehaviour {
             if (!playersAttacked.Contains(target))
             {
                 playersAttacked.Add(target);
-                target.GetComponent<PlayerProperties>().TakeDamage(transform.parent.GetComponent<Enemy>().attackPower);
+                target.GetComponent<PlayerProperties>().TakeDamage(transform.parent.GetComponent<Enemy>().attackPower,knockBackForce,stunDuration);
             }
 
         }

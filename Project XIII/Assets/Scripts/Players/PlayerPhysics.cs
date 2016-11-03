@@ -37,13 +37,17 @@ public class PlayerPhysics : MonoBehaviour {
 
     protected void FixedUpdate()
     {
-        Movement();
-        if (myKeyPress.jumpPress)
-            Jump();
-        if (myKeyPress.quickAttackPress)
-            QuickAttack();
-        if (myKeyPress.heavyAttackPress)
-            HeavyAttack();
+        if (!GetComponent<PlayerProperties>().GetStunState())
+        {
+            Movement();
+            if (myKeyPress.jumpPress)
+                Jump();
+            if (myKeyPress.quickAttackPress)
+                QuickAttack();
+            if (myKeyPress.heavyAttackPress)
+                HeavyAttack();
+        }
+
         Landing();
 
         ClassSpecificUpdate();
@@ -166,6 +170,5 @@ public class PlayerPhysics : MonoBehaviour {
         knockBackForce *= isFacingRight ? -1 : 1;
 
         GetComponent<Rigidbody2D>().AddForce(new Vector2(knockBackForce * 2, 0), ForceMode2D.Impulse);
-
     }
 }

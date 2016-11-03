@@ -36,6 +36,9 @@ public class PlayerProperties : MonoBehaviour{
     public PlayerBoostStats boostStats;
 
     protected GameObject psScript;
+    protected bool isStunned = false;
+
+
 
     void Start()
     {
@@ -75,9 +78,12 @@ public class PlayerProperties : MonoBehaviour{
         }
     }
 
-    public void TakeDamage(int dmg)
+    public void TakeDamage(int dmg, float knockBack = 0f, float stunTime = 0f)
     {
         currentHealth -= dmg;
+
+        if (!isStunned)
+            StartCoroutine(ApplyStun(stunTime));
 
         if (psScript != null)
             psScript.GetComponent<PlayerStatusUIScript>().ApplyHealthDamage(playerNumber, dmg);
@@ -108,4 +114,17 @@ public class PlayerProperties : MonoBehaviour{
         return currentHealth;
     }
 
+    IEnumerator ApplyStun(float duration)
+    {
+        isStunned = true;
+        GetComponent<Animator>().SetTrigger("stun");
+        yield return new WaitForSeconds(duration);
+        GetComponent<Animator>().SetTrigger("stunRecovery");
+        isStunned = false;
+    }
+
+    public bool GetStunState()
+    {
+        return isStunned;
+    }
 }

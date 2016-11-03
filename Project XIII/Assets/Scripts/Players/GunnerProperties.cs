@@ -24,7 +24,7 @@ public class GunnerProperties : PlayerProperties{
 
     void Start()
     {
-        psScript = GameObject.FindGameObjectWithTag("In Game Status Panel");
+        psScript = GameObject.FindGameObjectWithTag("In Game Status Panel"); //Do this for other classes
         gunnerbullets.quickBullets = Instantiate(gunnerbullets.quickBullets);
         gunnerbullets.heavyBullets = Instantiate(gunnerbullets.heavyBullets);
     }
@@ -37,4 +37,5 @@ public class GunnerProperties : PlayerProperties{
     {
         return gunnerbullets;
     }
+
 }
