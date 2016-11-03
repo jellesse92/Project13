@@ -80,6 +80,10 @@ public class BulletProjectile : MonoBehaviour {
         {
             col.gameObject.GetComponent<JazzPlayer>().TakeDamage(damageAmnt, knockbackAmnt);
             isHit = true;
+        } else if (col.collider.tag == "Destructible")
+        {
+            col.gameObject.GetComponent<Destructible>().TakeDamage(damageAmnt);
+            isHit = true;
         }
         if (!isPiercing && isHit)
         {
