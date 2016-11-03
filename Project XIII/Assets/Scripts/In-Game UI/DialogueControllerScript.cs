@@ -25,6 +25,10 @@ public class DialogueControllerScript : MonoBehaviour {
     public GameObject proceedArrow;                             //Arrow to indicate end of current dialogue line
     public Text dialogueUIText;                                 //Typed text for dialogue
 
+    //Other utility scripts
+    MusicManager musicManager;                                  //Script that manages music
+    SequenceFlowController sequenceScript;                      //Controls flow of the scene
+
     //---Colors for large portraits
     static Color SPEAKING_COLOR = new Color(1f, 1f, 1f);        //Brights character portrait when speaking
     static Color FADE_COLOR = new Color(.5f, .5f, .5f);         //Darkens character when they are not speaking
@@ -52,6 +56,8 @@ public class DialogueControllerScript : MonoBehaviour {
     {
         Reset();
         ConstructDict();
+        musicManager = GameObject.FindGameObjectWithTag("Music").GetComponent<MusicManager>();
+        sequenceScript = GameObject.FindGameObjectWithTag("Sequence").GetComponent<SequenceFlowController>();
     }
 
     // Use this for initialization
@@ -232,6 +238,10 @@ public class DialogueControllerScript : MonoBehaviour {
                 }
                 else { setCharListener(rightPortrait, rightNameTag); }
                 break;
+            case ("Music"):
+                if (command[1] == "NextLayer")
+                    musicManager.ActivateNextClip();
+                break;
 
             //Clear out character information in dialogue
             case ("Clear"): Clear();
@@ -311,6 +321,7 @@ public class DialogueControllerScript : MonoBehaviour {
     {
         Reset();
         dialogueUI.SetActive(false);
+        sequenceScript.NextSequence();
     }
 
     /*

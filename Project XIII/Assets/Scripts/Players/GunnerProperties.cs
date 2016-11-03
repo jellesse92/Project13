@@ -21,9 +21,12 @@ public class GunnerProperties : PlayerProperties{
 
     public GunnerStats gunnerStats;
     public GunnerBullets gunnerbullets;
+    Animator anim;
 
     void Start()
     {
+        anim = gameObject.GetComponent<Animator>();
+        anim.runtimeAnimatorController.animationClips[8].frameRate = 60;
         psScript = GameObject.FindGameObjectWithTag("In Game Status Panel"); //Do this for other classes
         gunnerbullets.quickBullets = Instantiate(gunnerbullets.quickBullets);
         gunnerbullets.heavyBullets = Instantiate(gunnerbullets.heavyBullets);
