@@ -28,6 +28,7 @@ public class DialogueControllerScript : MonoBehaviour {
     //Other utility scripts
     MusicManager musicManager;                                  //Script that manages music
     SequenceFlowController sequenceScript;                      //Controls flow of the scene
+    CamShakeScript shakeScript;                                 //Controls camera shake
 
     //---Colors for large portraits
     static Color SPEAKING_COLOR = new Color(1f, 1f, 1f);        //Brights character portrait when speaking
@@ -58,6 +59,7 @@ public class DialogueControllerScript : MonoBehaviour {
         ConstructDict();
         musicManager = GameObject.FindGameObjectWithTag("Music").GetComponent<MusicManager>();
         sequenceScript = GameObject.FindGameObjectWithTag("Sequence").GetComponent<SequenceFlowController>();
+        shakeScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamShakeScript>();
     }
 
     // Use this for initialization
@@ -241,6 +243,13 @@ public class DialogueControllerScript : MonoBehaviour {
             case ("Music"):
                 if (command[1] == "NextLayer")
                     musicManager.ActivateNextClip();
+                break;
+            case ("CamShake"):
+                float shakeAmt = .01f;
+                float.TryParse(command[1], out shakeAmt);
+                shakeAmt *= .01f;
+                shakeScript.StartShake(shakeAmt);
+
                 break;
 
             //Clear out character information in dialogue

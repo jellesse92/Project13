@@ -6,6 +6,25 @@ public class CamShakeScript : MonoBehaviour {
 
     float shakeAmount;
     bool isShaking = false;
+    bool keepShaking = true;
+
+    void Start()
+    {
+    }
+
+    void FixedUpdate()
+    {
+
+    }
+
+    public IEnumerator InfiniteShake()
+    {
+        while (true)
+        {
+            StartShake(.02f);
+            yield return new WaitForSeconds(3f);
+        }
+    }
 
     public void StartShake(float magnitude)
     {

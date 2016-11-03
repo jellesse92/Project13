@@ -111,6 +111,9 @@ public class Enemy : MonoBehaviour {
         anim.SetTrigger("death");
         dead = true;
         gameObject.layer = 14;
+
+        if (transform.parent != null && transform.parent.tag == "Fight Zone")
+            transform.parent.GetComponent<FightZoneLockScript>().ReportDead();
     }
 
     IEnumerator ApplyStun()
