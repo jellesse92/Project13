@@ -8,7 +8,7 @@ public class BasicEnemy2D : Enemy {
     bool isAttacking;                                       //Determine if enemy is in the middle of an attack animation to stop movement    
     bool attEnded;                                          //Determine if the attack ended
     bool gotAttackAnim;                                     //Determines if attack animation has been registered
-    bool facingRight = true;                                //Determine direction facing
+    public bool facingRight = true;                         //Determine direction facing
 
     // Use this for initialization
     void Start()
@@ -23,7 +23,7 @@ public class BasicEnemy2D : Enemy {
     {
         if (!dead)
         {
-            if (GetVisibleState() && GetPursuitState() && !stunned)
+            if (GetVisibleState() && GetPursuitState() && !stunned && !frozen)
             {
                 if (!isAttacking && !inAttackRange)
                     Approach();

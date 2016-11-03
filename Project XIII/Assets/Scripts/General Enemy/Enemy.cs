@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour {
 
     protected bool dead;                                //Determines if enemy is dead
     protected bool stunned;                             //Determines if enemy is stunned
+    protected bool frozen;                              //Determines if enemy is not meant to move
     float currentStunMultiplier;                        //Current stun time multiplier to be applied
 
     //Detection and Pursuit Variables
@@ -31,6 +32,7 @@ public class Enemy : MonoBehaviour {
     void Awake()
     {
         Reset();
+        frozen = false;
         isVisible = true;
         anim = GetComponent<Animator>();
 
@@ -157,5 +159,9 @@ public class Enemy : MonoBehaviour {
         inAttackRange = b;
     }
 
+    public void SetFrozenState(bool b)
+    {
+        frozen = b;
+    }
 
 }
