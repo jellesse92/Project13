@@ -16,10 +16,10 @@ public class KeyConfig
 {
     public string horizontalAxisName = "Horizontal_Key"; //name of the horizontal axis in the input manager
     public string verticalAxisName = "Vertical_Key";
-    public string jumpButton = "1_Circle";
-    public string quickAttackButton = "1_X";
+    public string jumpButton = "1_X";
+    public string quickAttackButton = "1_Square";
     public string heavyAttackButton = "1_Triangle";
-    public string blockButton = "1_Square";
+    public string blockButton = "1_Circle";
 
     //public string dashkey
 
@@ -99,10 +99,10 @@ public class PlayerInput : MonoBehaviour {
 
         keyConfig.horizontalAxisName = num.ToString() + "_LeftJoyStickX";
         keyConfig.verticalAxisName = num.ToString() + "_LeftJoyStickY";
-        keyConfig.jumpButton = num.ToString() + "_Circle";
-        keyConfig.quickAttackButton = num.ToString() + "_X";
+        keyConfig.jumpButton = num.ToString() + "_X";
+        keyConfig.quickAttackButton = num.ToString() + "_Square";
         keyConfig.heavyAttackButton = num.ToString() + "_Triangle";
-        keyConfig.blockButton = num.ToString() + "_Square";
+        keyConfig.blockButton = num.ToString() + "_Circle";
         //keyConfig.dashButton = ?
 
 
