@@ -7,7 +7,7 @@ public class SwordsmanMelee : MonoBehaviour {
     {
         if (col.tag == "Enemy")
         {
-            col.GetComponent<Enemy>().Damage(20, 10, 1.2f);
+            col.GetComponent<Enemy>().Damage(20, 1.2f);
             Debug.Log("hit");
         }
 

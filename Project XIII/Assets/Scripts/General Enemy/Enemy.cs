@@ -87,7 +87,7 @@ public class Enemy : MonoBehaviour {
     }
 
     //Damage script to be applied when enemy takes damage
-    public void Damage(int damage, int knockBack = 0, float stunMultiplier = 0f)
+    public void Damage(int damage, float stunMultiplier = 0f)
     {
         if (dead)
             return;

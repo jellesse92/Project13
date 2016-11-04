@@ -2,12 +2,15 @@
 using System.Collections;
 
 public class GunnerPhysics : PlayerPhysics{
+
     GunnerStats gunnerStat;
     GunnerBullets gunnerbullets;
     BulletProjectile bulletScript;
     Vector3 gunPoint;
     Vector2 velocity;
     float bulletSpeed;
+
+    public GameObject bulletSource;
 
     public override void ClassSpecificStart()
     {
@@ -17,9 +20,13 @@ public class GunnerPhysics : PlayerPhysics{
 
     void ShootQuickBullet()
     {
+
+        bulletSource.GetComponent<BulletSourceScript>().QuickShot(physicStats.quickAttackStrength);
+        /*
         velocity = isFacingRight? Vector2.right : Vector2.left;
         bulletSpeed = gunnerStat.quickBulletSpeed * boostStats.speedBoost;
 
+        
         foreach (Transform bullet in gunnerbullets.quickBullets.transform)
         {
             
@@ -39,6 +46,7 @@ public class GunnerPhysics : PlayerPhysics{
                 return;
             }
         }
+        */
     }
 
     void ShootHeavyBullet()

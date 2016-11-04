@@ -17,10 +17,10 @@ public class SequenceFlowController : MonoBehaviour {
 
     void Start()
     {
-        dcScript = GameObject.FindGameObjectWithTag("Dialogue Controller").GetComponent<DialogueControllerScript>();
+        //dcScript = GameObject.FindGameObjectWithTag("Dialogue Controller").GetComponent<DialogueControllerScript>();
         musicManager = GameObject.FindGameObjectWithTag("Music").GetComponent<MusicManager>();
         cam = GameObject.FindGameObjectWithTag("MainCamera");
-        dcScript.LoadTextAsset(0);
+        //dcScript.LoadTextAsset(0);
     }
 
 
