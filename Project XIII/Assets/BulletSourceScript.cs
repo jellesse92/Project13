@@ -9,7 +9,7 @@ public class BulletSourceScript : MonoBehaviour {
 
     LayerMask layermask;                            //Prevent raycast from hitting unimportant layers
     RaycastHit2D[] hit = new RaycastHit2D[5];       //What was hit by raycast
-
+    RaycastHit2D[][] heavyHit = new RaycastHit2D[5][];
 
     // Use this for initialization
     void Start () {
@@ -90,27 +90,25 @@ public class BulletSourceScript : MonoBehaviour {
 
     public void HeavyShot(int damage)
     {
-        hit[0] = Physics2D.Raycast(transform.position, transform.right * transform.parent.localScale.x, 5f, layermask);
-        hit[1] = Physics2D.Raycast(transform.position, new Vector3(1 * transform.parent.localScale.x, .5f, 0), 5, layermask);
-        hit[2] = Physics2D.Raycast(transform.position, new Vector3(1 * transform.parent.localScale.x, -.5f, 0), 5, layermask);
-        hit[3] = Physics2D.Raycast(transform.position, new Vector3(1 * transform.parent.localScale.x, -.25f, 0), 5, layermask);
-        hit[4] = Physics2D.Raycast(transform.position, new Vector3(1 * transform.parent.localScale.x, .25f, 0), 5, layermask);
-
-        for(int i = 0; i < 5; i++)
-        {
-            if (hit[i])
-            {
-                ApplyHeavyDamage(hit[i].collider.gameObject, damage/4, hit[i].distance);
-            }
-        }
-
+        //Physics2D.RaycastAll(transform.position, transform.right * transform.parent.localScale.x, 5f, layermask);
+        heavyHit[0] = Physics2D.RaycastAll(transform.position, transform.right * transform.parent.localScale.x, 5f, layermask);
+        heavyHit[1] = Physics2D.RaycastAll(transform.position, new Vector3(1 * transform.parent.localScale.x, .5f, 0), 5, layermask);
+        heavyHit[2] = Physics2D.RaycastAll(transform.position, new Vector3(1 * transform.parent.localScale.x, -.5f, 0), 5, layermask);
+        heavyHit[3] = Physics2D.RaycastAll(transform.position, new Vector3(1 * transform.parent.localScale.x, -.25f, 0), 5, layermask);
+        heavyHit[4] = Physics2D.RaycastAll(transform.position, new Vector3(1 * transform.parent.localScale.x, .25f, 0), 5, layermask);
+        
+        for (int i = 0; i < 5; i++)
+            foreach (RaycastHit2D hh in heavyHit[i])
+                if (hh)
+                    if (hh.collider.tag == "Enemy")
+                        ApplyHeavyDamage(hh.collider.gameObject, damage / 4, hit[i].distance);
     }
 
     void ApplyHeavyDamage(GameObject target, int damage, float distance)
     {
         if(target.tag == "Enemy")
         {
-            target.GetComponent<Rigidbody2D>().AddForce(new Vector2(100f * transform.parent.localScale.x, 6000f));
+            target.GetComponent<Rigidbody2D>().AddForce(new Vector2(2000f * transform.parent.localScale.x, 4000f));
             target.GetComponent<Enemy>().Damage(damage, HEAVY_STUN_MULTI);
         }
     }
