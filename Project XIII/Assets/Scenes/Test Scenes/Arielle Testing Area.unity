@@ -329,6 +329,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1000013660361970, guid: bc7f1ae70b13b8444b981b23d8708c2f, type: 2}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bc7f1ae70b13b8444b981b23d8708c2f, type: 2}
   m_IsPrefabParent: 0
@@ -434,30 +438,11 @@ Camera:
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
   m_StereoMirrorMode: 0
---- !u!1 &292319660 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1000013333228472, guid: 505026bd9660e45408eb909e00a94b99,
-    type: 2}
-  m_PrefabInternal: {fileID: 849877139}
 --- !u!4 &292319670 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000012030098652, guid: 505026bd9660e45408eb909e00a94b99,
     type: 2}
   m_PrefabInternal: {fileID: 849877139}
---- !u!61 &292319675
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 292319660}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: -0.1, y: 0.9}
-  serializedVersion: 2
-  m_Size: {x: 1.3, y: 1.5}
 --- !u!1001 &305682883
 Prefab:
   m_ObjectHideFlags: 0
@@ -2794,15 +2779,6 @@ Prefab:
     - target: {fileID: 1000013333228472, guid: 505026bd9660e45408eb909e00a94b99, type: 2}
       propertyPath: m_Name
       value: BasicEnemy2D (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000012979805064, guid: 505026bd9660e45408eb909e00a94b99,
-        type: 2}
-      propertyPath: facingRight
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000012030098652, guid: 505026bd9660e45408eb909e00a94b99, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 505026bd9660e45408eb909e00a94b99, type: 2}
@@ -5183,7 +5159,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000012030098652, guid: 505026bd9660e45408eb909e00a94b99, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -1.7301365
+      value: -1.730137
       objectReference: {fileID: 0}
     - target: {fileID: 4000012030098652, guid: 505026bd9660e45408eb909e00a94b99, type: 2}
       propertyPath: m_LocalPosition.z

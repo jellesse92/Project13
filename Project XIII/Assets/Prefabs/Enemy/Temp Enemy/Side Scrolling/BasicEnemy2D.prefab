@@ -66,6 +66,7 @@ GameObject:
   - 114: {fileID: 114000012654225966}
   - 82: {fileID: 82000013697984844}
   - 114: {fileID: 114000010139796144}
+  - 61: {fileID: 61000011432848888}
   m_Layer: 9
   m_Name: BasicEnemy2D
   m_TagString: Enemy
@@ -106,8 +107,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013333228472}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15, y: -1.7301365, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalPosition: {x: -5, y: -1.7301365, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000011467175252}
@@ -125,7 +126,7 @@ Rigidbody2D:
   m_Mass: 10
   m_LinearDrag: 8
   m_AngularDrag: 0.05
-  m_GravityScale: 10
+  m_GravityScale: 6
   m_IsKinematic: 0
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -145,6 +146,20 @@ BoxCollider2D:
   m_Offset: {x: 0.05, y: -0.8}
   serializedVersion: 2
   m_Size: {x: 0.12, y: 1.4}
+--- !u!61 &61000011432848888
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013333228472}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: -0.1, y: 0.9}
+  serializedVersion: 2
+  m_Size: {x: 1.3, y: 1.5}
 --- !u!61 &61000013231920210
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -559,8 +574,9 @@ MonoBehaviour:
   attackPower: 5
   stunnable: 1
   stunEffectiveness: 1
+  grounded: 0
   attProjectionTime: 0.25
-  facingRight: 0
+  facingRight: 1
 --- !u!114 &114000014283544048
 MonoBehaviour:
   m_ObjectHideFlags: 1

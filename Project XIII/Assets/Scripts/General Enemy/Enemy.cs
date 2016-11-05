@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour {
     public int attackPower;                             //Base attack power of enemy
     public bool stunnable;                              //Able to be stunned
     public float stunEffectiveness;                     //Effectiveness of stun
+    public bool grounded;                               //Checks if enemy is on the ground
 
     protected bool dead;                                //Determines if enemy is dead
     protected bool stunned;                             //Determines if enemy is stunned
@@ -26,7 +27,11 @@ public class Enemy : MonoBehaviour {
     protected GameObject target;                        //Target to chase
 
     //Attack Variables
-    protected bool inAttackRange;                                 //Detects if in range to begin attacking
+    protected bool inAttackRange;                       //Detects if in range to begin attacking
+
+    //Ground detection
+    float distToGround;                                 //Distance from the ground
+    int layerMask;                                      //Layers to check for ground
 
     // Use this for initialization
     void Awake()
@@ -35,7 +40,8 @@ public class Enemy : MonoBehaviour {
         frozen = false;
         isVisible = true;
         anim = GetComponent<Animator>();
-
+        distToGround = GetComponent<Collider2D>().bounds.extents.y;
+        layerMask = (LayerMask.GetMask("Default"));
     }
 
     // Call when enemy becomes visible on screen
@@ -167,4 +173,12 @@ public class Enemy : MonoBehaviour {
         frozen = b;
     }
 
+    public bool IsGrounded()
+    {
+        if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround - 0.1f, layerMask))
+        {
+            return true;
+        }
+        return false;
+    }
 }
