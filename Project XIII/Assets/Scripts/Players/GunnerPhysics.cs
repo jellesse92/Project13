@@ -52,7 +52,7 @@ public class GunnerPhysics : PlayerPhysics{
     void ShootHeavyBullet()
     {
 
-        knockBack(gunnerStat.heavyAttackKnockBackForce);
+        KnockBack(gunnerStat.heavyAttackKnockBackForce);
         bulletSource.GetComponent<BulletSourceScript>().HeavyShot(physicStats.quickAttackStrength);
         /*
         velocity = isFacingRight? Vector2.right : Vector2.left;

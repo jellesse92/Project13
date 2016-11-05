@@ -11,8 +11,10 @@ public class PlayerPhysics : MonoBehaviour {
     protected PlayerInput myPlayerInput;
     protected bool isJumping;
     protected bool isFacingRight;
-    protected bool cannotMove;
+    protected bool cannotMovePlayer;
     protected bool cannotJump;
+    protected bool cannotAttack;
+    protected bool zeroVelocity;
 
     protected void Start () {
         myAnimator = GetComponent<Animator>();
@@ -24,8 +26,11 @@ public class PlayerPhysics : MonoBehaviour {
         myKeyPress = myPlayerInput.getKeyPress();
         isFacingRight = true;
         isJumping = false;
-        cannotMove = false;
+        cannotMovePlayer = false;
         cannotJump = false;
+        cannotAttack = false;
+        zeroVelocity = false;
+
         ClassSpecificStart();
     }
 
@@ -71,20 +76,15 @@ public class PlayerPhysics : MonoBehaviour {
 
     protected void Movement()
     {
-        if (!myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+        if (!cannotMovePlayer)
         {
-            cannotJump = false;
             myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
             myAnimator.SetFloat("speed", Mathf.Abs(myKeyPress.horizontalAxisValue));
-            cannotMove = false;
             if (!isJumping)
                 Flip();
         }
-        else if(cannotMove)
-        {
-            myRigidbody.velocity = new Vector2(0, -0.001f);
-            isJumping = true;
-        }
+        if(zeroVelocity)
+            myRigidbody.velocity = new Vector2(0, 0);
     }
 
     protected void Jump()
@@ -119,35 +119,23 @@ public class PlayerPhysics : MonoBehaviour {
 
     protected virtual void QuickAttack()
     {
-        myRigidbody.velocity = new Vector2(0, 0);
-
-        if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+        if (!cannotAttack)
         {
             if (isJumping)
-            {
                 myAnimator.SetTrigger("airQuickAttack");
-                cannotMove = true;
-            }
             else
                 myAnimator.SetTrigger("quickAttack");
-            cannotJump = true;
         }
     }
     protected virtual void HeavyAttack()
     {
-        
-
-        if (!this.myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Attack"))
+       
+        if (!cannotAttack)
         {
             if (isJumping)
-            {
-                myRigidbody.velocity = new Vector2(0, 0);
                 myAnimator.SetTrigger("airHeavyAttack");
-                cannotMove = true;
-            }
             else
                 myAnimator.SetTrigger("heavyAttack");
-            cannotJump = true;
         }
     }
 
@@ -165,10 +153,69 @@ public class PlayerPhysics : MonoBehaviour {
         }
     }
 
-    protected void knockBack(float knockBackForce)
+    protected void KnockBack(float knockBackForce)
     {
         knockBackForce *= isFacingRight ? -1 : 1;
-
         GetComponent<Rigidbody2D>().AddForce(new Vector2(knockBackForce * 2, 0), ForceMode2D.Impulse);
+    }
+
+    //All function below is use for Animation Event
+    public void ActivateMovement()
+    {
+        cannotMovePlayer = false;
+    }
+
+    public void DeactivateMovement()
+    {
+        cannotMovePlayer = true;
+    }
+
+    public void ActivateJump()
+    {
+        cannotJump = false;
+    }
+
+    public void DeactivateJump()
+    {
+        cannotJump = true;
+    }
+
+    public void ActivateAttack()
+    {
+        cannotAttack = false;
+    }
+
+    public void DeactivateAttack()
+    {
+        cannotAttack = true;
+    }
+
+    public void DeactivateVelocity()
+    {
+        zeroVelocity = true;
+    }
+
+    public void ActivateVelocity()
+    {
+        zeroVelocity = false;
+    }
+    
+    public void VelocityY(float velocityY)
+    {
+        myRigidbody.velocity = new Vector2(0, velocityY);
+    }
+
+    public void ActivateAttackMovementJump()
+    {
+        cannotAttack = false;
+        cannotJump = false;
+        cannotMovePlayer = false;
+    }
+
+    public void DeactivateAttackMovementJump()
+    {
+        cannotAttack = true;
+        cannotJump = true;
+        cannotMovePlayer = true;
     }
 }
