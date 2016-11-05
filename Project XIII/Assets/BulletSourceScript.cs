@@ -57,28 +57,19 @@ public class BulletSourceScript : MonoBehaviour {
             //make a spark at the hit.point
             //hit[0].point;
             if (hit[0].collider.tag == "Enemy")
-            {
                 ApplyQuickDamage(hit[0].collider.gameObject, damage);
-            }
 
-            //Color color = hit ? Color.green : Color.red;
-            //Debug.DrawRay(transform.position, transform.right * (50f * transform.parent.localScale.x), color);
         }
     }
 
     void ApplyQuickDamage(GameObject target, int damage)
     {
         if(target.tag == "Enemy")
-        {
             target.GetComponent<Enemy>().Damage(damage, LIGHT_STUN_MULTI);
-            //target.GetComponent<Rigidbody2D>().AddForce(new Vector2(5000f * transform.parent.localScale.x, 20000f));
-        }
     }
 
     public void HeavyShot(int damage)
     {
-        //hit[index].distance for multiplier my distance
-
         hit[0] = Physics2D.Raycast(transform.position, transform.right * transform.parent.localScale.x, 5f, layermask);
         hit[1] = Physics2D.Raycast(transform.position, new Vector3(1 * transform.parent.localScale.x, .5f, 0), 5, layermask);
         hit[2] = Physics2D.Raycast(transform.position, new Vector3(1 * transform.parent.localScale.x, -.5f, 0), 5, layermask);
