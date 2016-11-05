@@ -51,6 +51,10 @@ public class GunnerPhysics : PlayerPhysics{
 
     void ShootHeavyBullet()
     {
+
+        knockBack(gunnerStat.heavyAttackKnockBackForce);
+        bulletSource.GetComponent<BulletSourceScript>().HeavyShot(physicStats.quickAttackStrength);
+        /*
         velocity = isFacingRight? Vector2.right : Vector2.left;
         bulletSpeed = gunnerStat.quickBulletSpeed * boostStats.speedBoost;
 
@@ -74,7 +78,9 @@ public class GunnerPhysics : PlayerPhysics{
                 bullet.GetComponent<Rigidbody2D>().velocity = velocity * bulletSpeed;
                 return;
             }
-        }
+                }
+            */
+
 
     }
 }
