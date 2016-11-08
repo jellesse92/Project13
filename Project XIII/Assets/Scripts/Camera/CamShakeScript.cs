@@ -26,11 +26,11 @@ public class CamShakeScript : MonoBehaviour {
         }
     }
 
-    public void StartShake(float magnitude)
+    public void StartShake(float magnitude, float duration = .5f)
     {
         shakeAmount = magnitude;
         InvokeRepeating("CameraShake", 0, .01f);
-        Invoke("StopShaking", .5f);
+        Invoke("StopShaking", duration);
     }
 
 
