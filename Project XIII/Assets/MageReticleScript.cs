@@ -30,7 +30,6 @@ public class MageReticleScript : MonoBehaviour {
         {
             float x = (Mathf.Abs(input.getKeyPress().horizontalAxisValue) > 0.05) ? input.getKeyPress().horizontalAxisValue : 0f;
             float y = (Mathf.Abs(input.getKeyPress().verticalAxisValue) > 0.05) ? input.getKeyPress().verticalAxisValue : 0f;
-            Debug.Log("x;" + x);
 
             Vector3 moveDir = new Vector3(x * SPEED, y * SPEED, 0f);
             transform.position = transform.position + moveDir;
@@ -115,10 +114,15 @@ public class MageReticleScript : MonoBehaviour {
         if (yDistance < .5f)
             yDistance = .5f;
 
-
+        float yMulti = 3000f;
 
         Vector3 dir = (this.transform.position - enemy.transform.position).normalized;
-        enemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(3000f * -dir.x * (5f/xDistance), 3000f * -dir.y * (5f/yDistance)));
+
+
+        if (dir.y < 0f)
+            yMulti = 5000f;
+
+            enemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(3000f * -dir.x * (5f/xDistance), yMulti * -dir.y * (5f/yDistance)));
 
 
         ApplyDamage(enemy);
