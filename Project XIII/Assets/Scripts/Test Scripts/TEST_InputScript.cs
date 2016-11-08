@@ -10,8 +10,12 @@ public class TEST_InputScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        
-            
+
+
+        if (Input.GetKeyDown(KeyCode.Z))
+            Debug.Log("Z Down");
+        if (Input.GetKeyUp(KeyCode.Z))
+            Debug.Log("Z released");
 
         if (Input.GetButtonDown("1_X"))
             Debug.Log("Player 1: X Pressed!");
