@@ -54,7 +54,6 @@ public class MagePhysics : PlayerPhysics
         if (!quickAttackReticle.transform.GetChild(0).gameObject.activeSelf)
         {
             EndQuickAttack();
-            Debug.Log("no child");
         }
 
     }

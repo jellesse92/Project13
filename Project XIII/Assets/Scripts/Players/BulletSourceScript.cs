@@ -18,36 +18,7 @@ public class BulletSourceScript : MonoBehaviour {
         layermask = (LayerMask.GetMask("Default","Enemy", "Juggled Enemy"));
 	}
 
-    void Update()
-    {
-
-        /* HEAVY SHOT STUFF. LOOK AT THIS IF YOU WANNA KNOW WHERE THE EFFECT SHOULD PLAY
-        hit[0] = Physics2D.Raycast(transform.position, transform.right * transform.parent.localScale.x, 5f,layermask);
-        hit[1] = Physics2D.Raycast(transform.position, new Vector3(1 * transform.parent.localScale.x, .5f, 0), 5, layermask);
-        hit[2] = Physics2D.Raycast(transform.position, new Vector3(1 * transform.parent.localScale.x, -.5f, 0), 5, layermask);
-        hit[3] = Physics2D.Raycast(transform.position, new Vector3(1 * transform.parent.localScale.x, -.25f, 0), 5, layermask);
-        hit[4] = Physics2D.Raycast(transform.position, new Vector3(1 * transform.parent.localScale.x, .25f, 0), 5, layermask);
-
-        Color color = Color.red;
-
-        for (int i = 0; i <5; i++)
-        {
-            if (hit[i])
-            {
-                Debug.Log(hit[i].collider.name);
-                color = Color.green;
-                break;
-            }
-        }
-
-        Debug.DrawRay(transform.position, transform.right * (5f * transform.parent.localScale.x), color);
-        Debug.DrawRay(transform.position, new Vector3(1* transform.parent.localScale.x,.5f,0) * 5f, color);
-        Debug.DrawRay(transform.position, new Vector3(1 * transform.parent.localScale.x, -.5f, 0) * 5f, color);
-        Debug.DrawRay(transform.position, new Vector3(1 * transform.parent.localScale.x, -.25f, 0) * 5f, color);
-        Debug.DrawRay(transform.position, new Vector3(1 * transform.parent.localScale.x, .25f, 0) * 5f, color);
-        */
-    }
-
+ 
     //Cast out quick shot ray to apply damage
     public void QuickShot(int damage)
     {
@@ -94,13 +65,18 @@ public class BulletSourceScript : MonoBehaviour {
 
     public void HeavyShot(int damage)
     {
-        //Physics2D.RaycastAll(transform.position, transform.right * transform.parent.localScale.x, 5f, layermask);
         heavyHit[0] = Physics2D.RaycastAll(transform.position, transform.right * transform.parent.localScale.x, 5f, layermask);
         heavyHit[1] = Physics2D.RaycastAll(transform.position, new Vector3(1 * transform.parent.localScale.x, .5f, 0), 5, layermask);
         heavyHit[2] = Physics2D.RaycastAll(transform.position, new Vector3(1 * transform.parent.localScale.x, -.5f, 0), 5, layermask);
         heavyHit[3] = Physics2D.RaycastAll(transform.position, new Vector3(1 * transform.parent.localScale.x, -.25f, 0), 5, layermask);
         heavyHit[4] = Physics2D.RaycastAll(transform.position, new Vector3(1 * transform.parent.localScale.x, .25f, 0), 5, layermask);
-        
+
+        if (transform.parent.parent != null)
+        {
+            transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(.08f);
+        }
+
+
         for (int i = 0; i < 5; i++)
             foreach (RaycastHit2D hh in heavyHit[i])
                 if (hh)
