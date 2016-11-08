@@ -2606,9 +2606,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 566569900}
   - 212: {fileID: 566569903}
-  - 61: {fileID: 566569902}
   - 114: {fileID: 566569901}
-  m_Layer: 15
+  - 58: {fileID: 566569902}
+  m_Layer: 19
   m_Name: Quick Attack Reticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2640,20 +2640,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cc4a13c4d313c74387db42e47a76486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!61 &566569902
-BoxCollider2D:
+--- !u!58 &566569902
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 566569899}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Radius: 5
 --- !u!212 &566569903
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2956,7 +2956,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4000012030098652, guid: 505026bd9660e45408eb909e00a94b99, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4000012030098652, guid: 505026bd9660e45408eb909e00a94b99, type: 2}
       propertyPath: m_LocalPosition.z
@@ -3154,7 +3154,7 @@ GameObject:
   - 4: {fileID: 1278486878}
   - 198: {fileID: 1278486880}
   - 199: {fileID: 1278486879}
-  m_Layer: 15
+  m_Layer: 19
   m_Name: Quick Attack Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

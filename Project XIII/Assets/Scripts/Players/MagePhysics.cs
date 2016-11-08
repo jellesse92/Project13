@@ -5,7 +5,7 @@ public class MagePhysics : PlayerPhysics
 {
     const float QUICK_ORIGIN_X = 5f;
     const float QUICK_ORIGIN_Y = 2f;
-    const float QUICK_ATTACK_DURATION = 4f;
+    const float QUICK_ATTACK_DURATION = .5f;
 
     public GameObject quickAttackReticle;                   //Reticle for applying quick attack
     bool quickAttackActive = false;
@@ -29,6 +29,7 @@ public class MagePhysics : PlayerPhysics
         { 
             quickAttackReticle.GetComponent<SpriteRenderer>().enabled = false;
             quickAttackReticle.transform.GetChild(0).gameObject.SetActive(true);
+            quickAttackReticle.GetComponent<MageReticleScript>().ReleaseQuickAttack();
             Invoke("EndQuickAttack", QUICK_ATTACK_DURATION);
         }
 
@@ -36,6 +37,7 @@ public class MagePhysics : PlayerPhysics
 
     void EndQuickAttack()
     {
+        quickAttackReticle.GetComponent<MageReticleScript>().ExtinguishAttack();
         quickAttackReticle.SetActive(false);
         quickAttackActive = false;
     }
