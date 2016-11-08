@@ -41,4 +41,11 @@ public class MagePhysics : PlayerPhysics
         quickAttackReticle.SetActive(false);
         quickAttackActive = false;
     }
+
+    void InterruptCast()
+    {
+        //If it's not already cast, deactivate the reticle
+        if (!quickAttackReticle.transform.GetChild(0).gameObject.activeSelf)
+            EndQuickAttack();
+    }
 }
