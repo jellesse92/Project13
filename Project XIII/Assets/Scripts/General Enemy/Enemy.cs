@@ -33,6 +33,10 @@ public class Enemy : MonoBehaviour {
     float distToGround;                                 //Distance from the ground
     int layerMask;                                      //Layers to check for ground
 
+    //Juggling Variables
+    protected int bounceCount = 0;                      //Number of times bounced
+    protected int comboCount = 0;                       //Number of times enemy has been hit in a consistent combo
+
     // Use this for initialization
     void Awake()
     {
@@ -95,13 +99,15 @@ public class Enemy : MonoBehaviour {
     //Damage script to be applied when enemy takes damage
     public void Damage(int damage, float stunMultiplier = 0f)
     {
+        bounceCount = 0; //Reset so juggle continues
+
         if (dead)
             return;
         health -= damage;
         if(health <= 0)
         {
+            StopAllCoroutines();
             PlayDeath();
-
         }
         else if (stunnable && stunMultiplier > 0)
         {
@@ -175,7 +181,7 @@ public class Enemy : MonoBehaviour {
 
     public bool IsGrounded()
     {
-        if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround - 0.1f, layerMask))
+        if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround - 1f, layerMask))
         {
             return true;
         }

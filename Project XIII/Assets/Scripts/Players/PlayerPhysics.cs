@@ -202,7 +202,22 @@ public class PlayerPhysics : MonoBehaviour {
     
     public void VelocityY(float velocityY)
     {
-        myRigidbody.velocity = new Vector2(0, velocityY);
+        myRigidbody.velocity = new Vector2(0, velocityY);  
+    }
+
+    public void VelocityX(float velocityX)
+    {
+        myRigidbody.velocity = new Vector2(velocityX, 0);
+    }
+
+    public void AddForceX(float forceX)
+    {
+        myRigidbody.AddForce(new Vector2(forceX * transform.localScale.x, 0f));
+    }
+
+    public void AddForceY(float forceY)
+    {
+        myRigidbody.AddForce(new Vector2(0f, forceY));
     }
 
     public void ActivateAttackMovementJump()

@@ -13,7 +13,7 @@ public class BulletSourceScript : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        layermask = (LayerMask.GetMask("Default","Enemy"));
+        layermask = (LayerMask.GetMask("Default","Enemy", "Juggled Enemy"));
 	}
 
     void Update()
@@ -81,7 +81,8 @@ public class BulletSourceScript : MonoBehaviour {
             target.GetComponent<Enemy>().Damage(damage, LIGHT_STUN_MULTI);
             if (!target.GetComponent<Enemy>().IsGrounded())
             {
-                target.GetComponent<Rigidbody2D>().AddForce(new Vector2(100f, 20000f));
+                target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, -10f);
+                target.GetComponent<Rigidbody2D>().AddForce(new Vector2(100f, 10000f));
             }
 
         }

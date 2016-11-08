@@ -10,18 +10,26 @@ public class BasicEnemy2D : Enemy {
     bool gotAttackAnim;                                     //Determines if attack animation has been registered
     public bool facingRight = true;                         //Determine direction facing
 
+
+    //Juggling Variables
+    bool checkGrounded;                                     //Determines if enemy should check if grounded for when it's in a juggled state
+
     // Use this for initialization
     void Start()
     {
         isAttacking = false;
         attEnded = true;
         gotAttackAnim = true;
+        checkGrounded = true;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!dead)
+
+        if(gameObject.layer == LayerMask.NameToLayer("Juggled Enemy"))
+            ManageJuggleState();
+        else if (!dead)
         {
             if (GetVisibleState() && GetPursuitState() && !stunned && !frozen)
             {
@@ -48,6 +56,33 @@ public class BasicEnemy2D : Enemy {
         }
 
 
+    }
+
+    //Check when to next check if enemy bounced
+    IEnumerator DelayBounceCheck()
+    {
+        checkGrounded = false;
+        yield return new WaitForSeconds(.3f);
+        checkGrounded = true;
+    }
+
+    //Manages juggling state
+    void ManageJuggleState()
+    {
+        if (checkGrounded)
+        {
+            if (IsGrounded())
+            {
+                bounceCount++;
+                StartCoroutine("DelayBounceCheck");
+                if (bounceCount >= 2)
+                {
+                    gameObject.layer = LayerMask.NameToLayer("Enemy");
+                    bounceCount = 0;
+                }
+
+            }
+        }
     }
 
     //Plays out enemy approach

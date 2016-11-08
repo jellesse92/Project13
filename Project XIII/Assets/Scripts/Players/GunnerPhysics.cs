@@ -4,7 +4,6 @@ using System.Collections;
 public class GunnerPhysics : PlayerPhysics{
 
     GunnerStats gunnerStat;
-    GunnerBullets gunnerbullets;
     BulletProjectile bulletScript;
     Vector3 gunPoint;
     Vector2 velocity;
@@ -15,7 +14,6 @@ public class GunnerPhysics : PlayerPhysics{
     public override void ClassSpecificStart()
     {
         gunnerStat = GetComponent<GunnerProperties>().GetGunnerStats();
-        gunnerbullets = GetComponent<GunnerProperties>().GetGunnerBullets();
     }
 
     void ShootQuickBullet()
