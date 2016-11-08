@@ -43,14 +43,14 @@ public class MagePhysics : PlayerPhysics
 
     void EndQuickAttack()
     {
-        quickAttackReticle.GetComponent<MageReticleScript>().ExtinguishAttack();
-        quickAttackReticle.SetActive(false);
+        quickAttackReticle.GetComponent<MageReticleScript>().ExtinguishAttack(); 
+        quickAttackReticle.SetActive(false); //DEACTIVATES RETICLE AND IT'S CHILDREN
         quickAttackActive = false;
     }
 
     void InterruptCast()
     {
-        //If it's not already cast, deactivate the reticle
+        //If it's not already cast and runnning, deactivate the reticle and its children
         if (!quickAttackReticle.transform.GetChild(0).gameObject.activeSelf)
         {
             EndQuickAttack();

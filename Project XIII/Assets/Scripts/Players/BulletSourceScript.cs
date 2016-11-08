@@ -30,10 +30,11 @@ public class BulletSourceScript : MonoBehaviour {
         for(int i = 0; i < 3; i++)
         {
             //make a spark at the hit.point
-            hitImpactParticle.transform.position = hit[0].point;
-            hitImpactParticle.GetComponent<ParticleSystem>().Play();
+
             if (hit[i].collider != null)
             {
+                hitImpactParticle.transform.position = hit[0].point;
+                hitImpactParticle.GetComponent<ParticleSystem>().Play();
                 ApplyQuickDamage(hit[i].collider.gameObject, damage);
                 break;
             }
