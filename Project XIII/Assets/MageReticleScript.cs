@@ -7,6 +7,7 @@ public class MageReticleScript : MonoBehaviour {
     const float SPEED = .5f;
 
     PlayerInput input;
+    GameObject master; 
 
     //For setting position indepent of parent
     Vector3 localPosition;
@@ -20,24 +21,24 @@ public class MageReticleScript : MonoBehaviour {
 
     void Start()
     {
-        input = transform.parent.GetComponent<PlayerInput>();
         checkedLastPos = false;
     }
 
     void FixedUpdate()
     {
+        if (master != null)
+        {
+            float x = (Mathf.Abs(input.getKeyPress().horizontalAxisValue) > 0.05) ? input.getKeyPress().horizontalAxisValue : 0f;
+            float y = (Mathf.Abs(input.getKeyPress().verticalAxisValue) > 0.05) ? input.getKeyPress().verticalAxisValue : 0f;
+            Debug.Log("x;" + x);
 
-        float x = (Mathf.Abs(input.getKeyPress().horizontalAxisValue) > 0.05) ? input.getKeyPress().horizontalAxisValue : 0f;
-        float y = (Mathf.Abs(input.getKeyPress().verticalAxisValue) > 0.05) ? input.getKeyPress().verticalAxisValue : 0f;
+            Vector3 moveDir = new Vector3(x * SPEED, y * SPEED, 0f);
+            transform.position = transform.position + moveDir;
 
-        Vector3 moveDir = new Vector3(x * SPEED, y * SPEED, 0f);
-
-        transform.position = transform.position + moveDir;
-
-
-        SetPosition();
-
-
+            SetPosition();
+        }
+        else
+            Debug.Log("no master?");
     }
 
     void LateUpdate()
@@ -71,9 +72,6 @@ public class MageReticleScript : MonoBehaviour {
                 if(!enemiesInRange.Contains(col.gameObject))
                     ApplyQuickAttack(col.gameObject);
         }
-
-
-
     }
 
 
@@ -145,5 +143,11 @@ public class MageReticleScript : MonoBehaviour {
     {
         enemiesInRange = new HashSet<GameObject>();
         quickAttackActive = false;
+    }
+
+    public void SetMaster(GameObject m)
+    {
+        master = m;
+        input = master.GetComponent<PlayerInput>();
     }
 }

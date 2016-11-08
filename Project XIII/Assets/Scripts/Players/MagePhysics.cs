@@ -11,11 +11,17 @@ public class MagePhysics : PlayerPhysics
     bool quickAttackActive = false;
 
 
+    public override void ClassSpecificStart()
+    {
+        quickAttackReticle = (GameObject)Instantiate(quickAttackReticle);
+        quickAttackReticle.GetComponent<MageReticleScript>().SetMaster(this.gameObject);
+    }
+
     void ActivateQuickReticle()
     {
         if (!quickAttackActive)
         {
-            quickAttackReticle.transform.position = transform.position + new Vector3(QUICK_ORIGIN_X, QUICK_ORIGIN_Y, transform.position.z);
+            quickAttackReticle.transform.position = transform.position + new Vector3(QUICK_ORIGIN_X * transform.localScale.x, QUICK_ORIGIN_Y, transform.position.z);
             quickAttackReticle.GetComponent<SpriteRenderer>().enabled = true;
             quickAttackReticle.transform.GetChild(0).gameObject.SetActive(false);
             quickAttackReticle.SetActive(true);
@@ -46,6 +52,10 @@ public class MagePhysics : PlayerPhysics
     {
         //If it's not already cast, deactivate the reticle
         if (!quickAttackReticle.transform.GetChild(0).gameObject.activeSelf)
+        {
             EndQuickAttack();
+            Debug.Log("no child");
+        }
+
     }
 }
