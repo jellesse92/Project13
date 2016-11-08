@@ -10,9 +10,11 @@ public class BulletSourceScript : MonoBehaviour {
     LayerMask layermask;                            //Prevent raycast from hitting unimportant layers
     RaycastHit2D[] hit = new RaycastHit2D[5];       //What was hit by raycast
     RaycastHit2D[][] heavyHit = new RaycastHit2D[5][];
-
+    GameObject hitImpact;
     // Use this for initialization
     void Start () {
+        hitImpact = GetComponentInParent<GunnerParticles>().quickHitImpact;
+        hitImpact = Instantiate(hitImpact);
         layermask = (LayerMask.GetMask("Default","Enemy", "Juggled Enemy"));
 	}
 

@@ -4,6 +4,8 @@ using System.Collections;
 public class GunnerParticles : MonoBehaviour {
     public GameObject quickAttack;
     public GameObject heavyAttack;
+    public GameObject quickHitImpact;
+    //public GameObject heavyHitImpact;
 
     void Start () {
         quickAttack = Instantiate(quickAttack);
