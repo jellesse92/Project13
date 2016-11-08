@@ -7,11 +7,12 @@ public class GunnerParticles : MonoBehaviour {
 
     void Start () {
         quickAttack = Instantiate(quickAttack);
-        quickAttack.transform.parent = transform;
-        quickAttack.transform.position = new Vector3(1.5f, 1, quickAttack.transform.position.z);
-
         heavyAttack = Instantiate(heavyAttack);
+        quickAttack.transform.parent = transform;
         heavyAttack.transform.parent = transform;
+
+        quickAttack.transform.position = new Vector3(transform.position.x + 1.5f, transform.position.y + 1, transform.position.z);
+        heavyAttack.transform.position = new Vector3(transform.position.x + 1.5f, transform.position.y + 1, transform.position.z);
     }
 
     public void PlayParticleQuickAttack()

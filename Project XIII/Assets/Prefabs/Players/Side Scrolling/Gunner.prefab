@@ -28,6 +28,7 @@ GameObject:
   - 114: {fileID: 114000012160316626}
   - 114: {fileID: 114000012299557240}
   - 114: {fileID: 114000010958125624}
+  - 114: {fileID: 114000013337911770}
   m_Layer: 15
   m_Name: Gunner
   m_TagString: Player
@@ -74,8 +75,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010278685086}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -216,7 +217,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -290,11 +291,6 @@ MonoBehaviour:
     heavyAttackCoolDown: 1.2
     dodgeCoolDown: 1
     heavyAttackKnockBackForce: 10
-  gunnerbullets:
-    quickBullets: {fileID: 1000013815239410, guid: 0c6e4273032a95f47ae7f9ecf911a7f4,
-      type: 2}
-    heavyBullets: {fileID: 1000011467668290, guid: b919a4568f5cd3242bc00de4d64feccd,
-      type: 2}
 --- !u!114 &114000012299557240
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -328,6 +324,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 296fd69c267e1c3478a9ddd0e005a73f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114000013337911770
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010278685086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 283d5d45c69fc1c4aa8680fa21d6ee77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quickAttack: {fileID: 1000013577874976, guid: 23f08740686178c41827d82d5f84273e,
+    type: 2}
+  heavyAttack: {fileID: 1000013169837426, guid: c73881b1aca867f4f85d6a997c4d1807,
+    type: 2}
 --- !u!114 &114000013793910032
 MonoBehaviour:
   m_ObjectHideFlags: 1
