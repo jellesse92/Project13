@@ -9,6 +9,11 @@ public class KeyPress {
     public bool dashPress;
     public float horizontalAxisValue;
     public float verticalAxisValue;
+
+    //Held buttons
+    public bool quickAttackHeld;
+    public bool heavyAttackHeld;
+
 }
 
 [System.Serializable]
@@ -66,6 +71,11 @@ public class PlayerInput : MonoBehaviour {
         if (Input.GetKeyDown(keyConfig.dashKey))
             keyPress.dashPress = true;
             */
+
+        if ((joystickNum == 0 && Input.GetKey(KeyCode.Z)) || (joystickNum != 0 && Input.GetButton(keyConfig.quickAttackButton)))
+            keyPress.quickAttackHeld = true;
+        if ((joystickNum == 0 && Input.GetKey(KeyCode.X)) || (joystickNum != 0 && Input.GetButton(keyConfig.heavyAttackButton)))
+            keyPress.heavyAttackHeld = true;
     }
 
     public void ResetKeyPress()
@@ -75,6 +85,8 @@ public class PlayerInput : MonoBehaviour {
         keyPress.heavyAttackPress = false;
         keyPress.blockPress = false;
         keyPress.dashPress = false;
+        keyPress.quickAttackHeld = false;
+        keyPress.heavyAttackHeld = false;
     }
 
     public KeyPress getKeyPress()

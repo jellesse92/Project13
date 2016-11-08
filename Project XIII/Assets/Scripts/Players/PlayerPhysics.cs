@@ -16,6 +16,10 @@ public class PlayerPhysics : MonoBehaviour {
     protected bool cannotAttack;
     protected bool zeroVelocity;
 
+    //Ground detection
+    float distToGround;                                 //Distance from the ground
+    int layerMask;                                      //Layers to check for ground
+
     protected void Start () {
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -30,6 +34,8 @@ public class PlayerPhysics : MonoBehaviour {
         cannotJump = false;
         cannotAttack = false;
         zeroVelocity = false;
+        distToGround = GetComponent<Collider2D>().bounds.extents.y;
+        layerMask = (LayerMask.GetMask("Default"));
 
         ClassSpecificStart();
     }
@@ -103,7 +109,9 @@ public class PlayerPhysics : MonoBehaviour {
 
     protected void Landing()
     {
-        if (myRigidbody.velocity.y == 0)
+
+        Debug.Log("grounded?" + isGrounded());
+        if (isGrounded())
             isJumping = false;
         else
             isJumping = true;
@@ -232,5 +240,14 @@ public class PlayerPhysics : MonoBehaviour {
         cannotAttack = true;
         cannotJump = true;
         cannotMovePlayer = true;
+    }
+
+    public bool isGrounded()
+    {
+        if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround +.05f, layerMask))
+        {
+            return true;
+        }
+        return false;
     }
 }
