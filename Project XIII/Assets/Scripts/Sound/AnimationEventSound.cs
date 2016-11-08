@@ -11,7 +11,6 @@ public class AnimationEventSound : MonoBehaviour {
 	
     public void playSound(AudioClip clip)
     {
-        myAudio.clip = clip;
-        myAudio.Play();
+        myAudio.PlayOneShot(clip);
     }
 }

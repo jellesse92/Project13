@@ -16,25 +16,21 @@ public class MageSoundEffects : MonoBehaviour {
 
     public void mageQuickAttackVoice()
     {
-        myAudio.clip = mageQuickAttackVoiceList[Random.Range(0, mageQuickAttackVoiceList.Length)];
-        myAudio.Play();
+        myAudio.PlayOneShot(mageQuickAttackVoiceList[Random.Range(0, mageQuickAttackVoiceList.Length)]);
     }
 
     public void mageHeavyAttackVoice()
     {
-        myAudio.clip = mageHeavyAttackVoiceList[Random.Range(0, mageHeavyAttackVoiceList.Length)];
-        myAudio.Play();
+        myAudio.PlayOneShot(mageHeavyAttackVoiceList[Random.Range(0, mageHeavyAttackVoiceList.Length)]);
     }
 
     public void mageDamageVoice()
     {
-        myAudio.clip = mageDamageVoiceList[Random.Range(0, mageDamageVoiceList.Length)];
-        myAudio.Play();
+        myAudio.PlayOneShot(mageDamageVoiceList[Random.Range(0, mageDamageVoiceList.Length)]);
     }
 
     public void mageDeathVoice()
     {
-        myAudio.clip = mageDeathVoiceList[Random.Range(0, mageDeathVoiceList.Length)];
-        myAudio.Play();
+        myAudio.PlayOneShot(mageDeathVoiceList[Random.Range(0, mageDeathVoiceList.Length)]);
     }
 }
