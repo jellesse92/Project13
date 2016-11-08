@@ -16,6 +16,12 @@ public class PlayerPhysics : MonoBehaviour {
     protected bool cannotAttack;
     protected bool zeroVelocity;
 
+    //For checking held buttons
+    protected bool checkQuickAttackUp;
+    protected bool quickAttackReleased;
+    protected bool checkHeavyAttackUp;
+    protected bool heavyAttackReleased;
+
     //Ground detection
     float distToGround;                                 //Distance from the ground
     int layerMask;                                      //Layers to check for ground
@@ -34,6 +40,16 @@ public class PlayerPhysics : MonoBehaviour {
         cannotJump = false;
         cannotAttack = false;
         zeroVelocity = false;
+
+        //Holding buttons
+        checkQuickAttackUp = false;
+        quickAttackReleased = true;
+        checkHeavyAttackUp = false;
+        heavyAttackReleased = true;
+
+        //Checking for if held buttons released
+        
+
         distToGround = GetComponent<Collider2D>().bounds.extents.y;
         layerMask = (LayerMask.GetMask("Default"));
 
@@ -57,6 +73,7 @@ public class PlayerPhysics : MonoBehaviour {
                 QuickAttack();
             if (myKeyPress.heavyAttackPress)
                 HeavyAttack();
+            CheckForButtonReleases();
         }
 
         Landing();
@@ -110,7 +127,6 @@ public class PlayerPhysics : MonoBehaviour {
     protected void Landing()
     {
 
-        Debug.Log("grounded?" + isGrounded());
         if (isGrounded())
             isJumping = false;
         else
@@ -249,5 +265,49 @@ public class PlayerPhysics : MonoBehaviour {
             return true;
         }
         return false;
+    }
+
+    protected void CheckForButtonReleases()
+    {
+        if (checkQuickAttackUp)
+        {
+            if (myKeyPress.heavyAttackReleased)
+            {
+                myAnimator.enabled = true;
+                quickAttackReleased = true;
+                checkQuickAttackUp = false;
+            }
+        }
+
+        if (checkHeavyAttackUp)
+        {
+            if (myKeyPress.quickAttackReleased)
+            {
+                myAnimator.enabled = true;
+                heavyAttackReleased = true;
+                checkHeavyAttackUp = false;
+            }
+        }
+
+
+    }
+
+    public void CheckForQuickRelease()
+    {
+        quickAttackReleased = false;
+        checkQuickAttackUp = true;
+    }
+
+    public void DisableAnimator()
+    {
+
+        if(!(quickAttackReleased && heavyAttackReleased))
+            myAnimator.enabled = false;
+    }
+
+    public void CheckForHeavyRelease()
+    {
+        heavyAttackReleased = false;
+        checkHeavyAttackUp = true;
     }
 }

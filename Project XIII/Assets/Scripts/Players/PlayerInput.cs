@@ -11,8 +11,8 @@ public class KeyPress {
     public float verticalAxisValue;
 
     //Held buttons
-    public bool quickAttackHeld;
-    public bool heavyAttackHeld;
+    public bool quickAttackReleased;
+    public bool heavyAttackReleased;
 
 }
 
@@ -61,9 +61,9 @@ public class PlayerInput : MonoBehaviour {
 
         if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.Space)) ||(joystickNum !=0 && Input.GetButtonDown(keyConfig.jumpButton)))
             keyPress.jumpPress = true;
-        if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.Z)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.quickAttackButton)))
+        if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.X)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.quickAttackButton)))
             keyPress.quickAttackPress = true;
-        if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.X)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.heavyAttackButton)))
+        if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.Z)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.heavyAttackButton)))
             keyPress.heavyAttackPress = true;
         if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.C)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.blockButton)))
             keyPress.blockPress = true;
@@ -72,10 +72,10 @@ public class PlayerInput : MonoBehaviour {
             keyPress.dashPress = true;
             */
 
-        if ((joystickNum == 0 && Input.GetKey(KeyCode.Z)) || (joystickNum != 0 && Input.GetButton(keyConfig.quickAttackButton)))
-            keyPress.quickAttackHeld = true;
-        if ((joystickNum == 0 && Input.GetKey(KeyCode.X)) || (joystickNum != 0 && Input.GetButton(keyConfig.heavyAttackButton)))
-            keyPress.heavyAttackHeld = true;
+        if ((joystickNum == 0 && Input.GetKeyUp(KeyCode.X)) || (joystickNum != 0 && Input.GetButtonUp(keyConfig.quickAttackButton)))
+            keyPress.quickAttackReleased = true;
+        if ((joystickNum == 0 && Input.GetKeyUp(KeyCode.Z)) || (joystickNum != 0 && Input.GetButtonUp(keyConfig.heavyAttackButton)))
+            keyPress.heavyAttackReleased = true;
     }
 
     public void ResetKeyPress()
@@ -85,8 +85,8 @@ public class PlayerInput : MonoBehaviour {
         keyPress.heavyAttackPress = false;
         keyPress.blockPress = false;
         keyPress.dashPress = false;
-        keyPress.quickAttackHeld = false;
-        keyPress.heavyAttackHeld = false;
+        keyPress.quickAttackReleased = false;
+        keyPress.heavyAttackReleased = false;
     }
 
     public KeyPress getKeyPress()
