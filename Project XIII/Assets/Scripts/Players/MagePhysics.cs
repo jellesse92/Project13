@@ -23,7 +23,7 @@ public class MagePhysics : PlayerPhysics
         {
             quickAttackReticle.transform.position = transform.position + new Vector3(QUICK_ORIGIN_X * transform.localScale.x, QUICK_ORIGIN_Y, transform.position.z);
             quickAttackReticle.GetComponent<SpriteRenderer>().enabled = true;
-            quickAttackReticle.transform.GetChild(0).gameObject.SetActive(false);
+            quickAttackReticle.transform.GetChild(0).gameObject.SetActive(false); //DEACTIVATING PARTICLE EFFECT
             quickAttackReticle.SetActive(true);
             quickAttackActive = true;
         }
@@ -34,7 +34,7 @@ public class MagePhysics : PlayerPhysics
         if (!quickAttackReticle.transform.GetChild(0).gameObject.activeSelf)
         { 
             quickAttackReticle.GetComponent<SpriteRenderer>().enabled = false;
-            quickAttackReticle.transform.GetChild(0).gameObject.SetActive(true);
+            quickAttackReticle.transform.GetChild(0).gameObject.SetActive(true); //ACTIVATING PARTICLE EFFECT
             quickAttackReticle.GetComponent<MageReticleScript>().ReleaseQuickAttack();
             Invoke("EndQuickAttack", QUICK_ATTACK_DURATION);
         }
