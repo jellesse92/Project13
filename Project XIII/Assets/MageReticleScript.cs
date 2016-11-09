@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class MageReticleScript : MonoBehaviour {
 
     const float SPEED = .5f;
+    public bool freeze_y = false;
 
     PlayerInput input;
     GameObject master; 
@@ -13,7 +14,7 @@ public class MageReticleScript : MonoBehaviour {
     Vector3 localPosition;
     bool checkedLastPos;
 
-    bool quickAttackActive = false;
+    bool attackActive = false;
 
     HashSet<GameObject> enemiesInRange = new HashSet<GameObject>();
     int damage = 10;
@@ -29,7 +30,10 @@ public class MageReticleScript : MonoBehaviour {
         if (master != null)
         {
             float x = (Mathf.Abs(input.getKeyPress().horizontalAxisValue) > 0.05) ? input.getKeyPress().horizontalAxisValue : 0f;
-            float y = (Mathf.Abs(input.getKeyPress().verticalAxisValue) > 0.05) ? input.getKeyPress().verticalAxisValue : 0f;
+            float y = 0f;
+            
+            if(!freeze_y)
+                y = (Mathf.Abs(input.getKeyPress().verticalAxisValue) > 0.05) ? input.getKeyPress().verticalAxisValue : 0f;
 
             Vector3 moveDir = new Vector3(x * SPEED, y * SPEED, 0f);
             transform.position = transform.position + moveDir;
@@ -65,18 +69,17 @@ public class MageReticleScript : MonoBehaviour {
 
         if (col.tag == "Enemy" )
         {
-            if (!quickAttackActive)
+            if (!attackActive)
                 enemiesInRange.Add(col.gameObject);
             else
-                if(!enemiesInRange.Contains(col.gameObject))
-                    ApplyQuickAttack(col.gameObject);
+                ApplyQuickAttack(col.gameObject);
         }
     }
 
 
     void OnTriggerExit2D(Collider2D col)
     {
-        if (!quickAttackActive)
+        if (!attackActive)
         {
             if (col.tag == "Enemy")
             {
@@ -90,7 +93,7 @@ public class MageReticleScript : MonoBehaviour {
 
     public void ReleaseQuickAttack()
     {
-        quickAttackActive = true;
+        attackActive = true;
         foreach(GameObject enemy in enemiesInRange)
         {
             ApplyQuickAttack(enemy);
@@ -99,7 +102,7 @@ public class MageReticleScript : MonoBehaviour {
 
     public void ExtinguishAttack()
     {
-        quickAttackActive = false;
+        attackActive = false;
         Reset();
     }
 
@@ -128,6 +131,35 @@ public class MageReticleScript : MonoBehaviour {
         ApplyDamage(enemy);
     }
 
+    public void ReleaseHeavyAttack()
+    {
+        attackActive = true;
+        foreach (GameObject enemy in enemiesInRange)
+        {
+            ApplyHeavyAttack(enemy);
+        }
+    }
+
+    void ApplyHeavyAttack(GameObject enemy)
+    {
+        float xDistance = enemy.transform.position.x - transform.position.x;
+        float i = 0f;
+
+        if (xDistance > 0)
+            i = 1f;
+        else if (xDistance < 0)
+            i = -1f;
+
+        xDistance = Mathf.Abs(xDistance);
+
+        if (xDistance < .1f)
+            xDistance = .1f;
+
+        enemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(500f * i* (5f / xDistance), 50000f));
+
+        ApplyDamage(enemy);
+    }
+
     void ApplyDamage(GameObject enemy)
     {
         enemy.GetComponent<Enemy>().Damage(damage, stunDuration);
@@ -146,7 +178,7 @@ public class MageReticleScript : MonoBehaviour {
     public void Reset()
     {
         enemiesInRange = new HashSet<GameObject>();
-        quickAttackActive = false;
+        attackActive = false;
     }
 
     public void SetMaster(GameObject m)
