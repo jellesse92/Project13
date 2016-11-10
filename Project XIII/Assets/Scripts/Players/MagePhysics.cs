@@ -5,7 +5,7 @@ public class MagePhysics : PlayerPhysics
 {
     const float QUICK_ORIGIN_X = 5f;
     const float QUICK_ORIGIN_Y = 2f;
-    const float QUICK_ATTACK_DURATION = .5f;
+    const float QUICK_ATTACK_DURATION = 1f;
 
     const float HEAVY_ORIGIN_X = 5f;
     const float HEAVY_ORIGIN_Y = 0f;
@@ -46,18 +46,28 @@ public class MagePhysics : PlayerPhysics
     protected void ActivateReticle(GameObject reticle, float x, float y, ref bool attackActiveState)
     {
         reticle.transform.position = transform.position + new Vector3(x * transform.localScale.x, y, transform.position.z);
+        reticle.transform.GetChild(1).GetComponent<ParticleSystem>().Play();
         reticle.GetComponent<SpriteRenderer>().enabled = true;
-        reticle.transform.GetChild(0).gameObject.SetActive(false);      //Deactivate particle effect before activating parent again to appear
+        reticle.GetComponent<Collider2D>().enabled = true;
         reticle.SetActive(true);
         attackActiveState = true;
     }
 
+ 
+
+    void PlayChildrenParticles(GameObject obj)
+    {
+        obj.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
+        foreach (Transform child in obj.transform.GetChild(0))
+            child.GetComponent<ParticleSystem>().Play();
+    }
+
     void ExecuteQuickAttack()
     {
-        if (!quickAttackReticle.transform.GetChild(0).gameObject.activeSelf)
-        { 
+        if (quickAttackReticle.GetComponent<SpriteRenderer>().enabled)
+        {
             quickAttackReticle.GetComponent<SpriteRenderer>().enabled = false;
-            quickAttackReticle.transform.GetChild(0).gameObject.SetActive(true); //ACTIVATING PARTICLE EFFECT
+            PlayChildrenParticles(quickAttackReticle);
             quickAttackReticle.GetComponent<MageReticleScript>().ReleaseQuickAttack();
             Invoke("EndQuickAttack", QUICK_ATTACK_DURATION);
         }
@@ -66,10 +76,10 @@ public class MagePhysics : PlayerPhysics
 
     void ExecuteHeavyAttack()
     {
-        if (!heavyAttackReticle.transform.GetChild(0).gameObject.activeSelf)
+        if (heavyAttackReticle.GetComponent<SpriteRenderer>().enabled)
         {
             heavyAttackReticle.GetComponent<SpriteRenderer>().enabled = false;
-            heavyAttackReticle.transform.GetChild(0).gameObject.SetActive(true); //ACTIVATING PARTICLE EFFECT
+            PlayChildrenParticles(heavyAttackReticle);
             heavyAttackReticle.GetComponent<MageReticleScript>().ReleaseHeavyAttack();
             Invoke("EndHeavyAttack", HEAVY_ATTACK_DURATION);
         }
@@ -79,17 +89,21 @@ public class MagePhysics : PlayerPhysics
     void EndAttack(GameObject reticle, ref bool activeState)
     {
         reticle.GetComponent<MageReticleScript>().ExtinguishAttack();
-        reticle.SetActive(false);
+        reticle.GetComponent<Collider2D>().enabled = false;
         activeState = false;
     }
 
     void EndHeavyAttack()
     {
+        heavyAttackReticle.transform.GetChild(1).GetComponent<ParticleSystem>().Stop();
+        heavyAttackReticle.transform.GetChild(0).GetComponent<ParticleSystem>().Stop();
         EndAttack(heavyAttackReticle, ref heavyAttackActive);
     }
 
     void EndQuickAttack()
     {
+        quickAttackReticle.transform.GetChild(1).GetComponent<ParticleSystem>().Stop();
+        quickAttackReticle.transform.GetChild(0).GetComponent<ParticleSystem>().Stop();
         EndAttack(quickAttackReticle, ref quickAttackActive);
     }
 
