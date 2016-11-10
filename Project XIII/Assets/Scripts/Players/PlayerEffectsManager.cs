@@ -19,8 +19,8 @@ public class PlayerEffectsManager : MonoBehaviour {
     }
 
     //Gets the screen to shake
-    public void ScreenShake(float magnitude)
+    public void ScreenShake(float magnitude, float duration = .5f)
     {
-        screenShake.GetComponent<CamShakeScript>().StartShake(magnitude);
+        screenShake.GetComponent<CamShakeScript>().StartShake(magnitude,duration);
     }
 }

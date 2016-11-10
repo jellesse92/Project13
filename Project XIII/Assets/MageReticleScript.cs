@@ -6,6 +6,8 @@ public class MageReticleScript : MonoBehaviour {
 
     const float SPEED = .5f;
     public bool freeze_y = false;
+    public float screenShakeAmt = 0f;
+    public float shakeDuration = .5f;
 
     PlayerInput input;
     GameObject master; 
@@ -158,10 +160,13 @@ public class MageReticleScript : MonoBehaviour {
         enemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(500f * i* (5f / xDistance), 50000f));
 
         ApplyDamage(enemy);
+        
     }
 
     void ApplyDamage(GameObject enemy)
     {
+        if (master.transform.parent != null)
+            master.transform.parent.GetComponent<PlayerEffectsManager>().ScreenShake(screenShakeAmt,shakeDuration);
         enemy.GetComponent<Enemy>().Damage(damage, stunDuration);
     }
 
