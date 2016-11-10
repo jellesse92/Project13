@@ -161,6 +161,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   freeze_y: 1
+  screenShakeAmt: 0.05
+  shakeDuration: 0.5
 --- !u!198 &198000010648107020
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -1877,7 +1879,7 @@ ParticleSystem:
   looping: 1
   prewarm: 0
   playOnAwake: 0
-  moveWithTransform: 1
+  moveWithTransform: 0
   autoRandomSeed: 1
   scalingMode: 2
   randomSeed: 1976434209

@@ -5,7 +5,7 @@ public class MagePhysics : PlayerPhysics
 {
     const float QUICK_ORIGIN_X = 5f;
     const float QUICK_ORIGIN_Y = 2f;
-    const float QUICK_ATTACK_DURATION = 1f;
+    const float QUICK_ATTACK_DURATION = 1.2f;
 
     const float HEAVY_ORIGIN_X = 5f;
     const float HEAVY_ORIGIN_Y = 0f;
