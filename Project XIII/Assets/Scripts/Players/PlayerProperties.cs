@@ -37,7 +37,7 @@ public class PlayerProperties : MonoBehaviour{
 
     protected GameObject psScript;
     protected bool isStunned = false;
-
+    protected bool stunnable = true;
 
 
     void Start()
@@ -82,7 +82,7 @@ public class PlayerProperties : MonoBehaviour{
     {
         currentHealth -= dmg;
 
-        if (!isStunned)
+        if (stunnable && !isStunned)
             StartCoroutine(ApplyStun(stunTime));
 
         if (psScript != null)
@@ -127,5 +127,10 @@ public class PlayerProperties : MonoBehaviour{
     public bool GetStunState()
     {
         return isStunned;
+    }
+
+    public void SetStunnableState(bool b)
+    {
+        stunnable = b;
     }
 }

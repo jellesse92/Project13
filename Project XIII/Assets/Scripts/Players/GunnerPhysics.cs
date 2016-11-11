@@ -10,75 +10,37 @@ public class GunnerPhysics : PlayerPhysics{
     float bulletSpeed;
 
     public GameObject bulletSource;
+    public DownKickScript downKickScript;
 
     public override void ClassSpecificStart()
     {
         gunnerStat = GetComponent<GunnerProperties>().GetGunnerStats();
+        downKickScript.enabled = false;
     }
 
     void ShootQuickBullet()
     {
-
         bulletSource.GetComponent<BulletSourceScript>().QuickShot(physicStats.quickAttackStrength);
-        /*
-        velocity = isFacingRight? Vector2.right : Vector2.left;
-        bulletSpeed = gunnerStat.quickBulletSpeed * boostStats.speedBoost;
-
-        
-        foreach (Transform bullet in gunnerbullets.quickBullets.transform)
-        {
-            
-            if (!bullet.gameObject.activeSelf)
-            {
-                bullet.gameObject.SetActive(true);
-
-                bulletScript = bullet.gameObject.GetComponent<BulletProjectile>();
-                bulletScript.SetDamageAmount(physicStats.quickAttackStrength);
-
-                gunPoint = transform.position;
-                gunPoint.x += isFacingRight ? 1.5f : -1.5f;
-                gunPoint.y += .7f;
-
-                bullet.position = gunPoint;
-                bullet.GetComponent<Rigidbody2D>().velocity = velocity * bulletSpeed;
-                return;
-            }
-        }
-        */
     }
 
     void ShootHeavyBullet()
     {
-
         KnockBack(gunnerStat.heavyAttackKnockBackForce);
         bulletSource.GetComponent<BulletSourceScript>().HeavyShot(physicStats.quickAttackStrength);
-        /*
-        velocity = isFacingRight? Vector2.right : Vector2.left;
-        bulletSpeed = gunnerStat.quickBulletSpeed * boostStats.speedBoost;
+    }
 
-        foreach (Transform bullet in gunnerbullets.heavyBullets.transform)
-        {
-            if (!bullet.gameObject.activeSelf)
-            {
-                bullet.gameObject.transform.position = gameObject.transform.position;
-                bullet.gameObject.SetActive(true);
-                knockBack(gunnerStat.heavyAttackKnockBackForce);
-                bulletScript = bullet.gameObject.GetComponent<BulletProjectile>();
-                bulletScript.SetDamageAmount(physicStats.quickAttackStrength);
-                bulletScript.DamageFadeActive(true);
-                bulletScript.SetMaxDistance(5);
+    void ExecuteDownKick()
+    {
+        downKickScript.Reset();
+        downKickScript.enabled = true;
+        downKickScript.InvokeRepeating("ApplyDamageEffect",0f,.1f);
+        GetComponent<PlayerProperties>().SetStunnableState(false);
+    }
 
-                gunPoint = transform.position;
-                gunPoint.x += isFacingRight ? 1.5f : -1.5f;
-                gunPoint.y += .7f;
-
-                bullet.position = gunPoint;
-                bullet.GetComponent<Rigidbody2D>().velocity = velocity * bulletSpeed;
-                return;
-            }
-                }
-            */
-
-
+    void CancelDownKick()
+    {
+        downKickScript.CancelInvoke("ApplyDamageEffect");
+        downKickScript.enabled = false;
+        GetComponent<PlayerProperties>().SetStunnableState(true);
     }
 }
