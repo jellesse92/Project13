@@ -20,10 +20,11 @@ public class ShieldBurstScript : MonoBehaviour {
                 float yMulti = 0f;
 
                 if (col.transform.position.y > transform.position.y)
-                    yMulti = 5000f;
+                    yMulti = 4000f;
                 else
                     yMulti = -2000f;
-                col.GetComponent<Rigidbody2D>().AddForce(new Vector2(3000f * (5f / xDistance), yMulti * (5f / yDistance)));
+                col.GetComponent<Rigidbody2D>().AddForce(new Vector2(2000f * (5f / xDistance), yMulti * (5f / yDistance)));
+                col.GetComponent<Enemy>().Damage(10, .5f);
             }
         }
     }

@@ -16,6 +16,7 @@ public class MagePhysics : PlayerPhysics
     bool quickAttackActive = false;                         //Returns if light ground attack is running
     bool heavyAttackActive = false;                         //Returns if heavy ground attack is running
 
+    public GameObject shieldParticle;
 
     public override void ClassSpecificStart()
     {
@@ -114,5 +115,10 @@ public class MagePhysics : PlayerPhysics
         {
             EndQuickAttack();
         }
+    }
+
+    void ActivateShield()
+    {
+        shieldParticle.GetComponent<ParticleSystem>().Play();
     }
 }
