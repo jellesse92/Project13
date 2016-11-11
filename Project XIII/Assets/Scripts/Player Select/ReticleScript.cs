@@ -4,7 +4,7 @@ using System.Collections;
 public class ReticleScript : MonoBehaviour
 {
 
-    const float RETICLE_SPEED = 1f;        //Speed reticle set to move at
+    const float RETICLE_SPEED = 2f;        //Speed reticle set to move at
 
     Vector2 origin;                         //Original position to return to on reset
 
