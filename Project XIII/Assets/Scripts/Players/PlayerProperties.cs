@@ -6,6 +6,8 @@ public class PlayerPhysicStats
 {
     public int quickAttackStrength = 20; //Attack Power
     public int heavyAttackStrength = 40;
+    public int quickAirAttackStrength = 5;
+    public int heavyAirAttackStrengh = 10;
 
     public float quickAttackSpeed = 1f; //Attack Speed
     public float heavyAttackSpeed = 1f;
