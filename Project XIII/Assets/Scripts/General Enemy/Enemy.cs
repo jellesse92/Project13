@@ -104,6 +104,9 @@ public class Enemy : MonoBehaviour {
         if (dead)
             return;
         health -= damage;
+
+        StartCoroutine("ApplyDamageColor");
+
         if(health <= 0)
         {
             StopAllCoroutines();
@@ -115,6 +118,13 @@ public class Enemy : MonoBehaviour {
             StopCoroutine(ApplyStun());
             StartCoroutine(ApplyStun());
         }
+    }
+
+    IEnumerator ApplyDamageColor()
+    {
+        GetComponent<SpriteRenderer>().material.color = Color.red;
+        yield return new WaitForSeconds(.05f);
+        GetComponent<SpriteRenderer>().material.color = Color.white;
     }
 
     void PlayDeath()
