@@ -82,7 +82,7 @@ public class BulletSourceScript : MonoBehaviour {
             foreach (RaycastHit2D hh in heavyHit[i])
                 if (hh)
                     if (hh.collider.tag == "Enemy")
-                        ApplyHeavyDamage(hh.collider.gameObject, damage / 4, hit[i].distance);
+                        ApplyHeavyDamage(hh.collider.gameObject, damage, hit[i].distance);
     }
 
     void ApplyHeavyDamage(GameObject target, int damage, float distance)

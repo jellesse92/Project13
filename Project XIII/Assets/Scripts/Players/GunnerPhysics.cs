@@ -26,7 +26,7 @@ public class GunnerPhysics : PlayerPhysics{
     void ShootHeavyBullet()
     {
         KnockBack(gunnerStat.heavyAttackKnockBackForce);
-        bulletSource.GetComponent<BulletSourceScript>().HeavyShot(physicStats.quickAttackStrength);
+        bulletSource.GetComponent<BulletSourceScript>().HeavyShot(physicStats.heavyAttackStrength);
     }
 
     void ExecuteDownKick()

@@ -15,10 +15,11 @@ public class GroundShakeScript : MonoBehaviour {
         if(col.gameObject.GetComponent<Rigidbody2D>() != null)
         {
             float v = col.gameObject.GetComponent<Rigidbody2D>().velocity.y;
+            float mass = col.gameObject.GetComponent<Rigidbody2D>().mass;
 
             if (v < -20f)
             {
-                shakeScript.StartShake(-.005f * v % 20f,.1f);
+                shakeScript.StartShake(-.005f * v % 20f *(mass/10f),.1f * (mass/10f));
             }
         }
     }

@@ -123,7 +123,7 @@ public class Enemy : MonoBehaviour {
     IEnumerator ApplyDamageColor()
     {
         GetComponent<SpriteRenderer>().material.color = Color.red;
-        yield return new WaitForSeconds(.05f);
+        yield return new WaitForSeconds(.075f);
         GetComponent<SpriteRenderer>().material.color = Color.white;
     }
 

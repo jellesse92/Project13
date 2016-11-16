@@ -11,12 +11,21 @@ public class MagePhysics : PlayerPhysics
     const float HEAVY_ORIGIN_Y = 0f;
     const float HEAVY_ATTACK_DURATION = 2f;
 
+    const float HEAVY_AIR_ORIGIN_X = 5f;
+    const float HEAVY_AIR_ORIGIN_Y = 3f;
+    const float HEAVY_AIR_FORCE_X = 14000f;
+    const float HEAVY_AIR_FORCE_Y = -15000f;
+    const float HEAVY_AIR_ATTACK_DURATION = 1f;
+
     public GameObject quickAttackReticle;                   //Reticle for applying quick attack
     public GameObject heavyAttackReticle;                   //Reticle for applying heavy attack
     bool quickAttackActive = false;                         //Returns if light ground attack is running
     bool heavyAttackActive = false;                         //Returns if heavy ground attack is running
 
-    public GameObject shieldParticle;
+    public GameObject shieldParticle;                       //Particle effect and collider for shield burst
+
+    public GameObject meteor;                               //Object for meteor
+    bool heavyAirAttackActive = false;                      //Returns if heavy air attack is on coold down or not
 
     public override void ClassSpecificStart()
     {
@@ -24,6 +33,8 @@ public class MagePhysics : PlayerPhysics
         quickAttackReticle.GetComponent<MageReticleScript>().SetMaster(this.gameObject);
         heavyAttackReticle = (GameObject)Instantiate(heavyAttackReticle);
         heavyAttackReticle.GetComponent<MageReticleScript>().SetMaster(this.gameObject);
+        meteor = (GameObject)Instantiate(meteor);
+        meteor.transform.GetChild(0).GetComponent<MageMeteorScript>().SetMaster(this.gameObject);
     }
 
     
@@ -42,6 +53,18 @@ public class MagePhysics : PlayerPhysics
         {
             ActivateReticle(heavyAttackReticle, HEAVY_ORIGIN_X, HEAVY_ORIGIN_Y, ref heavyAttackActive);
         }
+    }
+
+    void ExecuteHeavyAirAttack()
+    {
+        if (heavyAirAttackActive)
+            return;
+
+        meteor.transform.position = transform.position + new Vector3(HEAVY_AIR_ORIGIN_X * transform.localScale.x, HEAVY_AIR_ORIGIN_Y, transform.position.z);
+        meteor.transform.GetChild(0).GetComponent<MageMeteorScript>().ActivateAttack();
+        meteor.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_AIR_FORCE_X * transform.localScale.x, HEAVY_AIR_FORCE_Y));
+        Invoke("EndAirHeavyAttack", HEAVY_AIR_ATTACK_DURATION);
+        heavyAirAttackActive = true;
     }
 
     protected void ActivateReticle(GameObject reticle, float x, float y, ref bool attackActiveState)
@@ -106,6 +129,12 @@ public class MagePhysics : PlayerPhysics
         quickAttackReticle.transform.GetChild(1).GetComponent<ParticleSystem>().Stop();
         quickAttackReticle.transform.GetChild(0).GetComponent<ParticleSystem>().Stop();
         EndAttack(quickAttackReticle, ref quickAttackActive);
+    }
+
+    void EndAirHeavyAttack()
+    {
+        meteor.transform.GetChild(0).GetComponent<MageMeteorScript>().Reset();
+        heavyAirAttackActive = false;
     }
 
     void InterruptCast()

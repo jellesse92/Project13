@@ -37,7 +37,6 @@ public class SequenceFlowController : MonoBehaviour {
             musicManager.ActivateNextClip();
             StartCoroutine(cam.GetComponent<CamShakeScript>().InfiniteShake());
         }
-            Debug.Log("something");
     }
 
 
