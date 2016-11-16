@@ -47,7 +47,7 @@ public class DownKickScript : MonoBehaviour {
         if(col.tag == "Enemy"){
             if (!enemy.Contains(col.gameObject)){
                 enemy.Add(col.gameObject);
-                col.gameObject.layer = LayerMask.NameToLayer("Juggled Enemy");
+                col.gameObject.GetComponent<Enemy>().Bounce();
             }
         }
     }

@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour {
     //Juggling Variables
     protected int bounceCount = 0;                      //Number of times bounced
     protected int comboCount = 0;                       //Number of times enemy has been hit in a consistent comb
+    public PhysicsMaterial2D bounceMaterial;            //Material for bouncing
 
     Color default_color;
 
@@ -50,6 +51,7 @@ public class Enemy : MonoBehaviour {
         distToGround = GetComponent<Collider2D>().bounds.extents.y;
         layerMask = (LayerMask.GetMask("Default"));
         default_color = GetComponent<SpriteRenderer>().color;
+
     }
 
     // Call when enemy becomes visible on screen
@@ -71,23 +73,6 @@ public class Enemy : MonoBehaviour {
         {
             inPursuit = true;
             target = col.transform.parent.gameObject;
-        }
-    }
-
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "Player")
-        {
-            //col.gameObject.GetComponent<PlayerCharacter>().TakeDamage(attackPower);
-        }
-    }
-
-    //NOTE: Might change for efficiency issue
-    void OnCollisionStay2D(Collision2D col)
-    {
-        if(col.gameObject.tag == "Player")
-        {
-            //col.gameObject.GetComponent<PlayerCharacter>().TakeDamage(attackPower);
         }
     }
 
@@ -203,6 +188,11 @@ public class Enemy : MonoBehaviour {
         return false;
     }
 
+    public void Bounce()
+    {
+        GetComponent<Collider2D>().sharedMaterial = bounceMaterial;
+    }
+
     /*
      *  DEBUFFS
      */ 
@@ -215,4 +205,5 @@ public class Enemy : MonoBehaviour {
         GetComponent<SpriteRenderer>().material.color = default_color;
         isFrozen = false;
     }
+
 }

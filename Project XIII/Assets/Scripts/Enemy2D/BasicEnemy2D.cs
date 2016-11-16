@@ -27,7 +27,7 @@ public class BasicEnemy2D : Enemy {
     void FixedUpdate()
     {
 
-        if(gameObject.layer == LayerMask.NameToLayer("Juggled Enemy"))
+        if(GetComponent<Collider2D>().sharedMaterial == bounceMaterial)
             ManageJuggleState();
         else if (!dead)
         {
@@ -77,7 +77,7 @@ public class BasicEnemy2D : Enemy {
                 StartCoroutine("DelayBounceCheck");
                 if (bounceCount >= 2)
                 {
-                    gameObject.layer = LayerMask.NameToLayer("Enemy");
+                    GetComponent<Collider2D>().sharedMaterial = null;
                     bounceCount = 0;
                 }
 
