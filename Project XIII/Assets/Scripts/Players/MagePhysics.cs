@@ -15,7 +15,7 @@ public class MagePhysics : PlayerPhysics
     const float HEAVY_AIR_ORIGIN_Y = 3f;
     const float HEAVY_AIR_FORCE_X = 14000f;
     const float HEAVY_AIR_FORCE_Y = -15000f;
-    const float HEAVY_AIR_ATTACK_DURATION = 1f;
+    const float HEAVY_AIR_ATTACK_DURATION = 3f;
 
     public GameObject quickAttackReticle;                   //Reticle for applying quick attack
     public GameObject heavyAttackReticle;                   //Reticle for applying heavy attack
