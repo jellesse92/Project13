@@ -271,7 +271,7 @@ public class PlayerPhysics : MonoBehaviour {
     {
         if (checkQuickAttackUp)
         {
-            if (myKeyPress.heavyAttackReleased)
+            if (myKeyPress.quickAttackReleased)
             {
                 myAnimator.enabled = true;
                 quickAttackReleased = true;
@@ -281,7 +281,7 @@ public class PlayerPhysics : MonoBehaviour {
 
         if (checkHeavyAttackUp)
         {
-            if (myKeyPress.quickAttackReleased)
+            if (myKeyPress.heavyAttackReleased)
             {
                 myAnimator.enabled = true;
                 heavyAttackReleased = true;
