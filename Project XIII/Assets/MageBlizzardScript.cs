@@ -2,12 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class MageMeteorScript : MonoBehaviour {
+public class MageBlizzardScript : MonoBehaviour {
 
-    const float BLIZZARD_STUN_DURATION = .5f;
-    const float APPLY_DAMAGE_RATE = .2f;
+    const float BLIZZARD_STUN_DURATION = 5f;
+    const float APPLY_DAMAGE_RATE = 1.5f;
 
-    public GameObject hitSparkEffect;
     public GameObject blizzardParticle;
 
     HashSet<GameObject> enemy = new HashSet<GameObject>();
@@ -17,8 +16,6 @@ public class MageMeteorScript : MonoBehaviour {
 
     void Awake()
     {
-        hitSparkEffect = Instantiate(hitSparkEffect);
-        hitSparkEffect.transform.parent = transform.parent;
         GetComponent<Collider2D>().enabled = false;
         Reset();
     }
@@ -30,15 +27,24 @@ public class MageMeteorScript : MonoBehaviour {
         {
             if (!enemy.Contains(col.gameObject))
                 enemy.Add(col.gameObject);
+            Debug.Log("testing");
         }
     }
 
-    public void ApplyDamageEffect()
+    void OnTriggerExit2D(Collider2D col)
     {
-        if (transform.parent.parent != null)
-            transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(.01f);
+        if (col.tag == "Enemy" && enemy.Contains(col.gameObject))
+            enemy.Remove(col.gameObject);
+    }
+
+    public void ApplyFrozenEffect()
+    {
         foreach (GameObject target in enemy)
+        {
+            target.GetComponent<Enemy>().StartCoroutine(target.GetComponent<Enemy>().ApplyDebuffFreeze(BLIZZARD_STUN_DURATION));
             target.GetComponent<Enemy>().Damage(damage, BLIZZARD_STUN_DURATION);
+        }
+
     }
 
     public void SetMaster(GameObject obj)
@@ -56,7 +62,7 @@ public class MageMeteorScript : MonoBehaviour {
         {
             child.GetComponent<ParticleSystem>().Play();
         }
-        InvokeRepeating("ApplyDamageEffect", 0f, APPLY_DAMAGE_RATE);
+        InvokeRepeating("ApplyFrozenEffect", 0f, APPLY_DAMAGE_RATE);
     }
 
     public void Reset()
@@ -65,12 +71,12 @@ public class MageMeteorScript : MonoBehaviour {
         CancelInvoke("ApplyDamageEffec");
         enemy = new HashSet<GameObject>();
         blizzardParticle.GetComponent<ParticleSystem>().Stop();
-        foreach(Transform child in blizzardParticle.transform)
+        foreach (Transform child in blizzardParticle.transform)
         {
             child.GetComponent<ParticleSystem>().Stop();
             Debug.Log("testing");
         }
-        
+
 
     }
 }

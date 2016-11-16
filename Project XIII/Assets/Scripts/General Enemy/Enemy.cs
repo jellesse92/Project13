@@ -18,6 +18,7 @@ public class Enemy : MonoBehaviour {
 
     protected bool dead;                                //Determines if enemy is dead
     protected bool stunned;                             //Determines if enemy is stunned
+    protected bool isFrozen = false;                    //Determines if enemy is debuff frozen
     protected bool frozen;                              //Determines if enemy is not meant to move
     float currentStunMultiplier;                        //Current stun time multiplier to be applied
 
@@ -35,7 +36,9 @@ public class Enemy : MonoBehaviour {
 
     //Juggling Variables
     protected int bounceCount = 0;                      //Number of times bounced
-    protected int comboCount = 0;                       //Number of times enemy has been hit in a consistent combo
+    protected int comboCount = 0;                       //Number of times enemy has been hit in a consistent comb
+
+    Color default_color;
 
     // Use this for initialization
     void Awake()
@@ -46,6 +49,7 @@ public class Enemy : MonoBehaviour {
         anim = GetComponent<Animator>();
         distToGround = GetComponent<Collider2D>().bounds.extents.y;
         layerMask = (LayerMask.GetMask("Default"));
+        default_color = GetComponent<SpriteRenderer>().color;
     }
 
     // Call when enemy becomes visible on screen
@@ -105,7 +109,8 @@ public class Enemy : MonoBehaviour {
             return;
         health -= damage;
 
-        StartCoroutine("ApplyDamageColor");
+        if(!isFrozen)
+            StartCoroutine("ApplyDamageColor");
 
         if(health <= 0)
         {
@@ -124,7 +129,7 @@ public class Enemy : MonoBehaviour {
     {
         GetComponent<SpriteRenderer>().material.color = Color.red;
         yield return new WaitForSeconds(.075f);
-        GetComponent<SpriteRenderer>().material.color = Color.white;
+        GetComponent<SpriteRenderer>().material.color = default_color;
     }
 
     void PlayDeath()
@@ -196,5 +201,18 @@ public class Enemy : MonoBehaviour {
             return true;
         }
         return false;
+    }
+
+    /*
+     *  DEBUFFS
+     */ 
+
+    public IEnumerator ApplyDebuffFreeze(float duration)
+    {
+        GetComponent<SpriteRenderer>().material.color = new Color(.5f, .8f, 1f,1f);
+        isFrozen = true;
+        yield return new WaitForSeconds(duration);
+        GetComponent<SpriteRenderer>().material.color = default_color;
+        isFrozen = false;
     }
 }

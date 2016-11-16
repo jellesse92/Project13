@@ -13,8 +13,6 @@ public class MagePhysics : PlayerPhysics
 
     const float HEAVY_AIR_ORIGIN_X = 5f;
     const float HEAVY_AIR_ORIGIN_Y = 3f;
-    const float HEAVY_AIR_FORCE_X = 14000f;
-    const float HEAVY_AIR_FORCE_Y = -15000f;
     const float HEAVY_AIR_ATTACK_DURATION = 3f;
 
     public GameObject quickAttackReticle;                   //Reticle for applying quick attack
@@ -24,7 +22,7 @@ public class MagePhysics : PlayerPhysics
 
     public GameObject shieldParticle;                       //Particle effect and collider for shield burst
 
-    public GameObject meteor;                               //Object for meteor
+    public GameObject blizzard;                               //Object for meteor
     bool heavyAirAttackActive = false;                      //Returns if heavy air attack is on coold down or not
 
     public override void ClassSpecificStart()
@@ -33,8 +31,8 @@ public class MagePhysics : PlayerPhysics
         quickAttackReticle.GetComponent<MageReticleScript>().SetMaster(this.gameObject);
         heavyAttackReticle = (GameObject)Instantiate(heavyAttackReticle);
         heavyAttackReticle.GetComponent<MageReticleScript>().SetMaster(this.gameObject);
-        meteor = (GameObject)Instantiate(meteor);
-        meteor.transform.GetChild(0).GetComponent<MageMeteorScript>().SetMaster(this.gameObject);
+        blizzard = (GameObject)Instantiate(blizzard);
+        blizzard.GetComponent<MageBlizzardScript>().SetMaster(this.gameObject);
     }
 
     
@@ -60,9 +58,9 @@ public class MagePhysics : PlayerPhysics
         if (heavyAirAttackActive)
             return;
 
-        meteor.transform.position = transform.position + new Vector3(HEAVY_AIR_ORIGIN_X * transform.localScale.x, HEAVY_AIR_ORIGIN_Y, transform.position.z);
-        meteor.transform.GetChild(0).GetComponent<MageMeteorScript>().ActivateAttack();
-        meteor.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_AIR_FORCE_X * transform.localScale.x, HEAVY_AIR_FORCE_Y));
+        blizzard.transform.position = transform.position + new Vector3(HEAVY_AIR_ORIGIN_X * transform.localScale.x, HEAVY_AIR_ORIGIN_Y, transform.position.z);
+        blizzard.transform.rotation = Quaternion.Euler(0, 0, 20 * transform.localScale.x);
+        blizzard. GetComponent<MageBlizzardScript>().ActivateAttack();
         Invoke("EndAirHeavyAttack", HEAVY_AIR_ATTACK_DURATION);
         heavyAirAttackActive = true;
     }
@@ -133,7 +131,7 @@ public class MagePhysics : PlayerPhysics
 
     void EndAirHeavyAttack()
     {
-        meteor.transform.GetChild(0).GetComponent<MageMeteorScript>().Reset();
+        blizzard.GetComponent<MageBlizzardScript>().Reset();
         heavyAirAttackActive = false;
     }
 
