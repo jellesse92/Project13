@@ -26,7 +26,12 @@ public class MageBlizzardScript : MonoBehaviour {
         if (col.tag == "Enemy")
         {
             if (!enemy.Contains(col.gameObject))
+            {
                 enemy.Add(col.gameObject);
+                col.gameObject.GetComponent<Enemy>().StartCoroutine(col.gameObject.GetComponent<Enemy>().ApplyDebuffFreeze(BLIZZARD_STUN_DURATION));
+                col.gameObject.GetComponent<Enemy>().Damage(damage, BLIZZARD_STUN_DURATION);
+            }
+
             Debug.Log("testing");
         }
     }
