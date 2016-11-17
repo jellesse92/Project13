@@ -36,4 +36,8 @@ public class SwordsmanPhysics : PlayerPhysics{
     {
         inCombo = false;
     }
+    public void HeavyTransistionToAir()
+    {
+        GetComponent<Animator>().SetTrigger("heavyToAerial");
+    }
 }
