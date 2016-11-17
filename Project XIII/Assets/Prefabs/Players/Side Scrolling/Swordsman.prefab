@@ -45,6 +45,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1000012429320758
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000012982687378}
+  - 61: {fileID: 61000010930175472}
+  - 114: {fileID: 114000014245854188}
+  m_Layer: 19
+  m_Name: Carry Attack Box
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1000014081926900
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,8 +112,22 @@ Transform:
   m_Children:
   - {fileID: 4000011051847818}
   - {fileID: 4000014209728042}
+  - {fileID: 4000012982687378}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!4 &4000012982687378
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012429320758}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 4000012182819958}
+  m_RootOrder: 2
 --- !u!4 &4000014209728042
 Transform:
   m_ObjectHideFlags: 1
@@ -141,6 +172,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 15
+--- !u!61 &61000010930175472
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012429320758}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
 --- !u!61 &61000011372018674
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -283,6 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   comboAttackBox: {fileID: 1000011447821148}
+  dragAttackBox: {fileID: 1000012429320758}
 --- !u!114 &114000011439112550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -345,6 +391,17 @@ MonoBehaviour:
   boostStats:
     attackBoost: 0
     speedBoost: 0
+--- !u!114 &114000014245854188
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012429320758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d78594fb969722f47a106c744b63f19d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212000010376855666
 SpriteRenderer:
   m_ObjectHideFlags: 1
