@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour {
 
     //In-Game information                 
     public int health;                                  //Enemy health
+    int fullHealth;                                     //Health at full health to restore to
     public float speed;                                 //Speed of enemy
     public int attackPower;                             //Base attack power of enemy
     public bool stunnable;                              //Able to be stunned
@@ -51,6 +52,7 @@ public class Enemy : MonoBehaviour {
         distToGround = GetComponent<Collider2D>().bounds.extents.y;
         layerMask = (LayerMask.GetMask("Default"));
         default_color = GetComponent<SpriteRenderer>().color;
+        fullHealth = health;
 
     }
 
@@ -63,7 +65,12 @@ public class Enemy : MonoBehaviour {
     //Call when enemy becomes no longer visible on screen
     void OnBecameInvisible()
     {
-        Reset();
+        /*
+        isVisible = false;
+        inPursuit = false;
+        target = null;
+        inAttackRange = false;
+        */
     }
 
     //Call when enter a trigger field. If entering player trigger field and visible, activate pursuit status
@@ -83,6 +90,8 @@ public class Enemy : MonoBehaviour {
         inPursuit = false;
         target = null;
         inAttackRange = false;
+        fullHealth = health;
+        gameObject.layer = 9;
     }
 
     //Damage script to be applied when enemy takes damage
