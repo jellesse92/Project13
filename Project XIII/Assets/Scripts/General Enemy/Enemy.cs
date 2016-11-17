@@ -88,6 +88,7 @@ public class Enemy : MonoBehaviour {
     //Damage script to be applied when enemy takes damage
     public void Damage(int damage, float stunMultiplier = 0f)
     {
+        transform.GetChild(2).GetComponent<ParticleSystem>().Play();
         bounceCount = 0; //Reset so juggle continues
 
         if (dead)
