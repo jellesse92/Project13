@@ -3,11 +3,13 @@ using System.Collections;
 
 public class SwordsmanPhysics : PlayerPhysics{
 
+    public GameObject comboAttackBox;           //Collider for dealing combo attack damage
+
     bool inCombo = false;                       //Checks if swordsman able to combo
 
     public override void ClassSpecificStart()
     {
-
+        comboAttackBox.GetComponent<SwordsmanMelee>().SetDamage(GetComponent<PlayerProperties>().GetPhysicStats().quickAttackStrength);
     }
 
     public override void ClassSpecificUpdate()
