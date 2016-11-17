@@ -310,4 +310,14 @@ public class PlayerPhysics : MonoBehaviour {
         heavyAttackReleased = false;
         checkHeavyAttackUp = true;
     }
+
+    public void ConstrainY()
+    {
+        myRigidbody.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+    }
+
+    public void DeconstrainY()
+    {
+        myRigidbody.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
+    }
 }

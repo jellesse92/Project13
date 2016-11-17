@@ -3,14 +3,16 @@ using System.Collections;
 
 public class SwordsmanPhysics : PlayerPhysics{
 
-    public GameObject comboAttackBox;           //Collider for dealing combo attack damage
+    public GameObject comboAttackBox;           //Collider for dealing combo attacks
     public GameObject dragAttackBox;            //Collider for dragging enemies with sword swing up or down
+    public GameObject airComboAttackBox;        //Collider for dealing air combo attacks
 
     bool inCombo = false;                       //Checks if swordsman able to combo
 
     public override void ClassSpecificStart()
     {
         comboAttackBox.GetComponent<SwordsmanMelee>().SetDamage(GetComponent<PlayerProperties>().GetPhysicStats().quickAttackStrength);
+        airComboAttackBox.GetComponent<SwordsmanAirMelee>().SetDamage(GetComponent<PlayerProperties>().GetPhysicStats().quickAirAttackStrength);
         dragAttackBox.GetComponent<SwordsmanDragAttackScript>().enabled = false;
     }
 
@@ -52,6 +54,7 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     public void EndDragAttack()
     {
+        Debug.Log("ending");
         dragAttackBox.GetComponent<Collider2D>().enabled = false;
         dragAttackBox.GetComponent<SwordsmanDragAttackScript>().Reset();
         dragAttackBox.GetComponent<SwordsmanDragAttackScript>().enabled = false;

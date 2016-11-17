@@ -400,21 +400,21 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.25
-    functionName: AddForceY
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 1200
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.25
     functionName: ExecuteDragAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0.25
+    functionName: AddForceY
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 1200
+    intParameter: 0
+    messageOptions: 0
   - time: 0.6666667
-    functionName: EndDragAttack
+    functionName: ActivateAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -429,6 +429,13 @@ AnimationClip:
     messageOptions: 0
   - time: 0.75
     functionName: ActivateAttackMovementJump
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.75
+    functionName: EndDragAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
