@@ -54,7 +54,6 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     public void EndDragAttack()
     {
-        Debug.Log("ending");
         dragAttackBox.GetComponent<Collider2D>().enabled = false;
         dragAttackBox.GetComponent<SwordsmanDragAttackScript>().Reset();
         dragAttackBox.GetComponent<SwordsmanDragAttackScript>().enabled = false;
