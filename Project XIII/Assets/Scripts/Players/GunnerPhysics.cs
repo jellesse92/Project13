@@ -10,11 +10,13 @@ public class GunnerPhysics : PlayerPhysics{
     float bulletSpeed;
 
     public GameObject bulletSource;
+    public GameObject meleeAttackBox;
     public DownKickScript downKickScript;
 
     public override void ClassSpecificStart()
     {
         gunnerStat = GetComponent<GunnerProperties>().GetGunnerStats();
+        meleeAttackBox.GetComponent<MeleeAttackScript>().SetAttackStrength(GetComponent<PlayerProperties>().GetPhysicStats().quickAirAttackStrength);
         downKickScript.enabled = false;
     }
 
