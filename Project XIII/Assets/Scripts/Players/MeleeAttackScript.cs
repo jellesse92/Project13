@@ -16,7 +16,6 @@ public class MeleeAttackScript : MonoBehaviour {
         if(col.tag == "Enemy")
         {
             col.gameObject.GetComponent<Enemy>().Damage(attackStrength, stunDuration);
-
             col.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceX * transform.parent.localScale.x, forceY));
         }
     }

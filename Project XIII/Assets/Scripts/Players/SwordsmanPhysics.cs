@@ -6,6 +6,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     public GameObject comboAttackBox;           //Collider for dealing combo attacks
     public GameObject dragAttackBox;            //Collider for dragging enemies with sword swing up or down
     public GameObject airComboAttackBox;        //Collider for dealing air combo attacks
+    public GameObject heavyAirAttackBox;        //Collider for dealing with heavy air attack
 
     bool inCombo = false;                       //Checks if swordsman able to combo
 
@@ -13,6 +14,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     {
         comboAttackBox.GetComponent<SwordsmanMelee>().SetDamage(GetComponent<PlayerProperties>().GetPhysicStats().quickAttackStrength);
         airComboAttackBox.GetComponent<SwordsmanAirMelee>().SetDamage(GetComponent<PlayerProperties>().GetPhysicStats().quickAirAttackStrength);
+        heavyAirAttackBox.GetComponent<MeleeAttackScript>().SetAttackStrength(GetComponent<PlayerProperties>().GetPhysicStats().heavyAirAttackStrengh);
         dragAttackBox.GetComponent<SwordsmanDragAttackScript>().enabled = false;
     }
 
