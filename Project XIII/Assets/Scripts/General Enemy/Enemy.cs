@@ -5,6 +5,8 @@ using System.Collections.Generic;
 //Class to be inherited by all enemy scripts
 public class Enemy : MonoBehaviour {
 
+    protected const int ALLOWED_BOUNCES = 3;            //Bounces allowed starting at 3 to allow 1 distinct bounce
+
     //Animator
     protected Animator anim;
 
@@ -36,9 +38,9 @@ public class Enemy : MonoBehaviour {
     int layerMask;                                      //Layers to check for ground
 
     //Juggling Variables
-    protected int bounceCount = 0;                      //Number of times bounced
+    protected bool isBouncing = false;                  //Determines if enemy is bouncing
+    protected int bounceCount = 0;                      //Times bounced
     protected int comboCount = 0;                       //Number of times enemy has been hit in a consistent comb
-    public PhysicsMaterial2D bounceMaterial;            //Material for bouncing
 
     Color default_color;
 
@@ -98,7 +100,6 @@ public class Enemy : MonoBehaviour {
     public void Damage(int damage, float stunMultiplier = 0f)
     {
         transform.GetChild(2).GetComponent<ParticleSystem>().Play();
-        bounceCount = 0; //Reset so juggle continues
 
         if (dead)
             return;
@@ -200,7 +201,8 @@ public class Enemy : MonoBehaviour {
 
     public void Bounce()
     {
-        GetComponent<Collider2D>().sharedMaterial = bounceMaterial;
+        isBouncing = true;
+        bounceCount = 0;
     }
 
     /*

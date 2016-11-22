@@ -27,7 +27,8 @@ public class BasicEnemy2D : Enemy {
     void FixedUpdate()
     {
 
-        if(GetComponent<Collider2D>().sharedMaterial == bounceMaterial)
+
+        if(isBouncing)
             ManageJuggleState();
         else if (!dead)
         {
@@ -69,20 +70,16 @@ public class BasicEnemy2D : Enemy {
     //Manages juggling state
     void ManageJuggleState()
     {
-        if (checkGrounded)
+        if(bounceCount >= ALLOWED_BOUNCES)
         {
-            if (IsGrounded())
-            {
-                bounceCount++;
-                StartCoroutine("DelayBounceCheck");
-                if (bounceCount >= 2)
-                {
-                    GetComponent<Collider2D>().sharedMaterial = null;
-                    bounceCount = 0;
-                }
-
-            }
+            isBouncing = false;
         }
+        else if (IsGrounded())
+        {
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 5500f));
+            bounceCount++;
+        }
+        
     }
 
     //Plays out enemy approach

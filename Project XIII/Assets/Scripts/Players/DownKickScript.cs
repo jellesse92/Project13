@@ -57,4 +57,12 @@ public class DownKickScript : MonoBehaviour {
         enemy = new HashSet<GameObject>();
     }
 
+    public void ApplyBounce()
+    {
+        foreach(GameObject target in enemy)
+        {
+            target.GetComponent<Enemy>().Bounce();
+        }
+    }
+
 }

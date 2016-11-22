@@ -45,4 +45,9 @@ public class GunnerPhysics : PlayerPhysics{
         downKickScript.enabled = false;
         GetComponent<PlayerProperties>().SetStunnableState(true);
     }
+
+    void ApplyBounce()
+    {
+        downKickScript.ApplyBounce();
+    }
 }
