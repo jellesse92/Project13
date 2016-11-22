@@ -70,16 +70,44 @@ public class BasicEnemy2D : Enemy {
     //Manages juggling state
     void ManageJuggleState()
     {
+        if (isSquishing)
+            return;
+
         if(bounceCount >= ALLOWED_BOUNCES)
         {
             isBouncing = false;
         }
         else if (IsGrounded())
         {
-            GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 5500f));
+            StartCoroutine("BounceSquish");
             bounceCount++;
         }
         
+    }
+
+    IEnumerator BounceSquish()
+    {
+        float delayTime = .01f;
+        isSquishing = true;
+
+        for(int i = 0; i < 3; i++) {
+            transform.localScale += new Vector3(0, -.15f, 0f);
+            yield return new WaitForSeconds(delayTime);
+        }
+
+        for(int i = 0; i < 3; i++)
+        {
+            transform.localScale += new Vector3(0, .15f, 0f);
+            yield return new WaitForSeconds(delayTime);
+        }
+
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 10000f));
+        Invoke("DelayBounceCount", .2f);
+    }
+
+    void DelayBounceCount()
+    {
+        isSquishing = false;
     }
 
     //Plays out enemy approach

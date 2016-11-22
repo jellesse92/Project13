@@ -5,7 +5,7 @@ using System.Collections.Generic;
 //Class to be inherited by all enemy scripts
 public class Enemy : MonoBehaviour {
 
-    protected const int ALLOWED_BOUNCES = 3;            //Bounces allowed starting at 3 to allow 1 distinct bounce
+    protected const int ALLOWED_BOUNCES = 2;            //Bounces allowed starting at 3 to allow 1 distinct bounce
 
     //Animator
     protected Animator anim;
@@ -39,6 +39,7 @@ public class Enemy : MonoBehaviour {
 
     //Juggling Variables
     protected bool isBouncing = false;                  //Determines if enemy is bouncing
+    protected bool isSquishing = false;                 //Determines if enemy is being squished to ground
     protected int bounceCount = 0;                      //Times bounced
     protected int comboCount = 0;                       //Number of times enemy has been hit in a consistent comb
 
@@ -202,6 +203,7 @@ public class Enemy : MonoBehaviour {
     public void Bounce()
     {
         isBouncing = true;
+        isSquishing = false;
         bounceCount = 0;
     }
 
