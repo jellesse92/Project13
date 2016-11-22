@@ -10,6 +10,8 @@ public class BasicEnemy : Enemy {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+
+        Debug.Log("Is grounded?:" + IsGrounded());
         if (GetVisibleState() && GetPursuitState())
         {
             if (!inAttackRange)
