@@ -15,6 +15,10 @@ public class MechPhysics : PlayerPhysics{
 
     public GameObject rocket;                               //object for homing rocket attack;
 
+    public GameObject wall;
+    const float WALL_ORIGIN_X = 5f;
+    const float WALL_ORIGIN_Y = 0f;
+
     public override void ClassSpecificStart()
     {
         comboAttackBox.GetComponent<SwordsmanMelee>().SetDamage(GetComponent<PlayerProperties>().GetPhysicStats().quickAttackStrength);
@@ -23,6 +27,9 @@ public class MechPhysics : PlayerPhysics{
         barrage.GetComponent<MechRocketBarrage>().SetMaster(this.gameObject);
         rocket = (GameObject)Instantiate(rocket);
         rocket.SetActive(false);
+        wall = (GameObject)Instantiate(wall);
+        wall.SetActive(false);
+        wall.GetComponent<BoxCollider2D>().enabled = false;
     }
 
     public override void ClassSpecificUpdate()
@@ -69,13 +76,24 @@ public class MechPhysics : PlayerPhysics{
 
     void ExecuteHeavyGroundAttack()
     {
-        if (rocket.active == false)
+        if (rocket.activeSelf == false)
         {
             rocket.transform.position = transform.position;
             rocket.SetActive(true);
             GameObject target = GameObject.FindGameObjectWithTag("Enemy");
             rocket.GetComponent<RocketBehavior>().SetTarget(target);
             rocket.GetComponent<BoxCollider2D>().enabled = true;
+        }
+    }
+
+    void SummonWall()
+    {
+        if (wall.activeSelf == false)
+        {
+            wall.transform.position = transform.position + new Vector3(WALL_ORIGIN_X * transform.localScale.x, WALL_ORIGIN_Y, transform.position.z);
+            wall.SetActive(true);
+            wall.GetComponent<BoxCollider2D>().enabled = true;
+            wall.GetComponent<MechWallBehavior>().counter = 0;
         }
     }
 }
