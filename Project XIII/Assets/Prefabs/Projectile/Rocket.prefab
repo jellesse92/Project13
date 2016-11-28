@@ -21,8 +21,8 @@ GameObject:
   - 4: {fileID: 4000010677362002}
   - 114: {fileID: 114000013447374460}
   - 212: {fileID: 212000013897859262}
-  - 65: {fileID: 65000011973477056}
-  m_Layer: 15
+  - 61: {fileID: 61000013516899932}
+  m_Layer: 19
   m_Name: Rocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,24 +36,26 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012173082474}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -5.454656, y: -0.69064367, z: 0}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!65 &65000011973477056
-BoxCollider:
+--- !u!61 &61000013516899932
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012173082474}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
   m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 5.19, y: 6.16, z: 0.2}
-  m_Center: {x: -2.595, y: -3.08, z: 0}
+  m_Size: {x: 30.01, y: 30.01}
 --- !u!114 &114000013447374460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -95,7 +97,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0e6111f3ebf02504fa1afa93d8203b7c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5287b4433a1a49b4fb35b1638c32cb6c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -69,9 +69,13 @@ public class MechPhysics : PlayerPhysics{
 
     void ExecuteHeavyGroundAttack()
     {
-        rocket.transform.position = transform.position;
-        rocket.SetActive(true);
-        GameObject target = GameObject.FindGameObjectWithTag("Enemy");
-        rocket.GetComponent<RocketBehavior>().SetTarget(target);
+        if (rocket.active == false)
+        {
+            rocket.transform.position = transform.position;
+            rocket.SetActive(true);
+            GameObject target = GameObject.FindGameObjectWithTag("Enemy");
+            rocket.GetComponent<RocketBehavior>().SetTarget(target);
+            rocket.GetComponent<BoxCollider2D>().enabled = true;
+        }
     }
 }
