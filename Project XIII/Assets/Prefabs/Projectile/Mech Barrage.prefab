@@ -19,10 +19,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000011277324646}
-  - 114: {fileID: 114000011389115114}
   - 61: {fileID: 61000013283363648}
+  - 114: {fileID: 114000012814922128}
   m_Layer: 19
-  m_Name: Mage Blizzard
+  m_Name: Mech Barrage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,7 +39,7 @@ GameObject:
   - 198: {fileID: 198000010307747078}
   - 199: {fileID: 199000013528964084}
   m_Layer: 19
-  m_Name: Blizzard Particle
+  m_Name: Barrage Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,8 +51,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013498733352}
-  m_LocalRotation: {x: 0, y: 0, z: -0.1736482, w: 0.9848078}
-  m_LocalPosition: {x: -0.3195305, y: 8.789442, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -78,7 +78,7 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013498733352}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -86,7 +86,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: -10}
   serializedVersion: 2
   m_Size: {x: 5, y: 20}
---- !u!114 &114000011389115114
+--- !u!114 &114000012814922128
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -94,10 +94,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000013498733352}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d6932e2b9469784c97f5c395b04b694, type: 3}
+  m_Script: {fileID: 11500000, guid: e1e98fccf92e5304ebe82487c549bf89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blizzardParticle: {fileID: 1000014147919234}
+  barrageParticle: {fileID: 1000014147919234}
 --- !u!198 &198000010307747078
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -153,7 +153,7 @@ ParticleSystem:
     serializedVersion: 2
     enabled: 1
     startLifetime:
-      scalar: 5
+      scalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -188,7 +188,7 @@ ParticleSystem:
         m_RotationOrder: 4
       minMaxState: 0
     startSpeed:
-      scalar: 5
+      scalar: 10
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -311,7 +311,7 @@ ParticleSystem:
         m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
+      maxColor: {r: 0.47058824, g: 0.16862746, b: 0.16862746, a: 1}
       minMaxState: 0
     startSize:
       scalar: 1
@@ -1026,7 +1026,7 @@ ParticleSystem:
         m_RotationOrder: 4
       minMaxState: 0
     y:
-      scalar: -11
+      scalar: -20
       maxCurve:
         serializedVersion: 2
         m_Curve:
