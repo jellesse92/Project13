@@ -67,10 +67,6 @@ public class PlayerInput : MonoBehaviour {
             keyPress.heavyAttackPress = true;
         if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.C)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.dashButton)))
             keyPress.dashPress = true;
-        /*
-        if (Input.GetKeyDown(keyConfig.dashKey))
-            keyPress.dashPress = true;
-            */
 
         if ((joystickNum == 0 && Input.GetKeyUp(KeyCode.Z)) || (joystickNum != 0 && Input.GetButtonUp(keyConfig.quickAttackButton)))
             keyPress.quickAttackReleased = true;

@@ -15,7 +15,7 @@ public class BulletSourceScript : MonoBehaviour {
     void Start () {
         hitImpactParticle = GetComponentInParent<GunnerParticles>().quickHitImpact;
         hitImpactParticle = Instantiate(hitImpactParticle);
-        layermask = (LayerMask.GetMask("Default","Enemy", "Juggled Enemy"));
+        layermask = (LayerMask.GetMask("Default","Enemy"));
 	}
 
  
