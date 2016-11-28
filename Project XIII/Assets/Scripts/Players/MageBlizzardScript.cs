@@ -31,8 +31,6 @@ public class MageBlizzardScript : MonoBehaviour {
                 col.gameObject.GetComponent<Enemy>().StartCoroutine(col.gameObject.GetComponent<Enemy>().ApplyDebuffFreeze(BLIZZARD_STUN_DURATION));
                 col.gameObject.GetComponent<Enemy>().Damage(damage, BLIZZARD_STUN_DURATION);
             }
-
-            Debug.Log("testing");
         }
     }
 
