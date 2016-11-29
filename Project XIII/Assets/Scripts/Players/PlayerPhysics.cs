@@ -66,6 +66,9 @@ public class PlayerPhysics : MonoBehaviour {
     {
         if (!GetComponent<PlayerProperties>().GetStunState())
         {
+            float xMove = myKeyPress.horizontalAxisValue;
+            float yMove = myKeyPress.verticalAxisValue;
+
             Movement();
             if (myKeyPress.jumpPress)
                 Jump();
@@ -73,6 +76,8 @@ public class PlayerPhysics : MonoBehaviour {
                 QuickAttack();
             if (myKeyPress.heavyAttackPress)
                 HeavyAttack();
+            if (myKeyPress.dashPress)
+                MovementSkill(xMove, yMove);
             CheckForButtonReleases();
         }
 
@@ -95,6 +100,13 @@ public class PlayerPhysics : MonoBehaviour {
     public virtual void ClassSpecificUpdate()
     {
         //This function is used when a specific class need to use FixedUpdate
+    }
+
+    public virtual void MovementSkill(float xMove, float yMove)
+    {
+        if (!cannotMovePlayer)
+            return;
+        //This function is used for when specific class movement based skills
     }
 
     protected void Movement()
