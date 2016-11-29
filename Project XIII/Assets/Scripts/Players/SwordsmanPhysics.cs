@@ -3,17 +3,24 @@ using System.Collections;
 
 public class SwordsmanPhysics : PlayerPhysics{
 
-    const float DASH_DISTANCE = 10f;
+    //Constants for managing quick dashing skill
+    const float DASH_DISTANCE = 10f;            //Distance of dasj
+    const float DASH_RECOVERY_TIME = 1f;       //Time it takes to recover dashes
+    const float MAX_CHAIN_DASH = 3;             //Max amount of dashes that can be chained
 
     public GameObject comboAttackBox;           //Collider for dealing combo attacks
     public GameObject dragAttackBox;            //Collider for dragging enemies with sword swing up or down
     public GameObject airComboAttackBox;        //Collider for dealing air combo attacks
     public GameObject heavyAirAttackBox;        //Collider for dealing with heavy air attack
 
-    float xAxis = 0f;                       
-    float yAxis = 0f;
+    float xInputAxis = 0f;                                     
+    float yInputAxis = 0f;
 
     bool inCombo = false;                       //Checks if swordsman able to combo
+
+    //Dash skill variables
+    int dashCount = 0;                          //Checks how many dashes have been chained
+    bool checkGroundForDash = false;            //Bool that determines to check for grounded before resetting dash count
 
     public override void ClassSpecificStart()
     {
@@ -27,17 +34,22 @@ public class SwordsmanPhysics : PlayerPhysics{
     {
         if (inCombo)
             WatchForCombo();
+        if (checkGroundForDash)
+        {
+            ResetDashCount();
+        }
     }
 
     public override void MovementSkill(float xMove, float yMove)
     {
         base.MovementSkill(xMove,yMove);
 
-        xAxis = xMove;
-        yAxis = yMove;
+        xInputAxis = xMove;
+        yInputAxis = yMove;
 
         //EVENTUALLY ADD A DASH COUNTER
-        GetComponent<Animator>().SetTrigger("moveSkill");
+        if(dashCount < MAX_CHAIN_DASH)
+            GetComponent<Animator>().SetTrigger("moveSkill");
     }
 
     public void WatchForCombo()
@@ -80,7 +92,9 @@ public class SwordsmanPhysics : PlayerPhysics{
     public void ExecuteDashSkill()
     {
         RaycastHit2D hit;
-        Vector2 dir = new Vector2(xAxis, yAxis).normalized;
+        Vector2 dir = new Vector2(xInputAxis, yInputAxis).normalized;
+
+        dashCount++;
 
         if (dir.x == 0f && dir.y == 0f)
             dir.x = transform.localScale.x;
@@ -91,20 +105,20 @@ public class SwordsmanPhysics : PlayerPhysics{
             StartCoroutine(Dashing(transform.position + new Vector3(dir.x * DASH_DISTANCE, dir.y * DASH_DISTANCE, transform.position.z)));
         else
         {
-            Vector3 destination;
             float xOffset = 0f;
             float yOffset = 0f;
 
-
             StartCoroutine(Dashing(new Vector3(hit.point.x + xOffset, hit.point.y + yOffset, transform.position.z)));
         }
-
-            //Debug.Log(hit.collider.gameObject.name);
     }
 
     IEnumerator Dashing(Vector3 destination)
     {
         float gravity = GetComponent<Rigidbody2D>().gravityScale;
+
+        DeactivateAttackMovementJump();
+        VelocityY(0f);
+        VelocityX(0f);
 
         GetComponent<Rigidbody2D>().gravityScale = 0f;
 
@@ -114,7 +128,6 @@ public class SwordsmanPhysics : PlayerPhysics{
         {
             if (transform.position.x == destination.x && transform.position.y == destination.y)
                 break;
-
             yield return new WaitForSeconds(.01f);
             transform.position = Vector3.MoveTowards(transform.position, destination, DASH_DISTANCE / 5f);
         }
@@ -126,6 +139,23 @@ public class SwordsmanPhysics : PlayerPhysics{
         else
             GetComponent<Animator>().SetTrigger("heavyToAerial");
 
+        ActivateAttackMovementJump();
+
+        Invoke("ResetDashCount", DASH_RECOVERY_TIME);
+
+    }
+
+    void ResetDashCount()
+    {
+        if (isGrounded())
+        {
+            dashCount = 0;
+            checkGroundForDash = false;
+        }
+        else
+            checkGroundForDash = true;
+
+        
     }
 
 
