@@ -28,11 +28,8 @@ public class MechRocketBarrage : MonoBehaviour {
             if (!enemy.Contains(col.gameObject))
             {
                 enemy.Add(col.gameObject);
-                col.gameObject.GetComponent<Enemy>().StartCoroutine(col.gameObject.GetComponent<Enemy>().ApplyDebuffFreeze(BARRAGE_STUN_DURATION));
                 col.gameObject.GetComponent<Enemy>().Damage(damage, BARRAGE_STUN_DURATION);
             }
-
-            Debug.Log("testing");
         }
     }
 
@@ -40,16 +37,6 @@ public class MechRocketBarrage : MonoBehaviour {
     {
         if (col.tag == "Enemy" && enemy.Contains(col.gameObject))
             enemy.Remove(col.gameObject);
-    }
-
-    public void ApplyFrozenEffect()
-    {
-        foreach (GameObject target in enemy)
-        {
-            target.GetComponent<Enemy>().StartCoroutine(target.GetComponent<Enemy>().ApplyDebuffFreeze(BARRAGE_STUN_DURATION));
-            target.GetComponent<Enemy>().Damage(damage, BARRAGE_STUN_DURATION);
-        }
-
     }
 
     public void SetMaster(GameObject obj)

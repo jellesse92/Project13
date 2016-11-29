@@ -25,6 +25,7 @@ public class KeyConfig
     public string quickAttackButton = "1_Square";
     public string heavyAttackButton = "1_Triangle";
     public string dashButton = "1_Circle";
+    public string blockButton = "1_Bumper?";
 
     //public string dashkey
 
@@ -67,6 +68,8 @@ public class PlayerInput : MonoBehaviour {
             keyPress.heavyAttackPress = true;
         if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.C)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.dashButton)))
             keyPress.dashPress = true;
+        if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.V)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.blockButton)))
+            keyPress.blockPress = true;
 
         if ((joystickNum == 0 && Input.GetKeyUp(KeyCode.Z)) || (joystickNum != 0 && Input.GetButtonUp(keyConfig.quickAttackButton)))
             keyPress.quickAttackReleased = true;

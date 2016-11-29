@@ -78,6 +78,8 @@ public class PlayerPhysics : MonoBehaviour {
                 HeavyAttack();
             if (myKeyPress.dashPress)
                 MovementSkill(xMove, yMove);
+            if (myKeyPress.blockPress)
+                Block();
             CheckForButtonReleases();
         }
 
@@ -172,6 +174,16 @@ public class PlayerPhysics : MonoBehaviour {
                 myAnimator.SetTrigger("airHeavyAttack");
             else
                 myAnimator.SetTrigger("heavyAttack");
+        }
+    }
+    protected virtual void Block()
+    {
+        if (!cannotAttack)
+        {
+            if (!isJumping)
+            {
+                myAnimator.SetTrigger("block");
+            }
         }
     }
 
