@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SwordsmanPhysics : PlayerPhysics{
 
-    const float DASH_DISTANCE = 20f;
+    const float DASH_DISTANCE = 10f;
 
     public GameObject comboAttackBox;           //Collider for dealing combo attacks
     public GameObject dragAttackBox;            //Collider for dragging enemies with sword swing up or down
@@ -81,15 +81,25 @@ public class SwordsmanPhysics : PlayerPhysics{
     {
         RaycastHit2D hit;
         Vector2 dir = new Vector2(xAxis, yAxis).normalized;
-        
-        hit = Physics2D.Raycast(transform.position, dir, DASH_DISTANCE, LayerMask.GetMask("Default"));
-        
-        if(dir.x == 0f && dir.y == 0f)
+
+        if (dir.x == 0f && dir.y == 0f)
             dir.x = transform.localScale.x;
 
+        hit = Physics2D.Raycast(transform.position, dir, DASH_DISTANCE, LayerMask.GetMask("Default"));
 
-        if(hit.collider == null)
+        if (hit.collider == null)
             StartCoroutine(Dashing(transform.position + new Vector3(dir.x * DASH_DISTANCE, dir.y * DASH_DISTANCE, transform.position.z)));
+        else
+        {
+            Vector3 destination;
+            float xOffset = 0f;
+            float yOffset = 0f;
+
+
+            StartCoroutine(Dashing(new Vector3(hit.point.x + xOffset, hit.point.y + yOffset, transform.position.z)));
+        }
+
+            //Debug.Log(hit.collider.gameObject.name);
     }
 
     IEnumerator Dashing(Vector3 destination)
@@ -98,19 +108,24 @@ public class SwordsmanPhysics : PlayerPhysics{
 
         GetComponent<Rigidbody2D>().gravityScale = 0f;
 
-        transform.position = Vector3.MoveTowards(transform.position, destination, DASH_DISTANCE/10f);
-        yield return new WaitForSeconds(.01f);
-        transform.position = Vector3.MoveTowards(transform.position, destination, DASH_DISTANCE/10f);
-        yield return new WaitForSeconds(.01f);
-        transform.position = Vector3.MoveTowards(transform.position, destination, DASH_DISTANCE/10f);
-        yield return new WaitForSeconds(.01f);
-        transform.position = Vector3.MoveTowards(transform.position, destination, DASH_DISTANCE /10f);
-        yield return new WaitForSeconds(.01f);
-        transform.position = Vector3.MoveTowards(transform.position, destination, DASH_DISTANCE/10f);
-        yield return new WaitForSeconds(.01f);
+        transform.position = Vector3.MoveTowards(transform.position, destination, DASH_DISTANCE / 5f);
 
+        for (int i = 0; i < 4; i++)
+        {
+            if (transform.position.x == destination.x && transform.position.y == destination.y)
+                break;
+
+            yield return new WaitForSeconds(.01f);
+            transform.position = Vector3.MoveTowards(transform.position, destination, DASH_DISTANCE / 5f);
+        }
 
         GetComponent<Rigidbody2D>().gravityScale = gravity;
+
+        if (isGrounded())
+            GetComponent<Animator>().SetTrigger("idle");
+        else
+            GetComponent<Animator>().SetTrigger("heavyToAerial");
+
     }
 
 
