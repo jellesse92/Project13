@@ -38,7 +38,7 @@ public class PlayerInput : MonoBehaviour {
 
     void Start()
 	{
-        //SetJoystickNum(0);  //Temporary
+
     }
     
     public void GetInput()
