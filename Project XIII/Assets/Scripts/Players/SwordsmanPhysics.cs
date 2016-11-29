@@ -116,6 +116,10 @@ public class SwordsmanPhysics : PlayerPhysics{
     {
         float gravity = GetComponent<Rigidbody2D>().gravityScale;
 
+        DeactivateAttackMovementJump();
+        VelocityY(0f);
+        VelocityX(0f);
+
         GetComponent<Rigidbody2D>().gravityScale = 0f;
 
         transform.position = Vector3.MoveTowards(transform.position, destination, DASH_DISTANCE / 5f);
@@ -134,6 +138,8 @@ public class SwordsmanPhysics : PlayerPhysics{
             GetComponent<Animator>().SetTrigger("idle");
         else
             GetComponent<Animator>().SetTrigger("heavyToAerial");
+
+        ActivateAttackMovementJump();
 
         Invoke("ResetDashCount", DASH_RECOVERY_TIME);
 
