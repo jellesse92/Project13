@@ -8,10 +8,14 @@ public class SwordsmanPhysics : PlayerPhysics{
     const float DASH_RECOVERY_TIME = 1f;       //Time it takes to recover dashes
     const float MAX_CHAIN_DASH = 3;             //Max amount of dashes that can be chained
 
+    //Attack boxes
     public GameObject comboAttackBox;           //Collider for dealing combo attacks
     public GameObject dragAttackBox;            //Collider for dragging enemies with sword swing up or down
     public GameObject airComboAttackBox;        //Collider for dealing air combo attacks
     public GameObject heavyAirAttackBox;        //Collider for dealing with heavy air attack
+
+    //Particle effects
+    public ParticleSystem afterImageParticle;
 
     float xInputAxis = 0f;                                     
     float yInputAxis = 0f;
@@ -95,6 +99,7 @@ public class SwordsmanPhysics : PlayerPhysics{
         Vector2 dir = new Vector2(xInputAxis, yInputAxis).normalized;
 
         dashCount++;
+        CancelInvoke("StopAfterImage");
 
         if (dir.x == 0f && dir.y == 0f)
             dir.x = transform.localScale.x;
@@ -110,6 +115,8 @@ public class SwordsmanPhysics : PlayerPhysics{
 
             StartCoroutine(Dashing(new Vector3(hit.point.x + xOffset, hit.point.y + yOffset, transform.position.z)));
         }
+
+        afterImageParticle.Play();
     }
 
     IEnumerator Dashing(Vector3 destination)
@@ -135,14 +142,14 @@ public class SwordsmanPhysics : PlayerPhysics{
         GetComponent<Rigidbody2D>().gravityScale = gravity;
 
         if (isGrounded())
-            GetComponent<Animator>().SetTrigger("idle");
+            GetComponent<Animator>().SetTrigger("exitDash");
         else
             GetComponent<Animator>().SetTrigger("heavyToAerial");
 
         ActivateAttackMovementJump();
 
         Invoke("ResetDashCount", DASH_RECOVERY_TIME);
-
+        Invoke("StopAfterImage", .1f);
     }
 
     void ResetDashCount()
@@ -154,9 +161,13 @@ public class SwordsmanPhysics : PlayerPhysics{
         }
         else
             checkGroundForDash = true;
-
-        
     }
+
+    void StopAfterImage()
+    {
+        afterImageParticle.Stop();
+    }
+
 
 
 }
