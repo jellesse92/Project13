@@ -16,6 +16,8 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
     public bool in2DMode = true;
     public float lowestPointY = 0f;                             //Lowest point of the map the camera should be able to show
+    float lastOrthographicSize = 0f;                            //Keeps track of the last orthographic size
+    bool orthoTransitioning = false;
     Camera cam;
 
 	// Use this for initialization
@@ -93,11 +95,24 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     void SetOrthographicSize(float f)
     {
         float size;
+
         if (in2DMode)
         {
             size = Mathf.Max(f, DEFAULT_ORTHO_SIZE);
             size = Mathf.Min(size, MAX_ORTHO_SIZE);
-            cam.orthographicSize = size;
+
+            if(lastOrthographicSize <= size)
+            {
+                StopCoroutine(SmoothOrthograpicTransition(lastOrthographicSize));
+                lastOrthographicSize = 0f;
+                orthoTransitioning = false;
+            }
+
+
+            if ((cam.orthographicSize > size))
+                StartCoroutine(SmoothOrthograpicTransition(size) );
+            else if(!orthoTransitioning)
+                cam.orthographicSize = size;
             
         }
         else
@@ -106,6 +121,31 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
             size = Mathf.Min(size, MAX_ORTHO_SIZE_3D);
             cam.orthographicSize = size;
         }
+
+    }
+
+    //Smooths out the orthographic size transition
+    IEnumerator SmoothOrthograpicTransition(float size)
+    {
+        lastOrthographicSize = size;
+
+        orthoTransitioning = true;
+
+        while(cam.orthographicSize > size)
+        {
+
+            if (cam.orthographicSize - size < .1)
+            {
+                cam.orthographicSize = size;
+                orthoTransitioning = false;
+                break;
+            }
+
+            cam.orthographicSize -= .05f;
+        
+            yield return new WaitForSeconds(1.0f);
+        }
+
 
     }
 
