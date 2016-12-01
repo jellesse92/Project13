@@ -11,9 +11,12 @@ public class MagePhysics : PlayerPhysics
     const float HEAVY_ORIGIN_Y = 0f;
     const float HEAVY_ATTACK_DURATION = 2f;
 
-    const float HEAVY_AIR_ORIGIN_X = 5f;
-    const float HEAVY_AIR_ORIGIN_Y = 3f;
-    const float HEAVY_AIR_ATTACK_DURATION = 3f;
+    const float HEAVY_AIR_ORIGIN_X = 5f;                    //Heavy air attack local X position
+    const float HEAVY_AIR_ORIGIN_Y = 3f;                    //Heavy air attack local Y position
+    const float HEAVY_AIR_ATTACK_DURATION = 3f;             //Duration for heavy air attack
+
+    const float TELEPORT_DISTANCE = 10f;                    //Distance mage teleports when teleporting                 
+    const float TELEPORT_CD_TIME = 2f;                      //Time that teleport is on cooldown
 
     public GameObject quickAttackReticle;                   //Reticle for applying quick attack
     public GameObject heavyAttackReticle;                   //Reticle for applying heavy attack
@@ -22,8 +25,14 @@ public class MagePhysics : PlayerPhysics
 
     public GameObject shieldParticle;                       //Particle effect and collider for shield burst
 
-    public GameObject blizzard;                               //Object for meteor
-    bool heavyAirAttackActive = false;                      //Returns if heavy air attack is on coold down or not
+    public GameObject blizzard;                             //Object for blizzard
+    bool heavyAirAttackActive = false;                      //Returns if heavy air attack is on cool down or not
+
+    //Teleport variable
+    //public ParticleSystem teleportDust;
+    float xInputAxis = 0f;
+    float yInputAxis = 0f;
+    bool teleportOnCD = false;                              //Indicates teleport is on cooldown
 
     public override void ClassSpecificStart()
     {
@@ -35,7 +44,16 @@ public class MagePhysics : PlayerPhysics
         blizzard.GetComponent<MageBlizzardScript>().SetMaster(this.gameObject);
     }
 
-    
+    public override void MovementSkill(float xMove, float yMove)
+    {
+        base.MovementSkill(xMove, yMove);
+
+        xInputAxis = xMove;
+        yInputAxis = yMove;
+
+        if(!teleportOnCD)
+            GetComponent<Animator>().SetTrigger("moveSkill");
+    }
 
     void ActivateQuickReticle()
     {
@@ -147,5 +165,50 @@ public class MagePhysics : PlayerPhysics
     void ActivateShield()
     {
         shieldParticle.GetComponent<ParticleSystem>().Play();
+    }
+
+    void ExecuteTeleportSkill()
+    {
+        teleportOnCD = true;
+
+        RaycastHit2D hit;
+        Vector2 dir = new Vector2(xInputAxis, yInputAxis).normalized;
+
+        if (dir.x == 0f && dir.y == 0f)
+            dir.x = transform.localScale.x;
+
+        hit = Physics2D.Raycast(transform.position, dir, TELEPORT_DISTANCE, LayerMask.GetMask("Default"));
+
+        if (hit.collider == null)
+        {
+            transform.position += new Vector3(dir.x * TELEPORT_DISTANCE, dir.y * TELEPORT_DISTANCE, transform.position.z);
+        }
+        else
+        {
+            float xOffset = 0f;
+            float yOffset = 0f;
+
+            transform.position = new Vector3(hit.point.x + xOffset, hit.point.y + yOffset, transform.position.z);
+        }
+
+        Invoke("FinishTeleportCD", TELEPORT_CD_TIME);
+    }
+
+    void ExitTeleportState()
+    {
+        if (isGrounded())
+            GetComponent<Animator>().SetTrigger("exitDash");
+        else
+            GetComponent<Animator>().SetTrigger("heavyToAerial");
+    }
+
+    void PutTeleportOnCD()
+    {
+        teleportOnCD = true;
+    }
+
+    void FinishTeleportCD()
+    {
+        teleportOnCD = false;
     }
 }

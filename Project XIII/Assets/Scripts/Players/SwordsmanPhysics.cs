@@ -14,9 +14,8 @@ public class SwordsmanPhysics : PlayerPhysics{
     public GameObject airComboAttackBox;        //Collider for dealing air combo attacks
     public GameObject heavyAirAttackBox;        //Collider for dealing with heavy air attack
 
-    //Particle effects
+    //Dash variables
     public ParticleSystem afterImageParticle;
-
     float xInputAxis = 0f;                                     
     float yInputAxis = 0f;
 

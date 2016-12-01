@@ -344,4 +344,5 @@ public class PlayerPhysics : MonoBehaviour {
     {
         myRigidbody.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
     }
+
 }
