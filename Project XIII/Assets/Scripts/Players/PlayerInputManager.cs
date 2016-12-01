@@ -8,7 +8,6 @@ public class PlayerInputManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         gcScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
-        Debug.Log(GameObject.FindGameObjectWithTag("GameController").name);
         gcScript.AssignInputs(transform);
     }
 	
