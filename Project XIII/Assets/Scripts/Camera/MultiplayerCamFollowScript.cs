@@ -131,14 +131,14 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
         while(cam.orthographicSize > size)
         {
 
-            if (cam.orthographicSize - size < .1)
+            if (cam.orthographicSize - size < .01)
             {
                 cam.orthographicSize = size;
                 orthoTransitioning = false;
                 break;
             }
 
-            cam.orthographicSize -= .05f;
+            cam.orthographicSize -= .01f;
         
             yield return new WaitForSeconds(1.0f);
         }
