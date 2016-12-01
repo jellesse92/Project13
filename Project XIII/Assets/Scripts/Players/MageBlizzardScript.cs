@@ -71,7 +71,7 @@ public class MageBlizzardScript : MonoBehaviour {
     public void Reset()
     {
         GetComponent<Collider2D>().enabled = false;
-        CancelInvoke("ApplyDamageEffec");
+        CancelInvoke("ApplyDamageEffect");
         enemy = new HashSet<GameObject>();
         blizzardParticle.GetComponent<ParticleSystem>().Stop();
         foreach (Transform child in blizzardParticle.transform)
