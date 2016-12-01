@@ -70,7 +70,6 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     {
         Vector3 midpoint = GetPlayersMidpoint();
 
-
         if (midpoint != new Vector3())
         {
             float distance = GetDistance();
@@ -108,7 +107,6 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
                 orthoTransitioning = false;
             }
 
-
             if ((cam.orthographicSize > size))
                 StartCoroutine(SmoothOrthograpicTransition(size) );
             else if(!orthoTransitioning)
@@ -128,7 +126,6 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     IEnumerator SmoothOrthograpicTransition(float size)
     {
         lastOrthographicSize = size;
-
         orthoTransitioning = true;
 
         while(cam.orthographicSize > size)
