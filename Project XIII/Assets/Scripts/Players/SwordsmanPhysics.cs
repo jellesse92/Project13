@@ -43,6 +43,16 @@ public class SwordsmanPhysics : PlayerPhysics{
         }
     }
 
+    public override bool CheckClassSpecificInput()
+    {
+        float xMove = myKeyPress.horizontalAxisValue;
+        float yMove = myKeyPress.verticalAxisValue;
+
+        Debug.Log("Y?: " + yMove);
+
+        return false;
+    }
+
     public override void MovementSkill(float xMove, float yMove)
     {
         base.MovementSkill(xMove,yMove);

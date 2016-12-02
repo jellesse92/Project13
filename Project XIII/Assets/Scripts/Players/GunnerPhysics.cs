@@ -90,7 +90,7 @@ public class GunnerPhysics : PlayerPhysics{
 
     void Roll()
     {
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(xInputAxis*DODGE_DIST_PER_INVOKE,transform.position.y,transform.position.z), DODGE_DIST_PER_INVOKE);
+        transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(xInputAxis*DODGE_DIST_PER_INVOKE,0f,0f), DODGE_DIST_PER_INVOKE);
     }
 
     void CancelRoll()

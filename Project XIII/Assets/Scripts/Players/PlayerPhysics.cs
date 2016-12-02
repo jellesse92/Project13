@@ -66,21 +66,24 @@ public class PlayerPhysics : MonoBehaviour {
     {
         if (!GetComponent<PlayerProperties>().GetStunState())
         {
-            float xMove = myKeyPress.horizontalAxisValue;
-            float yMove = myKeyPress.verticalAxisValue;
+            if (!CheckClassSpecificInput())
+            {
+                float xMove = myKeyPress.horizontalAxisValue;
+                float yMove = myKeyPress.verticalAxisValue;
 
-            Movement();
-            if (myKeyPress.jumpPress)
-                Jump();
-            if (myKeyPress.quickAttackPress)
-                QuickAttack();
-            if (myKeyPress.heavyAttackPress)
-                HeavyAttack();
-            if (myKeyPress.dashPress)
-                MovementSkill(xMove, yMove);
-            if (myKeyPress.blockPress)
-                Block();
-            CheckForButtonReleases();
+                Movement();
+                if (myKeyPress.jumpPress)
+                    Jump();
+                if (myKeyPress.quickAttackPress)
+                    QuickAttack();
+                if (myKeyPress.heavyAttackPress)
+                    HeavyAttack();
+                if (myKeyPress.dashPress)
+                    MovementSkill(xMove, yMove);
+                if (myKeyPress.blockPress)
+                    Block();
+                CheckForButtonReleases();
+            }
         }
 
         Landing();
@@ -102,6 +105,12 @@ public class PlayerPhysics : MonoBehaviour {
     public virtual void ClassSpecificUpdate()
     {
         //This function is used when a specific class need to use FixedUpdate
+    }
+
+    public virtual bool CheckClassSpecificInput()
+    {
+        //This function is used when a specific class has specific inputs to look for
+        return false;
     }
 
     public virtual void MovementSkill(float xMove, float yMove)
