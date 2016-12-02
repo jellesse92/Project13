@@ -50,7 +50,6 @@ public class SwordsmanPhysics : PlayerPhysics{
         xInputAxis = xMove;
         yInputAxis = yMove;
 
-        //EVENTUALLY ADD A DASH COUNTER
         if(dashCount < MAX_CHAIN_DASH)
             GetComponent<Animator>().SetTrigger("moveSkill");
     }

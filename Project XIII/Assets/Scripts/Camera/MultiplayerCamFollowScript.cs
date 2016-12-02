@@ -9,6 +9,8 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     const float MAX_ORTHO_SIZE = 10f;
     const float MAX_ORTHO_SIZE_3D = 40f;
 
+    const float ZOOM_DELTA = .005f;                             //Amount to zoom when zooming in or out per update
+
     float zoomMultiplier = 1f;
     float followDelay = .8f;
 
@@ -131,14 +133,14 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
         while(cam.orthographicSize > size)
         {
 
-            if (cam.orthographicSize - size < .01)
+            if (cam.orthographicSize - size < ZOOM_DELTA)
             {
                 cam.orthographicSize = size;
                 orthoTransitioning = false;
                 break;
             }
 
-            cam.orthographicSize -= .01f;
+            cam.orthographicSize -= ZOOM_DELTA;
         
             yield return new WaitForSeconds(1.0f);
         }
