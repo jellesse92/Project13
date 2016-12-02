@@ -247,6 +247,11 @@ public class PlayerPhysics : MonoBehaviour {
         cannotAttack = true;
     }
 
+    public bool CanAttackStatus()
+    {
+        return !cannotAttack;
+    }
+
     public void DeactivateVelocity()
     {
         zeroVelocity = true;
