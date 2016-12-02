@@ -5,7 +5,8 @@ public class GunnerPhysics : PlayerPhysics{
 
     //Constants for Dodge Roll
     const float DODGE_DIST_PER_INVOKE = 1f;     //Amount gunner rolls per invoke
-    const float DODGE_RECOVERY_TIME = .5f;
+    const float DODGE_RECOVERY_TIME = 1f;
+    const float MAX_DODGE_CHAIN = 3;
 
     GunnerStats gunnerStat;
     BulletProjectile bulletScript;
@@ -19,13 +20,19 @@ public class GunnerPhysics : PlayerPhysics{
 
     //Dodge rolling variables
     float xInputAxis;
-    bool dodgeOnCD = false;
+    float yAtStart;
+    int dodgeCount = 0;
 
     public override void ClassSpecificStart()
     {
         gunnerStat = GetComponent<GunnerProperties>().GetGunnerStats();
         meleeAttackBox.GetComponent<MeleeAttackScript>().SetAttackStrength(GetComponent<PlayerProperties>().GetPhysicStats().quickAirAttackStrength);
         downKickScript.enabled = false;
+    }
+
+    public override void ClassSpecificUpdate()
+    {
+
     }
 
     public override void MovementSkill(float xMove, float yMove)
@@ -39,7 +46,7 @@ public class GunnerPhysics : PlayerPhysics{
 
         xInputAxis = dir;
 
-        if (!dodgeOnCD && isGrounded())
+        if (dodgeCount < MAX_DODGE_CHAIN && isGrounded())
             GetComponent<Animator>().SetTrigger("moveSkill");
     }
 
@@ -76,10 +83,9 @@ public class GunnerPhysics : PlayerPhysics{
 
     void ExecuteDodgeSkill()
     {
+        CancelInvoke("FinishDodgeCD");
         InvokeRepeating("Roll", 0f, .04f);
-        dodgeOnCD = true;
-        Invoke("FinishDodgeCD", DODGE_RECOVERY_TIME);
-
+        dodgeCount++;
     }
 
     void Roll()
@@ -90,6 +96,7 @@ public class GunnerPhysics : PlayerPhysics{
     void CancelRoll()
     {
         CancelInvoke("Roll");
+        Invoke("FinishDodgeCD", DODGE_RECOVERY_TIME);
 
         if (isGrounded())
             GetComponent<Animator>().SetTrigger("exitDash");
@@ -99,6 +106,6 @@ public class GunnerPhysics : PlayerPhysics{
 
     void FinishDodgeCD()
     {
-        dodgeOnCD = false;
+        dodgeCount = 0;
     }
 }
