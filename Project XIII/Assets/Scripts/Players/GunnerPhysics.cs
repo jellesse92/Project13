@@ -4,7 +4,7 @@ using System.Collections;
 public class GunnerPhysics : PlayerPhysics{
 
     //Constants for Dodge Roll
-    const float DODGE_DIST_PER_INVOKE = 1f;     //Amount gunner rolls per invoke
+    const float DODGE_DIST_PER_INVOKE = .3f;     //Amount gunner rolls per invoke
     const float DODGE_RECOVERY_TIME = 1f;
     const float MAX_DODGE_CHAIN = 3;
 
@@ -84,7 +84,7 @@ public class GunnerPhysics : PlayerPhysics{
     void ExecuteDodgeSkill()
     {
         CancelInvoke("FinishDodgeCD");
-        InvokeRepeating("Roll", 0f, .04f);
+        InvokeRepeating("Roll", 0f, .001f);
         dodgeCount++;
     }
 
