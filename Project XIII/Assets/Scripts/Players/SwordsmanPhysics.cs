@@ -7,7 +7,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     const float Y_INPUT_THRESHOLD = .5f;        //Threshold before considering input
 
     //Constants for managing quick dashing skill
-    const float DASH_DISTANCE = 10f;            //Distance of dasj
+    const float DASH_DISTANCE = 10f;            //Distance of dash
     const float DASH_RECOVERY_TIME = 1f;        //Time it takes to recover dashes
     const float MAX_CHAIN_DASH = 3;             //Max amount of dashes that can be chained
 

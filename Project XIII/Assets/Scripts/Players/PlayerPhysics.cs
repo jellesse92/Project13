@@ -305,6 +305,7 @@ public class PlayerPhysics : MonoBehaviour {
         return false;
     }
 
+    
     protected void CheckForButtonReleases()
     {
         if (checkQuickAttackUp)
@@ -336,9 +337,9 @@ public class PlayerPhysics : MonoBehaviour {
         checkQuickAttackUp = true;
     }
 
+    //Specific to freezing animations connected to whether a button has been released or not
     public void DisableAnimator()
     {
-
         if(!(quickAttackReleased && heavyAttackReleased))
             myAnimator.enabled = false;
     }
