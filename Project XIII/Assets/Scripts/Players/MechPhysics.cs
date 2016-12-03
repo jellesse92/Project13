@@ -23,6 +23,9 @@ public class MechPhysics : PlayerPhysics{
     const float WALL_ORIGIN_X = 5f;
     const float WALL_ORIGIN_Y = 0f;
 
+    bool charging = false;
+    float charge = 0;
+
     public override void ClassSpecificStart()
     {
         comboAttackBox.GetComponent<SwordsmanMelee>().SetDamage(GetComponent<PlayerProperties>().GetPhysicStats().quickAttackStrength);
@@ -46,6 +49,10 @@ public class MechPhysics : PlayerPhysics{
     {
         if (inCombo)
             WatchForCombo();
+        if(charging)
+        {
+            charge += Time.deltaTime;
+        }
     }
 
     public void WatchForCombo()
@@ -84,8 +91,15 @@ public class MechPhysics : PlayerPhysics{
         heavyAirAttackActive = false;
     }
 
+    void BeginChargingHeavyGroundAttack()
+    {
+       charging = true;
+    }
+
     void ExecuteHeavyGroundAttack()
     {
+        Debug.Log(charge);
+
         if (rocket.activeSelf == false)
         {
             GameObject target = GameObject.FindGameObjectWithTag("Enemy");
@@ -96,24 +110,35 @@ public class MechPhysics : PlayerPhysics{
             rocket.GetComponent<BoxCollider2D>().enabled = true;
             rocket.GetComponent<RocketBehavior>().SetDirection(1);
 
-            rocket2.transform.position = transform.position;
-            rocket2.SetActive(true);
-            rocket2.GetComponent<RocketBehavior>().SetTarget(target);
-            rocket2.GetComponent<BoxCollider2D>().enabled = true;
-            rocket2.GetComponent<RocketBehavior>().SetDirection(2);
+            if (charge > 0.5)
+            {
+                rocket2.transform.position = transform.position;
+                rocket2.SetActive(true);
+                rocket2.GetComponent<RocketBehavior>().SetTarget(target);
+                rocket2.GetComponent<BoxCollider2D>().enabled = true;
+                rocket2.GetComponent<RocketBehavior>().SetDirection(2);
+            }
 
-            rocket3.transform.position = transform.position;
-            rocket3.SetActive(true);
-            rocket3.GetComponent<RocketBehavior>().SetTarget(target);
-            rocket3.GetComponent<BoxCollider2D>().enabled = true;
-            rocket3.GetComponent<RocketBehavior>().SetDirection(3);
+            if (charge > 1)
+            {
+                rocket3.transform.position = transform.position;
+                rocket3.SetActive(true);
+                rocket3.GetComponent<RocketBehavior>().SetTarget(target);
+                rocket3.GetComponent<BoxCollider2D>().enabled = true;
+                rocket3.GetComponent<RocketBehavior>().SetDirection(3);
+            }
 
-            rocket4.transform.position = transform.position;
-            rocket4.SetActive(true);
-            rocket4.GetComponent<RocketBehavior>().SetTarget(target);
-            rocket4.GetComponent<BoxCollider2D>().enabled = true;
-            rocket4.GetComponent<RocketBehavior>().SetDirection(4);
+            if (charge > 1.5)
+            {
+                rocket4.transform.position = transform.position;
+                rocket4.SetActive(true);
+                rocket4.GetComponent<RocketBehavior>().SetTarget(target);
+                rocket4.GetComponent<BoxCollider2D>().enabled = true;
+                rocket4.GetComponent<RocketBehavior>().SetDirection(4);
+            }
         }
+
+        charge = 0;
     }
 
     void SummonWall()
