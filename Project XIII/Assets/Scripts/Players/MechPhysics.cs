@@ -67,6 +67,7 @@ public class MechPhysics : PlayerPhysics{
     void ExecuteQuickAttack()
     {
         meleeAttackBox.GetComponent<SwordsmanMelee>().SetDamage(GetComponent<PlayerProperties>().GetPhysicStats().quickAttackStrength+(int)((charge+1)*5));
+        charge = 0;
     }
 
     void EndAirHeavyAttack()
@@ -78,6 +79,7 @@ public class MechPhysics : PlayerPhysics{
     void BeginChargingHeavyGroundAttack()
     {
        charging = true;
+       charge = 0;
     }
 
     void ExecuteHeavyGroundAttack()
