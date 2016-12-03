@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class MechPhysics : PlayerPhysics{
 
-    public GameObject comboAttackBox;           //Collider for dealing combo attacks
+    public GameObject meleeAttackBox;           //Collider for dealing combo attacks
     public GameObject airComboAttackBox;        //Collider for dealing air combo attacks
 
     bool inCombo = false;                       //Checks if mech able to combo
@@ -28,7 +28,7 @@ public class MechPhysics : PlayerPhysics{
 
     public override void ClassSpecificStart()
     {
-        comboAttackBox.GetComponent<SwordsmanMelee>().SetDamage(GetComponent<PlayerProperties>().GetPhysicStats().quickAttackStrength);
+        meleeAttackBox.GetComponent<SwordsmanMelee>().SetDamage(GetComponent<PlayerProperties>().GetPhysicStats().quickAttackStrength);
         airComboAttackBox.GetComponent<SwordsmanAirMelee>().SetDamage(GetComponent<PlayerProperties>().GetPhysicStats().quickAirAttackStrength);
         barrage = (GameObject)Instantiate(barrage);
         barrage.GetComponent<MechRocketBarrage>().SetMaster(this.gameObject);
@@ -47,31 +47,10 @@ public class MechPhysics : PlayerPhysics{
 
     public override void ClassSpecificUpdate()
     {
-        if (inCombo)
-            WatchForCombo();
         if(charging)
         {
             charge += Time.deltaTime;
         }
-    }
-
-    public void WatchForCombo()
-    {
-        if (GetComponent<PlayerInput>().getKeyPress().quickAttackPress)
-        {
-            inCombo = false;
-            GetComponent<Animator>().SetTrigger("combo");
-        }
-    }
-
-    public void StartCombo()
-    {
-        inCombo = true;
-    }
-
-    public void FinishCombo()
-    {
-        inCombo = false;
     }
 
     void ExecuteHeavyAirAttack()
@@ -83,6 +62,11 @@ public class MechPhysics : PlayerPhysics{
         barrage.GetComponent<MechRocketBarrage>().ActivateAttack();
         Invoke("EndAirHeavyAttack", HEAVY_AIR_ATTACK_DURATION);
         heavyAirAttackActive = true;
+    }
+
+    void ExecuteQuickAttack()
+    {
+        meleeAttackBox.GetComponent<SwordsmanMelee>().SetDamage(GetComponent<PlayerProperties>().GetPhysicStats().quickAttackStrength+(int)((charge+1)*5));
     }
 
     void EndAirHeavyAttack()
