@@ -3,9 +3,12 @@ using System.Collections;
 
 public class SwordsmanPhysics : PlayerPhysics{
 
+    //SENSITVITY CONTROLS
+    const float Y_INPUT_THRESHOLD = .5f;        //Threshold before considering input
+
     //Constants for managing quick dashing skill
-    const float DASH_DISTANCE = 10f;            //Distance of dasj
-    const float DASH_RECOVERY_TIME = 1f;       //Time it takes to recover dashes
+    const float DASH_DISTANCE = 10f;            //Distance of dash
+    const float DASH_RECOVERY_TIME = 1f;        //Time it takes to recover dashes
     const float MAX_CHAIN_DASH = 3;             //Max amount of dashes that can be chained
 
     //Attack boxes
@@ -14,9 +17,8 @@ public class SwordsmanPhysics : PlayerPhysics{
     public GameObject airComboAttackBox;        //Collider for dealing air combo attacks
     public GameObject heavyAirAttackBox;        //Collider for dealing with heavy air attack
 
-    //Particle effects
+    //Dash variables
     public ParticleSystem afterImageParticle;
-
     float xInputAxis = 0f;                                     
     float yInputAxis = 0f;
 
@@ -44,6 +46,19 @@ public class SwordsmanPhysics : PlayerPhysics{
         }
     }
 
+    public override bool CheckClassSpecificInput()
+    {
+        float xMove = myKeyPress.horizontalAxisValue;
+        float yMove = myKeyPress.verticalAxisValue;
+
+        if (CanAttackStatus() && (yMove > Y_INPUT_THRESHOLD) && GetComponent<PlayerInput>().getKeyPress().quickAttackPress && isGrounded())
+            GetComponent<Animator>().SetTrigger("upQuickAttack");
+        else
+            return false;
+
+        return true;
+    }
+
     public override void MovementSkill(float xMove, float yMove)
     {
         base.MovementSkill(xMove,yMove);
@@ -51,7 +66,6 @@ public class SwordsmanPhysics : PlayerPhysics{
         xInputAxis = xMove;
         yInputAxis = yMove;
 
-        //EVENTUALLY ADD A DASH COUNTER
         if(dashCount < MAX_CHAIN_DASH)
             GetComponent<Animator>().SetTrigger("moveSkill");
     }

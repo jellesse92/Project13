@@ -41,6 +41,8 @@ public class PlayerProperties : MonoBehaviour{
     protected bool isStunned = false;
     protected bool stunnable = true;
 
+    protected bool isInvincibile = false;
+
 
     void Start()
     {
@@ -80,8 +82,11 @@ public class PlayerProperties : MonoBehaviour{
         }
     }
 
-    public void TakeDamage(int dmg, float knockBack = 0f, float stunTime = 0f)
+    public void TakeDamage(int dmg, float knockBackX = 0f, float knockBackY = 0f, float stunTime = 0f)
     {
+        if (isInvincibile)
+            return;
+
         currentHealth -= dmg;
 
         if (stunnable && !isStunned)
@@ -134,5 +139,15 @@ public class PlayerProperties : MonoBehaviour{
     public void SetStunnableState(bool b)
     {
         stunnable = b;
+    }
+
+    public void MakeInvuln()
+    {
+        isInvincibile = true;
+    }
+
+    public void MakeNotInvul()
+    {
+        isInvincibile = false;
     }
 }
