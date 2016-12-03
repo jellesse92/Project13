@@ -120,10 +120,11 @@ public class MechPhysics : PlayerPhysics{
     {
         if (wall.activeSelf == false)
         {
-            wall.transform.position = transform.position + new Vector3(WALL_ORIGIN_X * transform.localScale.x, WALL_ORIGIN_Y, transform.position.z);
+            wall.transform.position = transform.position + new Vector3(WALL_ORIGIN_X * transform.localScale.x, -1.04f, transform.position.z);
             wall.SetActive(true);
             wall.GetComponent<BoxCollider2D>().enabled = true;
             wall.GetComponent<MechWallBehavior>().counter = 0;
+            wall.GetComponent<Animator>().SetBool("raising", true);
         }
     }
 }

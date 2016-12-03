@@ -11,7 +11,7 @@ public class MechWallBehavior : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         counter += Time.deltaTime;
-
+        this.GetComponent<Animator>().SetBool("raising", false);
         if (counter >= duration)
         {
             this.gameObject.SetActive(false);
