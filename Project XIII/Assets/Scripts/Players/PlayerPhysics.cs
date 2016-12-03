@@ -2,6 +2,11 @@
 using System.Collections;
 
 public class PlayerPhysics : MonoBehaviour {
+
+    //Constants for changing gravity force for jumping
+    const float DEFAULT_GRAVITY_FORCE = 8f;
+    const float MIN_GRAVITY_FORCE = 4f;
+
     protected Rigidbody2D myRigidbody;
     protected Animator myAnimator;
     protected PlayerProperties playerProperties;
@@ -74,6 +79,8 @@ public class PlayerPhysics : MonoBehaviour {
                 Movement();
                 if (myKeyPress.jumpPress)
                     Jump();
+                if (myKeyPress.jumpReleased)
+                    JumpReleased();
                 if (myKeyPress.quickAttackPress)
                     QuickAttack();
                 if (myKeyPress.heavyAttackPress)
@@ -138,6 +145,8 @@ public class PlayerPhysics : MonoBehaviour {
         if (!isJumping && !cannotJump)
         {
             isJumping = true;
+            GetComponent<Rigidbody2D>().gravityScale = MIN_GRAVITY_FORCE;
+
             if (Mathf.Abs(myKeyPress.horizontalAxisValue) > 0.1)
                 myAnimator.SetTrigger("jumpForward");
             else
@@ -145,6 +154,11 @@ public class PlayerPhysics : MonoBehaviour {
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0, physicStats.jumpForce), ForceMode2D.Impulse);
         }
 
+    }
+
+    protected void JumpReleased()
+    {
+        GetComponent<Rigidbody2D>().gravityScale = DEFAULT_GRAVITY_FORCE;
     }
 
     protected void Landing()

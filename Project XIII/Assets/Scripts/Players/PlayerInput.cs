@@ -13,6 +13,7 @@ public class KeyPress {
     //Held buttons
     public bool quickAttackReleased;
     public bool heavyAttackReleased;
+    public bool jumpReleased;
 
 }
 
@@ -75,6 +76,8 @@ public class PlayerInput : MonoBehaviour {
             keyPress.quickAttackReleased = true;
         if ((joystickNum == 0 && Input.GetKeyUp(KeyCode.X)) || (joystickNum != 0 && Input.GetButtonUp(keyConfig.heavyAttackButton)))
             keyPress.heavyAttackReleased = true;
+        if ((joystickNum == 0 && Input.GetKeyUp(KeyCode.Space)) || (joystickNum != 0 && Input.GetButtonUp(keyConfig.jumpButton)))
+            keyPress.jumpReleased = true;
     }
 
     public void ResetKeyPress()
@@ -86,6 +89,7 @@ public class PlayerInput : MonoBehaviour {
         keyPress.dashPress = false;
         keyPress.quickAttackReleased = false;
         keyPress.heavyAttackReleased = false;
+        keyPress.jumpReleased = false;
     }
 
     public KeyPress getKeyPress()

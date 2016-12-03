@@ -29,7 +29,7 @@ public class SwordsmanDragAttackScript : MonoBehaviour {
         {
             if (transform.parent.parent != null)
                 transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(.01f);
-            //kickSparkEffect.GetComponent<ParticleSystem>().Play();
+
             foreach (GameObject target in enemy)
                 target.GetComponent<Enemy>().Damage(transform.parent.GetComponent<PlayerProperties>().GetPhysicStats().quickAttackStrength, .2f);
         }
