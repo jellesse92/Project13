@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class MechPhysics : PlayerPhysics{
 
@@ -14,6 +15,9 @@ public class MechPhysics : PlayerPhysics{
     bool heavyAirAttackActive = false;                      //Returns if heavy air attack is on cooldown or not
 
     public GameObject rocket;                               //object for homing rocket attack;
+    public GameObject rocket2;
+    public GameObject rocket3;
+    public GameObject rocket4;
 
     public GameObject wall;
     const float WALL_ORIGIN_X = 5f;
@@ -27,6 +31,12 @@ public class MechPhysics : PlayerPhysics{
         barrage.GetComponent<MechRocketBarrage>().SetMaster(this.gameObject);
         rocket = (GameObject)Instantiate(rocket);
         rocket.SetActive(false);
+        rocket2 = (GameObject)Instantiate(rocket);
+        rocket2.SetActive(false);
+        rocket3 = (GameObject)Instantiate(rocket);
+        rocket3.SetActive(false);
+        rocket4 = (GameObject)Instantiate(rocket);
+        rocket4.SetActive(false);
         wall = (GameObject)Instantiate(wall);
         wall.SetActive(false);
         wall.GetComponent<BoxCollider2D>().enabled = false;
@@ -78,11 +88,31 @@ public class MechPhysics : PlayerPhysics{
     {
         if (rocket.activeSelf == false)
         {
+            GameObject target = GameObject.FindGameObjectWithTag("Enemy");
+
             rocket.transform.position = transform.position;
             rocket.SetActive(true);
-            GameObject target = GameObject.FindGameObjectWithTag("Enemy");
             rocket.GetComponent<RocketBehavior>().SetTarget(target);
             rocket.GetComponent<BoxCollider2D>().enabled = true;
+            rocket.GetComponent<RocketBehavior>().SetDirection(1);
+
+            rocket2.transform.position = transform.position;
+            rocket2.SetActive(true);
+            rocket2.GetComponent<RocketBehavior>().SetTarget(target);
+            rocket2.GetComponent<BoxCollider2D>().enabled = true;
+            rocket2.GetComponent<RocketBehavior>().SetDirection(2);
+
+            rocket3.transform.position = transform.position;
+            rocket3.SetActive(true);
+            rocket3.GetComponent<RocketBehavior>().SetTarget(target);
+            rocket3.GetComponent<BoxCollider2D>().enabled = true;
+            rocket3.GetComponent<RocketBehavior>().SetDirection(3);
+
+            rocket4.transform.position = transform.position;
+            rocket4.SetActive(true);
+            rocket4.GetComponent<RocketBehavior>().SetTarget(target);
+            rocket4.GetComponent<BoxCollider2D>().enabled = true;
+            rocket4.GetComponent<RocketBehavior>().SetDirection(4);
         }
     }
 
