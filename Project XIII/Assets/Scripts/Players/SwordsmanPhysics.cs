@@ -11,22 +11,30 @@ public class SwordsmanPhysics : PlayerPhysics{
     const float DASH_RECOVERY_TIME = 1f;        //Time it takes to recover dashes
     const float MAX_CHAIN_DASH = 3;             //Max amount of dashes that can be chained
 
+    //Constant for charging ground heavy slash attack
+    const float MAX_CHARGE = 2f;                //Max amount of time multiplier allowed to be applied to charge distance
+    const float CHARGE_FORCE_MULTIPLIER = 3000f;//Multiplier for distance to travel after charging attack
+
     //Attack boxes
     public GameObject comboAttackBox;           //Collider for dealing combo attacks
     public GameObject dragAttackBox;            //Collider for dragging enemies with sword swing up or down
     public GameObject airComboAttackBox;        //Collider for dealing air combo attacks
     public GameObject heavyAirAttackBox;        //Collider for dealing with heavy air attack
+    public GameObject heavyAttackBox;           //Collider for dealing the ground heavy attack
 
     //Dash variables
     public ParticleSystem afterImageParticle;
     float xInputAxis = 0f;                                     
     float yInputAxis = 0f;
-
-    bool inCombo = false;                       //Checks if swordsman able to combo
-
-    //Dash skill variables
     int dashCount = 0;                          //Checks how many dashes have been chained
     bool checkGroundForDash = false;            //Bool that determines to check for grounded before resetting dash count
+
+    //Combo Variable
+    bool inCombo = false;                       //Checks if swordsman able to combo
+
+    //Heavy attack variables
+    bool checkChargeTime = false;               //Determines if should check for time charging
+    float timeCharged;
 
     public override void ClassSpecificStart()
     {
@@ -41,9 +49,9 @@ public class SwordsmanPhysics : PlayerPhysics{
         if (inCombo)
             WatchForCombo();
         if (checkGroundForDash)
-        {
             ResetDashCount();
-        }
+        if (checkChargeTime)
+            timeCharged += Time.fixedDeltaTime;
     }
 
     public override bool CheckClassSpecificInput()
@@ -106,6 +114,8 @@ public class SwordsmanPhysics : PlayerPhysics{
         dragAttackBox.GetComponent<SwordsmanDragAttackScript>().Reset();
         dragAttackBox.GetComponent<SwordsmanDragAttackScript>().enabled = false;
     }
+
+    //DASHING FUNCTIONS
 
     public void ExecuteDashSkill()
     {
@@ -182,6 +192,30 @@ public class SwordsmanPhysics : PlayerPhysics{
         afterImageParticle.Stop();
     }
 
+    //END DASHING FUNCTIONS
 
+    void StartHeavyGroundCharge()
+    {
+        checkChargeTime = true;
+        timeCharged = 0f;
+    }
+
+    void ExecuteHeavyAttack()
+    {
+        checkChargeTime = false;
+        timeCharged = Mathf.Min(timeCharged, MAX_CHARGE);
+        heavyAttackBox.GetComponent<ChargeSlashScript>().enabled = true;
+        heavyAttackBox.GetComponent<ChargeSlashScript>().SetForceMulti(timeCharged);
+        AddForceX(CHARGE_FORCE_MULTIPLIER * timeCharged);
+    }
+
+    void EndHeavyAttack()
+    {
+        heavyAttackBox.GetComponent<ChargeSlashScript>().enabled = false;
+        heavyAttackBox.GetComponent<Collider2D>().enabled = false;
+        heavyAttackBox.GetComponent<ChargeSlashScript>().Launch();
+        heavyAttackBox.GetComponent<ChargeSlashScript>().Reset();
+
+    }
 
 }

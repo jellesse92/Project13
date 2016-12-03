@@ -99,7 +99,7 @@ public class MechPhysics : PlayerPhysics{
     void ExecuteHeavyGroundAttack()
     {
         Debug.Log(charge);
-
+        charging = false;
         if (rocket.activeSelf == false)
         {
             GameObject target = GameObject.FindGameObjectWithTag("Enemy");

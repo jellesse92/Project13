@@ -31,7 +31,7 @@ public class SwordsmanDragAttackScript : MonoBehaviour {
                 transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(.01f);
             //kickSparkEffect.GetComponent<ParticleSystem>().Play();
             foreach (GameObject target in enemy)
-                target.GetComponent<Enemy>().Damage(transform.parent.GetComponent<PlayerProperties>().GetPhysicStats().heavyAirAttackStrengh, .2f);
+                target.GetComponent<Enemy>().Damage(transform.parent.GetComponent<PlayerProperties>().GetPhysicStats().quickAttackStrength, .2f);
         }
     }
 
@@ -45,7 +45,7 @@ public class SwordsmanDragAttackScript : MonoBehaviour {
                 if (transform.parent.parent != null)
                     transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(.01f);
 
-                col.GetComponent<Enemy>().Damage(transform.parent.GetComponent<PlayerProperties>().GetPhysicStats().heavyAirAttackStrengh, .2f);
+                col.GetComponent<Enemy>().Damage(transform.parent.GetComponent<PlayerProperties>().GetPhysicStats().quickAttackStrength, .2f);
             }
 
     }
