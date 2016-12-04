@@ -31,6 +31,9 @@ public class GunnerPhysics : PlayerPhysics{
     bool pistolOnCD = false;
     int pistolAmmo = MAX_PISTOL_AMMO;
 
+    //Down kick variables
+    bool checkForDKEnd = false;                     //Checks if the downkick should end
+
     public override void ClassSpecificStart()
     {
         gunnerStat = GetComponent<GunnerProperties>().GetGunnerStats();

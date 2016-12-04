@@ -87,6 +87,8 @@ public class SwordsmanPhysics : PlayerPhysics{
         }
     }
 
+    //COMBO FUNCTIONS
+
     public void StartCombo()
     {
         inCombo = true;
@@ -97,10 +99,14 @@ public class SwordsmanPhysics : PlayerPhysics{
         inCombo = false;
     }
 
+    //END COMBO FUNCTIONS
+
     public void HeavyTransistionToAir()
     {
         GetComponent<Animator>().SetTrigger("heavyToAerial");
     }
+
+    //UP + QUICK ATTACK ATTACK FUNCTIONS
 
     public void ExecuteDragAttack()
     {
@@ -114,6 +120,8 @@ public class SwordsmanPhysics : PlayerPhysics{
         dragAttackBox.GetComponent<SwordsmanDragAttackScript>().Reset();
         dragAttackBox.GetComponent<SwordsmanDragAttackScript>().enabled = false;
     }
+
+    //END UP + QUICK ATTACK ATTACK FUNCTIONS
 
     //DASHING FUNCTIONS
 
