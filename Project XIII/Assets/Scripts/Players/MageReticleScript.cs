@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class MageReticleScript : MonoBehaviour {
 
-    const float SPEED = .5f;
+    const float SPEED = .15f;
     public bool freeze_y = false;
     public float screenShakeAmt = 0f;
     public float shakeDuration = .5f;
