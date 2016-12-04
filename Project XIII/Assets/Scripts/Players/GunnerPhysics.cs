@@ -10,7 +10,7 @@ public class GunnerPhysics : PlayerPhysics{
 
     //Constants for pistol shot
     const int MAX_PISTOL_AMMO = 6;              //Amount of ammo that can be fired before reload
-    const float QUICKSHOT_CD = .2f;             //Cooldown between gun shots
+    const float QUICKSHOT_CD = .1f;             //Cooldown between gun shots
 
     GunnerStats gunnerStat;
     BulletProjectile bulletScript;
@@ -45,8 +45,16 @@ public class GunnerPhysics : PlayerPhysics{
 
     public override bool CheckClassSpecificInput()
     {
-        if (pistolOnCD && GetComponent<PlayerInput>().getKeyPress().quickAttackPress && isGrounded())
-            return true;
+        if (GetComponent<PlayerInput>().getKeyPress().quickAttackPress && isGrounded())
+        {
+            if (pistolOnCD)
+                return true;
+            if(pistolAmmo <= 0)
+            {
+                ReloadPistolAmmo();
+                return true;
+            }
+        }
 
         return base.CheckClassSpecificInput();
     }
@@ -105,6 +113,8 @@ public class GunnerPhysics : PlayerPhysics{
         downKickScript.ApplyBounce();
     }
 
+    //DODGE ROLL FUNCTIONS
+
     void ExecuteDodgeSkill()
     {
         CancelInvoke("FinishDodgeCD");
@@ -131,5 +141,13 @@ public class GunnerPhysics : PlayerPhysics{
     void FinishDodgeCD()
     {
         dodgeCount = 0;
+    }
+
+    //END DODGE ROLL FUNCTIONS
+
+    void ReloadPistolAmmo()
+    {
+        GetComponent<Animator>().SetTrigger("reload");
+        pistolAmmo = MAX_PISTOL_AMMO;
     }
 }
