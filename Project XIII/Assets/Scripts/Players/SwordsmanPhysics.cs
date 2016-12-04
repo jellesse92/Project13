@@ -10,6 +10,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     const float DASH_DISTANCE = 10f;            //Distance of dash
     const float DASH_RECOVERY_TIME = 1f;        //Time it takes to recover dashes
     const float MAX_CHAIN_DASH = 3;             //Max amount of dashes that can be chained
+    const float STOP_AFTER_IMAGE = .005f;        //Time to stop creating afterimages
 
     //Constant for charging ground heavy slash attack
     const float MAX_CHARGE = 2f;                //Max amount of time multiplier allowed to be applied to charge distance
@@ -181,7 +182,7 @@ public class SwordsmanPhysics : PlayerPhysics{
         ActivateAttackMovementJump();
 
         Invoke("ResetDashCount", DASH_RECOVERY_TIME);
-        Invoke("StopAfterImage", .1f);
+        Invoke("StopAfterImage", STOP_AFTER_IMAGE);
     }
 
     void ResetDashCount()
