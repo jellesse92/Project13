@@ -379,4 +379,14 @@ public class PlayerPhysics : MonoBehaviour {
         myRigidbody.constraints &= ~RigidbodyConstraints2D.FreezePositionY;
     }
 
+    public void AlterGravityForce(float force)
+    {
+        GetComponent<Rigidbody2D>().gravityScale = force;
+    }
+
+    public void RevertOriginalGravityForce()
+    {
+        GetComponent<Rigidbody2D>().gravityScale = DEFAULT_GRAVITY_FORCE;
+    }
+
 }
