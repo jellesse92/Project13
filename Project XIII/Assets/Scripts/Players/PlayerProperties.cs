@@ -88,7 +88,9 @@ public class PlayerProperties : MonoBehaviour{
             return;
 
         currentHealth -= dmg;
-
+        //print("knockBack is.... " + knockBack);
+        gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(knockBackX, knockBackY));
+        
         if (stunnable && !isStunned)
             StartCoroutine(ApplyStun(stunTime));
 
