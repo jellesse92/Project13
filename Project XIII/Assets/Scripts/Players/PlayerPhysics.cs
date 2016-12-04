@@ -358,6 +358,11 @@ public class PlayerPhysics : MonoBehaviour {
             myAnimator.enabled = false;
     }
 
+    void TotalDisableAnimator()
+    {
+        myAnimator.enabled = false;
+    }
+
     public void CheckForHeavyRelease()
     {
         heavyAttackReleased = false;

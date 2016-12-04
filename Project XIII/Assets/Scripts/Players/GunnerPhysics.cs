@@ -12,6 +12,10 @@ public class GunnerPhysics : PlayerPhysics{
     const int MAX_PISTOL_AMMO = 6;              //Amount of ammo that can be fired before reload
     const float QUICKSHOT_CD = .1f;             //Cooldown between gun shots
 
+    //Constants for down kick
+    const float DK_DELTA_X = 1f;                //Amount to move in the x direction per an update for down kick
+    const float DK_DELTA_Y = -1f;               //Amount to move in the y direction per an update for down kick
+
     GunnerStats gunnerStat;
     BulletProjectile bulletScript;
     Vector3 gunPoint;
@@ -33,6 +37,7 @@ public class GunnerPhysics : PlayerPhysics{
 
     //Down kick variables
     bool checkForDKEnd = false;                     //Checks if the downkick should end
+    bool kickFinished = true;                       //For if kick is too close to the ground to properly cancel animation freeze
 
     public override void ClassSpecificStart()
     {
@@ -43,6 +48,15 @@ public class GunnerPhysics : PlayerPhysics{
 
     public override void ClassSpecificUpdate()
     {
+        if (checkForDKEnd)
+        {
+            if(isGrounded())
+                CancelDownKick();
+            DownKickMove();
+        }
+
+        if (kickFinished)
+            GetComponent<Animator>().enabled = true;
 
     }
 
@@ -99,13 +113,28 @@ public class GunnerPhysics : PlayerPhysics{
     void ExecuteDownKick()
     {
         downKickScript.Reset();
+        kickFinished = false;
+        checkForDKEnd = true;
         downKickScript.enabled = true;
         downKickScript.InvokeRepeating("ApplyDamageEffect",0f,.1f);
         GetComponent<PlayerProperties>().SetStunnableState(false);
     }
 
+    void StartDownKickMove()
+    {
+        checkForDKEnd = true;
+    }
+
+    void DownKickMove()
+    {
+        transform.position = Vector3.MoveTowards(transform.position, transform.position += new Vector3(DK_DELTA_X * transform.localScale.x,DK_DELTA_Y,0f),100f);
+    }
+
     void CancelDownKick()
     {
+        GetComponent<Animator>().enabled = true;
+        kickFinished = true;
+        checkForDKEnd = false;
         downKickScript.CancelInvoke("ApplyDamageEffect");
         downKickScript.enabled = false;
         GetComponent<PlayerProperties>().SetStunnableState(true);
@@ -153,4 +182,6 @@ public class GunnerPhysics : PlayerPhysics{
         GetComponent<Animator>().SetTrigger("reload");
         pistolAmmo = MAX_PISTOL_AMMO;
     }
+
+    
 }
