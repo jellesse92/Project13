@@ -146,8 +146,6 @@ public class MageReticleScript : MonoBehaviour {
         if (yDistance < .5f)
             yDistance = .5f;
 
-
-
         Vector3 dir = (this.transform.position - enemy.transform.position).normalized;
 
         enemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(X_PULL_MULTI * dir.x * (5f/(xDistance*xDistance)), Y_PULL_MULTI * dir.y * (5f/(yDistance * yDistance))));

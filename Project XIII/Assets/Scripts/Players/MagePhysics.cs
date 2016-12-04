@@ -3,14 +3,16 @@ using System.Collections;
 
 public class MagePhysics : PlayerPhysics
 {
-    const float QUICK_ORIGIN_X = 5f;
-    const float QUICK_ORIGIN_Y = 2f;
-    const float QUICK_ATTACK_DURATION = 4f;
-    const float QUICK_ATTACK_STUN_DURATION = 2f;
+    const float RETICLE_CHARGE_TIME = 1.5f;                   //Time it takes to charge attack to create the reticle
 
-    const float HEAVY_ORIGIN_X = 5f;
-    const float HEAVY_ORIGIN_Y = 0f;
-    const float HEAVY_ATTACK_DURATION = 2f;
+    const float QUICK_ORIGIN_X = 5f;                        //Starting x location of quick attack reticle
+    const float QUICK_ORIGIN_Y = 2f;                        //Starting y location of quick attack reticle
+    const float QUICK_ATTACK_DURATION = 4f;                 //Quick attack duration
+    const float QUICK_ATTACK_STUN_DURATION = 2f;            //Stun duration applied for each time damage is applied by quick attack
+
+    const float HEAVY_ORIGIN_X = 5f;                        //Starting x location of heavy attack reticles
+    const float HEAVY_ORIGIN_Y = 0f;                        //Starting y location of heavy attack reticles
+    const float HEAVY_ATTACK_DURATION = 2f;                 //Duration of heavy attack
 
     const float HEAVY_AIR_ORIGIN_X = 5f;                    //Heavy air attack local X position
     const float HEAVY_AIR_ORIGIN_Y = 3f;                    //Heavy air attack local Y position
@@ -30,10 +32,14 @@ public class MagePhysics : PlayerPhysics
     bool heavyAirAttackActive = false;                      //Returns if heavy air attack is on cool down or not
 
     //Teleport variable
-    //public ParticleSystem teleportDust;
     float xInputAxis = 0f;
     float yInputAxis = 0f;
     bool teleportOnCD = false;                              //Indicates teleport is on cooldown
+
+    //Variables for charging attacks
+    float attackChargeTime = 0f;                            //Time quick attack has been charged
+    bool chargingQuickAttack = false;                       //Return if charging quick attack
+    bool chargingHeavyAttack = false;                       //Return if charging heavy attack
 
     public override void ClassSpecificStart()
     {
@@ -55,6 +61,16 @@ public class MagePhysics : PlayerPhysics
 
         if(!teleportOnCD)
             GetComponent<Animator>().SetTrigger("moveSkill");
+    }
+
+    void StartQuickAttackCharge()
+    {
+        attackChargeTime = 0f;
+    }
+
+    void StartHeavyAttackCharge()
+    {
+        attackChargeTime = 0f;
     }
 
     void ActivateQuickReticle()
@@ -94,8 +110,6 @@ public class MagePhysics : PlayerPhysics
         reticle.SetActive(true);
         attackActiveState = true;
     }
-
- 
 
     void PlayChildrenParticles(GameObject obj)
     {
@@ -169,6 +183,8 @@ public class MagePhysics : PlayerPhysics
         shieldParticle.GetComponent<ParticleSystem>().Play();
     }
 
+    //BEGIN TELEPORT FUNCTIONS
+
     void ExecuteTeleportSkill()
     {
         teleportOnCD = true;
@@ -213,4 +229,7 @@ public class MagePhysics : PlayerPhysics
     {
         teleportOnCD = false;
     }
+
+    //END TELEPORT FUNCTIONS
+
 }
