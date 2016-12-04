@@ -8,6 +8,10 @@ public class GunnerPhysics : PlayerPhysics{
     const float DODGE_RECOVERY_TIME = 1f;
     const float MAX_DODGE_CHAIN = 3;
 
+    //Constants for pistol shot
+    const int MAX_PISTOL_AMMO = 6;              //Amount of ammo that can be fired before reload
+    const float QUICKSHOT_CD = .2f;             //Cooldown between gun shots
+
     GunnerStats gunnerStat;
     BulletProjectile bulletScript;
     Vector3 gunPoint;
@@ -23,6 +27,10 @@ public class GunnerPhysics : PlayerPhysics{
     float yAtStart;
     int dodgeCount = 0;
 
+    //Pistol variables
+    bool pistolOnCD = false;
+    int pistolAmmo = MAX_PISTOL_AMMO;
+
     public override void ClassSpecificStart()
     {
         gunnerStat = GetComponent<GunnerProperties>().GetGunnerStats();
@@ -33,6 +41,14 @@ public class GunnerPhysics : PlayerPhysics{
     public override void ClassSpecificUpdate()
     {
 
+    }
+
+    public override bool CheckClassSpecificInput()
+    {
+        if (pistolOnCD && GetComponent<PlayerInput>().getKeyPress().quickAttackPress && isGrounded())
+            return true;
+
+        return base.CheckClassSpecificInput();
     }
 
     public override void MovementSkill(float xMove, float yMove)
@@ -50,9 +66,17 @@ public class GunnerPhysics : PlayerPhysics{
             GetComponent<Animator>().SetTrigger("moveSkill");
     }
 
+    void QuickShotRecovery()
+    {
+        pistolOnCD = false;
+    }
+
     void ShootQuickBullet()
     {
         bulletSource.GetComponent<BulletSourceScript>().QuickShot(physicStats.quickAttackStrength);
+        pistolOnCD = true;
+        pistolAmmo--;
+        Invoke("QuickShotRecovery", QUICKSHOT_CD);
     }
 
     void ShootHeavyBullet()
