@@ -9,6 +9,8 @@ public class BasicEnemy2D : Enemy {
     bool attEnded;                                          //Determine if the attack ended
     bool gotAttackAnim;                                     //Determines if attack animation has been registered
     public bool facingRight = true;                         //Determine direction facing
+    public float knockBackForceX = 2000f;                      //Knockback Damage amnt for enemies
+    public float knockBackForceY = 10f;
 
 
     //Juggling Variables
@@ -174,10 +176,12 @@ public class BasicEnemy2D : Enemy {
     {
         transform.GetChild(1).GetComponent<EnemyMeleeDamage>().ApplyDamage();
     }
-
+    
     //Resets list of players attacked during last attack
     void ResetDamageApply()
     {
+        transform.GetChild(1).GetComponent<EnemyMeleeDamage>().knockBackForceX = knockBackForceX;
+        transform.GetChild(1).GetComponent<EnemyMeleeDamage>().knockBackForceY = knockBackForceY;
         transform.GetChild(1).GetComponent<EnemyMeleeDamage>().ResetAttackApplied();
     }
 

@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 public class EnemyMeleeDamage : MonoBehaviour {
 
-    public float knockBackForce = 10f;
+    public float knockBackForceX = 10f;
+    public float knockBackForceY = 10f;
     public float stunDuration = .1f;
     int damage = 10;
 
@@ -35,10 +36,15 @@ public class EnemyMeleeDamage : MonoBehaviour {
             if (!playersAttacked.Contains(target))
             {
                 playersAttacked.Add(target);
-                target.GetComponent<PlayerProperties>().TakeDamage(transform.parent.GetComponent<Enemy>().attackPower,knockBackForce,stunDuration);
+                target.GetComponent<PlayerProperties>().TakeDamage(transform.parent.GetComponent<Enemy>().attackPower,knockBackForceX, knockBackForceY,stunDuration);
             }
 
         }
+    }
+
+    private void CalculateKnockBack(GameObject target)
+    {
+        knockBackForceX += gameObject.GetComponent<Enemy>().speed * 2000;
     }
 
     //Reset list keeping track of players already damaged by finished attack
