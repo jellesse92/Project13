@@ -42,6 +42,7 @@ public class PlayerProperties : MonoBehaviour{
     protected bool stunnable = true;
 
     protected bool isInvincibile = false;
+    protected bool isDead = false;
 
     private bool isKnockedBack = false;
     public bool isKnockedInAir = false;
@@ -77,13 +78,21 @@ public class PlayerProperties : MonoBehaviour{
 
     public void PlayerDeath()
     {
-        lives--;
-        currentHealth = maxHealth;
-        if(lives == -1)
-        {
-            alive = false;
-            cash = 0;
-        }
+        MakeInvuln();
+        isDead = true;
+        GetComponent<PlayerPhysics>().DeactivateAttackMovementJump();
+        GetComponent<Animator>().SetTrigger("death");
+
+        /*
+            lives--;
+
+            currentHealth = maxHealth;
+            if(lives == -1)
+            {
+                alive = false;
+                cash = 0;
+            }
+        */
     }
 
     public void TakeDamage(int dmg, float knockBackX = 0f, float knockBackY = 0f, float stunTime = 0f)
@@ -94,13 +103,20 @@ public class PlayerProperties : MonoBehaviour{
         currentHealth -= dmg;
         //Prevent stacking KnockBack
         knockXPlayer(knockBackX, knockBackY);
-        
+
+        if (!isDead && currentHealth <= 0)
+        {
+            PlayerDeath();
+            return;
+        }
+
         if (stunnable && !isStunned)
             StartCoroutine(ApplyStun(stunTime));
 
         if (psScript != null)
             psScript.GetComponent<PlayerStatusUIScript>().ApplyHealthDamage(playerNumber, dmg);
     }
+
     private void knockXPlayer(float x, float y) 
     {
         if (!isKnockedBack)
@@ -113,7 +129,7 @@ public class PlayerProperties : MonoBehaviour{
         y = y % 4000;
         gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(x, y));
     }
-    //void OnCollision
+
     private void unsetKnockedBack()
     {
         isKnockedBack = false;
