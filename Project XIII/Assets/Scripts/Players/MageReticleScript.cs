@@ -4,7 +4,14 @@ using System.Collections.Generic;
 
 public class MageReticleScript : MonoBehaviour {
 
+    //Constants for gravity pull
+    const float GRAVITY_PULL_RATE = .2f;                //Time rate at which light gravity attack should pull
+    const float X_PULL_MULTI = 1000f;                   //Multiplier for pulling in the x direction
+    const float Y_PULL_MULTI = 1000f;                   //Multiplier for pulling in the y direction
+    const float GRAVITY_APPLY_DAMAGE_RATE = 1f;        //Rate at which actual damage applied
+
     const float SPEED = .15f;
+
     public bool freeze_y = false;
     public float screenShakeAmt = 0f;
     public float shakeDuration = .5f;
@@ -17,6 +24,7 @@ public class MageReticleScript : MonoBehaviour {
     bool checkedLastPos;
 
     bool attackActive = false;
+    bool applyDamage = false;
 
     HashSet<GameObject> enemiesInRange = new HashSet<GameObject>();
     int damage = 10;
@@ -96,14 +104,33 @@ public class MageReticleScript : MonoBehaviour {
     public void ReleaseQuickAttack()
     {
         attackActive = true;
-        foreach(GameObject enemy in enemiesInRange)
+        InvokeRepeating("ApplyContinousQuickDamage", 0f, GRAVITY_APPLY_DAMAGE_RATE);
+        InvokeRepeating("ApplyContinousGravityForce", 0f, GRAVITY_PULL_RATE);
+    }
+
+    public void ApplyContinousGravityForce()
+    {
+        foreach (GameObject enemy in enemiesInRange)
         {
             ApplyQuickAttack(enemy);
+
+            if (applyDamage)
+            {    
+                ApplyDamage(enemy);
+            }
         }
+        applyDamage = false;
+    }
+
+    public void ApplyContinousQuickDamage()
+    {
+        applyDamage = true;
     }
 
     public void ExtinguishAttack()
     {
+        CancelInvoke("ApplyContinousQuickDamage");
+        CancelInvoke("ApplyContinousGravityForce");
         attackActive = false;
         Reset();
     }
@@ -119,18 +146,11 @@ public class MageReticleScript : MonoBehaviour {
         if (yDistance < .5f)
             yDistance = .5f;
 
-        float yMulti = 3000f;
+
 
         Vector3 dir = (this.transform.position - enemy.transform.position).normalized;
 
-
-        if (dir.y < 0f)
-            yMulti = 5000f;
-
-            enemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(3000f * -dir.x * (5f/xDistance), yMulti * -dir.y * (5f/yDistance)));
-
-
-        ApplyDamage(enemy);
+        enemy.GetComponent<Rigidbody2D>().AddForce(new Vector2(X_PULL_MULTI * dir.x * (5f/(xDistance*xDistance)), Y_PULL_MULTI * dir.y * (5f/(yDistance * yDistance))));
     }
 
     public void ReleaseHeavyAttack()

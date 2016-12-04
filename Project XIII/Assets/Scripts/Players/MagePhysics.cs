@@ -5,7 +5,8 @@ public class MagePhysics : PlayerPhysics
 {
     const float QUICK_ORIGIN_X = 5f;
     const float QUICK_ORIGIN_Y = 2f;
-    const float QUICK_ATTACK_DURATION = 0;
+    const float QUICK_ATTACK_DURATION = 4f;
+    const float QUICK_ATTACK_STUN_DURATION = 2f;
 
     const float HEAVY_ORIGIN_X = 5f;
     const float HEAVY_ORIGIN_Y = 0f;
@@ -38,6 +39,7 @@ public class MagePhysics : PlayerPhysics
     {
         quickAttackReticle = (GameObject)Instantiate(quickAttackReticle);
         quickAttackReticle.GetComponent<MageReticleScript>().SetMaster(this.gameObject);
+        quickAttackReticle.GetComponent<MageReticleScript>().SetStunDuration(QUICK_ATTACK_STUN_DURATION);
         heavyAttackReticle = (GameObject)Instantiate(heavyAttackReticle);
         heavyAttackReticle.GetComponent<MageReticleScript>().SetMaster(this.gameObject);
         blizzard = (GameObject)Instantiate(blizzard);
