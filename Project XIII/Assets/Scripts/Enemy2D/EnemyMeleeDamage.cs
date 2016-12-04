@@ -35,17 +35,15 @@ public class EnemyMeleeDamage : MonoBehaviour {
         {
             if (!playersAttacked.Contains(target))
             {
+                float xdir = gameObject.transform.parent.localPosition.x;
+                float ydir = gameObject.transform.parent.localPosition.y;
                 playersAttacked.Add(target);
-                target.GetComponent<PlayerProperties>().TakeDamage(transform.parent.GetComponent<Enemy>().attackPower,knockBackForceX, knockBackForceY,stunDuration);
+                target.GetComponent<PlayerProperties>().TakeDamage(transform.parent.GetComponent<Enemy>().attackPower,knockBackForceX*xdir, knockBackForceY *ydir,stunDuration);
             }
 
         }
     }
 
-    private void CalculateKnockBack(GameObject target)
-    {
-        knockBackForceX += gameObject.GetComponent<Enemy>().speed * 2000;
-    }
 
     //Reset list keeping track of players already damaged by finished attack
     public void ResetAttackApplied()

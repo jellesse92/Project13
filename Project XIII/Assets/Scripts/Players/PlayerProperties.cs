@@ -44,6 +44,8 @@ public class PlayerProperties : MonoBehaviour{
     protected bool isInvincibile = false;
 
     private bool isKnockedBack = false;
+    public bool isKnockedInAir = false;
+    private int playerAngle = 0;
 
 
     void Start()
@@ -91,15 +93,7 @@ public class PlayerProperties : MonoBehaviour{
 
         currentHealth -= dmg;
         //Prevent stacking KnockBack
-        if (!isKnockedBack)
-        {
-            isKnockedBack = true;
-            knockBackX = knockBackX % 4000; //Avoids Stacking Knockbacks 
-            knockBackY = knockBackY % 4000;
-            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(knockBackX, knockBackY));
-            Invoke("unsetKnockedBack", 1.5f);
-        }
-        
+        knockXPlayer(knockBackX, knockBackY);
         
         if (stunnable && !isStunned)
             StartCoroutine(ApplyStun(stunTime));
@@ -107,11 +101,24 @@ public class PlayerProperties : MonoBehaviour{
         if (psScript != null)
             psScript.GetComponent<PlayerStatusUIScript>().ApplyHealthDamage(playerNumber, dmg);
     }
-
+    private void knockXPlayer(float x, float y) 
+    {
+        if (!isKnockedBack)
+        {
+            isKnockedBack = x > 0;
+            Invoke("unsetKnockedBack", 1f);
+        }
+        
+        x = x % 4000; //Avoids Stacking Knockbacks 
+        y = y % 4000;
+        gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(x, y));
+    }
+    //void OnCollision
     private void unsetKnockedBack()
     {
         isKnockedBack = false;
     }
+
     public int GetCash()
     {
         return cash;
