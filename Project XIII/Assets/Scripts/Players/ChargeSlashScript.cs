@@ -30,6 +30,8 @@ public class ChargeSlashScript : MonoBehaviour {
 
     private void FixedUpdate()
     {
+        if (!GetComponent<BoxCollider2D>().enabled)
+            return;
         foreach (GameObject target in enemyHash)
         {
             target.transform.position = new Vector3(transform.position.x + X_OFFSET*transform.parent.localScale.x, target.transform.position.y, target.transform.position.z);

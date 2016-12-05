@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class Enemy : MonoBehaviour {
 
     protected const int ALLOWED_BOUNCES = 2;            //Bounces allowed starting at 3 to allow 1 distinct bounce
+    const float AIR_TO_GROUND_STUN_RECOVERY_TIME = .2f; //Time it takes to recover from stun after being in a stun state in the air as a non-flying enemy
 
     //Animator
     protected Animator anim;
@@ -18,6 +19,7 @@ public class Enemy : MonoBehaviour {
     public bool stunnable;                              //Able to be stunned
     public float stunEffectiveness;                     //Effectiveness of stun
     public bool grounded;                               //Checks if enemy is on the ground
+    public bool flyingEnemy = false;                    //Determines if is a flying enemy or not for stun recovery to take place only on the ground 
 
     protected bool dead;                                //Determines if enemy is dead
     protected bool stunned;                             //Determines if enemy is stunned
@@ -45,6 +47,9 @@ public class Enemy : MonoBehaviour {
     protected float bounceForce = 0f;                   //Force which enemy should be lifted during bounce
     protected int comboCount = 0;                       //Number of times enemy has been hit in a consistent combo
 
+    //Check if grounded after being knocked in air for stun recover
+    private bool waitForRemoveStunLand = false;
+
     Color default_color;
 
     // Use this for initialization
@@ -59,6 +64,15 @@ public class Enemy : MonoBehaviour {
         default_color = GetComponent<SpriteRenderer>().color;
         fullHealth = health;
 
+    }
+
+    public virtual void FixedUpdate()
+    {
+        if (waitForRemoveStunLand && IsGrounded())
+        {
+            waitForRemoveStunLand = false;
+            Invoke("RecoverFromStun", AIR_TO_GROUND_STUN_RECOVERY_TIME);
+        }
     }
 
     // Call when enemy becomes visible on screen
@@ -149,6 +163,14 @@ public class Enemy : MonoBehaviour {
         anim.SetTrigger("stun");
         stunned = true;
         yield return new WaitForSeconds(currentStunMultiplier * stunEffectiveness);
+        if (!flyingEnemy)
+            waitForRemoveStunLand = true;
+        else
+            RecoverFromStun();
+    }
+
+    void RecoverFromStun()
+    {
         anim.SetTrigger("stunRecovery");
         stunned = false;
     }

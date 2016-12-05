@@ -25,7 +25,8 @@ public class EnemyPhysics : Enemy{
     }
 
     // Update is called once per frame
-	void FixedUpdate () {
+	public override void FixedUpdate () {
+        base.FixedUpdate();
 
         if (isBouncing)
             ManageJuggleState();
