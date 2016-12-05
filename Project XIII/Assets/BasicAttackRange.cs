@@ -6,6 +6,11 @@ public class BasicAttackRange : MonoBehaviour{
 
     HashSet<GameObject> targets = new HashSet<GameObject>();
 
+    private void FixedUpdate()
+    {
+        CheckForDead();
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if(col.tag == "Player" && col.gameObject.GetComponent<PlayerProperties>().alive && !targets.Contains(col.gameObject))
@@ -24,6 +29,25 @@ public class BasicAttackRange : MonoBehaviour{
             if (targets.Count <= 0)
                 transform.parent.GetComponent<Enemy>().SetAttackInRange(false);
         }
+    }
+
+    void CheckForDead()
+    {
+        HashSet<GameObject> deadTargets = new HashSet<GameObject>();
+
+        foreach (GameObject player in targets)
+        {
+            if (!player.GetComponent<PlayerProperties>().alive)
+                deadTargets.Add(player);
+        }
+
+        foreach(GameObject dead in deadTargets)
+        {
+            targets.Remove(dead);
+        }
+
+        if(targets.Count<= 0)
+            transform.parent.GetComponent<Enemy>().SetAttackInRange(false);
     }
 
     public void Reset()
