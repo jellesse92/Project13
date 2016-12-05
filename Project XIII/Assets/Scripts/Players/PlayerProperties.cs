@@ -26,6 +26,8 @@ public class PlayerBoostStats
 
 public class PlayerProperties : MonoBehaviour{
 
+    const float reviveImmuneTime = .2f;                     //Time immune to damage after revive
+
     public bool alive = true;
 
     public int playerNumber = 0;
@@ -47,10 +49,19 @@ public class PlayerProperties : MonoBehaviour{
     public bool isKnockedInAir = false;
     private int playerAngle = 0;
 
+    //Camera stuff for when player dies
+    private bool isVisible = true;                  //Visible on the screen
+    private GameObject cam;
+
+    private void Awake()
+    {
+        cam = GameObject.FindGameObjectWithTag("MainCamera").transform.parent.gameObject;
+    } 
 
     void Start()
     {
         psScript = GameObject.FindGameObjectWithTag("In Game Status Panel");
+
     }
 
     public int GetPlayerNumber()
@@ -77,11 +88,11 @@ public class PlayerProperties : MonoBehaviour{
 
     public void PlayerDeath()
     {
+        GetComponent<PlayerPhysics>().ConstrainX();
         MakeInvuln();
         alive = false;
-        GetComponent<PlayerPhysics>().DeactivateAttackMovementJump();
         GetComponent<Animator>().SetTrigger("death");
-
+        cam.GetComponent<MultiplayerCamFollowScript>().RemovePlayerFromFocus(gameObject);
         /*
             lives--;
 
@@ -93,6 +104,17 @@ public class PlayerProperties : MonoBehaviour{
             }
         */
     }
+
+    public void Revive()
+    {
+        cam.GetComponent<MultiplayerCamFollowScript>().AddPlayerToFocus(gameObject);
+        GetComponent<PlayerPhysics>().DeconstrainX();
+        alive = true;
+        GetComponent<Animator>().SetTrigger("revive");
+        lives--;
+        Invoke("MakeNotInvul", reviveImmuneTime);
+    }
+
 
     public void TakeDamage(int dmg, float knockBackX = 0f, float knockBackY = 0f, float stunTime = 0f)
     {

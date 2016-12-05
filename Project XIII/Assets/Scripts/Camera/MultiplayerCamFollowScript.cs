@@ -14,7 +14,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     float zoomMultiplier = 1f;
     float followDelay = .8f;
 
-    GameObject[] players;
+    HashSet<GameObject> players = new HashSet<GameObject>();
 
     public bool in2DMode = true;
     public float lowestPointY = 0f;                             //Lowest point of the map the camera should be able to show
@@ -24,7 +24,12 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        players = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] tempPlayerFind = GameObject.FindGameObjectsWithTag("Player");
+
+        foreach(GameObject p in tempPlayerFind)
+        {
+            players.Add(p);
+        }
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 	}
 	
@@ -213,5 +218,17 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
             if (player.activeSelf)
                 active++;
         return active;
+    }
+
+    public void RemovePlayerFromFocus(GameObject p)
+    {
+        if (players.Contains(p))
+            players.Remove(p);
+    }
+
+    public void AddPlayerToFocus(GameObject p)
+    {
+        if (!players.Contains(p))
+            players.Add(p);
     }
 }

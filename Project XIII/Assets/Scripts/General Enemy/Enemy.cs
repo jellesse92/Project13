@@ -186,7 +186,6 @@ public class Enemy : MonoBehaviour {
         {
             if (child.gameObject.activeSelf && child.GetComponent<PlayerProperties>().alive)
             {
-                Debug.Log("testiing");
                 liveList[liveCount] = child.gameObject;
                 liveCount++;
             }
