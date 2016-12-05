@@ -42,7 +42,8 @@ public class Enemy : MonoBehaviour {
     protected bool isBouncing = false;                  //Determines if enemy is bouncing
     protected bool isSquishing = false;                 //Determines if enemy is being squished to ground
     protected int bounceCount = 0;                      //Times bounced
-    protected int comboCount = 0;                       //Number of times enemy has been hit in a consistent comb
+    protected float bounceForce = 0f;                   //Force which enemy should be lifted during bounce
+    protected int comboCount = 0;                       //Number of times enemy has been hit in a consistent combo
 
     Color default_color;
 
@@ -226,11 +227,12 @@ public class Enemy : MonoBehaviour {
         return false;
     }
 
-    public void Bounce()
+    public void Bounce(float forceY = 15000f)
     {
         isBouncing = true;
         isSquishing = false;
         bounceCount = 0;
+        bounceForce = forceY;
     }
 
     /*

@@ -7,6 +7,12 @@ public class BulletSourceScript : MonoBehaviour {
     const float HEAVY_STUN_MULTI = 1f;              //Multiplier for how long enemies should be stunned after heavy attack
     const float HIT_DISCREP = .5f;                  //Discrepency from target location allowed for air juggle
 
+    const float QUICK_FORCE_X = 100f;
+    const float QUICK_FORCE_Y = 16000f;
+
+    const float HEAVY_FORCE_X = 2500f;
+    const float HEAVY_FORCE_Y = 10000f;
+
     LayerMask layermask;                            //Prevent raycast from hitting unimportant layers
     RaycastHit2D[] hit = new RaycastHit2D[5];       //What was hit by raycast
     RaycastHit2D[][] heavyHit = new RaycastHit2D[5][];
@@ -57,7 +63,7 @@ public class BulletSourceScript : MonoBehaviour {
             if (!target.GetComponent<Enemy>().IsGrounded())
             {
                 target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, -10f);
-                target.GetComponent<Rigidbody2D>().AddForce(new Vector2(100f, 10000f));
+                target.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_FORCE_X, QUICK_FORCE_Y));
             }
 
         }
@@ -89,7 +95,7 @@ public class BulletSourceScript : MonoBehaviour {
     {
         if(target.tag == "Enemy")
         {
-            target.GetComponent<Rigidbody2D>().AddForce(new Vector2(2000f * transform.parent.localScale.x, 4000f));
+            target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_FORCE_X * transform.parent.localScale.x, HEAVY_FORCE_Y));
             target.GetComponent<Enemy>().Damage(damage, HEAVY_STUN_MULTI);
         }
     }

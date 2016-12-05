@@ -137,7 +137,7 @@ public class EnemyPhysics : Enemy{
             yield return new WaitForSeconds(delayTime);
         }
 
-        GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 10000f));
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(0, bounceForce));
         Invoke("DelayBounceCount", .2f);
     }
 
