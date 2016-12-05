@@ -14,7 +14,7 @@ public class EnemyMeleeDamage : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == "Player")
+        if (col.tag == "Player" && col.gameObject.GetComponent<PlayerProperties>().alive)
             playersinRange.Add(col.gameObject);
     }
 
@@ -31,16 +31,26 @@ public class EnemyMeleeDamage : MonoBehaviour {
 
     public void ApplyDamage()
     {
-        foreach(GameObject target in playersinRange)
+        HashSet<GameObject> deadTargets = new HashSet<GameObject>();
+
+        foreach (GameObject target in playersinRange)
         {
-            if (!playersAttacked.Contains(target))
+            if (!target.GetComponent<PlayerProperties>().alive)
+                deadTargets.Add(target);
+            else if (!playersAttacked.Contains(target))
             {
                 float xdir = gameObject.transform.parent.localPosition.x;
                 float ydir = gameObject.transform.parent.localPosition.y;
                 playersAttacked.Add(target);
                 target.GetComponent<PlayerProperties>().TakeDamage(transform.parent.GetComponent<Enemy>().attackPower,knockBackForceX*xdir, knockBackForceY *ydir,stunDuration);
+                
             }
+        }
 
+        foreach(GameObject dead in deadTargets)
+        {
+            if (playersinRange.Contains(dead))
+                playersinRange.Remove(dead);
         }
     }
 

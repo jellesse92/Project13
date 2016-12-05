@@ -29,6 +29,7 @@ public class Enemy : MonoBehaviour {
     protected bool isVisible;                           //Determine if enemy is visible on screen
     protected bool inPursuit;                           //Determine if enemy is in pursuit of player character
     protected GameObject target;                        //Target to chase
+    protected GameObject playerList;                    //List of players able to be targted
 
     //Attack Variables
     protected bool inAttackRange;                       //Detects if in range to begin attacking
@@ -83,6 +84,8 @@ public class Enemy : MonoBehaviour {
         {
             inPursuit = true;
             target = col.transform.parent.gameObject;
+            if (playerList == null)
+                playerList = target.transform.parent.gameObject;
         }
     }
 
@@ -171,6 +174,30 @@ public class Enemy : MonoBehaviour {
     public GameObject GetTarget()
     {
         return target;
+    }
+
+    //Gets a new target from the playerList
+    public GameObject GetRandomTarget()
+    {
+        GameObject[] liveList = new GameObject[4];
+        int liveCount = 0;
+
+        foreach(Transform child in playerList.transform)
+        {
+            if (child.gameObject.activeSelf && child.GetComponent<PlayerProperties>().alive)
+            {
+                Debug.Log("testiing");
+                liveList[liveCount] = child.gameObject;
+                liveCount++;
+            }
+        }
+
+        if (playerList != null && liveCount != 0)
+        {
+            return liveList[(int)Random.Range(0, liveCount - 1)];
+        }
+
+        return null;
     }
     
     //Sets the target player

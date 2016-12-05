@@ -9,7 +9,7 @@ public class BasicEnemy2D : Enemy {
     bool attEnded;                                          //Determine if the attack ended
     bool gotAttackAnim;                                     //Determines if attack animation has been registered
     public bool facingRight = true;                         //Determine direction facing
-    public float knockBackForceX = 2000f;                      //Knockback Damage amnt for enemies
+    public float knockBackForceX = 2000f;                   //Knockback Damage amnt for enemies
     public float knockBackForceY = 10f;
 
 
@@ -28,7 +28,6 @@ public class BasicEnemy2D : Enemy {
     // Update is called once per frame
     void FixedUpdate()
     {
-
 
         if(isBouncing)
             ManageJuggleState();
@@ -84,7 +83,6 @@ public class BasicEnemy2D : Enemy {
             StartCoroutine("BounceSquish");
             bounceCount++;
         }
-        
     }
 
     IEnumerator BounceSquish()

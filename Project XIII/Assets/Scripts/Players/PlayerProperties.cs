@@ -42,7 +42,6 @@ public class PlayerProperties : MonoBehaviour{
     protected bool stunnable = true;
 
     protected bool isInvincibile = false;
-    protected bool isDead = false;
 
     private bool isKnockedBack = false;
     public bool isKnockedInAir = false;
@@ -79,7 +78,7 @@ public class PlayerProperties : MonoBehaviour{
     public void PlayerDeath()
     {
         MakeInvuln();
-        isDead = true;
+        alive = false;
         GetComponent<PlayerPhysics>().DeactivateAttackMovementJump();
         GetComponent<Animator>().SetTrigger("death");
 
@@ -104,7 +103,7 @@ public class PlayerProperties : MonoBehaviour{
         //Prevent stacking KnockBack
         knockXPlayer(knockBackX, knockBackY);
 
-        if (!isDead && currentHealth <= 0)
+        if (alive && currentHealth <= 0)
         {
             PlayerDeath();
             return;
@@ -122,7 +121,7 @@ public class PlayerProperties : MonoBehaviour{
         if (!isKnockedBack)
         {
             isKnockedBack = x > 0;
-            Invoke("unsetKnockedBack", 1f);
+            Invoke("unsetKnockedBack", 2f);
         }
         
         x = x % 4000; //Avoids Stacking Knockbacks 
