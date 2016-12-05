@@ -69,7 +69,7 @@ public class MusicManager : MonoBehaviour {
 
     IEnumerator RaiseVolume(int index)
     {
-        if(aSource.Length > 0)
+        if(aSource.Length > index)
             while(aSource[index].volume < 1f)
             {
                 aSource[index].volume += INCREASE_VOLUME_RATE;
