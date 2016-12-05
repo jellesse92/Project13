@@ -8,6 +8,8 @@ public class Enemy : MonoBehaviour {
     protected const int ALLOWED_BOUNCES = 2;            //Bounces allowed starting at 3 to allow 1 distinct bounce
     const float AIR_TO_GROUND_STUN_RECOVERY_TIME = .2f; //Time it takes to recover from stun after being in a stun state in the air as a non-flying enemy
 
+    public GameObject hitParticles;                     //Object which controls hit particles                   
+
     //Animator
     protected Animator anim;
 
@@ -63,7 +65,6 @@ public class Enemy : MonoBehaviour {
         layerMask = (LayerMask.GetMask("Default"));
         default_color = GetComponent<SpriteRenderer>().color;
         fullHealth = health;
-
     }
 
     public virtual void FixedUpdate()
@@ -118,7 +119,9 @@ public class Enemy : MonoBehaviour {
     //Damage script to be applied when enemy takes damage
     public void Damage(int damage, float stunMultiplier = 0f)
     {
-        transform.GetChild(2).GetComponent<ParticleSystem>().Play();
+        //Will adjust this later for taking into account other particles to be played?
+        //Possibly have a list of children with different responsive particles?
+        hitParticles.GetComponent<ParticleSystem>().Play();
 
         if (dead)
             return;

@@ -66,7 +66,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1467694277023172
 GameObject:
   m_ObjectHideFlags: 1
@@ -495,12 +495,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb0c9d396040ef048b4b381dc1a6f086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitParticles: {fileID: 1692059593389906}
   health: 300
   speed: 0.25
   attackPower: 5
   stunnable: 1
   stunEffectiveness: 1
   grounded: 0
+  flyingEnemy: 0
   facingRight: 1
   attProjectionTime: 0.25
   hasAttackProjection: 1
