@@ -33,7 +33,7 @@ public class BulletSourceScript : MonoBehaviour {
 
             if (hit[i].collider != null)
             {
-                hitImpactParticle.transform.position = hit[0].point;
+                hitImpactParticle.transform.position = hit[i].point;
                 hitImpactParticle.GetComponent<ParticleSystem>().Play();
                 ApplyQuickDamage(hit[i].collider.gameObject, damage);
                 break;
