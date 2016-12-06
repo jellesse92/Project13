@@ -190,15 +190,17 @@ public class PlayerProperties : MonoBehaviour{
 
     private void knockXPlayer(float x, float y) 
     {
+        print("Kncking back with values" + x + "  AND  " + y);
         if (!isKnockedBack)
         {
             isKnockedBack = x > 0;
+            x = x % 4000; //Avoids Stacking Knockbacks 
             Invoke("unsetKnockedBack", 2f);
         }
         
-        x = x % 4000; //Avoids Stacking Knockbacks 
-        y = y % 4000;
+        y = y % 5555;
         gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(x, y));
+
     }
 
     private void unsetKnockedBack()
