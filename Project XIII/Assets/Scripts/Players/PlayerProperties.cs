@@ -169,6 +169,8 @@ public class PlayerProperties : MonoBehaviour{
         if (isInvincibile)
             return;
 
+        GetComponent<Rigidbody2D>().gravityScale = GetComponent<PlayerPhysics>().GetDefaultGravityForce();
+
         currentHealth -= dmg;
         //Prevent stacking KnockBack
         knockXPlayer(knockBackX, knockBackY);

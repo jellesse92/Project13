@@ -27,6 +27,7 @@ public class DetonatingEnemyExplosion : MonoBehaviour {
     {
         foreach(GameObject target in playersinRange)
         {
+            
             /*
             if (target.GetComponent<PlayerProperties>().alive)
                 target.GetComponent<PlayerProperties>().TakeDamage(damage, knockBackX, knockBackY);

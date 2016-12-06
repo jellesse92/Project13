@@ -399,4 +399,9 @@ public class PlayerPhysics : MonoBehaviour {
         GetComponent<Rigidbody2D>().gravityScale = DEFAULT_GRAVITY_FORCE;
     }
 
+    public float GetDefaultGravityForce()
+    {
+        return DEFAULT_GRAVITY_FORCE;
+    }
+
 }
