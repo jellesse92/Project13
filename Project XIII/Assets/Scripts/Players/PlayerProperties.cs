@@ -190,12 +190,15 @@ public class PlayerProperties : MonoBehaviour{
 
     private void knockXPlayer(float x, float y) 
     {
-        print("Kncking back with values" + x + "  AND  " + y);
+        //print("Kncking back with values" + x + "  AND  " + y);
         if (!isKnockedBack)
         {
-            isKnockedBack = x > 0;
-            x = x % 4000; //Avoids Stacking Knockbacks 
+            isKnockedBack = x != 0;
+            x = x % 3000;
             Invoke("unsetKnockedBack", 2f);
+        } else
+        {
+            x = 0;
         }
         
         y = y % 5555;
