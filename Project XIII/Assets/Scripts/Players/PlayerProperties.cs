@@ -75,7 +75,7 @@ public class PlayerProperties : MonoBehaviour{
         {
             if (!GetComponent<AudioSource>().isPlaying)
             {
-                Time.timeScale = 1f;
+                Time.timeScale = .5f;
                 checkVoiceDone = false;
             }
 
