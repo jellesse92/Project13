@@ -40,6 +40,9 @@ public class Enemy : MonoBehaviour {
     //Attack Variables
     protected bool inAttackRange;                       //Detects if in range to begin attacking
 
+    //Damage Variables
+    protected bool isInvincible = false;                //Determine if enemy is invincible when attacked;
+
     //Ground detection
     float distToGround;                                 //Distance from the ground
     int layerMask;                                      //Layers to check for ground
@@ -111,6 +114,7 @@ public class Enemy : MonoBehaviour {
     //Resets position and alert status
     public virtual void Reset()
     {
+        isInvincible = false;
         isVisible = false;
         inPursuit = false;
         target = null;
@@ -122,27 +126,30 @@ public class Enemy : MonoBehaviour {
     //Damage script to be applied when enemy takes damage
     public void Damage(int damage, float stunMultiplier = 0f)
     {
-        //Will adjust this later for taking into account other particles to be played?
-        //Possibly have a list of children with different responsive particles?
-        hitParticles.GetComponent<ParticleSystem>().Play();
-
-        if (dead)
-            return;
-        health -= damage;
-
-        if(!isFrozen)
-            StartCoroutine("ApplyDamageColor");
-
-        if(health <= 0)
+        if (!isInvincible)
         {
-            StopAllCoroutines();
-            PlayDeath();
-        }
-        else if (stunnable && stunMultiplier > 0)
-        {
-            currentStunMultiplier = stunMultiplier;
-            StopCoroutine(ApplyStun());
-            StartCoroutine(ApplyStun());
+            //Will adjust this later for taking into account other particles to be played?
+            //Possibly have a list of children with different responsive particles?
+            hitParticles.GetComponent<ParticleSystem>().Play();
+
+            if (dead)
+                return;
+            health -= damage;
+
+            if (!isFrozen)
+                StartCoroutine("ApplyDamageColor");
+
+            if (health <= 0)
+            {
+                StopAllCoroutines();
+                PlayDeath();
+            }
+            else if (stunnable && stunMultiplier > 0)
+            {
+                currentStunMultiplier = stunMultiplier;
+                StopCoroutine(ApplyStun());
+                StartCoroutine(ApplyStun());
+            }
         }
     }
 

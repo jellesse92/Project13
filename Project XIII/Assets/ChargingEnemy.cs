@@ -1,17 +1,21 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class BasicEnemy2D : Enemy {
-
+public class ChargingEnemy : Enemy {
 
     public float attProjectionTime = 0f;                    //Determine how long before enemy should execute attack
     bool isAttacking;                                       //Determine if enemy is in the middle of an attack animation to stop movement    
     bool attEnded;                                          //Determine if the attack ended
     bool gotAttackAnim;                                     //Determines if attack animation has been registered
     public bool facingRight = true;                         //Determine direction facing
+    public float attCoolDownTime;
     public float knockBackForceX = 2000f;                   //Knockback Damage amnt for enemies
-    public float knockBackForceY = 10f;
-
+    public float knockBackForceY = 3000f;
+    private int location = 1;
+    public bool isCoolingDown = false;
+    Vector2 xyBoundary;
+    GameObject leftCameraWall, rightCameraWall;
 
     //Juggling Variables
     bool checkGrounded;                                     //Determines if enemy should check if grounded for when it's in a juggled state
@@ -19,37 +23,40 @@ public class BasicEnemy2D : Enemy {
     // Use this for initialization
     void Start()
     {
+        leftCameraWall = GameObject.FindGameObjectWithTag("Left Camera Wall");
+        rightCameraWall = GameObject.FindGameObjectWithTag("Right Camera Wall");
+
         isAttacking = false;
+        isInvincible = false;
         attEnded = true;
         gotAttackAnim = true;
         checkGrounded = true;
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
 
-        if(isBouncing)
+
+
+
+    // Update is called once per frame
+    public override void FixedUpdate()
+    {
+        xyBoundary[0] = leftCameraWall.transform.position.x + leftCameraWall.GetComponent<Collider2D>().bounds.size.x;
+        xyBoundary[1] = rightCameraWall.transform.position.x - rightCameraWall.GetComponent<Collider2D>().bounds.size.x;
+        if (isBouncing)
             ManageJuggleState();
         else if (!dead)
         {
             if (GetVisibleState() && GetPursuitState() && !stunned && !frozen)
             {
-                if (!isAttacking && !inAttackRange)
-                    Approach();
-                else if (!isAttacking && attEnded)
+                if (isCoolingDown)
                 {
-                    anim.SetInteger("x", 0);
-                    anim.SetTrigger("projectAttack");
-                    isAttacking = true;
-
-                    if (attProjectionTime == 0f)
-                        ExecuteAttack();
-                    else
-                        Invoke("ExecuteAttack", attProjectionTime);
+                    anim.Play("Idle");
                 }
+                if (!isAttacking && !inAttackRange && !isCoolingDown)
+                    Approach();
                 else if (!attEnded)
                 {
+
                     CheckAttackEnd();
                 }
             }
@@ -74,7 +81,7 @@ public class BasicEnemy2D : Enemy {
         if (isSquishing)
             return;
 
-        if(bounceCount >= ALLOWED_BOUNCES)
+        if (bounceCount >= ALLOWED_BOUNCES)
         {
             isBouncing = false;
         }
@@ -90,12 +97,13 @@ public class BasicEnemy2D : Enemy {
         float delayTime = .01f;
         isSquishing = true;
 
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++)
+        {
             transform.localScale += new Vector3(0, -.15f, 0f);
             yield return new WaitForSeconds(delayTime);
         }
 
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             transform.localScale += new Vector3(0, .15f, 0f);
             yield return new WaitForSeconds(delayTime);
@@ -114,24 +122,30 @@ public class BasicEnemy2D : Enemy {
     void Approach()
     {
 
-        if (target.transform.position.x > transform.position.x)
-        {
-            if (!facingRight)
-                Flip();
-            anim.SetInteger("x", 1);
-        }
-        else if (target.transform.position.x < transform.position.x)
-        {
-            if (facingRight)
-                Flip();
-            anim.SetInteger("x", 0);
-        }
 
-        Vector2 target_location = new Vector2(target.transform.position.x, transform.position.y);
-        transform.position = Vector2.MoveTowards(transform.position, target_location, speed);
+        if (!isCoolingDown)
+        {
+            Vector2 target_location = new Vector2(xyBoundary[location], transform.position.y);
+            transform.position = Vector2.MoveTowards(transform.position, target_location, speed);
+            if (transform.position.x == xyBoundary[location])
+            {
+                isCoolingDown = true;
+                isInvincible = false;
+                Invoke("UnsetCoolDown", 3);
+            }
+            anim.SetTrigger("projectAttack");
+        }
 
     }
+    void UnsetCoolDown()
+    {
+        isCoolingDown = false;
+        isInvincible = false;
+        anim.SetInteger("x", 0);
+        location = location == 1 && transform.position.x < xyBoundary[1] ? 1 : 0;
+        location = location == 0 && transform.position.x > xyBoundary[0] ? 0 : 1;
 
+    }
     //Flips the sprite
     void Flip()
     {
@@ -167,20 +181,19 @@ public class BasicEnemy2D : Enemy {
 
     /*
      *   Melee Damage Control
-     */ 
+     */
 
     //Applies damage to player
     void ApplyDamage()
     {
         transform.GetChild(1).GetComponent<EnemyMeleeDamage>().ApplyDamage();
     }
-    
+
     //Resets list of players attacked during last attack
     void ResetDamageApply()
     {
-        transform.GetChild(1).GetComponent<EnemyMeleeDamage>().knockBackForceX = knockBackForceX;
-        transform.GetChild(1).GetComponent<EnemyMeleeDamage>().knockBackForceY = knockBackForceY;
-        transform.GetChild(1).GetComponent<EnemyMeleeDamage>().ResetAttackApplied();
+        //transform.GetChild(1).GetComponent<EnemyMeleeDamage>().knockBackForceX = knockBackForceX;
+        //transform.GetChild(1).GetComponent<EnemyMeleeDamage>().knockBackForceY = knockBackForceY;
+        //transform.GetChild(1).GetComponent<EnemyMeleeDamage>().ResetAttackApplied();
     }
-
 }
