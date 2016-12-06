@@ -20,6 +20,8 @@ public class PlayerStatusUIScript : MonoBehaviour {
             healthLast[i] = 100;
             lastDamage[i] = 0;
         }
+
+        GameObject.FindGameObjectWithTag("Death Screen").GetComponent<DeathScreenScript>().SetPlayerStatusUI(gameObject);
     }
 
     //Slowly apply damage to health

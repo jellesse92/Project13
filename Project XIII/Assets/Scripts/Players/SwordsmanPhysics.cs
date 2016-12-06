@@ -228,4 +228,9 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     }
 
+    public void HeavyAttackScreenShake()
+    {
+        ScreenShake(.1f, .03f);
+    }
+
 }

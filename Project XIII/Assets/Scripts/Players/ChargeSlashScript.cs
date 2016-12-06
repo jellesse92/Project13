@@ -61,6 +61,7 @@ public class ChargeSlashScript : MonoBehaviour {
             target.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceMulti * X_LAUNCH_FORCE_MULTIPLIER *transform.parent.localScale.x, forceMulti * Y_LAUNCH_FORCE_MULTIPLIER));
             target.GetComponent<Enemy>().Damage(transform.parent.GetComponent<PlayerProperties>().GetPhysicStats().heavyAttackStrength, .1f);
         }
+        transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(.2f, .05f);
     }
 
 

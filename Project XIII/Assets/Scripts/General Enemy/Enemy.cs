@@ -184,7 +184,6 @@ public class Enemy : MonoBehaviour {
 
     void RecoverFromStun()
     {
-        Debug.Log("testing");
         anim.SetTrigger("stunRecovery");
         stunned = false;
     }
@@ -283,5 +282,11 @@ public class Enemy : MonoBehaviour {
         GetComponent<SpriteRenderer>().material.color = default_color;
         isFrozen = false;
     }
+
+    public bool GetStunStatus()
+    {
+        return stunned;
+    }
+
 
 }
