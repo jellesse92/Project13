@@ -725,6 +725,7 @@ GameObject:
   m_Component:
   - component: {fileID: 645818034}
   - component: {fileID: 645818035}
+  - component: {fileID: 645818036}
   m_Layer: 16
   m_Name: Explosion Radius
   m_TagString: Untagged
@@ -759,6 +760,17 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 3
+--- !u!114 &645818036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 645818033}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0c5caabaf50ec7499f610717ddff0e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &687432976 stripped
 Camera:
   m_PrefabParentObject: {fileID: 20000013298354812, guid: 07a92b5373299d5439985ac79ff5411f,
@@ -1854,7 +1866,7 @@ ParticleSystem:
   speed: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   autoRandomSeed: 1
   startDelay:
     scalar: 0
@@ -1898,7 +1910,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1635822262
+  randomSeed: 1331804275
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4614,6 +4626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitParticles: {fileID: 2038416236}
+  groundedOffset: -1
   health: 25
   speed: 0.2
   attackPower: 40

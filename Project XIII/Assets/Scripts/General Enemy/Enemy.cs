@@ -109,7 +109,7 @@ public class Enemy : MonoBehaviour {
     }
 
     //Resets position and alert status
-    public void Reset()
+    public virtual void Reset()
     {
         isVisible = false;
         inPursuit = false;
