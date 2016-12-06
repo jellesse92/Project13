@@ -28,6 +28,8 @@ public class PlayerProperties : MonoBehaviour{
 
     const float reviveImmuneTime = .2f;                     //Time immune to damage after revive
 
+    public AudioClip[] lastDeathVoices;                    //Array of death voices for characters
+
     public bool alive = true;
 
     public int playerNumber = 0;
@@ -53,6 +55,9 @@ public class PlayerProperties : MonoBehaviour{
     private bool isVisible = true;                  //Visible on the screen
     private GameObject cam;
 
+    //Death voice stuff
+    bool checkVoiceDone = false;
+
     private void Awake()
     {
         cam = GameObject.FindGameObjectWithTag("MainCamera").transform.parent.gameObject;
@@ -62,6 +67,19 @@ public class PlayerProperties : MonoBehaviour{
     {
         psScript = GameObject.FindGameObjectWithTag("In Game Status Panel");
 
+    }
+
+    public virtual void Update()
+    {
+        if (checkVoiceDone)
+        {
+            if (!GetComponent<AudioSource>().isPlaying)
+            {
+                Time.timeScale = 1f;
+                checkVoiceDone = false;
+            }
+
+        }
     }
 
     public int GetPlayerNumber()
@@ -88,21 +106,51 @@ public class PlayerProperties : MonoBehaviour{
 
     public void PlayerDeath()
     {
+        bool isLast = false;
+
         GetComponent<PlayerPhysics>().ConstrainX();
         MakeInvuln();
         alive = false;
-        GetComponent<Animator>().SetTrigger("death");
+        
+        isLast = transform.parent.GetComponent<PlayerEffectsManager>().ReportLastDeath();
+
+        if (isLast)
+        {
+            LastDeathEvent();
+        }
+        else
+            GetComponent<Animator>().SetTrigger("death");
+
+
         cam.GetComponent<MultiplayerCamFollowScript>().RemovePlayerFromFocus(gameObject);
         /*
             lives--;
 
             currentHealth = maxHealth;
-            if(lives == -1)
-            {
-                alive = false;
-                cash = 0;
-            }
         */
+    }
+
+    //Plays if character is last to die
+    void LastDeathEvent()
+    {
+        GetComponent<SpriteRenderer>().sortingLayerName = "Special Effects";
+        GetComponent<SpriteRenderer>().sortingOrder = 1;
+        GetComponent<Animator>().SetTrigger("finalDeath");
+    }
+
+    public void StopTime()
+    {
+        Time.timeScale = 0f;
+    }
+
+    public void PlayLastDeathVoice()
+    {
+        int r = lastDeathVoices.Length;
+        r = (int)Random.Range(0, r - 1);
+
+        GetComponent<AudioSource>().clip = lastDeathVoices[r];
+        GetComponent<AudioSource>().Play();
+        checkVoiceDone = true;
     }
 
     public void Revive()
