@@ -133,6 +133,7 @@ public class SwordsmanPhysics : PlayerPhysics{
 
         dashCount++;
         CancelInvoke("StopAfterImage");
+        CancelInvoke("ResetDashCount");
 
         if (dir.x == 0f && dir.y == 0f)
             dir.x = transform.localScale.x;
