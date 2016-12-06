@@ -6,5 +6,9 @@ public class DetonatingSkullPhysics : EnemyPhysics {
 
     const float EXPLOSION_DELAY = 1f;               //Amount of time enemy delays explosion after contact with player
 
-
+    public override void FixedUpdate()
+    {
+        base.FixedUpdate();
+        Debug.Log(IsGrounded());
+    }
 }

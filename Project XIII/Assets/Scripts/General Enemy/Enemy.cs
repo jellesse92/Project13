@@ -8,7 +8,9 @@ public class Enemy : MonoBehaviour {
     protected const int ALLOWED_BOUNCES = 2;            //Bounces allowed starting at 3 to allow 1 distinct bounce
     const float AIR_TO_GROUND_STUN_RECOVERY_TIME = .2f; //Time it takes to recover from stun after being in a stun state in the air as a non-flying enemy
 
-    public GameObject hitParticles;                     //Object which controls hit particles                   
+    public GameObject hitParticles;                     //Object which controls hit particles    
+    public float groundedOffset = 1f;                   //Offset for ground checking
+                   
 
     //Animator
     protected Animator anim;
@@ -73,6 +75,7 @@ public class Enemy : MonoBehaviour {
         {
             waitForRemoveStunLand = false;
             Invoke("RecoverFromStun", AIR_TO_GROUND_STUN_RECOVERY_TIME);
+
         }
     }
 
@@ -166,7 +169,7 @@ public class Enemy : MonoBehaviour {
         anim.SetTrigger("stun");
         stunned = true;
         yield return new WaitForSeconds(currentStunMultiplier * stunEffectiveness);
-        if (!flyingEnemy)
+        if (!flyingEnemy && !IsGrounded())
             waitForRemoveStunLand = true;
         else
             RecoverFromStun();
@@ -174,6 +177,7 @@ public class Enemy : MonoBehaviour {
 
     void RecoverFromStun()
     {
+        Debug.Log("testing");
         anim.SetTrigger("stunRecovery");
         stunned = false;
     }
@@ -245,7 +249,7 @@ public class Enemy : MonoBehaviour {
 
     public bool IsGrounded()
     {
-        if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround - 1f, layerMask))
+        if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround - groundedOffset, layerMask))
         {
             return true;
         }
