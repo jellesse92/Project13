@@ -50,9 +50,13 @@ public class GunnerPhysics : PlayerPhysics{
     {
         if (checkForDKEnd)
         {
-            if(isGrounded())
+            if (isGrounded())
+            {
                 CancelDownKick();
-            DownKickMove();
+                transform.parent.GetComponent<PlayerEffectsManager>().ScreenShake(.08f, .1f);
+            }
+            else
+                DownKickMove();
         }
 
         if (kickFinished)

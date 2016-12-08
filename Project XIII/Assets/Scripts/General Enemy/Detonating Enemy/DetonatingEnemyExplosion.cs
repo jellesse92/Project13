@@ -6,6 +6,7 @@ public class DetonatingEnemyExplosion : MonoBehaviour {
 
     HashSet<GameObject> playersinRange = new HashSet<GameObject>();
     bool exploding = false;
+    bool interrupted = false;
     int damage = 40;
 
     void OnTriggerEnter2D(Collider2D col)
@@ -21,18 +22,31 @@ public class DetonatingEnemyExplosion : MonoBehaviour {
     {
         if (col.tag == "Player" && playersinRange.Contains(col.gameObject))
             playersinRange.Remove(col.gameObject);
+        
+    }
+
+    private void FixedUpdate()
+    {
+        if (interrupted && !transform.parent.GetComponent<Enemy>().GetStunStatus())
+        {
+            interrupted = false;
+            StartCoroutine("TriggerExplosion");
+        }
     }
 
     void ApplyExplosion()
     {
         foreach(GameObject target in playersinRange)
         {
-            
-            /*
             if (target.GetComponent<PlayerProperties>().alive)
-                target.GetComponent<PlayerProperties>().TakeDamage(damage, knockBackX, knockBackY);
-                */
+            {
+                float knockX = transform.parent.GetComponent<EnemyPhysics>().knockBackForceX;
+                float knockY = transform.parent.GetComponent<EnemyPhysics>().knockBackForceY;
+                target.GetComponent<PlayerProperties>().TakeDamage(damage, knockX, knockY);
+            }
         }
+
+        transform.parent.GetComponent<Enemy>().Damage(1000);
     }
 
     IEnumerator TriggerExplosion()
@@ -45,11 +59,13 @@ public class DetonatingEnemyExplosion : MonoBehaviour {
     public void CancelExplosion()
     {
         StopCoroutine("TriggerExplosion");
+        interrupted = true;
     }
 
     public void Reset()
     {
         exploding = false;
+        interrupted = false;
     } 
 
     public void SetDamage(int d)

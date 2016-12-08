@@ -9,6 +9,7 @@ public class DeathScreenScript : MonoBehaviour {
 
     GameObject leftScreenWipe;
     GameObject rightScreenWipe;
+    GameObject playerStatusUi;
 
     bool deathTriggered;
 
@@ -29,7 +30,14 @@ public class DeathScreenScript : MonoBehaviour {
 
     public void TriggerDeath()
     {
+        if (playerStatusUi != null)
+            playerStatusUi.SetActive(false);
         deathTriggered = true;
+    }
+
+    public void SetPlayerStatusUI(GameObject panel)
+    {
+        playerStatusUi = panel;
     }
 
     void FillScreen(GameObject screenWipe)
@@ -38,7 +46,5 @@ public class DeathScreenScript : MonoBehaviour {
         {
             screenWipe.GetComponent<Image>().fillAmount += FILL_SCREEN_AMOUNT;
         }
-
-
     }
 }

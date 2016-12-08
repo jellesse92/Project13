@@ -404,4 +404,9 @@ public class PlayerPhysics : MonoBehaviour {
         return DEFAULT_GRAVITY_FORCE;
     }
 
+    public void ScreenShake(float shakeAmt, float duration)
+    {
+        transform.parent.GetComponent<PlayerEffectsManager>().ScreenShake(shakeAmt, duration);
+    }
+
 }
