@@ -173,7 +173,8 @@ public class PlayerProperties : MonoBehaviour{
 
         currentHealth -= dmg;
         //Prevent stacking KnockBack
-        knockXPlayer(knockBackX, knockBackY);
+        StartCoroutine(knockXPlayer(knockBackX, knockBackY));
+        //knockXPlayer(knockBackX, knockBackY);
 
         if (alive && currentHealth <= 0)
         {
@@ -188,22 +189,22 @@ public class PlayerProperties : MonoBehaviour{
             psScript.GetComponent<PlayerStatusUIScript>().ApplyHealthDamage(playerNumber, dmg);
     }
 
-    private void knockXPlayer(float x, float y) 
+    private IEnumerator knockXPlayer(float x, float y, float knockDur = 0.02f) 
     {
-        print("Kncking back with values" + x + "  AND  " + y);
+        print("Knockback X = " + x + " Knockback y = " + y);
         if (!isKnockedBack)
         {
-            isKnockedBack = x != 0;
-        } else
-        {
-            x = 0;
-        }
-        
-        y = y % 5555;
+            isKnockedBack = true;
+            float timer = 0;
 
-        x = x % 3000;
-        Invoke("unsetKnockedBack", 2f);
-        gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(x, y));
+            while (knockDur > timer)
+            {
+                timer += Time.deltaTime;
+                gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(transform.position.x * x, transform.position.y * y, transform.position.z));
+            }
+            Invoke("unsetKnockedBack", .5f);
+        }
+        yield return 0;
 
     }
 

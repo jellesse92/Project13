@@ -627,7 +627,7 @@ Prefab:
     - target: {fileID: 224281308754915568, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 158.25
+      value: 137.77779
       objectReference: {fileID: 0}
     - target: {fileID: 224281308754915568, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
@@ -637,7 +637,7 @@ Prefab:
     - target: {fileID: 224281308754915568, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 316.5
+      value: 275.55557
       objectReference: {fileID: 0}
     - target: {fileID: 224281308754915568, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
@@ -657,7 +657,7 @@ Prefab:
     - target: {fileID: 224507707420911616, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 474.75
+      value: 413.33337
       objectReference: {fileID: 0}
     - target: {fileID: 224507707420911616, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
@@ -667,7 +667,7 @@ Prefab:
     - target: {fileID: 224507707420911616, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 316.5
+      value: 275.55557
       objectReference: {fileID: 0}
     - target: {fileID: 224507707420911616, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
@@ -3865,6 +3865,16 @@ Prefab:
       propertyPath: m_Name
       value: Melee Enemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 114094771904971976, guid: 512a3cf237662904eb32158e20e17e64,
+        type: 2}
+      propertyPath: knockBackForceX
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 114094771904971976, guid: 512a3cf237662904eb32158e20e17e64,
+        type: 2}
+      propertyPath: knockBackForceY
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 512a3cf237662904eb32158e20e17e64, type: 2}
   m_IsPrefabParent: 0
@@ -4460,27 +4470,6 @@ Prefab:
     - target: {fileID: 4007156967904604, guid: f20e99efc57ebec479ae112f71a86aaf, type: 2}
       propertyPath: m_RootOrder
       value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 58717298833207582, guid: f20e99efc57ebec479ae112f71a86aaf,
-        type: 2}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4124955083980556, guid: f20e99efc57ebec479ae112f71a86aaf, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4124955083980556, guid: f20e99efc57ebec479ae112f71a86aaf, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4749435314926726, guid: f20e99efc57ebec479ae112f71a86aaf, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4124955083980556, guid: f20e99efc57ebec479ae112f71a86aaf, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f20e99efc57ebec479ae112f71a86aaf, type: 2}
@@ -5110,9 +5099,15 @@ Prefab:
       propertyPath: m_Name
       value: Melee Enemy (3)
       objectReference: {fileID: 0}
-    - target: {fileID: 1464318194706696, guid: 512a3cf237662904eb32158e20e17e64, type: 2}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 114094771904971976, guid: 512a3cf237662904eb32158e20e17e64,
+        type: 2}
+      propertyPath: knockBackForceX
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 114094771904971976, guid: 512a3cf237662904eb32158e20e17e64,
+        type: 2}
+      propertyPath: knockBackForceY
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 512a3cf237662904eb32158e20e17e64, type: 2}
@@ -5210,9 +5205,15 @@ Prefab:
       propertyPath: m_Name
       value: Melee Enemy (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 1464318194706696, guid: 512a3cf237662904eb32158e20e17e64, type: 2}
-      propertyPath: m_IsActive
-      value: 1
+    - target: {fileID: 114094771904971976, guid: 512a3cf237662904eb32158e20e17e64,
+        type: 2}
+      propertyPath: knockBackForceX
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 114094771904971976, guid: 512a3cf237662904eb32158e20e17e64,
+        type: 2}
+      propertyPath: knockBackForceY
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 512a3cf237662904eb32158e20e17e64, type: 2}

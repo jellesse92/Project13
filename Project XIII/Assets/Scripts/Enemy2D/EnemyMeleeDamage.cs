@@ -39,8 +39,8 @@ public class EnemyMeleeDamage : MonoBehaviour {
                 deadTargets.Add(target);
             else if (!playersAttacked.Contains(target))
             {
-                float xdir = gameObject.transform.parent.localPosition.x;
-                float ydir = gameObject.transform.parent.localPosition.y;
+                float xdir = gameObject.transform.parent.localPosition.x > 0 ? 1 : -1;
+                float ydir = gameObject.transform.parent.localPosition.y > 0 ? 1 : -1;
                 playersAttacked.Add(target);
                 target.GetComponent<PlayerProperties>().TakeDamage(transform.parent.GetComponent<Enemy>().attackPower,knockBackForceX*xdir, knockBackForceY *ydir,stunDuration);
                 
