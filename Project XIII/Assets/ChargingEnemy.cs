@@ -9,7 +9,7 @@ public class ChargingEnemy : Enemy {
     bool attEnded;                                          //Determine if the attack ended
     bool gotAttackAnim;                                     //Determines if attack animation has been registered
     public bool facingRight = true;                         //Determine direction facing
-    public float attCoolDownTime;
+    public float attCoolDownTime = 3;
     public float knockBackForceX = 2000f;                   //Knockback Damage amnt for enemies
     public float knockBackForceY = 3000f;
     private int location = 1;
@@ -118,20 +118,30 @@ public class ChargingEnemy : Enemy {
         isSquishing = false;
     }
 
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.collider.tag != "Player" && col.collider.tag != "Enemy" && col.collider.tag != "Ground")
+        {
+            StopCharging();
+        }
+    }
+
+    private void StopCharging()
+    {
+        isCoolingDown = true;
+        isInvincible = false;
+        Invoke("UnsetCoolDown", attCoolDownTime);
+    }
     //Plays out enemy approach
     void Approach()
     {
-
-
         if (!isCoolingDown)
         {
             Vector2 target_location = new Vector2(xyBoundary[location], transform.position.y);
             transform.position = Vector2.MoveTowards(transform.position, target_location, speed);
             if (transform.position.x == xyBoundary[location])
             {
-                isCoolingDown = true;
-                isInvincible = false;
-                Invoke("UnsetCoolDown", 3);
+                StopCharging();
             }
             anim.SetTrigger("projectAttack");
         }
@@ -142,8 +152,7 @@ public class ChargingEnemy : Enemy {
         isCoolingDown = false;
         isInvincible = false;
         anim.SetInteger("x", 0);
-        location = location == 1 && transform.position.x < xyBoundary[1] ? 1 : 0;
-        location = location == 0 && transform.position.x > xyBoundary[0] ? 0 : 1;
+        location = location == 1 ? 0 : 1;
 
     }
     //Flips the sprite

@@ -26,8 +26,7 @@ public class ChargingEnemyDamage : MonoBehaviour {
         float xdir = gameObject.transform.parent.localPosition.x < 0 ? -1 : 1;
         //print(xdir);
         float ydir = gameObject.transform.parent.localPosition.y;
-        print("attacking");
-        if (col.tag == "Player" && col.gameObject.GetComponent<PlayerProperties>().alive)
+        if (!transform.parent.GetComponent<ChargingEnemy>().isCoolingDown && col.tag == "Player" && col.gameObject.GetComponent<PlayerProperties>().alive)
             col.GetComponent<PlayerProperties>().TakeDamage(transform.parent.GetComponent<Enemy>().attackPower, knockBackForceX, knockBackForceY, stunDuration);
     }
 }
