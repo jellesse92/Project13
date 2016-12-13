@@ -71,7 +71,20 @@ public class GameController : MonoBehaviour
 
     public void AssignInputs(Transform playerList)
     {
-        for(int i = 0; i < 4; i++)
+
+        int numberOfAvailablePlayers = playerList.transform.childCount;
+        int numberOfSelectedPlayers = numberOfAvailablePlayers;
+
+        for (int i = 0; i < numberOfAvailablePlayers; i++)
+        {
+            if (PlayerCharacters[i].player == -1)
+                numberOfSelectedPlayers -= 1;
+        }
+
+        if (numberOfSelectedPlayers == 0)
+            return;
+
+        for (int i = 0; i < numberOfAvailablePlayers; i++)
         {
             Transform character = playerList.GetChild(i);
             if (PlayerCharacters[i].player == -1)
