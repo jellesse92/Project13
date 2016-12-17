@@ -21,10 +21,10 @@ public class ChargeSlashScript : MonoBehaviour {
     private void Start()
     {
         enemyHash = new HashSet<GameObject>();
-        getProperties();
+        GetProperties();
     }
 
-    void getProperties() //thinking all attack will share this
+    void GetProperties() //thinking all attack will share this
     {
         PlayerProperties playerProperties = transform.parent.GetComponent<PlayerProperties>();
         PlayerParticleEffects playerParticleEffects = transform.parent.GetComponent<PlayerParticleEffects>();

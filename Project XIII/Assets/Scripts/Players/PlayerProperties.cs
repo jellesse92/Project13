@@ -67,7 +67,7 @@ public class PlayerProperties : MonoBehaviour{
 
     }
 
-    public virtual void Update()
+    public virtual void Update() //move this to player physics maybe? 
     {
         if (checkVoiceDone)
         {
@@ -136,15 +136,13 @@ public class PlayerProperties : MonoBehaviour{
         GetComponent<Animator>().SetTrigger("finalDeath");
     }
 
-    public void StopTime()
+    public void StopTime() //move this to player physics maybe? 
     {
         Time.timeScale = 0f;
     }
 
     public void PlayLastDeathVoice() //move this to player physics maybe? 
     {
-        PlayerSoundEffects playerSoundEffect = GetComponent<PlayerSoundEffects>();
-        playerSoundEffect.PlayPlayerLastAliveDeathVoices();
         checkVoiceDone = true;
     }
 

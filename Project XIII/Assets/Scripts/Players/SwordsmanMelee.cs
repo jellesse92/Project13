@@ -9,10 +9,10 @@ public class SwordsmanMelee : MonoBehaviour {
 
     void Start()
     {
-        getProperties();
+        GetProperties();
     }
 
-    void getProperties() //thinking all attack will share this
+    void GetProperties() //thinking all attack will share this
     {
         PlayerProperties playerProperties = transform.parent.GetComponent<PlayerProperties>();
         PlayerParticleEffects playerParticleEffects = transform.parent.GetComponent<PlayerParticleEffects>();
@@ -27,6 +27,7 @@ public class SwordsmanMelee : MonoBehaviour {
     {
         if (col.tag == "Enemy")
         {
+
             col.GetComponent<Enemy>().Damage(damage, 1f, hitSparkParticle);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(400f * transform.parent.localScale.x, 5000f));
         }

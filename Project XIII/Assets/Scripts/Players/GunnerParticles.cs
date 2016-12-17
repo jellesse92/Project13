@@ -2,9 +2,9 @@
 using System.Collections;
 
 public class GunnerParticles : MonoBehaviour {
-    public GameObject quickAttack;
-    public GameObject heavyAttack;
-    public GameObject quickHitImpact;
+    public ParticleSystem quickAttack;
+    public ParticleSystem heavyAttack;
+    public ParticleSystem quickAttackHitSpark;
     //public GameObject heavyHitImpact;
 
     void Start () {
@@ -19,11 +19,16 @@ public class GunnerParticles : MonoBehaviour {
 
     public void PlayParticleQuickAttack()
     {
-        quickAttack.GetComponent<ParticleSystem>().Play();
+        quickAttack.Play();
     }
 
     public void PlayParticleHeavyAttack()
     {
-        heavyAttack.GetComponent<ParticleSystem>().Play();
+        heavyAttack.Play();
+    }
+
+    public ParticleSystem GetHitSpark()
+    {
+        return quickAttackHitSpark;
     }
 }
