@@ -14,9 +14,25 @@ public class ChargeSlashScript : MonoBehaviour {
 
     float forceMulti = 1f;                                  //Force based on how much swordsman charged attack
 
+    int damage;
+    PlayerSoundEffects playerSoundEffects;
+    ParticleSystem hitSparkParticle;
+
     private void Start()
     {
         enemyHash = new HashSet<GameObject>();
+        getProperties();
+    }
+
+    void getProperties() //thinking all attack will share this
+    {
+        PlayerProperties playerProperties = transform.parent.GetComponent<PlayerProperties>();
+        PlayerParticleEffects playerParticleEffects = transform.parent.GetComponent<PlayerParticleEffects>();
+        PlayerStats playerstat = playerProperties.GetPlayerStats();
+
+        playerSoundEffects = transform.parent.GetComponent<PlayerSoundEffects>();
+        hitSparkParticle = playerParticleEffects.GetHitSpark();
+        damage = playerstat.heavyAttackStrength;
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -35,7 +51,7 @@ public class ChargeSlashScript : MonoBehaviour {
         foreach (GameObject target in enemyHash)
         {
             target.transform.position = new Vector3(transform.position.x + X_OFFSET*transform.parent.localScale.x, target.transform.position.y, target.transform.position.z);
-            target.GetComponent<Enemy>().Damage(0, .2f);
+            target.GetComponent<Enemy>().Damage(0, .2f, hitSparkParticle);
         }
     }
 
@@ -59,7 +75,7 @@ public class ChargeSlashScript : MonoBehaviour {
         foreach(GameObject target in enemyHash)
         {
             target.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceMulti * X_LAUNCH_FORCE_MULTIPLIER *transform.parent.localScale.x, forceMulti * Y_LAUNCH_FORCE_MULTIPLIER));
-            target.GetComponent<Enemy>().Damage(transform.parent.GetComponent<PlayerProperties>().GetPhysicStats().heavyAttackStrength, .1f);
+            target.GetComponent<Enemy>().Damage(damage, .1f, hitSparkParticle);
         }
         transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(.2f, .05f);
     }

@@ -53,7 +53,7 @@ public class MageBlizzardScript : MonoBehaviour {
     public void SetMaster(GameObject obj)
     {
         master = obj;
-        damage = obj.GetComponent<PlayerProperties>().GetPhysicStats().heavyAirAttackStrengh;
+        damage = obj.GetComponent<PlayerProperties>().GetPlayerStats().heavyAirAttackStrengh;
     }
 
     public void ActivateAttack()

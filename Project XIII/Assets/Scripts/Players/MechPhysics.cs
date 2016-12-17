@@ -28,8 +28,8 @@ public class MechPhysics : PlayerPhysics{
 
     public override void ClassSpecificStart()
     {
-        meleeAttackBox.GetComponent<SwordsmanMelee>().SetDamage(GetComponent<PlayerProperties>().GetPhysicStats().quickAttackStrength);
-        airComboAttackBox.GetComponent<SwordsmanAirMelee>().SetDamage(GetComponent<PlayerProperties>().GetPhysicStats().quickAirAttackStrength);
+        meleeAttackBox.GetComponent<SwordsmanMelee>().SetDamage(GetComponent<PlayerProperties>().GetPlayerStats().quickAttackStrength);
+        airComboAttackBox.GetComponent<SwordsmanAirMelee>().SetDamage(GetComponent<PlayerProperties>().GetPlayerStats().quickAirAttackStrength);
         barrage = (GameObject)Instantiate(barrage);
         barrage.GetComponent<MechRocketBarrage>().SetMaster(this.gameObject);
         rocket = (GameObject)Instantiate(rocket);
@@ -66,7 +66,7 @@ public class MechPhysics : PlayerPhysics{
 
     void ExecuteQuickAttack()
     {
-        meleeAttackBox.GetComponent<SwordsmanMelee>().SetDamage(GetComponent<PlayerProperties>().GetPhysicStats().quickAttackStrength+(int)((charge+1)*5));
+        meleeAttackBox.GetComponent<SwordsmanMelee>().SetDamage(GetComponent<PlayerProperties>().GetPlayerStats().quickAttackStrength+(int)((charge+1)*5));
         charge = 0;
     }
 

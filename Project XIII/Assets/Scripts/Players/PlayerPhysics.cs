@@ -10,7 +10,7 @@ public class PlayerPhysics : MonoBehaviour {
     protected Rigidbody2D myRigidbody;
     protected Animator myAnimator;
     protected PlayerProperties playerProperties;
-    protected PlayerPhysicStats physicStats;
+    protected PlayerStats physicStats;
     protected PlayerBoostStats boostStats;
     protected KeyPress myKeyPress;
     protected PlayerInput myPlayerInput;
@@ -35,7 +35,7 @@ public class PlayerPhysics : MonoBehaviour {
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
         playerProperties = GetComponent<PlayerProperties>();
-        physicStats = playerProperties.GetPhysicStats();
+        physicStats = playerProperties.GetPlayerStats();
         boostStats = playerProperties.GetBoostStats();
         myPlayerInput = GetComponent<PlayerInput>();
         myKeyPress = myPlayerInput.getKeyPress();

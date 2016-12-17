@@ -2,7 +2,7 @@
 using System.Collections;
 
 [System.Serializable]
-public class PlayerPhysicStats
+public class PlayerStats
 {
     public int quickAttackStrength = 20; //Attack Power
     public int heavyAttackStrength = 40;
@@ -25,10 +25,7 @@ public class PlayerBoostStats
 }
 
 public class PlayerProperties : MonoBehaviour{
-
     const float reviveImmuneTime = .2f;                     //Time immune to damage after revive
-
-    public AudioClip[] lastDeathVoices;                    //Array of death voices for characters
 
     public bool alive = true;
 
@@ -38,7 +35,9 @@ public class PlayerProperties : MonoBehaviour{
     public int currentHealth = 100;
     public int cash = 0;
 
-    public PlayerPhysicStats physicStats;
+    public bool isKnockedInAir = false;
+
+    public PlayerStats playerStats;
     public PlayerBoostStats boostStats;
 
     protected GameObject psScript;
@@ -48,7 +47,6 @@ public class PlayerProperties : MonoBehaviour{
     protected bool isInvincibile = false;
 
     private bool isKnockedBack = false;
-    public bool isKnockedInAir = false;
     private int playerAngle = 0;
 
     //Camera stuff for when player dies
@@ -87,9 +85,9 @@ public class PlayerProperties : MonoBehaviour{
         return playerNumber;
     }
 
-    public PlayerPhysicStats GetPhysicStats()
+    public PlayerStats GetPlayerStats()
     {
-        return physicStats;
+        return playerStats;
     }
 
     public PlayerBoostStats GetBoostStats()
@@ -143,13 +141,10 @@ public class PlayerProperties : MonoBehaviour{
         Time.timeScale = 0f;
     }
 
-    public void PlayLastDeathVoice()
+    public void PlayLastDeathVoice() //move this to player physics maybe? 
     {
-        int r = lastDeathVoices.Length;
-        r = (int)Random.Range(0, r - 1);
-
-        GetComponent<AudioSource>().clip = lastDeathVoices[r];
-        GetComponent<AudioSource>().Play();
+        PlayerSoundEffects playerSoundEffect = GetComponent<PlayerSoundEffects>();
+        playerSoundEffect.PlayPlayerLastAliveDeathVoices();
         checkVoiceDone = true;
     }
 
@@ -191,7 +186,7 @@ public class PlayerProperties : MonoBehaviour{
 
     private IEnumerator knockXPlayer(float x, float y, float knockDur = 0.02f) 
     {
-        print("Knockback X = " + x + " Knockback y = " + y);
+        //print("Knockback X = " + x + " Knockback y = " + y);
         if (!isKnockedBack)
         {
             isKnockedBack = true;

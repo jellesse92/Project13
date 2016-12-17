@@ -127,7 +127,7 @@ public class Enemy : MonoBehaviour {
     {
         if (hitspark)
         {
-            hitspark.transform.position = transform.position;
+            hitspark.transform.position = defaultHitSparkParticle.transform.position;
             hitspark.Play();
         }
         else
@@ -141,6 +141,7 @@ public class Enemy : MonoBehaviour {
         {
             //Will adjust this later for taking into account other particles to be played?
             //Possibly have a list of children with different responsive particles?
+            //Debug.Log(hitspark);
             activateHitSpark(hitspark);
 
 
