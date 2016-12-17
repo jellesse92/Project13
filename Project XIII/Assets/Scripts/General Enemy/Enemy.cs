@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 //Class to be inherited by all enemy scripts
 public class Enemy : MonoBehaviour {
+    public ParticleSystem defaultHitSparkParticle;                     //Default hitspark
 
     protected const int ALLOWED_BOUNCES = 2;            //Bounces allowed starting at 3 to allow 1 distinct bounce
     const float AIR_TO_GROUND_STUN_RECOVERY_TIME = .2f; //Time it takes to recover from stun after being in a stun state in the air as a non-flying enemy
 
-    public GameObject hitParticles;                     //Object which controls hit particles    
     public float groundedOffset = 1f;                   //Offset for ground checking
                    
 
@@ -123,14 +123,26 @@ public class Enemy : MonoBehaviour {
         gameObject.layer = 9;
     }
 
+    void activateHitSpark(ParticleSystem hitspark)
+    {
+        if (hitspark)
+        {
+            hitspark.transform.position = transform.position;
+            hitspark.Play();
+        }
+        else
+            defaultHitSparkParticle.Play();
+    }
+
     //Damage script to be applied when enemy takes damage
-    public void Damage(int damage, float stunMultiplier = 0f)
+    public void Damage(int damage, float stunMultiplier = 0f, ParticleSystem hitspark = null)
     {
         if (!isInvincible)
         {
             //Will adjust this later for taking into account other particles to be played?
             //Possibly have a list of children with different responsive particles?
-            hitParticles.GetComponent<ParticleSystem>().Play();
+            activateHitSpark(hitspark);
+
 
             if (dead)
                 return;
