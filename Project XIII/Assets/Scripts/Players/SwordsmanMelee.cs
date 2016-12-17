@@ -3,9 +3,12 @@ using System.Collections;
 
 public class SwordsmanMelee : MonoBehaviour {
 
-    int damage;
+    PlayerProperties playerProperties;
     PlayerSoundEffects playerSoundEffects;
-    ParticleSystem hitSparkParticle;
+    PlayerParticleEffects playerParticleEffects;
+
+    ParticleSystem hitspark;
+    int damage;
 
     void Start()
     {
@@ -14,13 +17,12 @@ public class SwordsmanMelee : MonoBehaviour {
 
     void GetProperties() //thinking all attack will share this
     {
-        PlayerProperties playerProperties = transform.parent.GetComponent<PlayerProperties>();
-        PlayerParticleEffects playerParticleEffects = transform.parent.GetComponent<PlayerParticleEffects>();
-        PlayerStats playerstat = playerProperties.GetPlayerStats();
-
+        playerProperties = transform.parent.GetComponent<PlayerProperties>();
+        playerParticleEffects = transform.parent.GetComponent<PlayerParticleEffects>();
         playerSoundEffects = transform.parent.GetComponent<PlayerSoundEffects>();
-        hitSparkParticle = playerParticleEffects.GetHitSpark();
-        damage = playerstat.heavyAttackStrength;
+
+        hitspark = playerParticleEffects.GetHitSpark();
+        damage = playerProperties.GetPlayerStats().quickAttackStrength;
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -28,7 +30,7 @@ public class SwordsmanMelee : MonoBehaviour {
         if (col.tag == "Enemy")
         {
 
-            col.GetComponent<Enemy>().Damage(damage, 1f, hitSparkParticle);
+            col.GetComponent<Enemy>().Damage(damage, 1f, hitspark);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(400f * transform.parent.localScale.x, 5000f));
         }
 

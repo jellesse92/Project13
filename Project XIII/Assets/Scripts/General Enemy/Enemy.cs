@@ -125,6 +125,7 @@ public class Enemy : MonoBehaviour {
 
     void activateHitSpark(ParticleSystem hitspark)
     {
+        //Debug.Log(hitspark);
         if (hitspark)
         {
             hitspark.transform.position = defaultHitSparkParticle.transform.position;
