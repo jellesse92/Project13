@@ -11,7 +11,7 @@ public class PlayerSoundEffects : MonoBehaviour {
     public AudioClip[] deathVoiceList;
     public int xOut10ToSaySomething = 4;
 
-    public AudioClip hitSparkAudio;                           //audio clip at enemy hit contact
+    public AudioClip[] hitSparkList;                           //audio clip at enemy hit contact
 
     void Start()
     {
@@ -40,6 +40,10 @@ public class PlayerSoundEffects : MonoBehaviour {
         myAudio.PlayOneShot(deathVoiceList[Random.Range(0, deathVoiceList.Length)]);
     }
 
+    public void PlayHitSpark()
+    {
+        myAudio.PlayOneShot(hitSparkList[Random.Range(0, hitSparkList.Length)]);
+    }
     public void playSound(AudioClip clip)
     {
         myAudio.PlayOneShot(clip);

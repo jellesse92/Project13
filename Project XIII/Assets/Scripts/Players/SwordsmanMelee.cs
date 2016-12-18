@@ -29,7 +29,7 @@ public class SwordsmanMelee : MonoBehaviour {
     {
         if (col.tag == "Enemy")
         {
-
+            playerSoundEffects.PlayHitSpark();
             col.GetComponent<Enemy>().Damage(damage, 1f, hitspark);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(400f * transform.parent.localScale.x, 5000f));
         }

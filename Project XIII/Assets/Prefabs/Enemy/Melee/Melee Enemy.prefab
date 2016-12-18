@@ -77,6 +77,7 @@ GameObject:
   - component: {fileID: 114094771904971976}
   - component: {fileID: 82553785290978330}
   - component: {fileID: 114439209475829112}
+  - component: {fileID: 114961765914640788}
   m_Layer: 9
   m_Name: Melee Enemy
   m_TagString: Enemy
@@ -454,7 +455,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -546,6 +547,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4124e0e9cd477049972ef80584e6384, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114961765914640788
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1464318194706696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72d7b7de5a9b9004faf99c230f0dc6a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  receiveDamageVoiceList:
+  - {fileID: 8300000, guid: a85964894aebc3940a8f4fbd58db45a0, type: 3}
+  xOut10ToSaySomething: 0
 --- !u!198 &198214049629626652
 ParticleSystem:
   m_ObjectHideFlags: 1
