@@ -4,7 +4,12 @@ using System.Collections.Generic;
 
 //Class to be inherited by all enemy scripts
 public class Enemy : MonoBehaviour {
-    public ParticleSystem defaultHitSparkParticle;                     //Default hitspark
+    //Particles
+    GameObject particleHolder;                          //Use to contain any particles instantiated
+    protected GameObject centerObjectPosition;          //use to get center of enemy, might be different for each child
+    public GameObject defaultHitSparkParticle;          //Default hitspark
+    
+    
 
     protected const int ALLOWED_BOUNCES = 2;            //Bounces allowed starting at 3 to allow 1 distinct bounce
     const float AIR_TO_GROUND_STUN_RECOVERY_TIME = .2f; //Time it takes to recover from stun after being in a stun state in the air as a non-flying enemy
@@ -70,6 +75,33 @@ public class Enemy : MonoBehaviour {
         layerMask = (LayerMask.GetMask("Default"));
         default_color = GetComponent<SpriteRenderer>().color;
         fullHealth = health;
+
+        InstantiateObjects();
+        ChangeCenter(transform.position);
+    }
+
+    void InstantiateObjects() //Use to instatiate the particles
+    {
+        centerObjectPosition = new GameObject();
+        centerObjectPosition.name = "Center Position";
+        centerObjectPosition.transform.parent = transform;
+
+        particleHolder = new GameObject();
+        particleHolder.name = "Particles";
+        particleHolder.transform.parent = transform;
+
+        if (defaultHitSparkParticle)
+        {
+            defaultHitSparkParticle = Instantiate(defaultHitSparkParticle);
+            defaultHitSparkParticle.transform.parent = particleHolder.transform;
+        }
+    }
+
+    protected void ChangeCenter(Vector3 position) //Use to change position of center, put all things that needs the center here. Mostly use for child
+    {
+        centerObjectPosition.transform.position = position;
+        if(defaultHitSparkParticle)
+            defaultHitSparkParticle.transform.position = centerObjectPosition.transform.position;
     }
 
     public virtual void FixedUpdate()
@@ -128,11 +160,13 @@ public class Enemy : MonoBehaviour {
         //Debug.Log(hitspark);
         if (hitspark)
         {
-            hitspark.transform.position = defaultHitSparkParticle.transform.position;
+            hitspark.transform.position = centerObjectPosition.transform.position;
             hitspark.Play();
         }
-        else
-            defaultHitSparkParticle.Play();
+        else if(defaultHitSparkParticle)
+        {
+            defaultHitSparkParticle.GetComponent<ParticleSystem>().Play();
+        }
     }
 
     //Damage script to be applied when enemy takes damage

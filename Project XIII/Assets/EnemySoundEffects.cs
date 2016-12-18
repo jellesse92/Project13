@@ -17,4 +17,9 @@ public class EnemySoundEffects : MonoBehaviour {
         if (Random.Range(0, 10) < xOut10ToSaySomething)
             myAudio.PlayOneShot(receiveDamageVoiceList[Random.Range(0, receiveDamageVoiceList.Length)]);
     }
+
+    public void playSound(AudioClip clip)
+    {
+        myAudio.PlayOneShot(clip);
+    }
 }

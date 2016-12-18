@@ -8,7 +8,7 @@ public class DetonatingSkullPhysics : EnemyPhysics {
 
     public GameObject explosionRadius;
 
-    public override void EnemySpecificStart()
+    protected override void EnemySpecificStart()
     {
         explosionRadius.GetComponent<DetonatingEnemyExplosion>().SetDamage(attackPower);
     }

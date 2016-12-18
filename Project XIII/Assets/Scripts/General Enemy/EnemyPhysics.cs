@@ -48,7 +48,7 @@ public class EnemyPhysics : Enemy{
        
     }
 
-    public virtual void EnemySpecificStart()
+    protected virtual void EnemySpecificStart()
     {
 
     }
