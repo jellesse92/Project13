@@ -19,7 +19,7 @@ public class BulletSourceScript : MonoBehaviour {
     ParticleSystem hitImpactParticle;
     // Use this for initialization
     void Start () {
-        hitImpactParticle = GetComponentInParent<GunnerParticles>().GetHitSpark();
+        hitImpactParticle = GetComponentInParent<GunnerParticleEffects>().GetHitSpark();
         hitImpactParticle = Instantiate(hitImpactParticle);
         layermask = (LayerMask.GetMask("Default","Enemy"));
 	}

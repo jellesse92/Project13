@@ -8,43 +8,45 @@ public class PlayerParticleEffects : MonoBehaviour {
     public GameObject heavyAttack;
     public GameObject quickAttackHitSpark;
     public GameObject generalHitSpark;
+
+    GameObject particlesHolder;
     //public GameObject heavyHitImpact;
 
     void Awake() //Awake since other scripts will need the variables here at start
     {
         InstantiateParticles();
+        ClassSpecificAwake();
     }
 
+    protected virtual void ClassSpecificAwake()
+    {
+        //Use this to add anything for the awake of children
+    }
     void InstantiateParticles()
     {
         //Tried putting all three into a function, cannot put into parameter of function. 
         //InstantiateParticle(generalHitSpark), InstantiateParticle(quickAttack), InstantiateParticle(heavyAttack)
         //It loses reference. must be done directly. Maybe there's another way?
 
+        particlesHolder = new GameObject();
+        particlesHolder.name = "Particles";
+        particlesHolder.transform.parent = transform;
+
         if (generalHitSpark) 
         {
             generalHitSpark = Instantiate(generalHitSpark); 
-            generalHitSpark.transform.parent = transform;
+            generalHitSpark.transform.parent = particlesHolder.transform;
         }
         if (quickAttack)
         {
             quickAttack = Instantiate(quickAttack);
-            quickAttack.transform.parent = transform;
+            quickAttack.transform.parent = particlesHolder.transform;
         }
         if (heavyAttack)
         {
             heavyAttack = Instantiate(heavyAttack);
-            heavyAttack.transform.parent = transform;
+            heavyAttack.transform.parent = particlesHolder.transform;
         }
-
-        if (quickAttack && heavyAttack)
-            GunnerAdjustment();
-    }
-
-    void GunnerAdjustment()
-    {
-        quickAttack.transform.position = new Vector3(transform.position.x + 1.5f, transform.position.y + 1, transform.position.z);
-        heavyAttack.transform.position = new Vector3(transform.position.x + 1.5f, transform.position.y + 1, transform.position.z);
     }
 
     public void PlayParticleQuickAttack()
@@ -59,6 +61,8 @@ public class PlayerParticleEffects : MonoBehaviour {
 
     public ParticleSystem GetHitSpark()
     {
-        return generalHitSpark.GetComponent<ParticleSystem>();
+        if(generalHitSpark)
+            return generalHitSpark.GetComponent<ParticleSystem>();
+        return null;
     }
 }
