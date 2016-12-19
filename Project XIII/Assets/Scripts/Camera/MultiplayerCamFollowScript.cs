@@ -22,8 +22,11 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     bool orthoTransitioning = false;
     Camera cam;
 
-	// Use this for initialization
-	void Start () {
+    Vector3 velocity = Vector3.zero;
+    public float dampTime = 0.15f;
+
+    // Use this for initialization
+    void Start () {
         GameObject[] tempPlayerFind = GameObject.FindGameObjectsWithTag("Player");
 
         foreach(GameObject p in tempPlayerFind)
@@ -57,6 +60,12 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
             }
         }
 
+        Vector3 point = cam.WorldToViewportPoint(singlePlayerTrans.position);
+        Vector3 delta = singlePlayerTrans.position - cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z)); //(new Vector3(0.5, 0.5, point.z));
+        Vector3 destination = transform.position + delta;
+        transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, dampTime);
+
+        /*
         Vector3 destination = new Vector3();
         destination.x = singlePlayerTrans.position.x;
 
@@ -71,6 +80,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
         if ((destination - transform.position).magnitude <= 0.05f)
             transform.position = destination;
+        */
     }
 
     void MultiplayerCamera()
