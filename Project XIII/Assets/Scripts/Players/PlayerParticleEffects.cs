@@ -26,29 +26,26 @@ public class PlayerParticleEffects : MonoBehaviour {
     {
         //Tried putting all three into a function, cannot put into parameter of function. 
         //InstantiateParticle(generalHitSpark), InstantiateParticle(quickAttack), InstantiateParticle(heavyAttack)
-        //It loses reference. must be done directly. Maybe there's another way?
+        //It loses reference. must be done directly. Maybe there's another way? Solved it by using ref modifier!!!
 
         particlesHolder = new GameObject();
         particlesHolder.name = "Particles";
         particlesHolder.transform.parent = transform;
 
-        if (generalHitSpark) 
-        {
-            generalHitSpark = Instantiate(generalHitSpark); 
-            generalHitSpark.transform.parent = particlesHolder.transform;
-        }
-        if (quickAttack)
-        {
-            quickAttack = Instantiate(quickAttack);
-            quickAttack.transform.parent = particlesHolder.transform;
-        }
-        if (heavyAttack)
-        {
-            heavyAttack = Instantiate(heavyAttack);
-            heavyAttack.transform.parent = particlesHolder.transform;
-        }
+        InstantiateParticle(ref generalHitSpark);
+        InstantiateParticle(ref quickAttack);
+        InstantiateParticle(ref heavyAttack);
     }
 
+    void InstantiateParticle(ref GameObject particle)
+    {
+        if (particle)
+        {
+            particle = Instantiate(particle);
+            particle.transform.parent = particlesHolder.transform;
+        }
+
+    }
     public void PlayParticleQuickAttack()
     {
         quickAttack.GetComponent<ParticleSystem>().Play();
