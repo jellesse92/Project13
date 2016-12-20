@@ -50,8 +50,9 @@ public class ChargeSlashScript : MonoBehaviour {
         foreach (GameObject target in enemyHash)
         {
             target.transform.position = new Vector3(transform.position.x + X_OFFSET*transform.parent.localScale.x, target.transform.position.y, target.transform.position.z);
+            playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
             playerSoundEffects.PlayHitSpark();
-            target.GetComponent<Enemy>().Damage(0, .2f, playerParticleEffects);
+            target.GetComponent<Enemy>().Damage(0, .2f);
         }
     }
 
@@ -76,7 +77,8 @@ public class ChargeSlashScript : MonoBehaviour {
         {
             target.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceMulti * X_LAUNCH_FORCE_MULTIPLIER *transform.parent.localScale.x, forceMulti * Y_LAUNCH_FORCE_MULTIPLIER));
             playerSoundEffects.PlayHitSpark();
-            target.GetComponent<Enemy>().Damage(damage, .1f, playerParticleEffects);
+            playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
+            target.GetComponent<Enemy>().Damage(damage, .1f);
         }
         transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(.2f, .05f);
     }
