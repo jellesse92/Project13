@@ -8,8 +8,6 @@ public class Enemy : MonoBehaviour {
     GameObject particleHolder;                          //Use to contain any particles instantiated
     protected GameObject centerObjectPosition;          //use to get center of enemy, might be different for each child
     public GameObject defaultHitSparkParticle;          //Default hitspark
-    
-    
 
     protected const int ALLOWED_BOUNCES = 2;            //Bounces allowed starting at 3 to allow 1 distinct bounce
     const float AIR_TO_GROUND_STUN_RECOVERY_TIME = .2f; //Time it takes to recover from stun after being in a stun state in the air as a non-flying enemy
@@ -90,11 +88,17 @@ public class Enemy : MonoBehaviour {
         particleHolder.name = "Particles";
         particleHolder.transform.parent = transform;
 
-        if (defaultHitSparkParticle)
+        InstantiateParticle(ref defaultHitSparkParticle);
+    }
+
+    void InstantiateParticle(ref GameObject particle)
+    {
+        if (particle)
         {
-            defaultHitSparkParticle = Instantiate(defaultHitSparkParticle);
-            defaultHitSparkParticle.transform.parent = particleHolder.transform;
+            particle = Instantiate(particle);
+            particle.transform.parent = particleHolder.transform;
         }
+
     }
 
     protected void ChangeCenter(Vector3 position) //Use to change position of center, put all things that needs the center here. Mostly use for child
@@ -155,30 +159,22 @@ public class Enemy : MonoBehaviour {
         gameObject.layer = 9;
     }
 
-    void activateHitSpark(ParticleSystem hitspark)
+    void ActivateHitSpark(PlayerParticleEffects playerParticleEffects)
     {
-        //Debug.Log(hitspark);
-        if (hitspark)
-        {
-            hitspark.transform.position = centerObjectPosition.transform.position;
-            hitspark.Play();
-        }
-        else if(defaultHitSparkParticle)
-        {
+        if (playerParticleEffects)
+            playerParticleEffects.PlayHitSpark(centerObjectPosition.transform.position);
+        else
             defaultHitSparkParticle.GetComponent<ParticleSystem>().Play();
-        }
     }
 
     //Damage script to be applied when enemy takes damage
-    public void Damage(int damage, float stunMultiplier = 0f, ParticleSystem hitspark = null)
+    public void Damage(int damage, float stunMultiplier = 0f, PlayerParticleEffects playerParticleEffects = null)
     {
         if (!isInvincible)
         {
             //Will adjust this later for taking into account other particles to be played?
             //Possibly have a list of children with different responsive particles?
-            //Debug.Log(hitspark);
-            activateHitSpark(hitspark);
-
+            ActivateHitSpark(playerParticleEffects);
 
             if (dead)
                 return;

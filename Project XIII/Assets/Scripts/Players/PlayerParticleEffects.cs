@@ -44,8 +44,8 @@ public class PlayerParticleEffects : MonoBehaviour {
             particle = Instantiate(particle);
             particle.transform.parent = particlesHolder.transform;
         }
-
     }
+
     public void PlayParticleQuickAttack()
     {
         quickAttack.GetComponent<ParticleSystem>().Play();
@@ -56,10 +56,9 @@ public class PlayerParticleEffects : MonoBehaviour {
         heavyAttack.GetComponent<ParticleSystem>().Play();
     }
 
-    public ParticleSystem GetHitSpark()
+    public void PlayHitSpark(Vector3 location)
     {
-        if(generalHitSpark)
-            return generalHitSpark.GetComponent<ParticleSystem>();
-        return null;
+        generalHitSpark.transform.position = location;
+        generalHitSpark.GetComponent<ParticleSystem>().Play();
     }
 }

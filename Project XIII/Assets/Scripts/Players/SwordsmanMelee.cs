@@ -6,8 +6,6 @@ public class SwordsmanMelee : MonoBehaviour {
     PlayerProperties playerProperties;
     PlayerSoundEffects playerSoundEffects;
     PlayerParticleEffects playerParticleEffects;
-
-    ParticleSystem hitspark;
     int damage;
 
     void Start()
@@ -21,7 +19,6 @@ public class SwordsmanMelee : MonoBehaviour {
         playerParticleEffects = transform.parent.GetComponent<PlayerParticleEffects>();
         playerSoundEffects = transform.parent.GetComponent<PlayerSoundEffects>();
 
-        hitspark = playerParticleEffects.GetHitSpark();
         damage = playerProperties.GetPlayerStats().quickAttackStrength;
     }
 
@@ -30,7 +27,7 @@ public class SwordsmanMelee : MonoBehaviour {
         if (col.tag == "Enemy")
         {
             playerSoundEffects.PlayHitSpark();
-            col.GetComponent<Enemy>().Damage(damage, 1f, hitspark);
+            col.GetComponent<Enemy>().Damage(damage, 1f, playerParticleEffects);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(400f * transform.parent.localScale.x, 5000f));
         }
 
