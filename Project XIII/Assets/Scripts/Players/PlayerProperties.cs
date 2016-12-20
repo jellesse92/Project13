@@ -26,6 +26,8 @@ public class PlayerBoostStats
 
 public class PlayerProperties : MonoBehaviour{
     const float reviveImmuneTime = .2f;                     //Time immune to damage after revive
+    const float damageImmuneTime = 1f;                     //Time immune to damage after taking damage
+
 
     public bool alive = true;
 
@@ -169,15 +171,21 @@ public class PlayerProperties : MonoBehaviour{
         StartCoroutine(knockXPlayer(knockBackX, knockBackY));
         //knockXPlayer(knockBackX, knockBackY);
 
+        //Play death
         if (alive && currentHealth <= 0)
         {
             PlayerDeath();
             return;
         }
 
+        //Applies invincibility
+        StartCoroutine("ApplyInvin");
+
+        //Applies stun
         if (stunnable && !isStunned)
             StartCoroutine(ApplyStun(stunTime));
 
+        //Updates player health ui
         if (psScript != null)
             psScript.GetComponent<PlayerStatusUIScript>().ApplyHealthDamage(playerNumber, dmg);
     }
@@ -239,6 +247,25 @@ public class PlayerProperties : MonoBehaviour{
         yield return new WaitForSeconds(duration);
         GetComponent<Animator>().SetTrigger("stunRecovery");
         isStunned = false;
+    }
+
+    IEnumerator ApplyInvin()
+    {
+        isInvincibile = true;
+
+        for (int i = 0; i < 3; i++)
+        {
+            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .75f);
+            yield return new WaitForSeconds(damageImmuneTime/7f);
+            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .50f);
+            yield return new WaitForSeconds(damageImmuneTime / 7f);
+        }
+
+        GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .75f);
+        yield return new WaitForSeconds(damageImmuneTime / 7f);
+        GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+
+        isInvincibile = false;
     }
 
     public bool GetStunState()
