@@ -24,10 +24,6 @@ public class PlayerParticleEffects : MonoBehaviour {
     }
     void InstantiateParticles()
     {
-        //Tried putting all three into a function, cannot put into parameter of function. 
-        //InstantiateParticle(generalHitSpark), InstantiateParticle(quickAttack), InstantiateParticle(heavyAttack)
-        //It loses reference. must be done directly. Maybe there's another way? Solved it by using ref modifier!!!
-
         particlesHolder = new GameObject();
         particlesHolder.name = "Particles";
         particlesHolder.transform.parent = transform;
