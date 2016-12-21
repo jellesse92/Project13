@@ -24,8 +24,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     public GameObject heavyAttackBox;           //Collider for dealing the ground heavy attack
 
     //Dash variables
-    public ParticleSystem afterImageParticle;
-    float xInputAxis = 0f;                                     
+    float xInputAxis = 0f;                               
     float yInputAxis = 0f;
     int dashCount = 0;                          //Checks how many dashes have been chained
     bool checkGroundForDash = false;            //Bool that determines to check for grounded before resetting dash count
@@ -37,12 +36,14 @@ public class SwordsmanPhysics : PlayerPhysics{
     bool checkChargeTime = false;               //Determines if should check for time charging
     float timeCharged;
 
+    PlayerParticleEffects playerParticleEffects;
     public override void ClassSpecificStart()
     {
         comboAttackBox.GetComponent<SwordsmanMelee>().SetDamage(GetComponent<PlayerProperties>().GetPlayerStats().quickAttackStrength);
         airComboAttackBox.GetComponent<SwordsmanAirMelee>().SetDamage(GetComponent<PlayerProperties>().GetPlayerStats().quickAirAttackStrength);
         heavyAirAttackBox.GetComponent<MeleeAttackScript>().SetAttackStrength(GetComponent<PlayerProperties>().GetPlayerStats().heavyAirAttackStrengh);
         dragAttackBox.GetComponent<SwordsmanDragAttackScript>().enabled = false;
+        playerParticleEffects = GetComponent<PlayerParticleEffects>();
     }
 
     public override void ClassSpecificUpdate()
@@ -150,7 +151,7 @@ public class SwordsmanPhysics : PlayerPhysics{
             StartCoroutine(Dashing(new Vector3(hit.point.x + xOffset, hit.point.y + yOffset, transform.position.z)));
         }
 
-        afterImageParticle.Play();
+        playerParticleEffects.PlayDashAfterImage(true);
     }
 
     IEnumerator Dashing(Vector3 destination)
@@ -199,7 +200,7 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     void StopAfterImage()
     {
-        afterImageParticle.Stop();
+        playerParticleEffects.PlayDashAfterImage(false);
     }
 
     //END DASHING FUNCTIONS

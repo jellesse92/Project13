@@ -4,15 +4,15 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 
 public class PlayerSoundEffects : MonoBehaviour {
-    private AudioSource myAudio;
+    public int attackFrequencyPercentage = 40;
     public AudioClip[] quickAttackVoiceList;
     public AudioClip[] heavyAttackVoiceList;
     public AudioClip[] receiveDamageVoiceList;
     public AudioClip[] deathVoiceList;
-    public int xOut10ToSaySomething = 4;
 
     public AudioClip[] hitSparkList;                           //audio clip at enemy hit contact
 
+    AudioSource myAudio;
     void Start()
     {
         myAudio = GetComponent<AudioSource>();
@@ -20,13 +20,13 @@ public class PlayerSoundEffects : MonoBehaviour {
 
     public void PlayQuickAttackVoice()
     {
-        if (Random.Range(0, 10) < xOut10ToSaySomething)
+        if (Random.Range(0, 100) < attackFrequencyPercentage)
             myAudio.PlayOneShot(quickAttackVoiceList[Random.Range(0, quickAttackVoiceList.Length)]);
     }
 
     public void PlayHeavyAttackVoice()
     {
-        if (Random.Range(0, 10) < xOut10ToSaySomething)
+        if (Random.Range(0, 100) < attackFrequencyPercentage)
             myAudio.PlayOneShot(heavyAttackVoiceList[Random.Range(0, heavyAttackVoiceList.Length)]);
     }
 
@@ -44,6 +44,7 @@ public class PlayerSoundEffects : MonoBehaviour {
     {
         myAudio.PlayOneShot(hitSparkList[Random.Range(0, hitSparkList.Length)]);
     }
+
     public void playSound(AudioClip clip)
     {
         myAudio.PlayOneShot(clip);

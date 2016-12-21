@@ -8,6 +8,7 @@ public class PlayerParticleEffects : MonoBehaviour {
     public GameObject heavyAttack;
     public GameObject quickAttackHitSpark;
     public GameObject generalHitSpark;
+    public GameObject dashAfterImage;
 
     GameObject particlesHolder;
     //public GameObject heavyHitImpact;
@@ -31,6 +32,7 @@ public class PlayerParticleEffects : MonoBehaviour {
         InstantiateParticle(ref generalHitSpark);
         InstantiateParticle(ref quickAttack);
         InstantiateParticle(ref heavyAttack);
+        InstantiateParticle(ref dashAfterImage);
     }
 
     void InstantiateParticle(ref GameObject particle)
@@ -38,6 +40,7 @@ public class PlayerParticleEffects : MonoBehaviour {
         if (particle)
         {
             particle = Instantiate(particle);
+            particle.transform.position = transform.position;
             particle.transform.parent = particlesHolder.transform;
         }
     }
@@ -56,5 +59,16 @@ public class PlayerParticleEffects : MonoBehaviour {
     {
         generalHitSpark.transform.position = location;
         generalHitSpark.GetComponent<ParticleSystem>().Play();
+    }
+
+    public void PlayDashAfterImage(bool play)
+    {
+        if (play)
+        {
+            dashAfterImage.transform.localScale = transform.localScale;
+            dashAfterImage.GetComponent<ParticleSystem>().Play();
+        }
+        else
+            dashAfterImage.GetComponent<ParticleSystem>().Stop();
     }
 }
