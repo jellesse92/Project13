@@ -10,8 +10,6 @@ public class SwordsmanAttackScript : MonoBehaviour {
     const float HEAVY_Y_LAUNCH_FORCE_MULTIPLIER = 18000f;           //Multiplier for how much to push enemy at the end of hit in the Y direction
     const float HEAVY_X_OFFSET = 4f;                                //Where enemy is dragged relative to the swordsman
     
-
-
     HashSet<GameObject> enemyHash;
 
     //Heavy attack variables
@@ -63,7 +61,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
         {
             case ("heavy"): damage = playProp.GetPlayerStats().heavyAttackStrength; break;
             case ("quick"): damage = playProp.GetPlayerStats().quickAttackStrength; break;
-            default: break;
+            default: attack = ""; break;
         }
     }
 

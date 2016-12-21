@@ -21,7 +21,6 @@ public class SwordsmanPhysics : PlayerPhysics{
     public GameObject dragAttackBox;            //Collider for dragging enemies with sword swing up or down
     public GameObject airComboAttackBox;        //Collider for dealing air combo attacks
     public GameObject heavyAirAttackBox;        //Collider for dealing with heavy air attack
-    public GameObject heavyAttackBox;           //Collider for dealing the ground heavy attack
 
     public GameObject attackBox;                //Collider for dealing all melee attacks
     public SwordsmanAttackScript attackScript;  //Script for managing attack
