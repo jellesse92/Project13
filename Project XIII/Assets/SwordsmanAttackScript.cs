@@ -9,6 +9,8 @@ public class SwordsmanAttackScript : MonoBehaviour {
     const float HEAVY_X_LAUNCH_FORCE_MULTIPLIER = 18000f;           //Multiplier for how much to push enemy at the end of hit in the X direction
     const float HEAVY_Y_LAUNCH_FORCE_MULTIPLIER = 18000f;           //Multiplier for how much to push enemy at the end of hit in the Y direction
     const float HEAVY_X_OFFSET = 4f;                                //Where enemy is dragged relative to the swordsman
+    
+
 
     HashSet<GameObject> enemyHash;
 
@@ -20,6 +22,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     PlayerSoundEffects playerSoundEffects;
     PlayerParticleEffects playerParticleEffects;
+    PlayerProperties playProp;
 
     void Awake()
     {
@@ -30,6 +33,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     {
         playerSoundEffects = transform.parent.GetComponent<PlayerSoundEffects>();
         playerParticleEffects = transform.parent.GetComponent<PlayerParticleEffects>();
+        playProp = transform.parent.GetComponent<PlayerProperties>();
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -37,6 +41,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
         switch (attack)
         {
             case "heavy": TriggerHeavyAttack(col); break;
+            case "quick": TriggerQuickAttack(col); break;
             default: break;
         }
     }
@@ -56,7 +61,8 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
         switch (attack)
         {
-            case ("heavy"): damage = transform.parent.GetComponent<PlayerProperties>().GetPlayerStats().heavyAttackStrength; break;
+            case ("heavy"): damage = playProp.GetPlayerStats().heavyAttackStrength; break;
+            case ("quick"): damage = playProp.GetPlayerStats().quickAttackStrength; break;
             default: break;
         }
     }
@@ -121,4 +127,24 @@ public class SwordsmanAttackScript : MonoBehaviour {
      */
 
 
+    /*
+     *  QUICK ATTACK FUNCTIONS
+     */
+
+    void TriggerQuickAttack(Collider2D col)
+    {
+        if (col.tag == "Enemy")
+        {
+            //QUICK ATTACK EFFECTS STUFF
+            playerSoundEffects.PlayHitSpark();
+            playerParticleEffects.PlayHitSpark(col.GetComponent<Enemy>().GetCenter());
+
+            col.GetComponent<Enemy>().Damage(damage, 1f);
+            col.GetComponent<Rigidbody2D>().AddForce(new Vector2(400f * transform.parent.localScale.x, 5000f));
+        }
+    }
+
+    /*
+     *  END QUICK ATTACK FUNCTIONS
+     */
 }
