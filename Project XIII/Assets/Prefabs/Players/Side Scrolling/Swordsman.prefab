@@ -138,6 +138,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1352759767500384
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4927104563732910}
+  - component: {fileID: 114895810148568018}
+  - component: {fileID: 61965323942429836}
+  m_Layer: 19
+  m_Name: Melee Attack Box
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!4 &4000010977972368
 Transform:
   m_ObjectHideFlags: 1
@@ -206,6 +223,7 @@ Transform:
   - {fileID: 4000012982687378}
   - {fileID: 4000011454043698}
   - {fileID: 4000010977972368}
+  - {fileID: 4927104563732910}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -234,6 +252,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4000012182819958}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4927104563732910
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1352759767500384}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4000012182819958}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50000010508830406
 Rigidbody2D:
@@ -345,6 +376,20 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012210171406}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+--- !u!61 &61965323942429836
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1352759767500384}
   m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
@@ -477,6 +522,8 @@ MonoBehaviour:
   airComboAttackBox: {fileID: 1000011966676256}
   heavyAirAttackBox: {fileID: 1000011094693538}
   heavyAttackBox: {fileID: 1000012210171406}
+  attackBox: {fileID: 1352759767500384}
+  attackScript: {fileID: 114895810148568018}
 --- !u!114 &114000011439112550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -587,7 +634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5dfdb340f5147b47bc12f8882862f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frequencyPercentageForAttacks: 40
+  attackFrequencyPercentage: 40
   quickAttackVoiceList: []
   heavyAttackVoiceList: []
   receiveDamageVoiceList:
@@ -617,6 +664,17 @@ MonoBehaviour:
     type: 2}
   dashAfterImage: {fileID: 1134252364337398, guid: 74fd7ab29cc7a9c47bcb00df5899f423,
     type: 2}
+--- !u!114 &114895810148568018
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1352759767500384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: febec76d4bb00c5418d445768375c673, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212000010376855666
 SpriteRenderer:
   m_ObjectHideFlags: 1

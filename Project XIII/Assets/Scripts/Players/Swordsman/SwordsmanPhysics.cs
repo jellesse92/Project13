@@ -23,6 +23,9 @@ public class SwordsmanPhysics : PlayerPhysics{
     public GameObject heavyAirAttackBox;        //Collider for dealing with heavy air attack
     public GameObject heavyAttackBox;           //Collider for dealing the ground heavy attack
 
+    public GameObject attackBox;                //Collider for dealing all melee attacks
+    public SwordsmanAttackScript attackScript;  //Script for managing attack
+
     //Dash variables
     float xInputAxis = 0f;                               
     float yInputAxis = 0f;
@@ -215,23 +218,25 @@ public class SwordsmanPhysics : PlayerPhysics{
     {
         checkChargeTime = false;
         timeCharged = Mathf.Min(timeCharged, MAX_CHARGE);
-        heavyAttackBox.GetComponent<ChargeSlashScript>().enabled = true;
-        heavyAttackBox.GetComponent<ChargeSlashScript>().SetForceMulti(timeCharged);
+        attackScript.SetForceMulti(timeCharged);
         AddForceX(CHARGE_FORCE_MULTIPLIER * timeCharged);
     }
 
     void EndHeavyAttack()
     {
-        heavyAttackBox.GetComponent<ChargeSlashScript>().enabled = false;
-        heavyAttackBox.GetComponent<Collider2D>().enabled = false;
-        heavyAttackBox.GetComponent<ChargeSlashScript>().Launch();
-        heavyAttackBox.GetComponent<ChargeSlashScript>().Reset();
-
+        attackBox.GetComponent<Collider2D>().enabled = false;
+        attackScript.Launch();
+        attackScript.Reset();
     }
 
     public void HeavyAttackScreenShake()
     {
         ScreenShake(.1f, .03f);
+    }
+
+    public void SetAttackType(string type)
+    {
+        attackScript.SetAttackType(type);
     }
 
 }
