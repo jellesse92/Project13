@@ -79,23 +79,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1000012210171406
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4000010977972368}
-  - component: {fileID: 61000012421656224}
-  - component: {fileID: 114000013030002820}
-  m_Layer: 19
-  m_Name: Charge Slash Attack Box
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1000012429320758
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,19 +138,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4000010977972368
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012210171406}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4000012182819958}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000011051847818
 Transform:
   m_ObjectHideFlags: 1
@@ -222,7 +192,6 @@ Transform:
   - {fileID: 4000011710380944}
   - {fileID: 4000012982687378}
   - {fileID: 4000011454043698}
-  - {fileID: 4000010977972368}
   - {fileID: 4927104563732910}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -264,7 +233,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4000012182819958}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50000010508830406
 Rigidbody2D:
@@ -362,20 +331,6 @@ BoxCollider2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011447821148}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
---- !u!61 &61000012421656224
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012210171406}
   m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
@@ -521,7 +476,7 @@ MonoBehaviour:
   dragAttackBox: {fileID: 1000012429320758}
   airComboAttackBox: {fileID: 1000011966676256}
   heavyAirAttackBox: {fileID: 1000011094693538}
-  heavyAttackBox: {fileID: 1000012210171406}
+  heavyAttackBox: {fileID: 0}
   attackBox: {fileID: 1352759767500384}
   attackScript: {fileID: 114895810148568018}
 --- !u!114 &114000011439112550
@@ -544,17 +499,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dcff83776fbf92b4aa0efc8f60883126, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114000013030002820
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012210171406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec828ad170bf4774389c6dbc0771b3a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114000013064964176
