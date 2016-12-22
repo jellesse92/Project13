@@ -48,7 +48,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1533574949759392}
   serializedVersion: 5
-  lengthInSec: 0.3
+  lengthInSec: 0.4
   speed: 1
   looping: 0
   prewarm: 0
@@ -96,12 +96,12 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1021532408
+  randomSeed: -1267917645
   InitialModule:
     serializedVersion: 3
     enabled: 1
     startLifetime:
-      scalar: 0.3
+      scalar: 0.4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -603,13 +603,13 @@ ParticleSystem:
         - serializedVersion: 2
           time: 0
           value: 0
-          inSlope: 14.355857
-          outSlope: 14.355857
+          inSlope: 24.758795
+          outSlope: 24.758795
           tangentMode: 34
         - serializedVersion: 2
-          time: 0.06965798
+          time: 0.040389687
           value: 1
-          inSlope: 14.355857
+          inSlope: 24.758795
           outSlope: -0
           tangentMode: 69
         - serializedVersion: 2
@@ -648,26 +648,26 @@ ParticleSystem:
         - serializedVersion: 2
           time: 0
           value: 0
-          inSlope: 11.516067
-          outSlope: 11.516067
+          inSlope: 33.597584
+          outSlope: 33.597584
           tangentMode: 34
         - serializedVersion: 2
-          time: 0.053897705
-          value: 0.6206896
-          inSlope: 11.516067
-          outSlope: -6.8543143
+          time: 0.02950746
+          value: 0.9913793
+          inSlope: 33.597584
+          outSlope: -6.6544714
           tangentMode: 69
         - serializedVersion: 2
-          time: 0.1252714
-          value: 0.13147189
-          inSlope: -6.8543143
-          outSlope: -0.12073438
+          time: 0.14966165
+          value: 0.19181672
+          inSlope: -6.6544714
+          outSlope: -0.22557694
           tangentMode: 69
         - serializedVersion: 2
           time: 1
-          value: 0.02586207
-          inSlope: -0.12073438
-          outSlope: -0.12073438
+          value: 0
+          inSlope: -0.22557694
+          outSlope: -0.22557694
           tangentMode: 34
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -2141,8 +2141,8 @@ ParticleSystem:
     enabled: 0
     subEmitters:
     - emitter: {fileID: 0}
-      type: 0
-      properties: 0
+      type: 2
+      properties: -3
   LightsModule:
     enabled: 0
     ratio: 0
