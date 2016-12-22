@@ -9,7 +9,6 @@ public class PlayerParticleEffects : MonoBehaviour {
     public GameObject quickAttackHitSpark;
     public GameObject generalHitSpark;
     public GameObject dashAfterImage;
-
     GameObject particlesHolder;
     //public GameObject heavyHitImpact;
 
@@ -35,7 +34,7 @@ public class PlayerParticleEffects : MonoBehaviour {
         InstantiateParticle(ref dashAfterImage);
     }
 
-    void InstantiateParticle(ref GameObject particle)
+    protected void InstantiateParticle(ref GameObject particle)
     {
         if (particle)
         {

@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 114000014040226704}
   - component: {fileID: 114000011358648682}
   - component: {fileID: 114626846822014886}
-  - component: {fileID: 114790921744137808}
+  - component: {fileID: 114958880432912130}
   m_Layer: 15
   m_Name: Swordsman
   m_TagString: Player
@@ -476,7 +476,6 @@ MonoBehaviour:
   dragAttackBox: {fileID: 1000012429320758}
   airComboAttackBox: {fileID: 1000011966676256}
   heavyAirAttackBox: {fileID: 1000011094693538}
-  heavyAttackBox: {fileID: 0}
   attackBox: {fileID: 1352759767500384}
   attackScript: {fileID: 114895810148568018}
 --- !u!114 &114000011439112550
@@ -590,24 +589,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: bcce52b20073d2149b6043e79650aa27, type: 3}
   - {fileID: 8300000, guid: 2065a1d233f3e7d4194cba31cc8897c2, type: 3}
   - {fileID: 8300000, guid: 18a51c1cedef28f4490de86fa9bc9968, type: 3}
---- !u!114 &114790921744137808
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000014081926900}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c5f5608d2da64f4985bde61aaddd7bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  quickAttack: {fileID: 0}
-  heavyAttack: {fileID: 0}
-  quickAttackHitSpark: {fileID: 0}
-  generalHitSpark: {fileID: 1533574949759392, guid: fc140a5b2d085054dbdced62b69117cd,
-    type: 2}
-  dashAfterImage: {fileID: 1134252364337398, guid: 74fd7ab29cc7a9c47bcb00df5899f423,
-    type: 2}
 --- !u!114 &114895810148568018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -619,6 +600,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: febec76d4bb00c5418d445768375c673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114958880432912130
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000014081926900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d179753f6e084f440afe0c8416417c31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quickAttack: {fileID: 0}
+  heavyAttack: {fileID: 0}
+  quickAttackHitSpark: {fileID: 0}
+  generalHitSpark: {fileID: 1533574949759392, guid: fc140a5b2d085054dbdced62b69117cd,
+    type: 2}
+  dashAfterImage: {fileID: 1134252364337398, guid: 74fd7ab29cc7a9c47bcb00df5899f423,
+    type: 2}
+  chargingDust: {fileID: 1178132478518532, guid: 728da1d9dfd695f4491b3349e400e3a9,
+    type: 2}
 --- !u!212 &212000010376855666
 SpriteRenderer:
   m_ObjectHideFlags: 1
