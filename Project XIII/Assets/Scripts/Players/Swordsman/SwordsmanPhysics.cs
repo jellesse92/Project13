@@ -40,7 +40,6 @@ public class SwordsmanPhysics : PlayerPhysics{
     PlayerParticleEffects playerParticleEffects;
     public override void ClassSpecificStart()
     {
-
         airComboAttackBox.GetComponent<SwordsmanAirMelee>().SetDamage(GetComponent<PlayerProperties>().GetPlayerStats().quickAirAttackStrength);
         heavyAirAttackBox.GetComponent<MeleeAttackScript>().SetAttackStrength(GetComponent<PlayerProperties>().GetPlayerStats().heavyAirAttackStrengh);
         dragAttackBox.GetComponent<SwordsmanDragAttackScript>().enabled = false;
@@ -81,6 +80,8 @@ public class SwordsmanPhysics : PlayerPhysics{
             GetComponent<Animator>().SetTrigger("moveSkill");
     }
 
+    //COMBO FUNCTIONS
+
     public void WatchForCombo()
     {
         if (GetComponent<PlayerInput>().getKeyPress().quickAttackPress)
@@ -89,8 +90,6 @@ public class SwordsmanPhysics : PlayerPhysics{
             GetComponent<Animator>().SetTrigger("combo");
         }
     }
-
-    //COMBO FUNCTIONS
 
     public void StartCombo()
     {
