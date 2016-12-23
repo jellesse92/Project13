@@ -17,8 +17,6 @@ public class SwordsmanPhysics : PlayerPhysics{
     const float CHARGE_FORCE_MULTIPLIER = 3000f;//Multiplier for distance to travel after charging attack
 
     //Attack box
-    public GameObject dragAttackBox;            //Collider for dragging enemies with sword swing up or down
-
     public GameObject attackBox;                //Collider for dealing all melee attacks
     public SwordsmanAttackScript attackScript;  //Script for managing attack
 
@@ -38,7 +36,6 @@ public class SwordsmanPhysics : PlayerPhysics{
     PlayerParticleEffects playerParticleEffects;
     public override void ClassSpecificStart()
     {
-        dragAttackBox.GetComponent<SwordsmanDragAttackScript>().enabled = false;
         playerParticleEffects = GetComponent<PlayerParticleEffects>();
     }
 
@@ -109,23 +106,12 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     public void ExecuteDragAttack()
     {
-        /*
-        dragAttackBox.GetComponent<SwordsmanDragAttackScript>().Reset();
-        dragAttackBox.GetComponent<SwordsmanDragAttackScript>().enabled = true;
-        */
-
         attackScript.Reset();
         attackScript.SetAttackType("drag");
     }
 
     public void EndDragAttack()
     {
-        /*
-        dragAttackBox.GetComponent<Collider2D>().enabled = false;
-        dragAttackBox.GetComponent<SwordsmanDragAttackScript>().Reset();
-        dragAttackBox.GetComponent<SwordsmanDragAttackScript>().enabled = false;
-        */
-
         attackBox.GetComponent<Collider2D>().enabled = false;
         attackScript.Reset();
     }
@@ -212,14 +198,18 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     //END DASHING FUNCTIONS
 
+    //HEAVY CHARGING ATTACK FUNCTIONS
+
     void StartHeavyGroundCharge()
     {
         checkChargeTime = true;
         timeCharged = 0f;
+        GetComponent<SwordsmanParticleEffects>().PlayChargingDust(true);
     }
 
     void ExecuteHeavyAttack()
     {
+        GetComponent<SwordsmanParticleEffects>().PlayChargingDust(false);
         checkChargeTime = false;
         timeCharged = Mathf.Min(timeCharged, MAX_CHARGE);
         attackScript.SetForceMulti(timeCharged);
@@ -232,6 +222,14 @@ public class SwordsmanPhysics : PlayerPhysics{
         attackScript.Launch();
         attackScript.Reset();
     }
+
+    public void CancelHeavyCharge()
+    {
+        GetComponent<SwordsmanParticleEffects>().PlayChargingDust(false);
+        attackScript.Reset();
+    }
+
+    //END HEAVY CHARGING ATTACK FUNCTIONS
 
     public void HeavyAttackScreenShake()
     {
