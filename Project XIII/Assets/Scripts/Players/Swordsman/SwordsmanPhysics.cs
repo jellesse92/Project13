@@ -14,6 +14,7 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     //Constant for charging ground heavy slash attack
     const float MAX_CHARGE = 2f;                //Max amount of time multiplier allowed to be applied to charge distance
+    const float TIER_1_CHARGE = 1.2f;           //Tier one charge for beginning to flash white
     const float CHARGE_FORCE_MULTIPLIER = 3000f;//Multiplier for distance to travel after charging attack
 
     //Attack box
@@ -31,12 +32,19 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     //Heavy attack variables
     bool checkChargeTime = false;               //Determines if should check for time charging
-    float timeCharged;
+    float timeCharged;                          //Time attack has been charged
+    Material defaultMat;                        //Default sprite material
+    public Material flashWhiteMat;              //White flashing material
+    public Material flashGoldMat;               //Gold flashing material
+    bool isFlashingWhite = false;               //Determines if flashing white color
+    bool isFlashingGold = false;                //Determines if flashing gold color
 
     PlayerParticleEffects playerParticleEffects;
+
     public override void ClassSpecificStart()
     {
         playerParticleEffects = GetComponent<PlayerParticleEffects>();
+        defaultMat = GetComponent<SpriteRenderer>().material;
     }
 
     public override void ClassSpecificUpdate()
@@ -46,7 +54,21 @@ public class SwordsmanPhysics : PlayerPhysics{
         if (checkGroundForDash)
             ResetDashCount();
         if (checkChargeTime)
+        {
             timeCharged += Time.fixedDeltaTime;
+            if(timeCharged >= 2f && !isFlashingGold)
+            {
+                isFlashingGold = true;
+                CancelInvoke("ChargingFlashWhite");
+                InvokeRepeating("ChargingFlashGold", 0f, .09f);
+            }
+            else if(timeCharged >= 1f && timeCharged < 2f && !isFlashingWhite)
+            {
+                isFlashingWhite = true;
+                InvokeRepeating("ChargingFlashWhite", 0f, .15f);
+            }
+        }
+
     }
 
     public override bool CheckClassSpecificInput()
@@ -210,6 +232,8 @@ public class SwordsmanPhysics : PlayerPhysics{
     void ExecuteHeavyAttack()
     {
         GetComponent<SwordsmanParticleEffects>().PlayChargingDust(false);
+        CancelFlashing();
+
         checkChargeTime = false;
         timeCharged = Mathf.Min(timeCharged, MAX_CHARGE);
         attackScript.SetForceMulti(timeCharged);
@@ -223,9 +247,37 @@ public class SwordsmanPhysics : PlayerPhysics{
         attackScript.Reset();
     }
 
+    void FlashColor(Material mat)
+    {
+        if (GetComponent<SpriteRenderer>().material == defaultMat)
+            GetComponent<SpriteRenderer>().material = mat;
+        else
+            GetComponent<SpriteRenderer>().material = defaultMat;
+    }
+
+    void ChargingFlashWhite()
+    {
+        FlashColor(flashWhiteMat);
+    }
+
+    void ChargingFlashGold()
+    {
+        FlashColor(flashGoldMat);
+    }
+
+    void CancelFlashing()
+    {
+        CancelInvoke("ChargingFlashWhite");
+        CancelInvoke("ChargingFlashGold");
+        GetComponent<SpriteRenderer>().material = defaultMat;
+        isFlashingWhite = false;
+        isFlashingGold = false;
+    }
+
     public void CancelHeavyCharge()
     {
         GetComponent<SwordsmanParticleEffects>().PlayChargingDust(false);
+        CancelFlashing();
         attackScript.Reset();
     }
 
