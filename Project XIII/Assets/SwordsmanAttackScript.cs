@@ -9,6 +9,24 @@ public class SwordsmanAttackScript : MonoBehaviour {
     const float HEAVY_X_LAUNCH_FORCE_MULTIPLIER = 18000f;           //Multiplier for how much to push enemy at the end of hit in the X direction
     const float HEAVY_Y_LAUNCH_FORCE_MULTIPLIER = 18000f;           //Multiplier for how much to push enemy at the end of hit in the Y direction
     const float HEAVY_X_OFFSET = 4f;                                //Where enemy is dragged relative to the swordsman
+
+    //Constants for heavy air attack variables
+    const float HEAVY_AIR_X_FORCE = 7000f;                          //X force to be applied on hit for air heavy attack
+    const float HEAVY_AIR_Y_FORCE = -19000f;                        //Y force to be applied on hit for air heavy attack
+
+    //Constants for quick attack variables
+    const float QUICK_X_FORCE = 400f;                               //X force to be applied on hit for quick attack
+    const float QUICK_Y_FORCE = 5000f;                              //Y force to be applied on hit for quick attack
+
+    //Constants for quick air attack variables
+    const float QUICK_AIR_X_FORCE = 400f;                           //X force to be applied on hit for air quick attack
+    const float QUICK_AIR_Y_FORCE = 12000f;                         //Y force to be applied on hit for air quick attack
+
+    //Constants for stun duration
+    const float HEAVY_STUN_MULTI = 1f;                              //Stun duration multiplier for heavy attack
+    const float HEAVY_AIR_STUN_MULTI = 6f;                          //Stun duration multiplier for air heavy attack
+    const float QUICK_STUN_MULTI = 1f;                              //Stun duration multiplier for quick atack
+    const float QUICK_AIR_STUN_MULTI = 1f;                          //Stun duration multiplier for air quick attack 
     
     HashSet<GameObject> enemyHash;
 
@@ -41,6 +59,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             case "heavy": TriggerHeavyAttack(col); break;
             case "quick": TriggerQuickAttack(col); break;
             case "quickAir": TriggerAirQuickAttack(col); break;
+            case "heavyAir": TriggerAirHeavyAttack(col); break;
             default: break;
         }
     }
@@ -52,6 +71,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             case "heavy": UpdateHeavyAttack(); break;
             case "quick": break;
             case "quickAir": break;
+            case "heavyAir": break;
             default: break;
         }
     }
@@ -65,6 +85,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             case ("heavy"): damage = playProp.GetPlayerStats().heavyAttackStrength; break;
             case ("quick"): damage = playProp.GetPlayerStats().quickAttackStrength; break;
             case ("quickAir"): damage = playProp.GetPlayerStats().quickAirAttackStrength; break;
+            case ("heavyAir"): damage = playProp.GetPlayerStats().heavyAirAttackStrengh; break;
             default: attack = ""; break;
         }
     }
@@ -119,7 +140,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             target.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceMulti * HEAVY_X_LAUNCH_FORCE_MULTIPLIER * transform.parent.localScale.x, forceMulti * HEAVY_Y_LAUNCH_FORCE_MULTIPLIER));
             playerSoundEffects.PlayHitSpark();
             playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
-            target.GetComponent<Enemy>().Damage(damage, .1f);
+            target.GetComponent<Enemy>().Damage(damage, HEAVY_STUN_MULTI);
         }
         transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(.2f, .05f);
     }
@@ -128,6 +149,26 @@ public class SwordsmanAttackScript : MonoBehaviour {
      *  END HEAVY ATTACK FUNCTIONS
      */
 
+    /*
+     *  HEAVY AIR ATTACK FUNCTIONS
+     */
+
+    void TriggerAirHeavyAttack(Collider2D col)
+    {
+        if (col.tag == "Enemy")
+        {
+            //HEAVY ATTACK AIR EFFECTS STUFF
+            playerSoundEffects.PlayHitSpark();
+            playerParticleEffects.PlayHitSpark(col.GetComponent<Enemy>().GetCenter());
+
+            col.gameObject.GetComponent<Enemy>().Damage(damage, HEAVY_AIR_STUN_MULTI);
+            col.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_AIR_X_FORCE * transform.parent.localScale.x, HEAVY_AIR_Y_FORCE));
+        }
+    }
+
+    /*
+     *  END AIR HEAVY ATTACK FUNCTIONS
+     */
 
     /*
      *  QUICK ATTACK FUNCTIONS
@@ -141,8 +182,8 @@ public class SwordsmanAttackScript : MonoBehaviour {
             playerSoundEffects.PlayHitSpark();
             playerParticleEffects.PlayHitSpark(col.GetComponent<Enemy>().GetCenter());
 
-            col.GetComponent<Enemy>().Damage(damage, 1f);
-            col.GetComponent<Rigidbody2D>().AddForce(new Vector2(400f * transform.parent.localScale.x, 5000f));
+            col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
+            col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
         }
     }
 
@@ -154,8 +195,8 @@ public class SwordsmanAttackScript : MonoBehaviour {
             playerSoundEffects.PlayHitSpark();
             playerParticleEffects.PlayHitSpark(col.GetComponent<Enemy>().GetCenter());
 
-            col.GetComponent<Enemy>().Damage(damage, 1f);
-            col.GetComponent<Rigidbody2D>().AddForce(new Vector2(400f * transform.parent.localScale.x, 12000f));
+            col.GetComponent<Enemy>().Damage(damage, QUICK_AIR_STUN_MULTI);
+            col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_AIR_X_FORCE * transform.parent.localScale.x, QUICK_AIR_Y_FORCE));
         }
     }
 
