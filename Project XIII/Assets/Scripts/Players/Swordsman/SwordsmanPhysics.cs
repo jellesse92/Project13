@@ -227,6 +227,7 @@ public class SwordsmanPhysics : PlayerPhysics{
         checkChargeTime = true;
         timeCharged = 0f;
         GetComponent<SwordsmanParticleEffects>().PlayChargingDust(true);
+        InvokeRepeating("ChargingShake", .7f, .1f);
     }
 
     void ExecuteHeavyAttack()
@@ -245,6 +246,15 @@ public class SwordsmanPhysics : PlayerPhysics{
         attackBox.GetComponent<Collider2D>().enabled = false;
         attackScript.Launch();
         attackScript.Reset();
+    }
+
+    void ChargingShake()
+    {
+        if (transform.rotation.z == 0f)
+            transform.Rotate(new Vector3(0f, 0f, -1f));
+        else
+            transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, 0f));
+
     }
 
     void FlashColor(Material mat)
@@ -269,6 +279,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     {
         CancelInvoke("ChargingFlashWhite");
         CancelInvoke("ChargingFlashGold");
+        CancelInvoke("ChargingShake");
         GetComponent<SpriteRenderer>().material = defaultMat;
         isFlashingWhite = false;
         isFlashingGold = false;
