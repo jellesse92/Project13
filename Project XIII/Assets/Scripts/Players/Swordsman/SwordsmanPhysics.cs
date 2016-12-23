@@ -17,7 +17,6 @@ public class SwordsmanPhysics : PlayerPhysics{
     const float CHARGE_FORCE_MULTIPLIER = 3000f;//Multiplier for distance to travel after charging attack
 
     //Attack boxes
-    public GameObject comboAttackBox;           //Collider for dealing combo attacks
     public GameObject dragAttackBox;            //Collider for dragging enemies with sword swing up or down
     public GameObject airComboAttackBox;        //Collider for dealing air combo attacks
     public GameObject heavyAirAttackBox;        //Collider for dealing with heavy air attack
@@ -41,7 +40,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     PlayerParticleEffects playerParticleEffects;
     public override void ClassSpecificStart()
     {
-        comboAttackBox.GetComponent<SwordsmanMelee>().SetDamage(GetComponent<PlayerProperties>().GetPlayerStats().quickAttackStrength);
+
         airComboAttackBox.GetComponent<SwordsmanAirMelee>().SetDamage(GetComponent<PlayerProperties>().GetPlayerStats().quickAirAttackStrength);
         heavyAirAttackBox.GetComponent<MeleeAttackScript>().SetAttackStrength(GetComponent<PlayerProperties>().GetPlayerStats().heavyAirAttackStrengh);
         dragAttackBox.GetComponent<SwordsmanDragAttackScript>().enabled = false;
