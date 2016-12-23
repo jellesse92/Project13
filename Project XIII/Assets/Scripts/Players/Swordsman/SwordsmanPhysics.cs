@@ -14,7 +14,7 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     //Constant for charging ground heavy slash attack
     const float MAX_CHARGE = 2f;                //Max amount of time multiplier allowed to be applied to charge distance
-    const float TIER_1_CHARGE = 1.2f;           //Tier one charge for beginning to flash white
+    const float TIER_1_CHARGE = .8f;            //Tier one charge for beginning to flash white
     const float CHARGE_FORCE_MULTIPLIER = 3000f;//Multiplier for distance to travel after charging attack
 
     //Attack box
