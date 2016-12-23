@@ -27,6 +27,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     const float HEAVY_AIR_STUN_MULTI = 6f;                          //Stun duration multiplier for air heavy attack
     const float QUICK_STUN_MULTI = 1f;                              //Stun duration multiplier for quick atack
     const float QUICK_AIR_STUN_MULTI = 1f;                          //Stun duration multiplier for air quick attack 
+    const float DRAG_STUN_MULTI = 1f;                               //Stun duration multiplier for drag attack
     
     HashSet<GameObject> enemyHash;
 
@@ -60,6 +61,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             case "quick": TriggerQuickAttack(col); break;
             case "quickAir": TriggerAirQuickAttack(col); break;
             case "heavyAir": TriggerAirHeavyAttack(col); break;
+            case "drag": TriggerDragAttack(col);  break;
             default: break;
         }
     }
@@ -72,6 +74,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             case "quick": break;
             case "quickAir": break;
             case "heavyAir": break;
+            case "drag": UpdateDragAttack(); break;
             default: break;
         }
     }
@@ -86,6 +89,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             case ("quick"): damage = playProp.GetPlayerStats().quickAttackStrength; break;
             case ("quickAir"): damage = playProp.GetPlayerStats().quickAirAttackStrength; break;
             case ("heavyAir"): damage = playProp.GetPlayerStats().heavyAirAttackStrengh; break;
+            case ("drag"): damage = playProp.GetPlayerStats().quickAttackStrength; break;
             default: attack = ""; break;
         }
     }
@@ -202,5 +206,36 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     /*
      *  END QUICK ATTACK FUNCTIONS
+     */
+
+    /*
+     *  DRAG ATTACK FUNCTIONS
+     */
+
+    void TriggerDragAttack(Collider2D col)
+    {
+        if (col.tag == "Enemy")
+            if (!enemyHash.Contains(col.gameObject))
+            {
+                //DRAG ATTACK EFFECTS STUFF
+                playerSoundEffects.PlayHitSpark();
+                playerParticleEffects.PlayHitSpark(col.GetComponent<Enemy>().GetCenter());
+
+                enemyHash.Add(col.gameObject);
+                if (transform.parent.parent != null)
+                    transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(.01f);
+                col.GetComponent<Enemy>().Damage(damage, DRAG_STUN_MULTI);
+            }
+    }
+
+    void UpdateDragAttack()
+    {
+        foreach (GameObject target in enemyHash)
+            target.transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+    }
+
+
+    /*
+     *  END DRAG ATTACK FUNCTIONS
      */
 }

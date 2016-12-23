@@ -58,11 +58,12 @@ public class SwordsmanPhysics : PlayerPhysics{
         float yMove = myKeyPress.verticalAxisValue;
 
         if (CanAttackStatus() && (yMove > Y_INPUT_THRESHOLD) && GetComponent<PlayerInput>().getKeyPress().quickAttackPress && isGrounded())
+        {
             GetComponent<Animator>().SetTrigger("upQuickAttack");
-        else
-            return false;
+            return true;
+        }
 
-        return true;
+        return false;
     }
 
     public override void MovementSkill(float xMove, float yMove)
@@ -108,15 +109,25 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     public void ExecuteDragAttack()
     {
+        /*
         dragAttackBox.GetComponent<SwordsmanDragAttackScript>().Reset();
         dragAttackBox.GetComponent<SwordsmanDragAttackScript>().enabled = true;
+        */
+
+        attackScript.Reset();
+        attackScript.SetAttackType("drag");
     }
 
     public void EndDragAttack()
     {
+        /*
         dragAttackBox.GetComponent<Collider2D>().enabled = false;
         dragAttackBox.GetComponent<SwordsmanDragAttackScript>().Reset();
         dragAttackBox.GetComponent<SwordsmanDragAttackScript>().enabled = false;
+        */
+
+        attackBox.GetComponent<Collider2D>().enabled = false;
+        attackScript.Reset();
     }
 
     //END UP + QUICK ATTACK ATTACK FUNCTIONS
