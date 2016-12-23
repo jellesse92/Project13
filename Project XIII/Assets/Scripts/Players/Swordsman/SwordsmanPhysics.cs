@@ -277,6 +277,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     public void CancelHeavyCharge()
     {
         GetComponent<SwordsmanParticleEffects>().PlayChargingDust(false);
+        checkChargeTime = false;
         CancelFlashing();
         attackScript.Reset();
     }
