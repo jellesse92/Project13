@@ -9,6 +9,7 @@ public class PlayerParticleEffects : MonoBehaviour {
     public GameObject quickAttackHitSpark;
     public GameObject generalHitSpark;
     public GameObject dashAfterImage;
+    public GameObject jumpDust;
     GameObject particlesHolder;
     //public GameObject heavyHitImpact;
 
@@ -32,6 +33,7 @@ public class PlayerParticleEffects : MonoBehaviour {
         InstantiateParticle(ref quickAttack);
         InstantiateParticle(ref heavyAttack);
         InstantiateParticle(ref dashAfterImage);
+        InstantiateParticle(ref jumpDust);
     }
 
     protected void InstantiateParticle(ref GameObject particle)
@@ -44,20 +46,31 @@ public class PlayerParticleEffects : MonoBehaviour {
         }
     }
 
+    protected void PlayParticle(GameObject particle)
+    {
+        if(particle)
+            particle.GetComponent<ParticleSystem>().Play();
+    }
+
     public void PlayParticleQuickAttack()
     {
-        quickAttack.GetComponent<ParticleSystem>().Play();
+        PlayParticle(quickAttack);
     }
 
     public void PlayParticleHeavyAttack()
     {
-        heavyAttack.GetComponent<ParticleSystem>().Play();
+        PlayParticle(heavyAttack);
     }
 
     public void PlayHitSpark(Vector3 location)
     {
         generalHitSpark.transform.position = location;
-        generalHitSpark.GetComponent<ParticleSystem>().Play();
+        PlayParticle(generalHitSpark);
+    }
+
+    public void PlayJumpDust()
+    {
+        PlayParticle(jumpDust);
     }
 
     public void PlayDashAfterImage(bool play)
@@ -65,7 +78,7 @@ public class PlayerParticleEffects : MonoBehaviour {
         if (play)
         {
             dashAfterImage.transform.localScale = transform.localScale;
-            dashAfterImage.GetComponent<ParticleSystem>().Play();
+            PlayParticle(dashAfterImage);
         }
         else
             dashAfterImage.GetComponent<ParticleSystem>().Stop();
