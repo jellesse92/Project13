@@ -10,6 +10,7 @@ public class PlayerParticleEffects : MonoBehaviour {
     public GameObject generalHitSpark;
     public GameObject dashAfterImage;
     public GameObject jumpDust;
+    public GameObject runningDust;
     GameObject particlesHolder;
     //public GameObject heavyHitImpact;
 
@@ -34,6 +35,7 @@ public class PlayerParticleEffects : MonoBehaviour {
         InstantiateParticle(ref heavyAttack);
         InstantiateParticle(ref dashAfterImage);
         InstantiateParticle(ref jumpDust);
+        InstantiateParticle(ref runningDust);
     }
 
     protected void InstantiateParticle(ref GameObject particle)
@@ -71,6 +73,11 @@ public class PlayerParticleEffects : MonoBehaviour {
     public void PlayJumpDust()
     {
         PlayParticle(jumpDust);
+    }
+
+    public void PlayRunningDust()
+    {
+        PlayParticle(runningDust);
     }
 
     public void PlayDashAfterImage(bool play)
