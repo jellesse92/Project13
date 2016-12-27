@@ -19,23 +19,13 @@ public class SquishBlockScript : MonoBehaviour {
     bool moving = false;
     bool returning = false;
 
+    bool isVisible = false;
+
 	// Use this for initialization
 	void Start () {
         cam = GameObject.FindGameObjectWithTag("MainCamera");
         origin = block.position;
 	}
-
-    void OnBecameVisible()
-    {
-        block.position = origin;
-    }
-
-    void OnBecameInvisible()
-    {
-        block.position = origin;
-        moving = false;
-        returning = false;
-    }
 
     void FixedUpdate()
     {
@@ -47,7 +37,7 @@ public class SquishBlockScript : MonoBehaviour {
 
     public void TriggerMove()
     {
-        if(!returning)
+        if(!returning && isVisible)
             moving = true;
     }
 
@@ -59,7 +49,7 @@ public class SquishBlockScript : MonoBehaviour {
         {
             moving = false;
             cam.GetComponent<CamShakeScript>().StartShake(.1f);
-            StartCoroutine("DelayReturn");
+            Invoke("DelayReturn", returnDelay);
         }
     }
 
@@ -74,12 +64,27 @@ public class SquishBlockScript : MonoBehaviour {
 
     }
 
-    IEnumerator DelayReturn()
+    void DelayReturn()
     {
-        yield return new WaitForSeconds(returnDelay);
         returning = true;
     }
 	
+    //Function to run when sprite is visible
+    public void VisibleFunc()
+    {
+        this.GetComponent<SquishBlockScript>().enabled = true;
+        block.position = origin;
+        isVisible = true;
+    }
 
+    //Function to run when sprite is invis
+    public void InvisFunc()
+    {
+        this.GetComponent<SquishBlockScript>().enabled = false;
+        block.position = origin;
+        moving = false;
+        returning = false;
+        isVisible = false;
+    }
 
 }

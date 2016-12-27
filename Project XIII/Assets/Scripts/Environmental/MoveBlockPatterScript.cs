@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MoveBlockPatterScript : MonoBehaviour {
+public class MoveBlockPatterScript : MonoBehaviour
+{
 
     [System.Serializable]
     public class MoveBlock                              //Contains info on which block ton control and when to trigger movement
@@ -23,20 +24,16 @@ public class MoveBlockPatterScript : MonoBehaviour {
     private int currentSequence = 0;                    //Current sequence being examined
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
         StartPattern();
-	}
-	
-	// Update is called once per frame
-	void FixedUpdate () {
-	
-	}
+    }
 
     void StartPattern()
     {
         if (currentSequence >= blockPattern.Length)
             currentSequence = 0;
-        foreach(MoveBlock movBlock in blockPattern[currentSequence].moveBlock)
+        foreach (MoveBlock movBlock in blockPattern[currentSequence].moveBlock)
         {
             StartCoroutine(waitToTrigger(movBlock.block, movBlock.delayStartMove));
         }
@@ -45,8 +42,11 @@ public class MoveBlockPatterScript : MonoBehaviour {
     }
 
     IEnumerator waitToTrigger(GameObject block, float waitTime)
-    {      
+    {
         yield return new WaitForSeconds(waitTime);
         block.GetComponent<SquishBlockScript>().TriggerMove();
     }
+
 }
+
+
