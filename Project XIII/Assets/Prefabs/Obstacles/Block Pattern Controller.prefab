@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 212000010468699646}
   - component: {fileID: 50000010348060984}
   - component: {fileID: 61000013141687168}
+  - component: {fileID: 114319218016832942}
   m_Layer: 0
   m_Name: Block
   m_TagString: Untagged
@@ -197,6 +198,17 @@ MonoBehaviour:
     - block: {fileID: 1000012026053274}
       delayStartMove: 0
     delayNextPattern: 6
+--- !u!114 &114319218016832942
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000014145279970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1bc0c9ba77c09d840be7b89c5f06075a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212000010468699646
 SpriteRenderer:
   m_ObjectHideFlags: 1
