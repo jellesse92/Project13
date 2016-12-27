@@ -22,6 +22,11 @@ public class SwordsmanAttackScript : MonoBehaviour {
     const float QUICK_AIR_X_FORCE = 400f;                           //X force to be applied on hit for air quick attack
     const float QUICK_AIR_Y_FORCE = 12000f;                         //Y force to be applied on hit for air quick attack
 
+    //Constants for drag attack variables
+    const float DRAG_REPEAT_DMG_APPLY_ST = .03f;                     //Time to start applying repeated damage as character performs drag attack
+    const float DRAG_REPEAT_DMG_RATE = .1f;                         //Rate at which damage is applied after invoke started for drag attack
+    const int DRAG_DAMAGE = 1;
+
     //Constants for stun duration
     const float HEAVY_STUN_MULTI = 1f;                              //Stun duration multiplier for heavy attack
     const float HEAVY_AIR_STUN_MULTI = 6f;                          //Stun duration multiplier for air heavy attack
@@ -89,7 +94,10 @@ public class SwordsmanAttackScript : MonoBehaviour {
             case ("quick"): damage = playProp.GetPlayerStats().quickAttackStrength; break;
             case ("quickAir"): damage = playProp.GetPlayerStats().quickAirAttackStrength; break;
             case ("heavyAir"): damage = playProp.GetPlayerStats().heavyAirAttackStrengh; break;
-            case ("drag"): damage = playProp.GetPlayerStats().quickAttackStrength; break;
+            case ("drag"):
+                damage = playProp.GetPlayerStats().quickAttackStrength;
+                InvokeRepeating("DragAttackApplyDamage", DRAG_REPEAT_DMG_APPLY_ST, DRAG_REPEAT_DMG_RATE);
+                break;
             default: attack = ""; break;
         }
     }
@@ -98,6 +106,12 @@ public class SwordsmanAttackScript : MonoBehaviour {
     {
         attack = "";
         enemyHash = new HashSet<GameObject>();
+    }
+
+    public void ResetDrag()
+    {
+        Reset();
+        CancelInvoke("DragAttackApplyDamage");
     }
 
     /*
@@ -232,6 +246,19 @@ public class SwordsmanAttackScript : MonoBehaviour {
     {
         foreach (GameObject target in enemyHash)
             target.transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+    }
+
+    void DragAttackApplyDamage()
+    {
+        foreach(GameObject target in enemyHash)
+        {
+            //DRAG ATTACK EFFECTS STUFF
+            playerSoundEffects.PlayHitSpark();
+            playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
+
+            target.GetComponent<Enemy>().Damage(DRAG_DAMAGE, DRAG_STUN_MULTI);
+        }
+
     }
 
 

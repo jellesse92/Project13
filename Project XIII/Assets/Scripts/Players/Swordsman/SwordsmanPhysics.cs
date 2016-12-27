@@ -135,7 +135,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     public void EndDragAttack()
     {
         attackBox.GetComponent<Collider2D>().enabled = false;
-        attackScript.Reset();
+        attackScript.ResetDrag();
     }
 
     //END UP + QUICK ATTACK ATTACK FUNCTIONS
