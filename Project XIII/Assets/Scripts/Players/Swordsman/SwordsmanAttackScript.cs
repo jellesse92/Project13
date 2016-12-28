@@ -258,7 +258,11 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
             target.GetComponent<Enemy>().Damage(DRAG_DAMAGE, DRAG_STUN_MULTI);
         }
+    }
 
+    public void CancelDragAttackApplyDamage()
+    {
+        CancelInvoke("DragAttackApplyDamage");
     }
 
 

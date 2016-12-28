@@ -138,6 +138,11 @@ public class SwordsmanPhysics : PlayerPhysics{
         attackScript.ResetDrag();
     }
 
+    public void EndDragDamage()
+    {
+        attackScript.CancelDragAttackApplyDamage();
+    }
+
     //END UP + QUICK ATTACK ATTACK FUNCTIONS
 
     //DASHING FUNCTIONS
