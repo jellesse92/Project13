@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
+
 public class SquishBlockScript : MonoBehaviour {
 
     //Heirarchy objects
@@ -21,8 +23,13 @@ public class SquishBlockScript : MonoBehaviour {
 
     bool isVisible = false;
 
-	// Use this for initialization
-	void Start () {
+    //Audio
+    AudioSource myAudio;
+    public AudioClip impact;
+
+    // Use this for initialization
+    void Start () {
+        myAudio = GetComponent<AudioSource>();
         cam = GameObject.FindGameObjectWithTag("MainCamera");
         origin = block.position;
 	}
@@ -48,6 +55,7 @@ public class SquishBlockScript : MonoBehaviour {
         if (block.position.x == destination.position.x && block.position.y == destination.position.y)
         {
             moving = false;
+            playSound(impact);
             cam.GetComponent<CamShakeScript>().StartShake(.1f);
             Invoke("DelayReturn", returnDelay);
         }
@@ -87,4 +95,8 @@ public class SquishBlockScript : MonoBehaviour {
         isVisible = false;
     }
 
+    public void playSound(AudioClip clip)
+    {
+        myAudio.PlayOneShot(clip);
+    }
 }
