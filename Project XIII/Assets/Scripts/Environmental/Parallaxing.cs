@@ -6,25 +6,29 @@ public class Parallaxing : MonoBehaviour {
     public bool scrolling;
     public bool parallax;
 
-    public float backgroundSize;
     public float parallaxSpeed;
 
-    private Transform cameraTransform;
-    private Transform[] layers;
-    private float viewZone = 10;
-    private int leftIndex;
-    private int rightIndex;
-    private float lastCameraX;
-    
+    Transform cameraTransform;
+    Transform[] layers;
+
+
+    float lastCameraX;
+    float deltaX;
+
+    float viewZone = 10;
+    int leftIndex;
+    int rightIndex;
+    Vector3 newPosition;
+    float backgroundSize;
+
     void Start()
     {
         cameraTransform = Camera.main.transform;
         lastCameraX = cameraTransform.position.x;
         layers = new Transform[transform.childCount];
-        for(int i = 0; i < transform.childCount; i++)
-        {
-            layers[i] = transform.GetChild(i);
-        }
+
+        SetBackground();
+
         leftIndex = 0;
         rightIndex = layers.Length - 1;
 
@@ -35,7 +39,7 @@ public class Parallaxing : MonoBehaviour {
     {
         if (parallax)
         {
-            float deltaX = cameraTransform.position.x - lastCameraX;
+            deltaX = cameraTransform.position.x - lastCameraX;
             transform.position += Vector3.right * (deltaX * parallaxSpeed);
         }
         lastCameraX = cameraTransform.position.x;
@@ -50,9 +54,31 @@ public class Parallaxing : MonoBehaviour {
         }
     }
 
+    void SetBackground()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            layers[i] = transform.GetChild(i);
+        }
+
+        backgroundSize = layers[0].GetComponent<Renderer>().bounds.size.x;
+
+        Vector3 leftPosition = layers[1].transform.position;
+        Vector3 rightPosition = layers[1].transform.position;
+        leftPosition.x -= backgroundSize;
+        rightPosition.x += backgroundSize;
+
+        layers[0].transform.position = leftPosition;
+        layers[layers.Length - 1].transform.position = rightPosition;
+    }
+
     private void ScrollLeft()
     {
-        layers[rightIndex].position = new Vector3 ((layers[leftIndex].position.x - backgroundSize), layers[leftIndex].position.y, layers[leftIndex].position.z);
+        backgroundSize = layers[leftIndex].GetComponent<Renderer>().bounds.size.x;
+        newPosition = layers[leftIndex].position;
+        newPosition.x -= backgroundSize;
+        layers[rightIndex].position = newPosition;
+
         leftIndex = rightIndex;
         rightIndex--;
         if (rightIndex < 0)
@@ -61,7 +87,11 @@ public class Parallaxing : MonoBehaviour {
 
     private void ScrollRight()
     {
-        layers[leftIndex].position = new Vector3((layers[rightIndex].position.x + backgroundSize), layers[rightIndex].position.y, layers[rightIndex].position.z);
+        backgroundSize = layers[leftIndex].GetComponent<Renderer>().bounds.size.x;
+        newPosition = layers[rightIndex].position;
+        newPosition.x += backgroundSize;
+        layers[leftIndex].position = newPosition;
+
         rightIndex = leftIndex;
         leftIndex++;
         if (leftIndex == layers.Length)
