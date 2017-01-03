@@ -5,7 +5,9 @@ using System.Collections;
 public class Parallaxing : MonoBehaviour {
     public bool scrolling;
     public bool parallax;
+    public bool autoScroll;
 
+    public float autoScrollSpeed;
     public float parallaxSpeed;
 
     Transform cameraTransform;
@@ -37,7 +39,11 @@ public class Parallaxing : MonoBehaviour {
     // Update is called once per frame
     void LateUpdate()
     {
-        if (parallax)
+        if(autoScroll)
+        {
+            transform.position += Vector3.right * (Time.deltaTime * autoScrollSpeed);
+        }
+        else if (parallax)
         {
             deltaX = cameraTransform.position.x - lastCameraX;
             transform.position += Vector3.right * (deltaX * parallaxSpeed);
