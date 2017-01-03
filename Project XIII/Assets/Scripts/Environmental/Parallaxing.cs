@@ -2,25 +2,25 @@
 using System.Collections;
 
 public class Parallaxing : MonoBehaviour {
-    public bool scrolling;
-    public bool parallax;
-    public bool autoScroll;
+    const float VIEW_ZONE = 10f;
 
-    public float autoScrollSpeed;
+    public bool infiniteScrolling;
+
+    public bool parallax;
     public float parallaxSpeed;
+
+    public bool autoScroll;
+    public float autoScrollSpeed;
 
     Transform cameraTransform;
     Transform[] layers;
 
-
+    float backgroundSize;
     float lastCameraX;
     float deltaX;
-
-    float viewZone = 10;
     int leftIndex;
     int rightIndex;
     Vector3 newPosition;
-    float backgroundSize;
 
     void Start()
     {
@@ -30,12 +30,18 @@ public class Parallaxing : MonoBehaviour {
         {
             cameraTransform = Camera.main.transform;
             lastCameraX = cameraTransform.position.x;
+
             layers = new Transform[3];
+            leftIndex = 0;
+            rightIndex = 2;
 
             SetBackground();
 
-            leftIndex = 0;
-            rightIndex = 2;
+            foreach (var comp in gameObject.GetComponents<Component>())
+            {
+                if (!(comp is Transform || comp is Parallaxing))
+                    Destroy(comp);
+            }
         }
     }
 
@@ -44,11 +50,10 @@ public class Parallaxing : MonoBehaviour {
     {
         if (autoScroll)
         {
-            layers[0].position += Vector3.right * (Time.deltaTime * autoScrollSpeed);
-            layers[1].position += Vector3.right * (Time.deltaTime * autoScrollSpeed);
-            layers[2].position += Vector3.right * (Time.deltaTime * autoScrollSpeed);
-
+            foreach (var layer in layers)
+                layer.position += Vector3.right * (Time.deltaTime * autoScrollSpeed);
         }
+
         if (parallax)
         {
             deltaX = cameraTransform.position.x - lastCameraX;
@@ -56,12 +61,12 @@ public class Parallaxing : MonoBehaviour {
         }
         lastCameraX = cameraTransform.position.x;
 
-        if (scrolling)
+        if (infiniteScrolling)
         {
-            if (cameraTransform.position.x < (layers[leftIndex].transform.position.x + viewZone))
+            if (cameraTransform.position.x < (layers[leftIndex].transform.position.x + VIEW_ZONE))
                 ScrollLeft();
 
-            if (cameraTransform.position.x > (layers[rightIndex].transform.position.x - viewZone))
+            if (cameraTransform.position.x > (layers[rightIndex].transform.position.x - VIEW_ZONE))
                 ScrollRight();
         }
     }
@@ -88,14 +93,6 @@ public class Parallaxing : MonoBehaviour {
         layers[0].transform.position = leftPosition;
         layers[1].transform.position = centerPosition;
         layers[2].transform.position = rightPosition;
-
-        foreach (var comp in gameObject.GetComponents<Component>())
-        {
-            if (!(comp is Transform || comp is Parallaxing))
-            {
-                Destroy(comp);
-            }
-        }
     }
 
     private void ScrollLeft()
