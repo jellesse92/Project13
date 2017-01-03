@@ -43,7 +43,7 @@ public class Parallaxing : MonoBehaviour {
         {
             transform.position += Vector3.right * (Time.deltaTime * autoScrollSpeed);
         }
-        else if (parallax)
+        if (parallax)
         {
             deltaX = cameraTransform.position.x - lastCameraX;
             transform.position += Vector3.right * (deltaX * parallaxSpeed);
