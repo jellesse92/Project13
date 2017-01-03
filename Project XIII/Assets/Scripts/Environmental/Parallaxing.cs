@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-
 public class Parallaxing : MonoBehaviour {
     public bool scrolling;
     public bool parallax;
@@ -25,23 +24,30 @@ public class Parallaxing : MonoBehaviour {
 
     void Start()
     {
-        cameraTransform = Camera.main.transform;
-        lastCameraX = cameraTransform.position.x;
-        layers = new Transform[transform.childCount];
+        if (name.Contains("(Clone)"))
+            Destroy(GetComponent<Parallaxing>());
+        else
+        {
+            cameraTransform = Camera.main.transform;
+            lastCameraX = cameraTransform.position.x;
+            layers = new Transform[3];
 
-        SetBackground();
+            SetBackground();
 
-        leftIndex = 0;
-        rightIndex = layers.Length - 1;
-
+            leftIndex = 0;
+            rightIndex = 2;
+        }
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
-        if(autoScroll)
+        if (autoScroll)
         {
-            transform.position += Vector3.right * (Time.deltaTime * autoScrollSpeed);
+            layers[0].position += Vector3.right * (Time.deltaTime * autoScrollSpeed);
+            layers[1].position += Vector3.right * (Time.deltaTime * autoScrollSpeed);
+            layers[2].position += Vector3.right * (Time.deltaTime * autoScrollSpeed);
+
         }
         if (parallax)
         {
@@ -62,20 +68,34 @@ public class Parallaxing : MonoBehaviour {
 
     void SetBackground()
     {
-        for (int i = 0; i < transform.childCount; i++)
-        {
-            layers[i] = transform.GetChild(i);
-        }
+        backgroundSize = GetComponent<Renderer>().bounds.size.x;
 
-        backgroundSize = layers[0].GetComponent<Renderer>().bounds.size.x;
+        Vector3 leftPosition = transform.position;
+        Vector3 centerPosition = transform.position;
+        Vector3 rightPosition = transform.position;
 
-        Vector3 leftPosition = layers[1].transform.position;
-        Vector3 rightPosition = layers[1].transform.position;
         leftPosition.x -= backgroundSize;
         rightPosition.x += backgroundSize;
 
+        layers[0] = Instantiate(gameObject).transform;
+        layers[1] = Instantiate(gameObject).transform;
+        layers[2] = Instantiate(gameObject).transform;
+
+        layers[0].transform.parent = transform;
+        layers[1].transform.parent = transform;
+        layers[2].transform.parent = transform;
+
         layers[0].transform.position = leftPosition;
-        layers[layers.Length - 1].transform.position = rightPosition;
+        layers[1].transform.position = centerPosition;
+        layers[2].transform.position = rightPosition;
+
+        foreach (var comp in gameObject.GetComponents<Component>())
+        {
+            if (!(comp is Transform || comp is Parallaxing))
+            {
+                Destroy(comp);
+            }
+        }
     }
 
     private void ScrollLeft()
