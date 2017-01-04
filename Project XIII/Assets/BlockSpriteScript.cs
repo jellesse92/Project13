@@ -13,4 +13,14 @@ public class BlockSpriteScript : MonoBehaviour {
     {
         transform.parent.GetComponent<SquishBlockScript>().InvisFunc();
     }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.name == "Kill Zone Activate")
+        {
+            transform.parent.GetComponent<SquishBlockScript>().killZone.SetActive(true);
+        }
+    }
+
+
 }

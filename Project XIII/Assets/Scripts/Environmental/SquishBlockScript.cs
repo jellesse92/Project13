@@ -8,6 +8,7 @@ public class SquishBlockScript : MonoBehaviour {
     //Heirarchy objects
     public Transform destination;               //Destination location
     public Transform block;                     //Moving block
+    public GameObject killZone;                 //Kill zone for block while it's moving towards its destination
     GameObject cam;                             //Game camera
 
     Vector3 origin;                             //Origin position of block to return to
@@ -56,6 +57,7 @@ public class SquishBlockScript : MonoBehaviour {
         {
             moving = false;
             playSound(impact);
+            killZone.SetActive(false);
             cam.GetComponent<CamShakeScript>().StartShake(.1f);
             Invoke("DelayReturn", returnDelay);
         }
