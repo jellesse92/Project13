@@ -35,7 +35,6 @@ public class MineDetectionScript : MonoBehaviour {
 
     public bool detectsPlayer()
     {
-        Debug.Log("players?:" + playersInRange.Count);
         return playersInRange.Count != 0;
     }
 }
