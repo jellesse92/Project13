@@ -10,8 +10,8 @@ public class FloatingMineScript : MonoBehaviour {
 
     const int DAMAGE = 20;
 
-    public ParticleSystem explosion;
-    public Transform detectionRadii;
+    public ParticleSystem explosion;                //Particle for explosion
+    public Transform detectionRadii;                //Parent of detection radius trigger zones
 
     private int currentRadiusLevel = 3;             //How close player is to mine. 3 is the farthest level
     private float[] flashRates = new float[]{ INNER_DETECTION_FLASH_RATE, MIDDLE_DETECTION_FLASH_RATE, OUTER_DETECTION_FLASH_RATE };
@@ -81,6 +81,5 @@ public class FloatingMineScript : MonoBehaviour {
             GetComponent<SpriteRenderer>().color = Color.white;
             yield return new WaitForSeconds(rate);
         }
-
     }
 }

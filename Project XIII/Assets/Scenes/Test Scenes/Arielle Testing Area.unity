@@ -907,6 +907,36 @@ Transform:
   m_PrefabParentObject: {fileID: 4566462683338748, guid: 512a3cf237662904eb32158e20e17e64,
     type: 2}
   m_PrefabInternal: {fileID: 645303053}
+--- !u!1 &676029750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 676029751}
+  m_Layer: 0
+  m_Name: Mine Travel Route
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &676029751
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 676029750}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1128499560}
+  - {fileID: 1136933936}
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &706071604
 Prefab:
   m_ObjectHideFlags: 0
@@ -1490,6 +1520,85 @@ BoxCollider2D:
   m_Offset: {x: 0, y: -12}
   serializedVersion: 2
   m_Size: {x: 500, y: 20}
+--- !u!1001 &1128499559
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 676029751}
+    m_Modifications:
+    - target: {fileID: 4320745074160720, guid: 9d4e0a17f1f7f654684307e151e5691b, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4320745074160720, guid: 9d4e0a17f1f7f654684307e151e5691b, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4320745074160720, guid: 9d4e0a17f1f7f654684307e151e5691b, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4320745074160720, guid: 9d4e0a17f1f7f654684307e151e5691b, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4320745074160720, guid: 9d4e0a17f1f7f654684307e151e5691b, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4320745074160720, guid: 9d4e0a17f1f7f654684307e151e5691b, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4320745074160720, guid: 9d4e0a17f1f7f654684307e151e5691b, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4320745074160720, guid: 9d4e0a17f1f7f654684307e151e5691b, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1516411421712734, guid: 9d4e0a17f1f7f654684307e151e5691b, type: 2}
+      propertyPath: m_Name
+      value: Floating Mine
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 9d4e0a17f1f7f654684307e151e5691b, type: 2}
+  m_IsPrefabParent: 0
+--- !u!4 &1128499560 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4320745074160720, guid: 9d4e0a17f1f7f654684307e151e5691b,
+    type: 2}
+  m_PrefabInternal: {fileID: 1128499559}
+--- !u!1 &1136933935
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1136933936}
+  m_Layer: 0
+  m_Name: Travel Points
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1136933936
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1136933935}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 676029751}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1159528797
 GameObject:
   m_ObjectHideFlags: 0
