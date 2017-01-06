@@ -12,14 +12,17 @@ public class FloatingMineScript : MonoBehaviour {
 
     public ParticleSystem explosion;                //Particle for explosion
     public Transform detectionRadii;                //Parent of detection radius trigger zones
+    public AudioClip explosionSoundEffect;
 
     private int currentRadiusLevel = 3;             //How close player is to mine. 3 is the farthest level
     private float[] flashRates = new float[]{ INNER_DETECTION_FLASH_RATE, MIDDLE_DETECTION_FLASH_RATE, OUTER_DETECTION_FLASH_RATE };
 
     private Animator myAnimator;
+    private Camera mainCamera;
 
     void Start()
     {
+        mainCamera = Camera.main;
         myAnimator = GetComponent<Animator>();
     }
 
@@ -29,6 +32,9 @@ public class FloatingMineScript : MonoBehaviour {
         {
             StopAllCoroutines();
             explosion.Play();
+            mainCamera.GetComponent<CamShakeScript>().StartShake(.1f);
+
+            GetComponent<AnimationEventSound>().playSound(explosionSoundEffect);
             col.gameObject.GetComponent<PlayerProperties>().TakeDamage(DAMAGE);
             GetComponent<SpriteRenderer>().enabled = false;
             GetComponent<Collider2D>().enabled = false;
@@ -72,7 +78,6 @@ public class FloatingMineScript : MonoBehaviour {
                     if (currentRadiusLevel < 3)
                     {
                         DetectionFlashEffect(flashRates[radiusLevel]);
-                        Debug.Log("Exit: " + radiusLevel);
                     }
                 }
             }
