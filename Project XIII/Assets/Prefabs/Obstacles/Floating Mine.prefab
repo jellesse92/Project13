@@ -89,6 +89,7 @@ GameObject:
   - component: {fileID: 58308651294783208}
   - component: {fileID: 114558866733626454}
   - component: {fileID: 50126714944560940}
+  - component: {fileID: 95355278296272984}
   m_Layer: 0
   m_Name: Mine
   m_TagString: Untagged
@@ -301,6 +302,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2.5
+--- !u!95 &95355278296272984
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1871094976406782}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: baffe33af2adb7f4b8decf457b5fe886, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114140775472451038
 MonoBehaviour:
   m_ObjectHideFlags: 1

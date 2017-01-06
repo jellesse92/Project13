@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class FloatingMineScript : MonoBehaviour {
 
-    const float OUTER_DETECTION_FLASH_RATE = .8f;
-    const float MIDDLE_DETECTION_FLASH_RATE = .3f;
-    const float INNER_DETECTION_FLASH_RATE = .1f;
+    const float OUTER_DETECTION_FLASH_RATE = 2.5f;
+    const float MIDDLE_DETECTION_FLASH_RATE = 5f;
+    const float INNER_DETECTION_FLASH_RATE = 10f;
 
     const int DAMAGE = 20;
 
@@ -15,6 +15,13 @@ public class FloatingMineScript : MonoBehaviour {
 
     private int currentRadiusLevel = 3;             //How close player is to mine. 3 is the farthest level
     private float[] flashRates = new float[]{ INNER_DETECTION_FLASH_RATE, MIDDLE_DETECTION_FLASH_RATE, OUTER_DETECTION_FLASH_RATE };
+
+    private Animator myAnimator;
+
+    void Start()
+    {
+        myAnimator = GetComponent<Animator>();
+    }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -36,7 +43,7 @@ public class FloatingMineScript : MonoBehaviour {
 
     public void StopFlashing()
     {
-        StopAllCoroutines();
+        DetectionFlashEffect(1);
         GetComponent<SpriteRenderer>().color = Color.white;
     }
 
@@ -48,7 +55,7 @@ public class FloatingMineScript : MonoBehaviour {
             if(currentRadiusLevel > radiusLevel)
             {
                 StopFlashing();
-                StartCoroutine(DetectionFlashEffect(flashRates[radiusLevel]));
+                DetectionFlashEffect(flashRates[radiusLevel]);
                 currentRadiusLevel = radiusLevel;
             }
         }
@@ -64,7 +71,7 @@ public class FloatingMineScript : MonoBehaviour {
                     currentRadiusLevel++;
                     if (currentRadiusLevel < 3)
                     {
-                        StartCoroutine(DetectionFlashEffect(flashRates[radiusLevel]));
+                        DetectionFlashEffect(flashRates[radiusLevel]);
                         Debug.Log("Exit: " + radiusLevel);
                     }
                 }
@@ -72,14 +79,8 @@ public class FloatingMineScript : MonoBehaviour {
         }
     }
 
-    IEnumerator DetectionFlashEffect(float rate)
+    void DetectionFlashEffect(float rate)
     {
-        while (true)
-        {
-            GetComponent<SpriteRenderer>().color = Color.red;
-            yield return new WaitForSeconds(rate);
-            GetComponent<SpriteRenderer>().color = Color.white;
-            yield return new WaitForSeconds(rate);
-        }
+        myAnimator.speed = rate;
     }
 }
