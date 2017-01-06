@@ -13,23 +13,23 @@ public class MineDetectionScript : MonoBehaviour {
         playersInRange = new HashSet<GameObject>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag == "Player")
             if (!playersInRange.Contains(collision.gameObject))
             {
                 playersInRange.Add(collision.gameObject);
-                transform.parent.parent.GetComponent<FloatingMineScript>().RadiusReport(radiusLevel, true);
+                transform.parent.parent.GetChild(0).GetComponent<FloatingMineScript>().RadiusReport(radiusLevel, true);
             }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.tag == "Player")
             if (playersInRange.Contains(collision.gameObject))
             {
                 playersInRange.Remove(collision.gameObject);
-                transform.parent.parent.GetComponent<FloatingMineScript>().RadiusReport(radiusLevel, false);
+                transform.parent.parent.GetChild(0).GetComponent<FloatingMineScript>().RadiusReport(radiusLevel, false);
             }
     }
 
