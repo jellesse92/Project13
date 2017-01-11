@@ -139,7 +139,10 @@ public class ChargingEnemy : Enemy {
         {
             Vector2 target_location = new Vector2(xyBoundary[location], transform.position.y);
             transform.position = Vector2.MoveTowards(transform.position, target_location, speed);
-            if (transform.position.x == xyBoundary[location])
+            if (location == 1 && transform.position.x >= xyBoundary[location])
+            {
+                StopCharging();
+            } else if (location == 0 && transform.position.x <= xyBoundary[location])
             {
                 StopCharging();
             }
