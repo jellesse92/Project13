@@ -2,20 +2,27 @@
 using System.Collections;
 
 public class EnemyBulletScript : MonoBehaviour {
-    /*
+
+    int damage = 10;
+    
 	void OnTriggerEnter2D(Collider2D col)
     {
         if(col.tag != "Enemy")
         {
-            transform.parent.parent.GetComponent<BasicRangeEnemy>().ReloadAmmo();
             if (col.tag == "Player")
+                col.GetComponent<PlayerProperties>().TakeDamage(damage);
+            
+            if (!col.GetComponent<Collider2D>().isTrigger)
             {
-                col.gameObject.GetComponent<Player>().TakeDamage(10);
+                gameObject.SetActive(false);
+                transform.parent.parent.GetComponent<Enemy>().ReloadAmmo();
             }
-            gameObject.SetActive(false);
+
         }
-
-
     }
-    */
+    
+    public void SetDamage(int dmg)
+    {
+        damage = dmg;
+    }
 }

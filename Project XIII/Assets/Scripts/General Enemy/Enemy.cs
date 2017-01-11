@@ -58,6 +58,7 @@ public class Enemy : MonoBehaviour {
     private bool waitForRemoveStunLand = false;
 
     Color default_color;
+    protected int currentAmmo = 0;                      //Ammo count for enemies with ammo
 
     // Use this for initialization
     void Awake()
@@ -307,5 +308,9 @@ public class Enemy : MonoBehaviour {
         return stunned;
     }
 
+    public void ReloadAmmo()
+    {
+        currentAmmo++;
+    }
 
 }

@@ -14,6 +14,7 @@ public class EnemyPhysics : Enemy{
     protected bool canMove = true;
     protected bool canAttack = true;
     protected bool canJump = true;
+    protected bool turning = false;
 
 
     //Juggling variables
@@ -35,7 +36,7 @@ public class EnemyPhysics : Enemy{
             if (target != null && !target.GetComponent<PlayerProperties>().alive)
                 target = GetRandomTarget();
 
-            if (target != null && GetVisibleState() && GetPursuitState() && !stunned && !frozen)
+            if (target != null && GetVisibleState() && GetPursuitState() && !stunned && !frozen && !turning)
                 RunEngagedBehavior();
         }
 
@@ -75,11 +76,11 @@ public class EnemyPhysics : Enemy{
     //Execute attack
     public virtual void ExecuteAttack()
     {
-        anim.SetTrigger("attack");
+        anim.SetTrigger("Attack");
     }
 
     //Runs behavior of enemy engaged with player
-    void RunEngagedBehavior()
+    public virtual void RunEngagedBehavior()
     {
 
         if (!inAttackRange && canMove)
@@ -148,7 +149,7 @@ public class EnemyPhysics : Enemy{
     }
 
     //Flips the sprite
-    void Flip()
+    public void Flip()
     {
         Vector3 scale = transform.localScale;
         scale.x *= -1;
