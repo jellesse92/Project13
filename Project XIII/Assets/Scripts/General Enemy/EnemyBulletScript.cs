@@ -9,12 +9,14 @@ public class EnemyBulletScript : MonoBehaviour {
     {
         if(col.tag != "Enemy")
         {
-            //transform.parent.parent.GetComponent<BasicRangeEnemy>().ReloadAmmo();
+            Debug.Log(col.tag);
             if (col.tag == "Player")
             {
                 col.GetComponent<PlayerProperties>().TakeDamage(damage);
             }
+            
             gameObject.SetActive(false);
+            transform.parent.parent.GetComponent<Enemy>().ReloadAmmo();
         }
     }
     

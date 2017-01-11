@@ -6,8 +6,8 @@ public class BasicTurretEnemy : EnemyPhysics
 {
 
     const int AMMO_AMOUNT = 20;                             //Amount of ammo to be created
-
-    public float rangedAttackCooldown = .1f;                //Cooldown between ranged attack
+    const float BULLET_SPEED = 15f;                         //Speed of bullet
+    const float RANGED_ATTACK_COOLDOWN = 1f;                //Cooldown for attack
 
     public GameObject rangedProjectile;                    //Projectiles to be shot
     public Transform projectileList;                       //Transform containing projectiles
@@ -15,6 +15,8 @@ public class BasicTurretEnemy : EnemyPhysics
     // Use this for initialization
     void Start()
     {
+        currentAmmo = AMMO_AMOUNT;
+
         for (int i = 0; i < 20; i++)
         {
             GameObject bullet = (GameObject)Instantiate(rangedProjectile);
@@ -42,6 +44,15 @@ public class BasicTurretEnemy : EnemyPhysics
         }
     }
 
+    public override void RunEngagedBehavior()
+    {
+
+        if (!inAttackRange && canMove)
+            ApproachTarget();
+        else if (canAttack)
+            ExecuteAttack();
+    }
+
     public void Turn()
     {
         anim.SetTrigger("Turn");
@@ -56,11 +67,38 @@ public class BasicTurretEnemy : EnemyPhysics
 
     public void AttackCDRecovery()
     {
-        Invoke("SetCanAttackTrue", rangedAttackCooldown);
+        Invoke("SetCanAttackTrue", RANGED_ATTACK_COOLDOWN);
     }
 
     void SetCanAttackTrue()
     {
         canAttack = true;
     }
+
+    public override void ExecuteAttack()
+    {
+        if (currentAmmo > 0)
+        {
+            base.ExecuteAttack();
+        }
+    }
+
+    public void FireBullet()
+    {
+        for(int i = 0; i < AMMO_AMOUNT; i++)
+        {
+            if (!projectileList.GetChild(i).gameObject.activeSelf)
+            {
+                projectileList.GetChild(i).gameObject.SetActive(true);
+                projectileList.GetChild(i).position = projectileList.position;
+                projectileList.GetChild(i).GetComponent<Rigidbody2D>().velocity = -(transform.position - target.transform.position).normalized * BULLET_SPEED;
+                return;
+            }
+        }
+
+    }
+
+
+
+
 }

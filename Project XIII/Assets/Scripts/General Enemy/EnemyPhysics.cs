@@ -80,7 +80,7 @@ public class EnemyPhysics : Enemy{
     }
 
     //Runs behavior of enemy engaged with player
-    void RunEngagedBehavior()
+    public virtual void RunEngagedBehavior()
     {
 
         if (!inAttackRange && canMove)
