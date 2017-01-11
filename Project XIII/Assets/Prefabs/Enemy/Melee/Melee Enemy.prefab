@@ -100,7 +100,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1464318194706696}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10, y: 0, z: 0}
+  m_LocalPosition: {x: 5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4380498703240874}
@@ -139,9 +139,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: -2, y: 1.2}
+  m_Offset: {x: 0, y: -0.2}
   serializedVersion: 2
-  m_Size: {x: 3.2, y: 2.2}
+  m_Size: {x: 3.5, y: 3}
 --- !u!61 &61055280739709448
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -153,9 +153,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: -0.3, y: 1}
+  m_Offset: {x: 2, y: -0.5}
   serializedVersion: 2
-  m_Size: {x: 1, y: 1.5}
+  m_Size: {x: 4, y: 2}
 --- !u!61 &61411985378113178
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -167,9 +167,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: -1, y: 1}
+  m_Offset: {x: 2, y: -0.5}
   serializedVersion: 2
-  m_Size: {x: 2.3, y: 2}
+  m_Size: {x: 4, y: 2}
 --- !u!82 &82553785290978330
 AudioSource:
   m_ObjectHideFlags: 1
@@ -259,7 +259,7 @@ Animator:
   m_GameObject: {fileID: 1464318194706696}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 7b1fe1cd6b256cd47883d9299906602a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8d3c3cb93acf46f439d78cdd93315d90, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -278,8 +278,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb0c9d396040ef048b4b381dc1a6f086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultHitSparkParticle: {fileID: 1153493469282362, guid: 69425b005fabae443b1d0d966ceba490,
-    type: 2}
   groundedOffset: 1
   health: 300
   speed: 0.25
@@ -332,7 +330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   receiveDamageVoiceList:
   - {fileID: 8300000, guid: a85964894aebc3940a8f4fbd58db45a0, type: 3}
-  xOut10ToSaySomething: 0
+  xOut10ToSaySomething: 2
 --- !u!212 &212803223240221760
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -364,7 +362,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3613a73529362a74ea4a170e27a9da71, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a19bd840733123c428b183f7acf4dfdd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
