@@ -10,12 +10,12 @@ public class PlayerStatusUIScript : MonoBehaviour {
     public Text[] lifeText;
     public Text[] currencyText;
 
-    private int[] healthLast = new int[4];
-    private int[] lastDamage = new int[4];
+    private int[] healthLast = new int[2];
+    private int[] lastDamage = new int[2];
 
     void Start()
     {
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < 2; i++)
         {
             healthLast[i] = 100;
             lastDamage[i] = 0;
@@ -33,7 +33,7 @@ public class PlayerStatusUIScript : MonoBehaviour {
             index = 0;
 
         //Jump to last known health amount
-        healthBars[index].transform.GetChild(0).GetComponent<Image>().fillAmount = 1.1f - healthLast[index] * .01f;
+        healthBars[index].transform.GetChild(0).GetComponent<Image>().fillAmount = 1f - healthLast[index] * .01f;
 
         StopCoroutine(decreaseHealth(index, lastDamage[index]));
 
@@ -56,6 +56,6 @@ public class PlayerStatusUIScript : MonoBehaviour {
 
     public void SetHealth(int index, int amount)
     {
-        healthBars[index].transform.GetChild(index).GetComponent<Image>().fillAmount = .9f - amount * .01f;
+        healthBars[index].transform.GetChild(index).GetComponent<Image>().fillAmount = 1f - amount * .01f;
     }
 }
