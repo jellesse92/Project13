@@ -9,8 +9,8 @@ public class BasicMeleeEnemy : EnemyPhysics{
     protected override void EnemySpecificStart()
     {
         Vector3 newCenter = transform.position; //adjust center position of the enemy, use to place particles
-        newCenter.x -= 0.2f;
-        newCenter.y -= 0.4f;
+        newCenter.x -= 2f;
+        newCenter.y += 1.5f;
         ChangeCenter(newCenter);
     }
 
