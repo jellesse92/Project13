@@ -18,6 +18,7 @@ public class PlayerEffectsManager : MonoBehaviour {
     public void FlashScreen()
     {
         screenFlash.GetComponent<Animator>().SetTrigger("hitFlash");
+        Debug.Log("flash?");
     }
 
     //Gets the screen to shake

@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SwordsmanAttackScript : MonoBehaviour {
 
+    //Constant for last combo hit damage additive
+    const int FINISHER_DMG_BONUS = 5;
+
     //Constants for heavy attack variables 
     const float HEAVY_DRAG_ENEMY_TIME = .1f;                        //Time after initial enemy hit to keep dragging out attack
     const float HEAVY_X_LAUNCH_FORCE_MULTIPLIER = 18000f;           //Multiplier for how much to push enemy at the end of hit in the X direction
@@ -39,6 +42,9 @@ public class SwordsmanAttackScript : MonoBehaviour {
     //Heavy attack variables
     float forceMulti = 1f;                                          //Force based on how much swordsman charged attack
 
+    //Combo finisher variable
+    bool finishEffectPlayed = false;                                //Finisher effect has been played
+
     string attack = "";
     int damage;
 
@@ -67,6 +73,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             case "quickAir": TriggerAirQuickAttack(col); break;
             case "heavyAir": TriggerAirHeavyAttack(col); break;
             case "drag": TriggerDragAttack(col);  break;
+            case "finisher": TriggerFinisherAttack(col); break;
             default: break;
         }
     }
@@ -80,6 +87,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             case "quickAir": break;
             case "heavyAir": break;
             case "drag": UpdateDragAttack(); break;
+            case "finisher": break;
             default: break;
         }
     }
@@ -98,6 +106,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
                 damage = playProp.GetPlayerStats().quickAttackStrength;
                 InvokeRepeating("DragAttackApplyDamage", DRAG_REPEAT_DMG_APPLY_ST, DRAG_REPEAT_DMG_RATE);
                 break;
+            case "finisher": damage = playProp.GetPlayerStats().quickAttackStrength + FINISHER_DMG_BONUS; break;
             default: attack = ""; break;
         }
     }
@@ -269,4 +278,33 @@ public class SwordsmanAttackScript : MonoBehaviour {
     /*
      *  END DRAG ATTACK FUNCTIONS
      */
+
+    /*
+     *  BEGIN FINISHER FUNCTIONS
+     */
+
+    void TriggerFinisherAttack(Collider2D col)
+    {
+        if(col.tag == "Enemy")
+        {
+            //HEAVY ATTACK EFFECTS STUFF
+            playerSoundEffects.PlayHitSpark();
+            playerParticleEffects.PlayHitSpark(col.GetComponent<Enemy>().GetCenter());
+
+            if (!finishEffectPlayed)
+            {
+                finishEffectPlayed = true;
+                transform.parent.parent.GetComponent<PlayerEffectsManager>().FlashScreen();
+            }
+
+            col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
+            col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
+
+        }
+    }
+
+    /*
+     *  END FINISHER FUNCTIONS
+     */
+
 }
