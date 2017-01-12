@@ -106,7 +106,10 @@ public class SwordsmanAttackScript : MonoBehaviour {
                 damage = playProp.GetPlayerStats().quickAttackStrength;
                 InvokeRepeating("DragAttackApplyDamage", DRAG_REPEAT_DMG_APPLY_ST, DRAG_REPEAT_DMG_RATE);
                 break;
-            case "finisher": damage = playProp.GetPlayerStats().quickAttackStrength + FINISHER_DMG_BONUS; break;
+            case "finisher":
+                damage = playProp.GetPlayerStats().quickAttackStrength + FINISHER_DMG_BONUS;
+                finishEffectPlayed = false;
+                break;
             default: attack = ""; break;
         }
     }
