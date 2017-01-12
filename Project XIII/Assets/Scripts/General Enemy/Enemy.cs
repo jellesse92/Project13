@@ -196,6 +196,7 @@ public class Enemy : MonoBehaviour {
         anim.SetTrigger("stun");
         stunned = true;
         yield return new WaitForSeconds(currentStunMultiplier * stunEffectiveness);
+
         if (!flyingEnemy && !IsGrounded())
             waitForRemoveStunLand = true;
         else
