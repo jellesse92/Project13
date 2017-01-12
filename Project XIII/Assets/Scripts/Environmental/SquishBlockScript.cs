@@ -83,7 +83,8 @@ public class SquishBlockScript : MonoBehaviour {
     public void VisibleFunc()
     {
         this.GetComponent<SquishBlockScript>().enabled = true;
-        block.position = origin;
+        if(!moving)
+            block.position = origin;
         isVisible = true;
     }
 

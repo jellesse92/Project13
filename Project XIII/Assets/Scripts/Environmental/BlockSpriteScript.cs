@@ -4,21 +4,24 @@ using UnityEngine;
 
 public class BlockSpriteScript : MonoBehaviour {
 
-    void OnBecameVisible()
-    {
-        transform.parent.GetComponent<SquishBlockScript>().VisibleFunc();
-    }
-
-    void OnBecameInvisible()
-    {
-        transform.parent.GetComponent<SquishBlockScript>().InvisFunc();
-    }
-
     void OnTriggerEnter2D(Collider2D col)
     {
+        if (col.tag == "Activation Field")
+        {
+            transform.parent.GetComponent<SquishBlockScript>().VisibleFunc();
+        }
+
         if (col.name == "Kill Zone Activate")
         {
             transform.parent.GetComponent<SquishBlockScript>().killZone.SetActive(true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.tag == "Activation Field")
+        {
+            transform.parent.GetComponent<SquishBlockScript>().InvisFunc();
         }
     }
 
