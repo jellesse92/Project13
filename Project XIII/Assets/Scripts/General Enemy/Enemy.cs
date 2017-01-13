@@ -170,10 +170,8 @@ public class Enemy : MonoBehaviour {
 
             if (dead)
                 return;
-            health -= damage;
 
-            if (!isFrozen)
-                StartCoroutine("ApplyDamageColor");
+            health -= damage;
 
             if (health <= 0)
             {
@@ -186,6 +184,8 @@ public class Enemy : MonoBehaviour {
                 currentStunMultiplier = stunMultiplier;
                 StopCoroutine(ApplyStun());
                 StartCoroutine(ApplyStun());
+                if (!isFrozen)
+                    StartCoroutine("ApplyDamageColor");
             }
         }
     }
@@ -201,6 +201,7 @@ public class Enemy : MonoBehaviour {
     {
         StopCoroutine("ApplyStun");
         anim.SetTrigger("death");
+        GetComponent<SpriteRenderer>().color = default_color;
         dead = true;
         gameObject.layer = 14;
 
