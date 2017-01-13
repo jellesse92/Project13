@@ -20,14 +20,26 @@ public class DetonatingSkullPhysics : EnemyPhysics {
         explosionRadius.GetComponent<Collider2D>().enabled = true;
     }
 
+    public override void PlayDeath()
+    {
+        base.PlayDeath();
+        CancelExplosion();
+        explosionRadius.GetComponent<Collider2D>().enabled = false;
+    }
+
     public float GetExplosionDelay()
     {
         return EXPLOSION_DELAY;
     }
 
-    public void CancelExplosion()
+    void CancelExplosion()
     {
         explosionRadius.GetComponent<DetonatingEnemyExplosion>().CancelExplosion();
+    }
+
+    public void InterruptExplosion()
+    {
+        explosionRadius.GetComponent<DetonatingEnemyExplosion>().InterruptExplosion();
     }
 
 

@@ -5,6 +5,8 @@ using UnityEngine;
 public class DetonatingEnemyExplosion : MonoBehaviour {
 
     HashSet<GameObject> playersinRange = new HashSet<GameObject>();
+    public ParticleSystem explosionParticle;                            //Explosion particle
+
     bool exploding = false;
     bool interrupted = false;
     int damage = 40;
@@ -22,12 +24,14 @@ public class DetonatingEnemyExplosion : MonoBehaviour {
     {
         if (col.tag == "Player" && playersinRange.Contains(col.gameObject))
             playersinRange.Remove(col.gameObject);
-        
+
+        if (playersinRange.Count == 0)
+            exploding = false;
     }
 
     private void FixedUpdate()
     {
-        if (interrupted && !transform.parent.GetComponent<Enemy>().GetStunStatus())
+        if (interrupted && !transform.parent.GetComponent<Enemy>().GetStunStatus() && exploding)
         {
             interrupted = false;
             StartCoroutine("TriggerExplosion");
@@ -47,6 +51,7 @@ public class DetonatingEnemyExplosion : MonoBehaviour {
         }
 
         transform.parent.GetComponent<Enemy>().Damage(1000);
+        explosionParticle.Play();
         GetComponent<Collider2D>().enabled = false;
     }
 
@@ -57,10 +62,17 @@ public class DetonatingEnemyExplosion : MonoBehaviour {
         ApplyExplosion();
     }
 
-    public void CancelExplosion()
+    public void InterruptExplosion()
     {
         StopCoroutine("TriggerExplosion");
         interrupted = true;
+    }
+
+    public void CancelExplosion()
+    {
+        StopCoroutine("TriggerExplosion");
+        exploding = false;
+        interrupted = false;
     }
 
     public void Reset()

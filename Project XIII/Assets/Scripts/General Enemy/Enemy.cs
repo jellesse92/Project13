@@ -62,7 +62,6 @@ public class Enemy : MonoBehaviour {
     // Use this for initialization
     void Awake()
     {
-        Reset();
         frozen = false;
         isVisible = true;
         anim = GetComponent<Animator>();
@@ -70,6 +69,7 @@ public class Enemy : MonoBehaviour {
         layerMask = (LayerMask.GetMask("Default"));
         default_color = GetComponent<SpriteRenderer>().color;
         fullHealth = health;
+        Reset();
 
         CreateCenterObject();
         ChangeCenter(transform.position);
@@ -179,7 +179,7 @@ public class Enemy : MonoBehaviour {
         GetComponent<SpriteRenderer>().material.color = default_color;
     }
 
-    void PlayDeath()
+    public virtual void PlayDeath()
     {
         StopCoroutine("ApplyStun");
         anim.SetTrigger("death");
