@@ -32,16 +32,22 @@ public class MusicManager : MonoBehaviour {
     void Start () {
         aSource = new AudioSource[musicArray.Length];
 
-        for(int i = 0; i < musicArray.Length; i++)
+        GameObject child = new GameObject("Death Music");
+        child.transform.parent = gameObject.transform;
+        aSource[0] = child.AddComponent<AudioSource>() as AudioSource;
+        aSource[0].clip = musicArray[0].startClip;
+        aSource[0].Stop();
+
+        for (int i = 1; i < musicArray.Length; i++)
         {
-            GameObject child = new GameObject("Background Music");
+            child = new GameObject("Background Music");
             child.transform.parent = gameObject.transform;
             aSource[i] = child.AddComponent<AudioSource>() as AudioSource;
             aSource[i].clip = musicArray[i].startClip;
             aSource[i].loop = true;
         }
 
-        for(int i = 0; i < musicArray.Length; i++)
+        for(int i = 1; i < musicArray.Length; i++)
             StartCoroutine(StartClips(i));
 
         nextClip = clipsPlayOnStart;
@@ -60,7 +66,8 @@ public class MusicManager : MonoBehaviour {
     //Zero the volume for all clips except the first
     void ZeroVolumeClips()
     {
-        for(int i = clipsPlayOnStart; i < aSource.Length; i++)
+        aSource[0].volume = 0;
+        for(int i = clipsPlayOnStart+1; i < aSource.Length; i++)
         {
             aSource[i].volume = 0;
         }
@@ -84,7 +91,14 @@ public class MusicManager : MonoBehaviour {
                 aSource[index].volume += INCREASE_VOLUME_RATE;
                 yield return new WaitForSeconds(1f);
             }
+    }
 
+    public void PlayDeathMusic()
+    {
+        clipsPlayOnStart = 0;
+        ZeroVolumeClips();
+        aSource[0].Play();
+        StartCoroutine(RaiseVolume(0));
     }
 
 }

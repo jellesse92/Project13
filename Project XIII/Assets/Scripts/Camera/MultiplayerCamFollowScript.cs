@@ -18,8 +18,11 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
     public bool in2DMode = true;
     public float lowestPointY = 0f;                             //Lowest point of the map the camera should be able to show
+    public float lowestPointX = 0f;                             //Leftmost point of the map the camera should be able to show
+
     float lastOrthographicSize = 0f;                            //Keeps track of the last orthographic size
     bool orthoTransitioning = false;
+
     Camera cam;
 
     Vector3 velocity = Vector3.zero;

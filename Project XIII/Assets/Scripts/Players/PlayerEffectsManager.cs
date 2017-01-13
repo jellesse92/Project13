@@ -6,19 +6,20 @@ public class PlayerEffectsManager : MonoBehaviour {
     GameObject screenFlash;
     GameObject screenShake;
     GameObject deathScreen;
+    GameObject musicManager;
 
 	// Use this for initialization
 	void Start () {
         screenFlash = GameObject.FindGameObjectWithTag("Hit Flash Image");
         screenShake = GameObject.FindGameObjectWithTag("MainCamera");
         deathScreen = GameObject.FindGameObjectWithTag("Death Screen");
+        musicManager = GameObject.FindGameObjectWithTag("Music");
     }
 
     //Gets the screen to flash
     public void FlashScreen()
     {
         screenFlash.GetComponent<Animator>().SetTrigger("hitFlash");
-        Debug.Log("flash?");
     }
 
     //Gets the screen to shake
@@ -29,6 +30,11 @@ public class PlayerEffectsManager : MonoBehaviour {
 
     public bool ReportLastDeath()
     {
+        if(musicManager != null)
+        {
+            musicManager.GetComponent<MusicManager>().PlayDeathMusic();
+        }
+
         if(deathScreen != null)
         {
             foreach(Transform child in transform)
@@ -39,6 +45,7 @@ public class PlayerEffectsManager : MonoBehaviour {
             deathScreen.GetComponent<DeathScreenScript>().TriggerDeath();
             return true;
         }
+
         return false;
     }
 }

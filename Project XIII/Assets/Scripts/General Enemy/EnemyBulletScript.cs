@@ -39,7 +39,7 @@ public class EnemyBulletScript : MonoBehaviour {
             
             if (!col.GetComponent<Collider2D>().isTrigger)
             {
-                //gameObject.SetActive(false);
+                StartCoroutine("DeactivateBullet");
                 PlayParticle(false);
                 transform.parent.parent.GetComponent<Enemy>().ReloadAmmo();
             }
@@ -47,6 +47,14 @@ public class EnemyBulletScript : MonoBehaviour {
         }
     }
     
+    IEnumerator DeactivateBullet()
+    {
+        GetComponent<Collider2D>().enabled = false;
+        yield return new WaitForSeconds(2.0f);
+        GetComponent<Collider2D>().enabled = true;
+        gameObject.SetActive(false);
+    }
+
     public void SetDamage(int dmg)
     {
         damage = dmg;
