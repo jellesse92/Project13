@@ -210,6 +210,8 @@ public class PlayerProperties : MonoBehaviour{
             isKnockedBack = true;
             float timer = 0;
 
+            GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+
             while (knockDur > timer)
             {
                 timer += Time.deltaTime;
