@@ -10,7 +10,6 @@ public class Enemy : MonoBehaviour {
     const float AIR_TO_GROUND_STUN_RECOVERY_TIME = .2f; //Time it takes to recover from stun after being in a stun state in the air as a non-flying enemy
 
     public float groundedOffset = 1f;                   //Offset for ground checking
-                   
 
     //Animator
     protected Animator anim;
@@ -140,7 +139,7 @@ public class Enemy : MonoBehaviour {
         inPursuit = false;
         target = null;
         inAttackRange = false;
-        fullHealth = health;
+        health = fullHealth;
         gameObject.layer = 9;
     }
 

@@ -17,7 +17,7 @@ public class DetonatingSkullPhysics : EnemyPhysics {
     {
         base.Reset();
         explosionRadius.GetComponent<DetonatingEnemyExplosion>().Reset();
-
+        explosionRadius.GetComponent<Collider2D>().enabled = true;
     }
 
     public float GetExplosionDelay()

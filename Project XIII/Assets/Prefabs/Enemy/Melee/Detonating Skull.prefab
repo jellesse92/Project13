@@ -64,7 +64,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1589014258543682
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,7 +227,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b423bf06f5f7ea44299837812d713a96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitParticles: {fileID: 1308180246131608}
   groundedOffset: 1
   health: 30
   speed: 0.2
@@ -239,8 +238,8 @@ MonoBehaviour:
   facingRight: 0
   attProjectionTime: 0
   hasAttackProjection: 1
-  knockBackForceX: 2500
-  knockBackForceY: 6000
+  knockBackForceX: 0
+  knockBackForceY: 0
   explosionRadius: {fileID: 1159727469049626}
 --- !u!114 &114772747886551396
 MonoBehaviour:

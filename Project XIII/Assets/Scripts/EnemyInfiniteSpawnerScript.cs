@@ -64,9 +64,10 @@ public class EnemyInfiniteSpawnerScript : MonoBehaviour {
 
         foreach(GameObject enemy in enemyHash)
         {
-            if (!enemy.activeSelf)
+            if (!enemy.activeSelf || enemy.gameObject.layer == 14)
             {
                 spawn = enemy;
+                spawn.GetComponent<Enemy>().Reset();
                 return spawn;
             }
             else if(enemy.GetComponent<Enemy>().health <= 0)

@@ -47,6 +47,7 @@ public class DetonatingEnemyExplosion : MonoBehaviour {
         }
 
         transform.parent.GetComponent<Enemy>().Damage(1000);
+        GetComponent<Collider2D>().enabled = false;
     }
 
     IEnumerator TriggerExplosion()
