@@ -21,7 +21,7 @@ public class BasicMeleeEnemy : EnemyPhysics{
 
     void ResetDamageApply()
     {
-        meleeAttackBox.GetComponent<EnemyMeleeDamage>().knockBackForceX = knockBackForceX * transform.parent.localScale.x;
+        meleeAttackBox.GetComponent<EnemyMeleeDamage>().knockBackForceX = knockBackForceX;
         meleeAttackBox.GetComponent<EnemyMeleeDamage>().knockBackForceY = knockBackForceY;
         meleeAttackBox.GetComponent<EnemyMeleeDamage>().ResetAttackApplied();
     }
