@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class DetonatingSkullPhysics : EnemyPhysics {
 
-    const float EXPLOSION_DELAY = 1.5f;               //Amount of time enemy delays explosion after contact with player
-
     public GameObject explosionRadius;
 
     protected override void EnemySpecificStart()
@@ -23,7 +21,6 @@ public class DetonatingSkullPhysics : EnemyPhysics {
     public override void PlayDeath()
     {
         base.PlayDeath();
-        CancelExplosion();
         explosionRadius.GetComponent<Collider2D>().enabled = false;
     }
 
@@ -35,19 +32,9 @@ public class DetonatingSkullPhysics : EnemyPhysics {
         facingRight = !facingRight;
     }
 
-    public float GetExplosionDelay()
+    public void Explode()
     {
-        return EXPLOSION_DELAY;
-    }
-
-    void CancelExplosion()
-    {
-        explosionRadius.GetComponent<DetonatingEnemyExplosion>().CancelExplosion();
-    }
-
-    public void InterruptExplosion()
-    {
-        explosionRadius.GetComponent<DetonatingEnemyExplosion>().InterruptExplosion();
+        explosionRadius.GetComponent<DetonatingEnemyExplosion>().ApplyExplosion();
     }
 
 

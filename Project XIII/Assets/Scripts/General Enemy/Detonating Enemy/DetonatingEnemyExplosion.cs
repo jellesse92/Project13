@@ -13,8 +13,10 @@ public class DetonatingEnemyExplosion : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
+        /*
         if (!exploding && col.tag == "Player")
             StartCoroutine("TriggerExplosion");
+            */
         if (col.tag == "Player" && !playersinRange.Contains(col.gameObject))
             playersinRange.Add(col.gameObject);
 
@@ -25,20 +27,10 @@ public class DetonatingEnemyExplosion : MonoBehaviour {
         if (col.tag == "Player" && playersinRange.Contains(col.gameObject))
             playersinRange.Remove(col.gameObject);
 
-        if (playersinRange.Count == 0)
-            exploding = false;
     }
 
-    private void FixedUpdate()
-    {
-        if (interrupted && !transform.parent.GetComponent<Enemy>().GetStunStatus() && exploding)
-        {
-            interrupted = false;
-            StartCoroutine("TriggerExplosion");
-        }
-    }
 
-    void ApplyExplosion()
+    public void ApplyExplosion()
     {
         foreach(GameObject target in playersinRange)
         {
@@ -55,25 +47,9 @@ public class DetonatingEnemyExplosion : MonoBehaviour {
         GetComponent<Collider2D>().enabled = false;
     }
 
-    IEnumerator TriggerExplosion()
-    {
-        exploding = true;
-        yield return new WaitForSeconds(transform.parent.GetComponent<DetonatingSkullPhysics>().GetExplosionDelay());
-        ApplyExplosion();
-    }
 
-    public void InterruptExplosion()
-    {
-        StopCoroutine("TriggerExplosion");
-        interrupted = true;
-    }
 
-    public void CancelExplosion()
-    {
-        StopCoroutine("TriggerExplosion");
-        exploding = false;
-        interrupted = false;
-    }
+
 
     public void Reset()
     {
