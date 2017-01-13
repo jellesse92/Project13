@@ -27,6 +27,14 @@ public class DetonatingSkullPhysics : EnemyPhysics {
         explosionRadius.GetComponent<Collider2D>().enabled = false;
     }
 
+    public override void Flip()
+    {
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+        facingRight = !facingRight;
+    }
+
     public float GetExplosionDelay()
     {
         return EXPLOSION_DELAY;
