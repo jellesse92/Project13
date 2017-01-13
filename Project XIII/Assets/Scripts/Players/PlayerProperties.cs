@@ -201,7 +201,7 @@ public class PlayerProperties : MonoBehaviour{
             while (knockDur > timer)
             {
                 timer += Time.deltaTime;
-                gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(transform.position.x * x, transform.position.y * y, transform.position.z));
+                gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(x, y, 0));
             }
             Invoke("unsetKnockedBack", .5f);
         }
