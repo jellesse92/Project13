@@ -153,10 +153,10 @@ public class Enemy : MonoBehaviour {
             }
         }
 
-        inAttackRange = false;
+        GetComponent<SpriteRenderer>().color = default_color;
         health = fullHealth;
         gameObject.layer = 9;
-        GetComponent<SpriteRenderer>().color = default_color;
+
 
     }
 
@@ -178,6 +178,7 @@ public class Enemy : MonoBehaviour {
             if (health <= 0)
             {
                 StopAllCoroutines();
+                GetComponent<SpriteRenderer>().color = default_color;
                 PlayDeath();
             }
             else if (stunnable && stunMultiplier > 0)
