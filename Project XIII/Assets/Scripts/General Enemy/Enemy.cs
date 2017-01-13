@@ -110,7 +110,6 @@ public class Enemy : MonoBehaviour {
     {
         if (col.tag == "Detection Field")
         {
-            inPursuit = true;
             target = col.transform.parent.gameObject;
 
             if (!playersInView.Contains(target))
@@ -133,18 +132,17 @@ public class Enemy : MonoBehaviour {
     //Resets position and alert status
     public virtual void Reset()
     {
-        if(health < 0)
+        if(health <= 0)
             anim.SetTrigger("revive");
 
         isInvincible = false;
+        dead = false;
 
         if(playersInView.Count <= 0)
         {
-            inPursuit = false;
             target = null;
         }
         else{
-            inPursuit = true;
             target = null;
             foreach(GameObject player in playersInView)
             {

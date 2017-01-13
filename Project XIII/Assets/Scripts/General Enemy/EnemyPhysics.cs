@@ -16,7 +16,6 @@ public class EnemyPhysics : Enemy{
     protected bool canJump = true;
     protected bool turning = false;
 
-
     //Juggling variables
     bool checkGrounded;                                     //Determines if enemy should check if grounded for when it's in a juggled state
 
@@ -36,7 +35,7 @@ public class EnemyPhysics : Enemy{
             if (target != null && !target.GetComponent<PlayerProperties>().alive)
                 target = GetRandomTarget();
 
-            if (target != null && GetVisibleState() && GetPursuitState() && !stunned && !frozen && !turning)
+            if (target != null && GetVisibleState() && !stunned && !frozen && !turning)
                 RunEngagedBehavior();
         }
 
