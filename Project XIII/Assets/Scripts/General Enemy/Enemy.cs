@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 //Class to be inherited by all enemy scripts
 public class Enemy : MonoBehaviour {
+
+    HashSet<GameObject> playersInView = new HashSet<GameObject>();
+
     protected GameObject centerObjectPosition;          //use to get center of enemy, might be different for each child
 
     protected const int ALLOWED_BOUNCES = 2;            //Bounces allowed starting at 3 to allow 1 distinct bounce
@@ -102,23 +105,6 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    // Call when enemy becomes visible on screen
-    void OnBecameVisible()
-    {
-        isVisible = true;
-    }
-
-    //Call when enemy becomes no longer visible on screen
-    void OnBecameInvisible()
-    {
-        /*
-        isVisible = false;
-        inPursuit = false;
-        target = null;
-        inAttackRange = false;
-        */
-    }
-
     //Call when enter a trigger field. If entering player trigger field and visible, activate pursuit status
     void OnTriggerEnter2D(Collider2D col)
     {
@@ -126,21 +112,52 @@ public class Enemy : MonoBehaviour {
         {
             inPursuit = true;
             target = col.transform.parent.gameObject;
+
+            if (!playersInView.Contains(target))
+                playersInView.Add(target);
+
             if (playerList == null)
                 playerList = target.transform.parent.gameObject;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if(collision.tag == "Detection Field")
+        {
+            if (playersInView.Contains(collision.transform.parent.gameObject))
+                playersInView.Remove(collision.transform.parent.gameObject);
         }
     }
 
     //Resets position and alert status
     public virtual void Reset()
     {
+        if(health < 0)
+            anim.SetTrigger("revive");
+
         isInvincible = false;
-        isVisible = false;
-        inPursuit = false;
-        target = null;
+
+        if(playersInView.Count <= 0)
+        {
+            inPursuit = false;
+            target = null;
+        }
+        else{
+            inPursuit = true;
+            target = null;
+            foreach(GameObject player in playersInView)
+            {
+                target = player;
+                break;
+            }
+        }
+
         inAttackRange = false;
         health = fullHealth;
         gameObject.layer = 9;
+        GetComponent<SpriteRenderer>().color = default_color;
+
     }
 
     //Damage script to be applied when enemy takes damage

@@ -55,13 +55,13 @@ public class BasicTurretEnemy : EnemyPhysics
 
     public void Turn()
     {
-        anim.SetTrigger("Turn");
+        Flip();
         turning = true;
     }
 
     public void EndTurn()
     {
-        Flip();
+
         turning = false;
     }
 

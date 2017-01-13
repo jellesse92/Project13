@@ -13,7 +13,7 @@ public class DetonatingEnemyExplosion : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (!exploding)
+        if (!exploding && col.tag == "Player")
             StartCoroutine("TriggerExplosion");
         if (col.tag == "Player" && !playersinRange.Contains(col.gameObject))
             playersinRange.Add(col.gameObject);
@@ -79,7 +79,8 @@ public class DetonatingEnemyExplosion : MonoBehaviour {
     {
         exploding = false;
         interrupted = false;
-    } 
+        playersinRange = new HashSet<GameObject>();
+    }
 
     public void SetDamage(int d)
     {
