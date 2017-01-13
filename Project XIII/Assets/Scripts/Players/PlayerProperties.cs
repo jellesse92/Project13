@@ -58,6 +58,10 @@ public class PlayerProperties : MonoBehaviour{
     //Death voice stuff
     bool checkVoiceDone = false;
 
+    //Screenshak and Screenflash
+    public float damageScreenShake = 0.1f;
+    //Might put this in physics instead
+
     private void Awake()
     {
         cam = GameObject.FindGameObjectWithTag("MainCamera").transform.parent.gameObject;
@@ -163,6 +167,14 @@ public class PlayerProperties : MonoBehaviour{
     {
         if (isInvincibile)
             return;
+
+        if (transform.parent.GetComponent<PlayerEffectsManager>())
+        {
+            //Activate Screen Flash
+            transform.parent.GetComponent<PlayerEffectsManager>().ScreenShake(damageScreenShake);
+            //Activate Screen Shake
+            transform.parent.GetComponent<PlayerEffectsManager>().DamageFlashScreen();
+        }
 
         GetComponent<Rigidbody2D>().gravityScale = GetComponent<PlayerPhysics>().GetDefaultGravityForce();
 
