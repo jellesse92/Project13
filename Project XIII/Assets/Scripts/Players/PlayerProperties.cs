@@ -260,6 +260,7 @@ public class PlayerProperties : MonoBehaviour{
         GetComponent<Animator>().SetTrigger("stun");
         yield return new WaitForSeconds(duration);
         GetComponent<Animator>().SetTrigger("stunRecovery");
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
         isStunned = false;
     }
 

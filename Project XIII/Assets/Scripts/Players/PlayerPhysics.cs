@@ -65,6 +65,7 @@ public class PlayerPhysics : MonoBehaviour {
     {
         myPlayerInput.GetInput();
         myKeyPress = myPlayerInput.getKeyPress();
+        
     }
 
     protected void FixedUpdate()
