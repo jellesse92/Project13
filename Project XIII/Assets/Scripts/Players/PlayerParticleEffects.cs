@@ -11,6 +11,8 @@ public class PlayerParticleEffects : MonoBehaviour {
     public GameObject dashAfterImage;
     public GameObject jumpDust;
     public GameObject runningDust;
+    public GameObject landingDust;
+
     GameObject particlesHolder;
     //public GameObject heavyHitImpact;
 
@@ -36,6 +38,7 @@ public class PlayerParticleEffects : MonoBehaviour {
         InstantiateParticle(ref dashAfterImage);
         InstantiateParticle(ref jumpDust);
         InstantiateParticle(ref runningDust);
+        InstantiateParticle(ref landingDust);        
     }
 
     protected void InstantiateParticle(ref GameObject particle)
@@ -48,6 +51,11 @@ public class PlayerParticleEffects : MonoBehaviour {
         }
     }
 
+    protected void ChangeParticlePosition(ref GameObject particle, Vector3 newPosition)
+    {
+        if (particle)
+            particle.transform.position = newPosition;
+    }
     protected void PlayParticle(GameObject particle)
     {
         if(particle)
@@ -78,6 +86,11 @@ public class PlayerParticleEffects : MonoBehaviour {
     public void PlayRunningDust()
     {
         PlayParticle(runningDust);
+    }
+
+    public void PlayLandingDust()
+    {
+        PlayParticle(landingDust);
     }
 
     public void PlayDashAfterImage(bool play)
