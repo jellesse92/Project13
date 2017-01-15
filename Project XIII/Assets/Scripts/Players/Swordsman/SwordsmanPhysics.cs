@@ -17,6 +17,9 @@ public class SwordsmanPhysics : PlayerPhysics{
     const float TIER_1_CHARGE = .8f;            //Tier one charge for beginning to flash white
     const float CHARGE_FORCE_MULTIPLIER = 3000f;//Multiplier for distance to travel after charging attack
 
+    //Constant for max combo hit types
+    const int MAX_COMBO = 3;                    //Maximum combo hit types
+
     //Attack box
     public GameObject attackBox;                //Collider for dealing all melee attacks
     public SwordsmanAttackScript attackScript;  //Script for managing attack
@@ -29,6 +32,8 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     //Combo Variable
     bool inCombo = false;                       //Checks if swordsman able to combo
+    bool comboPressed = false;                  //Check if the combo button was pressed during combo
+    int currentCombo = 0;                       //Checks what combo hit was last played
 
     //Heavy attack variables
     bool checkChargeTime = false;               //Determines if should check for time charging
@@ -76,9 +81,15 @@ public class SwordsmanPhysics : PlayerPhysics{
         float xMove = myKeyPress.horizontalAxisValue;
         float yMove = myKeyPress.verticalAxisValue;
 
+        //Up attack input
         if (CanAttackStatus() && (yMove > Y_INPUT_THRESHOLD) && GetComponent<PlayerInput>().getKeyPress().quickAttackPress && isGrounded())
         {
             GetComponent<Animator>().SetTrigger("upQuickAttack");
+            return true;
+        }
+
+        if(CanAttackStatus() && GetComponent<PlayerInput>().getKeyPress().quickAttackPress && inCombo)
+        {
             return true;
         }
 
@@ -102,8 +113,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     {
         if (GetComponent<PlayerInput>().getKeyPress().quickAttackPress)
         {
-            inCombo = false;
-            GetComponent<Animator>().SetTrigger("combo");
+            comboPressed = true;
         }
     }
 
@@ -115,6 +125,18 @@ public class SwordsmanPhysics : PlayerPhysics{
     public void FinishCombo()
     {
         inCombo = false;
+        currentCombo++;
+
+        if (comboPressed && currentCombo < MAX_COMBO)
+            PlayNextComboHit();
+        else
+            currentCombo = 0;
+    }
+
+    public void PlayNextComboHit()
+    {
+        comboPressed = false;
+        GetComponent<Animator>().SetTrigger("combo" + currentCombo.ToString());
     }
 
     //END COMBO FUNCTIONS
