@@ -5,12 +5,18 @@ public class EnemyBulletScript : MonoBehaviour {
     string FIREBALL_NAME = "Fireball";
     string IMPACT_NAME = "Impact";
 
+    public AudioClip impactAudio;
+
     int damage = 10;
     ParticleSystem fireballParticle;
     ParticleSystem impactParticle;
+    
+    AudioSource myAudio;
 
     void Start()
     {
+        myAudio = GetComponent<AudioSource>();
+
         if (transform.Find(FIREBALL_NAME))
             fireballParticle = transform.Find(FIREBALL_NAME).GetComponent<ParticleSystem>();
         if (transform.Find(IMPACT_NAME))
@@ -19,14 +25,13 @@ public class EnemyBulletScript : MonoBehaviour {
 
     public void PlayParticle(bool play)
     {
-        Debug.Log(fireballParticle);
-
         if (play)
             fireballParticle.Play();
         else
         {
             fireballParticle.Stop();
             impactParticle.Play();
+            myAudio.PlayOneShot(impactAudio);
         }
     }
 
