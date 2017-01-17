@@ -12,7 +12,7 @@ public class ChargingEnemy : Enemy {
     public float attCoolDownTime = 3;
     public float knockBackForceX = 2000f;                   //Knockback Damage amnt for enemies
     public float knockBackForceY = 3000f;
-    private int location = 1;
+    private int location = 0;
     public bool isCoolingDown = false;
     Vector2 xyBoundary;
     GameObject leftCameraWall, rightCameraWall;
@@ -40,7 +40,6 @@ public class ChargingEnemy : Enemy {
     // Update is called once per frame
     public override void FixedUpdate()
     {
-        print("fixing update");
         xyBoundary[0] = leftCameraWall.transform.position.x + leftCameraWall.GetComponent<Collider2D>().bounds.size.x;
         xyBoundary[1] = rightCameraWall.transform.position.x - rightCameraWall.GetComponent<Collider2D>().bounds.size.x;
         if (isBouncing)
@@ -130,6 +129,7 @@ public class ChargingEnemy : Enemy {
 
     private void StopCharging()
     {
+        print("initiating cool down from side: " + location);
         isCoolingDown = true;
         isInvincible = false;
         Invoke("UnsetCoolDown", attCoolDownTime);
@@ -140,12 +140,9 @@ public class ChargingEnemy : Enemy {
         if (!isCoolingDown)
         {
             Vector2 target_location = new Vector2(xyBoundary[location], transform.position.y);
-            print("Target = " + target_location);
-            print("Current = " + transform.position);
             transform.position = Vector2.MoveTowards(transform.position, target_location, speed);
             if (location == 1 && transform.position.x >= xyBoundary[location])
             {
-                //print("stopping charge.");
                 StopCharging();
             } else if (location == 0 && transform.position.x <= xyBoundary[location])
             {
