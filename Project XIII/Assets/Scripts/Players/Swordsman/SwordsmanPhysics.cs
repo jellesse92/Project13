@@ -19,6 +19,7 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     //Constant for max combo hit types
     const int MAX_COMBO = 3;                    //Maximum combo hit types
+    const float COMBO_GRACE_TIME = 0.4f;        //Time after finishing a combo hit's animation before the next combo hit no longer continues the chain
 
     //Attack box
     public GameObject attackBox;                //Collider for dealing all melee attacks
@@ -33,6 +34,8 @@ public class SwordsmanPhysics : PlayerPhysics{
     //Combo Variable
     bool inCombo = false;                       //Checks if swordsman able to combo
     bool comboPressed = false;                  //Check if the combo button was pressed during combo
+    bool checkForCombo = false;                 //Check if script should check for next combo press input
+    bool comboAnimFinished = false;             //Checks if the combo animation was finished but still should check for combo input
     int currentCombo = 0;                       //Checks what combo hit was last played
 
     //Heavy attack variables
@@ -88,8 +91,13 @@ public class SwordsmanPhysics : PlayerPhysics{
             return true;
         }
 
-        if(CanAttackStatus() && GetComponent<PlayerInput>().getKeyPress().quickAttackPress && inCombo)
+        if(CanAttackStatus() && GetComponent<PlayerInput>().getKeyPress().quickAttackPress && checkForCombo)
         {
+            if (comboAnimFinished)
+            {
+                CancelInvoke("StopCheckForCombo");
+                PlayNextComboHit();
+            }
             return true;
         }
 
@@ -120,23 +128,49 @@ public class SwordsmanPhysics : PlayerPhysics{
     public void StartCombo()
     {
         inCombo = true;
+        checkForCombo = true;
+        comboAnimFinished = false;
     }
+
+    public void ResetCombo()
+    {
+        inCombo = false;
+        comboAnimFinished = false;
+        checkForCombo = false;
+        CancelInvoke("StopCheckForCombo");
+        currentCombo = 0;
+    } 
 
     public void FinishCombo()
     {
         inCombo = false;
         currentCombo++;
+        comboAnimFinished = true;
 
-        if (comboPressed && currentCombo < MAX_COMBO)
-            PlayNextComboHit();
+        if (currentCombo < MAX_COMBO)
+        {
+            if (comboPressed)
+                PlayNextComboHit();
+            else
+                Invoke("StopCheckForCombo", COMBO_GRACE_TIME);
+        }
         else
-            currentCombo = 0;
+            StopCheckForCombo();
+        
     }
 
-    public void PlayNextComboHit()
+    void PlayNextComboHit()
     {
         comboPressed = false;
+        comboAnimFinished = false;
         GetComponent<Animator>().SetTrigger("combo" + currentCombo.ToString());
+    }
+
+    void StopCheckForCombo()
+    {
+        checkForCombo = false;
+        currentCombo = 0;
+        comboAnimFinished = false;
     }
 
     //END COMBO FUNCTIONS
