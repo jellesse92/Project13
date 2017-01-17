@@ -13,6 +13,8 @@ public class PlayerSoundEffects : MonoBehaviour {
     public AudioClip[] hitSparkList;                           //audio clip at enemy hit contact
 
     AudioSource myAudio;
+    AudioClip myClip;
+
     void Start()
     {
         myAudio = GetComponent<AudioSource>();

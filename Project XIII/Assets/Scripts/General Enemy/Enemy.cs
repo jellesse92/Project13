@@ -62,6 +62,9 @@ public class Enemy : MonoBehaviour {
     Color default_color;
     protected int currentAmmo = 0;                      //Ammo count for enemies with ammo
 
+    //Use in shakecam
+    protected Camera mainCamera;
+
     // Use this for initialization
     void Awake()
     {
@@ -76,6 +79,8 @@ public class Enemy : MonoBehaviour {
 
         CreateCenterObject();
         ChangeCenter(transform.position);
+
+        mainCamera = Camera.main;
     }
 
     void CreateCenterObject()
@@ -197,6 +202,7 @@ public class Enemy : MonoBehaviour {
 
     public virtual void PlayDeath()
     {
+        mainCamera.GetComponent<CamShakeScript>().StartShake(0.2f, 0.5f);
         StopCoroutine("ApplyStun");
         anim.SetTrigger("death");
         GetComponent<SpriteRenderer>().color = default_color;

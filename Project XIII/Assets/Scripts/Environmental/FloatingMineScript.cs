@@ -8,7 +8,7 @@ public class FloatingMineScript : MonoBehaviour {
     const float MIDDLE_DETECTION_FLASH_RATE = 5f;
     const float INNER_DETECTION_FLASH_RATE = 10f;
 
-    const int DAMAGE = 20;
+    const int DAMAGE = 25;
 
     public ParticleSystem explosion;                //Particle for explosion
     public Transform detectionRadii;                //Parent of detection radius trigger zones

@@ -298,6 +298,8 @@ public class SwordsmanAttackScript : MonoBehaviour {
             {
                 finishEffectPlayed = true;
                 transform.parent.parent.GetComponent<PlayerEffectsManager>().FlashScreen();
+                transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(0.2f);
+
             }
 
             col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
