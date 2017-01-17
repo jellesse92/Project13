@@ -161,9 +161,14 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     void PlayNextComboHit()
     {
+        string triggerString = "combo" + currentCombo.ToString();
         comboPressed = false;
         comboAnimFinished = false;
-        GetComponent<Animator>().SetTrigger("combo" + currentCombo.ToString());
+
+        if (isGrounded())
+            GetComponent<Animator>().SetTrigger(triggerString);
+        else
+            GetComponent<Animator>().SetTrigger("air" + triggerString);
     }
 
     void StopCheckForCombo()
