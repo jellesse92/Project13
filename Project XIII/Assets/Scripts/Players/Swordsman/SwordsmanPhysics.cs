@@ -8,8 +8,8 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     //Constants for managing quick dashing skill
     const float DASH_DISTANCE = 10f;            //Distance of dash
-    const float DASH_RECOVERY_TIME = 1f;        //Time it takes to recover dashes
-    const float MAX_CHAIN_DASH = 3;             //Max amount of dashes that can be chained
+    const float DASH_RECOVERY_TIME = 0.5f;        //Time it takes to recover dashes
+    const float MAX_CHAIN_DASH = 1;             //Max amount of dashes that can be chained
     const float STOP_AFTER_IMAGE = .005f;        //Time to stop creating afterimages
 
     //Constant for charging ground heavy slash attack
