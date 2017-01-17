@@ -40,28 +40,30 @@ public class ChargingEnemy : Enemy {
     // Update is called once per frame
     public override void FixedUpdate()
     {
+        print("fixing update");
         xyBoundary[0] = leftCameraWall.transform.position.x + leftCameraWall.GetComponent<Collider2D>().bounds.size.x;
         xyBoundary[1] = rightCameraWall.transform.position.x - rightCameraWall.GetComponent<Collider2D>().bounds.size.x;
         if (isBouncing)
             ManageJuggleState();
         else if (!dead)
         {
-            if (GetVisibleState() && GetPursuitState() && !stunned && !frozen)
+            if (GetVisibleState() && !stunned && !frozen)
             {
                 if (isCoolingDown)
                 {
                     anim.Play("Idle");
                 }
                 if (!isAttacking && !inAttackRange && !isCoolingDown)
+                {
                     Approach();
+                }
+
                 else if (!attEnded)
                 {
-
                     CheckAttackEnd();
                 }
             }
-            else if (!stunned)
-                anim.SetInteger("x", 0);
+
         }
 
 
@@ -138,9 +140,12 @@ public class ChargingEnemy : Enemy {
         if (!isCoolingDown)
         {
             Vector2 target_location = new Vector2(xyBoundary[location], transform.position.y);
+            print("Target = " + target_location);
+            print("Current = " + transform.position);
             transform.position = Vector2.MoveTowards(transform.position, target_location, speed);
             if (location == 1 && transform.position.x >= xyBoundary[location])
             {
+                //print("stopping charge.");
                 StopCharging();
             } else if (location == 0 && transform.position.x <= xyBoundary[location])
             {
