@@ -6,7 +6,9 @@ public class Parallaxing : MonoBehaviour {
 
     public bool infiniteScrolling;
 
-    public bool parallax;
+    public bool parallaxXAxis;
+    public bool parallaxYAxis;
+
     public float parallaxSpeed;
 
     public bool autoScroll;
@@ -16,8 +18,13 @@ public class Parallaxing : MonoBehaviour {
     Transform[] layers;
 
     float backgroundSize;
+
     float lastCameraX;
     float deltaX;
+
+    float lastCameraY;
+    float deltaY;
+
     int leftIndex;
     int rightIndex;
     Vector3 newPosition;
@@ -30,6 +37,7 @@ public class Parallaxing : MonoBehaviour {
         {
             cameraTransform = Camera.main.transform;
             lastCameraX = cameraTransform.position.x;
+            lastCameraY = cameraTransform.position.y;
 
             layers = new Transform[3];
             leftIndex = 0;
@@ -54,12 +62,20 @@ public class Parallaxing : MonoBehaviour {
                 layer.position += Vector3.right * (Time.deltaTime * autoScrollSpeed);
         }
 
-        if (parallax)
+        if (parallaxXAxis)
         {
             deltaX = cameraTransform.position.x - lastCameraX;
             transform.position += Vector3.right * (deltaX * parallaxSpeed);
+            lastCameraX = cameraTransform.position.x;
+
         }
-        lastCameraX = cameraTransform.position.x;
+
+        if (parallaxYAxis)
+        {
+            deltaY = cameraTransform.position.y - lastCameraY;
+            transform.position += Vector3.up * (deltaY * parallaxSpeed);
+            lastCameraY = cameraTransform.position.y;
+        }
 
         if (infiniteScrolling)
         {
