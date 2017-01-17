@@ -313,7 +313,7 @@ public class PlayerPhysics : MonoBehaviour {
 
     public bool isGrounded()
     {
-        if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround +1f, layerMask))
+        if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround +2f, layerMask))
         {
             return true;
         }
