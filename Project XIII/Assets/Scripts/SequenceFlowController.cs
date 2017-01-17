@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 public class SequenceFlowController : MonoBehaviour {
 
@@ -7,13 +8,7 @@ public class SequenceFlowController : MonoBehaviour {
     MusicManager musicManager;
     GameObject cam;
 
-    //TEMPORARY LAYOUT
-    int currentSequence = 0;
-
-    //EVERYTHING TEMPORARY FOR THE DEMO
-    //TEMPORARY
-    public GameObject enGroup1;
-    public GameObject enGroup2;
+    public UnityEvent myEvent;
 
     void Start()
     {
@@ -27,6 +22,7 @@ public class SequenceFlowController : MonoBehaviour {
     //THIS IS ESPECIALLY TEMPORARY
     public void NextSequence()
     {
+        /*
         currentSequence++;
         if (currentSequence == 1)
             enGroup1.GetComponent<FreezeEnemyScript>().UnfreezeEnemies();
@@ -37,6 +33,7 @@ public class SequenceFlowController : MonoBehaviour {
             musicManager.ActivateNextClip();
             StartCoroutine(cam.GetComponent<CamShakeScript>().InfiniteShake());
         }
+        */
     }
 
 
