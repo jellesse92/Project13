@@ -7,16 +7,21 @@ public class CutsceneManager : MonoBehaviour {
 
     const float RUN_SPEED = .35f;
 
-    public enum Character {Swordsman,Gunner,Mage,Mech,Dialogue}
+    public enum Character {Swordsman,Gunner,Mage,Mech}
     public enum Action {Run,Attack,Fall,None}
     public enum NextActivate {SameTime,After,None}
 
     [System.Serializable]
+    public class CharacterAction
+    {
+        public Character character = Character.Swordsman;
+        public Action action = Action.None;
+    }
+
+    [System.Serializable]
     public class ActionEntry
     {
-        public Character character;
-        public Action action;
-        public Transform destination;
+        public CharacterAction[] characterActions;
         public UnityEvent function;
         public NextActivate playNext;
     }
@@ -27,17 +32,23 @@ public class CutsceneManager : MonoBehaviour {
         public ActionEntry[] actionEntries;
     }
 
-    Transform characterList;
+    Transform playersManager;
+    GameObject[] characterList = new GameObject[4];
 
     int currentSequence = 0;
 
-    public ActionSequence[] actionSequences;
+    public ActionSequence[] cutscene;
     bool[] isMoving = new bool[4];
     Vector2[] endPoint = new Vector2[4];
 
     private void Awake()
     {
-        characterList = GameObject.FindGameObjectWithTag("PlayerList").transform;
+        playersManager = GameObject.FindGameObjectWithTag("PlayerList").transform;
+
+        for(int i = 0; i < 4; i++)
+            characterList[i] = playersManager.GetChild(i).gameObject;
+
+
         for (int i = 0; i < 4; i++)
             isMoving[i] = false;
     } 
@@ -45,7 +56,7 @@ public class CutsceneManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        ActivateCutscene(0);
+        //ActivateCutscene(0);
     }
 
     private void FixedUpdate()
@@ -59,79 +70,33 @@ public class CutsceneManager : MonoBehaviour {
 
     public void ActivateCutscene(int index)
     {
-        characterList.GetComponent<PlayerInputManager>().SetInputsActive(false);
+        playersManager.GetComponent<PlayerInputManager>().SetInputsActive(false);
         PlayActionSequence();
     }
 
     void PlayActionSequence()
     {
-        foreach(ActionEntry act in actionSequences[currentSequence].actionEntries)
+        foreach(ActionEntry act in cutscene[currentSequence].actionEntries)
         {
-            PlayAction(act);
+            PlayActions(act);
         }
         currentSequence++;
     }
 
-    void PlayAction(ActionEntry act)
+    void PlayCharacterActions(ActionEntry entry)
     {
-        GameObject targetChar = GetChar(act);
-        PlayAnim(targetChar, act);
-        act.function.Invoke();
-    }
-
-    GameObject GetChar(ActionEntry act)
-    {
-        switch (act.character)
+        foreach(CharacterAction charAction in entry.characterActions)
         {
-            case Character.Swordsman: return characterList.GetChild(0).gameObject;
-            case Character.Gunner: return characterList.GetChild(1).gameObject;
-            case Character.Mage: return characterList.GetChild(2).gameObject;
-            case Character.Mech: return characterList.GetChild(3).gameObject;
-            default: break;
-        }
-        return null;
-    }
-
-    void PlayAnim(GameObject targetChar, ActionEntry act)
-    {
-        switch (act.action)
-        {
-            case Action.Attack: targetChar.GetComponent<Animator>().SetTrigger("quickAttack"); break;
-            case Action.Run: StartRun(targetChar, act, act.destination); break;
-            //case Action.Fall: target
+            switch (charAction.action)
+            {
+                case Action.Attack: ActionAttack(charAction.character); break;
+                case Action.Run: break;
+                default: break;
+            }
         }
     }
 
-    void StartRun(GameObject targetChar, ActionEntry act,Transform destination)
-    {
-        int index = ConvertToInt(act.character);
-
-        if (index == -1 || destination == null)
-            return;
-
-        targetChar.GetComponent<Animator>().SetFloat("speed", 1f);
-        isMoving[index] = true;
-        endPoint[index] = destination.transform.position;
-       
-    }
-
-    void ApplyRun(int index)
-    {
-        Vector2 pos = characterList.GetChild(index).position;
-
-        if(Mathf.Abs(pos.x - endPoint[index].x) <= RUN_SPEED)
-        {
-            characterList.GetChild(index).position = new Vector2(endPoint[index].x, characterList.GetChild(index).position.y);
-            characterList.GetChild(index).GetComponent<Animator>().SetFloat("speed", 0f);
-            isMoving[index] = false;
-            return;
-        }
-
-        characterList.GetChild(index).position = Vector2.MoveTowards(characterList.GetChild(index).position, 
-            new Vector2(endPoint[index].x,characterList.GetChild(index).position.y),RUN_SPEED);
-    }
-
-    int ConvertToInt(Character c)
+    int GetCharEnumInt(Character c)
     {
         switch (c)
         {
@@ -141,6 +106,59 @@ public class CutsceneManager : MonoBehaviour {
             case Character.Mech: return 3;
         }
         return -1;
+    }
+
+    void ActionAttack(Character c)
+    {
+        characterList[GetCharEnumInt(c)].GetComponent<Animator>().SetTrigger("quickAttack");
+    }
+
+    void ActionRun(Character c, Transform dest)
+    {
+        if (dest == null)
+            return;
+
+        int index = GetCharEnumInt(c);
+
+        characterList[index].GetComponent<Animator>().SetFloat("speed", 5f);
+        isMoving[index] = true;
+        endPoint[index] = dest.position;
+
+    }
+
+    void PlayActions(ActionEntry entry)
+    {
+        PlayCharacterActions(entry);
+        entry.function.Invoke();
+    }
+
+
+
+    void PlayAnim(GameObject targetChar, Action act, Transform dest = null)
+    {
+        switch (act)
+        {
+            //case Action.Attack: targetChar.GetComponent<Animator>().SetTrigger("quickAttack"); break;
+            //case Action.Run: StartRun(targetChar, act, dest); break;
+            //case Action.Fall: target
+        }
+    }
+
+
+    void ApplyRun(int index)
+    {
+        //Vector2 pos = characterList.GetChild(index).position;
+
+        //if(Mathf.Abs(pos.x - endPoint[index].x) <= RUN_SPEED)
+        {
+            //characterList.GetChild(index).position = new Vector2(endPoint[index].x, characterList.GetChild(index).position.y);
+            //characterList.GetChild(index).GetComponent<Animator>().SetFloat("speed", 0f);
+            isMoving[index] = false;
+            return;
+        }
+
+        //characterList.GetChild(index).position = Vector2.MoveTowards(characterList.GetChild(index).position, 
+        //    new Vector2(endPoint[index].x,characterList.GetChild(index).position.y),RUN_SPEED);
     }
 
     void AbortSequence()
