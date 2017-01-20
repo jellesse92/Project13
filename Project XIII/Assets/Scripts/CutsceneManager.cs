@@ -45,7 +45,7 @@ public class CutsceneManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        //ActivateCutscene(0);
+        ActivateCutscene(0);
     }
 
     private void FixedUpdate()
@@ -76,6 +76,7 @@ public class CutsceneManager : MonoBehaviour {
     {
         GameObject targetChar = GetChar(act);
         PlayAnim(targetChar, act);
+        act.function.Invoke();
     }
 
     GameObject GetChar(ActionEntry act)
@@ -117,11 +118,6 @@ public class CutsceneManager : MonoBehaviour {
     void ApplyRun(int index)
     {
         Vector2 pos = characterList.GetChild(index).position;
-
-        Debug.Log(Mathf.Abs(pos.y - endPoint[index].y) <= RUN_SPEED);
-
-        Debug.Log(pos.y);
-        Debug.Log(endPoint[index].y);
 
         if(Mathf.Abs(pos.x - endPoint[index].x) <= RUN_SPEED)
         {
