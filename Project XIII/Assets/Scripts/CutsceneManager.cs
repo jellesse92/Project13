@@ -44,7 +44,7 @@ public class CutsceneManager : MonoBehaviour {
     //Variables for managing flow of cutscene
     int currentCutscene = 0;                                    //Cutscene to be played on next cutscene call
     int currentAction = 0;                                      //Current action to be played under current cutscene
-    bool currentActionComplete = true;
+    bool currentActionComplete = true;     
 
     private void Awake()
     {
@@ -52,7 +52,6 @@ public class CutsceneManager : MonoBehaviour {
 
         for(int i = 0; i < 4; i++)
             characterList[i] = playersManager.GetChild(i).gameObject;
-
 
         for (int i = 0; i < 4; i++)
         {
@@ -67,20 +66,20 @@ public class CutsceneManager : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        bool actionDoneCheck = true;
+        bool movingCheckDone = true;
 
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
             if (isMoving[i])
             {
                 ApplyRun(i);
-                actionDoneCheck = false;
+                movingCheckDone = false;
             }
         }
 
-        if(!currentActionComplete && actionDoneCheck)
+        if(movingCheckDone && currentActionComplete)
         {
-            currentActionComplete = true;
+            PlayActionSequence();
         }
     }
 
@@ -103,13 +102,26 @@ public class CutsceneManager : MonoBehaviour {
     public void EndCutscene()
     {
         playersManager.GetComponent<PlayerInputManager>().SetInputsActive(true);
+        currentCutscene++;
         this.enabled = false;
     }
 
     void PlayActionSequence()
     {
-        PlayActions(cutscene[currentCutscene].actionEntries[0]);
-        currentCutscene++;
+        Debug.Log("current act:" + currentAction);
+        Debug.Log(cutscene[currentCutscene].actionEntries.Length);
+
+        if(currentAction >= cutscene[currentCutscene].actionEntries.Length)
+        {
+            EndCutscene();
+            Debug.Log("here?");
+            return;
+        }
+
+        currentActionComplete = false;
+        PlayActions(cutscene[currentCutscene].actionEntries[currentAction]);
+        currentAction++;
+        currentActionComplete = true;
     }
 
     void PlayCharacterActions(ActionEntry entry)
@@ -150,10 +162,10 @@ public class CutsceneManager : MonoBehaviour {
 
         int index = GetCharEnumInt(c);
 
+        currentActionComplete = false;
         characterList[index].GetComponent<Animator>().SetFloat("speed", 5f);
         isMoving[index] = true;
         endPoint[index] = dest.position;
-
     }
 
     void ActionSetPos(Character c, Transform dest)
