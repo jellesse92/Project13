@@ -6,6 +6,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     //Constant for last combo hit damage additive
     const int FINISHER_DMG_BONUS = 2;
+    const int QUICK_2_DMG_BONUS = 5;
 
     //Constants for heavy attack variables 
     const float HEAVY_DRAG_ENEMY_TIME = .1f;                        //Time after initial enemy hit to keep dragging out attack
@@ -105,6 +106,10 @@ public class SwordsmanAttackScript : MonoBehaviour {
             case ("drag"):
                 damage = playProp.GetPlayerStats().quickAttackStrength;
                 InvokeRepeating("DragAttackApplyDamage", DRAG_REPEAT_DMG_APPLY_ST, DRAG_REPEAT_DMG_RATE);
+                break;
+            case ("quick2"):
+                damage = playProp.GetPlayerStats().quickAttackStrength + QUICK_2_DMG_BONUS;
+                //Effect stuff??
                 break;
             case "finisher":
                 damage = playProp.GetPlayerStats().quickAttackStrength * FINISHER_DMG_BONUS;
