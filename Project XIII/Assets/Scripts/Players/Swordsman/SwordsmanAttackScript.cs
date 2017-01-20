@@ -71,6 +71,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
         {
             case "heavy": TriggerHeavyAttack(col); break;
             case "quick": TriggerQuickAttack(col); break;
+            case ("quick2"): TriggerQuickAttack2(col); break;
             case "quickAir": TriggerAirQuickAttack(col); break;
             case "heavyAir": TriggerAirHeavyAttack(col); break;
             case "drag": TriggerDragAttack(col);  break;
@@ -85,6 +86,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
         {
             case "heavy": UpdateHeavyAttack(); break;
             case "quick": break;
+            case "quick2": break;
             case "quickAir": break;
             case "heavyAir": break;
             case "drag": UpdateDragAttack(); break;
@@ -214,6 +216,19 @@ public class SwordsmanAttackScript : MonoBehaviour {
         if (col.tag == "Enemy")
         {
             //QUICK ATTACK EFFECTS STUFF
+            playerSoundEffects.PlayHitSpark();
+            playerParticleEffects.PlayHitSpark(col.GetComponent<Enemy>().GetCenter());
+
+            col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
+            col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
+        }
+    }
+
+    void TriggerQuickAttack2(Collider2D col)
+    {
+        if (col.tag == "Enemy")
+        {
+            //QUICK ATTACK 2 EFFECTS STUFF
             playerSoundEffects.PlayHitSpark();
             playerParticleEffects.PlayHitSpark(col.GetComponent<Enemy>().GetCenter());
 
