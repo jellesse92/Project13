@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class CutsceneManager : MonoBehaviour {
 
-    const float RUN_SPEED = .35f;
+    const float RUN_SPEED = .20f;
 
     public enum Character {Swordsman,Gunner,Mage,Mech}
     public enum Action {Run,Attack,Fall,None}
@@ -16,6 +16,7 @@ public class CutsceneManager : MonoBehaviour {
     {
         public Character character = Character.Swordsman;
         public Action action = Action.None;
+        public Transform destination;
     }
 
     [System.Serializable]
@@ -56,7 +57,7 @@ public class CutsceneManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        //ActivateCutscene(0);
+        ActivateCutscene(0);
     }
 
     private void FixedUpdate()
@@ -90,7 +91,7 @@ public class CutsceneManager : MonoBehaviour {
             switch (charAction.action)
             {
                 case Action.Attack: ActionAttack(charAction.character); break;
-                case Action.Run: break;
+                case Action.Run: ActionRun(charAction.character, charAction.destination); break;
                 default: break;
             }
         }
@@ -132,33 +133,20 @@ public class CutsceneManager : MonoBehaviour {
         entry.function.Invoke();
     }
 
-
-
-    void PlayAnim(GameObject targetChar, Action act, Transform dest = null)
-    {
-        switch (act)
-        {
-            //case Action.Attack: targetChar.GetComponent<Animator>().SetTrigger("quickAttack"); break;
-            //case Action.Run: StartRun(targetChar, act, dest); break;
-            //case Action.Fall: target
-        }
-    }
-
-
     void ApplyRun(int index)
     {
-        //Vector2 pos = characterList.GetChild(index).position;
+        Vector2 pos = characterList[index].transform.position;
 
-        //if(Mathf.Abs(pos.x - endPoint[index].x) <= RUN_SPEED)
+        if(Mathf.Abs(pos.x - endPoint[index].x) <= RUN_SPEED)
         {
-            //characterList.GetChild(index).position = new Vector2(endPoint[index].x, characterList.GetChild(index).position.y);
-            //characterList.GetChild(index).GetComponent<Animator>().SetFloat("speed", 0f);
+            characterList[index].transform.position = new Vector2(endPoint[index].x, characterList[index].transform.position.y);
+            characterList[index].transform.GetComponent<Animator>().SetFloat("speed", 0f);
             isMoving[index] = false;
             return;
         }
 
-        //characterList.GetChild(index).position = Vector2.MoveTowards(characterList.GetChild(index).position, 
-        //    new Vector2(endPoint[index].x,characterList.GetChild(index).position.y),RUN_SPEED);
+        characterList[index].transform.position = Vector2.MoveTowards(characterList[index].transform.position, 
+            new Vector2(endPoint[index].x,characterList[index].transform.position.y),RUN_SPEED);
     }
 
     void AbortSequence()
