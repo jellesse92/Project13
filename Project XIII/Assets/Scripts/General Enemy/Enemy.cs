@@ -202,6 +202,11 @@ public class Enemy : MonoBehaviour {
 
     public virtual void PlayDeath()
     {
+        foreach (Transform child in transform)
+        {
+            if (child.name == "Death Particles")
+                child.GetComponent<ParticleSystem>().Play();
+        }
         mainCamera.GetComponent<CamShakeScript>().StartShake(0.2f, 0.5f);
         StopCoroutine("ApplyStun");
         anim.SetTrigger("death");
