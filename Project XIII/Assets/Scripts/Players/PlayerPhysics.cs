@@ -70,7 +70,7 @@ public class PlayerPhysics : MonoBehaviour {
 
     protected void FixedUpdate()
     {
-        if (!GetComponent<PlayerProperties>().GetStunState() && GetComponent<PlayerProperties>().alive)
+        if (!GetComponent<PlayerProperties>().GetStunState() && GetComponent<PlayerProperties>().alive && GetComponent<PlayerInput>().InputActiveState())
         {
             if (!CheckClassSpecificInput())
             {

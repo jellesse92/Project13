@@ -10,5 +10,14 @@ public class PlayerInputManager : MonoBehaviour {
         gcScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         gcScript.AssignInputs(transform);
     }
+
+    public void SetInputsActive(bool b)
+    {
+        foreach(Transform child in transform)
+        {
+            child.GetComponent<PlayerInput>().SetInputActive(b);
+        }
+    }
+ 
 	
 }
