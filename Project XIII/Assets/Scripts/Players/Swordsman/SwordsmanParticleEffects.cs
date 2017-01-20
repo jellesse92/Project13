@@ -5,7 +5,8 @@ using UnityEngine;
 public class SwordsmanParticleEffects : PlayerParticleEffects {
     public GameObject chargingDust;
     public GameObject upAttackDust;
-
+    public GameObject finisherHitSpark;
+    
     Vector3 positionChargingDust;
     Vector3 positionJumpDust;
     Vector3 positionRunningDust;
@@ -25,6 +26,7 @@ public class SwordsmanParticleEffects : PlayerParticleEffects {
 
         InstantiateParticle(ref chargingDust);
         InstantiateParticle(ref upAttackDust);
+        InstantiateParticle(ref finisherHitSpark);
 
         ChangeParticlePosition(ref chargingDust, positionChargingDust);
         ChangeParticlePosition(ref jumpDust, positionJumpDust);
@@ -45,5 +47,11 @@ public class SwordsmanParticleEffects : PlayerParticleEffects {
     public void PlayUpAttackDust()
     {
         PlayParticle(upAttackDust);
+    }
+
+    public void PlayFinisherHitSpark(Vector3 location)
+    {
+        finisherHitSpark.transform.position = location;
+        PlayParticle(finisherHitSpark);
     }
 }

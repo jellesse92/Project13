@@ -5,7 +5,7 @@ using UnityEngine;
 public class SwordsmanAttackScript : MonoBehaviour {
 
     //Constant for last combo hit damage additive
-    const int FINISHER_DMG_BONUS = 5;
+    const int FINISHER_DMG_BONUS = 2;
 
     //Constants for heavy attack variables 
     const float HEAVY_DRAG_ENEMY_TIME = .1f;                        //Time after initial enemy hit to keep dragging out attack
@@ -49,7 +49,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     int damage;
 
     PlayerSoundEffects playerSoundEffects;
-    PlayerParticleEffects playerParticleEffects;
+    SwordsmanParticleEffects playerParticleEffects;
     PlayerProperties playProp;
 
     void Awake()
@@ -60,7 +60,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     void Start()
     {
         playerSoundEffects = transform.parent.GetComponent<PlayerSoundEffects>();
-        playerParticleEffects = transform.parent.GetComponent<PlayerParticleEffects>();
+        playerParticleEffects = transform.parent.GetComponent<SwordsmanParticleEffects>();
         playProp = transform.parent.GetComponent<PlayerProperties>();
     }
 
@@ -107,7 +107,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
                 InvokeRepeating("DragAttackApplyDamage", DRAG_REPEAT_DMG_APPLY_ST, DRAG_REPEAT_DMG_RATE);
                 break;
             case "finisher":
-                damage = playProp.GetPlayerStats().quickAttackStrength + FINISHER_DMG_BONUS;
+                damage = playProp.GetPlayerStats().quickAttackStrength * FINISHER_DMG_BONUS;
                 finishEffectPlayed = false;
                 break;
             default: attack = ""; break;
@@ -292,8 +292,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
         {
             //HEAVY ATTACK EFFECTS STUFF
             playerSoundEffects.PlayHitSpark();
-            playerParticleEffects.PlayHitSpark(col.GetComponent<Enemy>().GetCenter());
-
+            playerParticleEffects.PlayFinisherHitSpark(col.GetComponent<Enemy>().GetCenter());
             if (!finishEffectPlayed)
             {
                 finishEffectPlayed = true;
