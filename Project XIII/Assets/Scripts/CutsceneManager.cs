@@ -53,6 +53,7 @@ public class CutsceneManager : MonoBehaviour {
     int currentAction = 0;                                      //Current action to be played under current cutscene
     bool currentActionComplete = true;
     bool borderTransitionComplete = false;
+    bool forcedHoldAction = false;                              //Overrides all other bools to stop next action from being played right away
 
     private void Awake()
     {
@@ -84,6 +85,9 @@ public class CutsceneManager : MonoBehaviour {
                 movingCheckDone = false;
             }
         }
+
+        if (forcedHoldAction)
+            return;
 
         if(borderTransitionComplete && movingCheckDone && currentActionComplete)
         {
@@ -230,5 +234,17 @@ public class CutsceneManager : MonoBehaviour {
     void AbortSequence()
     {
 
+    }
+
+    public void DelayAction(float duration)
+    {
+        CancelInvoke("HoldAction");
+        forcedHoldAction = true;
+        Invoke("HoldActions", duration);
+    }
+
+    void HoldActions()
+    {
+        forcedHoldAction = false;
     }
 }
