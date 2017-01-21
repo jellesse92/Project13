@@ -11,7 +11,7 @@ public class CutsceneManager : MonoBehaviour {
     const float BORDER_INVOKE_RATE = .01f;                      //Rate at which invoke is called
 
     public enum Character {Swordsman,Gunner,Mage,Mech}          //Selectable characters to animate
-    public enum Action {Run,Attack,SetPos,None}                 //Actions characters can make during cutscene
+    public enum Action {Run,Attack,Fall,SetPos,None}                 //Actions characters can make during cutscene
 
     [System.Serializable]
     public class CharacterAction
@@ -45,6 +45,7 @@ public class CutsceneManager : MonoBehaviour {
 
     //Variables for movement
     bool[] isMoving = new bool[4];
+    bool[] isFalling = new bool[4];
     Vector2[] endPoint = new Vector2[4];
 
     //Variables for managing flow of cutscene
@@ -101,14 +102,16 @@ public class CutsceneManager : MonoBehaviour {
     {
         currentActionComplete = true;
         for (int i = 0; i < 4; i++)
+        {
             isMoving[i] = false;
+            isFalling[i] = false;
+        }
     } 
 
     public void EndCutscene()
     {
         this.enabled = false;
         InvokeRepeating("TransitionOutBorders", 0f, BORDER_INVOKE_RATE);
-        playersManager.GetComponent<PlayerInputManager>().SetInputsActive(true);
         currentCutscene++;
     }
 
@@ -131,6 +134,7 @@ public class CutsceneManager : MonoBehaviour {
         if(topCutsceneBorder.fillAmount <= 0f)
         {
             CancelInvoke("TransitionOutBorders");
+            playersManager.GetComponent<PlayerInputManager>().SetInputsActive(true);
             return;
         }
         topCutsceneBorder.fillAmount -= BORDER_FILL_AMT;
