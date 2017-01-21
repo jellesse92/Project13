@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class CutsceneManager : MonoBehaviour {
 
     const float RUN_SPEED = .20f;                               //Speed player moves if set to run as action
+    const float BORDER_FILL_AMT = .01f;                         //Amount border fills per invoke
+    const float BORDER_INVOKE_RATE = .01f;                      //Rate at which invoke is called
 
     public enum Character {Swordsman,Gunner,Mage,Mech}          //Selectable characters to animate
     public enum Action {Run,Attack,SetPos,None}                 //Actions characters can make during cutscene
@@ -31,6 +34,9 @@ public class CutsceneManager : MonoBehaviour {
         public ActionEntry[] actionEntries;                     //List of actions to happen under cutscene
     }
 
+    public Image topCutsceneBorder;                             //Top border for cutscene
+    public Image botCutsceneBorder;                             //Bottom border for cutscene               
+
     Transform playersManager;                                   //For managing player input
     GameObject[] characterList = new GameObject[4];             //List of characters to be controlled by cutscene controller
 
@@ -44,7 +50,8 @@ public class CutsceneManager : MonoBehaviour {
     //Variables for managing flow of cutscene
     int currentCutscene = 0;                                    //Cutscene to be played on next cutscene call
     int currentAction = 0;                                      //Current action to be played under current cutscene
-    bool currentActionComplete = true;     
+    bool currentActionComplete = true;
+    bool borderTransitionComplete = false;
 
     private void Awake()
     {
@@ -77,7 +84,7 @@ public class CutsceneManager : MonoBehaviour {
             }
         }
 
-        if(movingCheckDone && currentActionComplete)
+        if(borderTransitionComplete && movingCheckDone && currentActionComplete)
         {
             PlayActionSequence();
         }
@@ -86,10 +93,8 @@ public class CutsceneManager : MonoBehaviour {
     public void ActivateCutscene(int index)
     {
         Reset();
-        this.enabled = true;
         playersManager.GetComponent<PlayerInputManager>().SetInputsActive(false);
-        PlayActionSequence();
-
+        InvokeRepeating("TransitionInBorders", 0f, BORDER_INVOKE_RATE);
     }
 
     private void Reset()
@@ -101,20 +106,43 @@ public class CutsceneManager : MonoBehaviour {
 
     public void EndCutscene()
     {
+        this.enabled = false;
+        InvokeRepeating("TransitionOutBorders", 0f, BORDER_INVOKE_RATE);
         playersManager.GetComponent<PlayerInputManager>().SetInputsActive(true);
         currentCutscene++;
-        this.enabled = false;
+    }
+
+    void TransitionInBorders()
+    {
+        if(topCutsceneBorder.fillAmount >= 1f)
+        {
+            CancelInvoke("TransitionInBorders");
+            borderTransitionComplete = true;
+            this.enabled = true;
+            return;
+        }
+
+        topCutsceneBorder.fillAmount += BORDER_FILL_AMT;
+        botCutsceneBorder.fillAmount += BORDER_FILL_AMT;
+    }
+
+    void TransitionOutBorders()
+    {
+        if(topCutsceneBorder.fillAmount <= 0f)
+        {
+            CancelInvoke("TransitionOutBorders");
+            return;
+        }
+        topCutsceneBorder.fillAmount -= BORDER_FILL_AMT;
+        botCutsceneBorder.fillAmount -= BORDER_FILL_AMT;
+
     }
 
     void PlayActionSequence()
     {
-        Debug.Log("current act:" + currentAction);
-        Debug.Log(cutscene[currentCutscene].actionEntries.Length);
-
         if(currentAction >= cutscene[currentCutscene].actionEntries.Length)
         {
             EndCutscene();
-            Debug.Log("here?");
             return;
         }
 
