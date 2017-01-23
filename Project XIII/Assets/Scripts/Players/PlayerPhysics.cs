@@ -215,14 +215,27 @@ public class PlayerPhysics : MonoBehaviour {
     {
         if (myKeyPress.horizontalAxisValue > 0 && !isFacingRight || myKeyPress.horizontalAxisValue < 0 && isFacingRight)
         {
-            myAnimator.SetTrigger("switch");
-            isFacingRight = !isFacingRight;
-
-            Vector3 scale = transform.localScale;
-            scale.x *= -1;
-
-            transform.localScale = scale;
+            ApplyFlip();
         }
+    }
+
+    public void SetFacing(bool inRightDirection)
+    {
+        if((inRightDirection && !isFacingRight) || (!inRightDirection && isFacingRight))
+        {
+            ApplyFlip();
+        }     
+    }   
+
+    void ApplyFlip()
+    {
+        myAnimator.SetTrigger("switch");
+        isFacingRight = !isFacingRight;
+
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+
+        transform.localScale = scale;
     }
 
     protected void KnockBack(float knockBackForce)

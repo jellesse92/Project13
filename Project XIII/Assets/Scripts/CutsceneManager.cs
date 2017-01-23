@@ -11,7 +11,8 @@ public class CutsceneManager : MonoBehaviour {
     const float BORDER_INVOKE_RATE = .01f;                      //Rate at which invoke is called
 
     public enum Character {Swordsman,Gunner,Mage,Mech}          //Selectable characters to animate
-    public enum Action {Run,Attack,SetPos,None,                 //Actions characters can make during cutscene                        
+    public enum Action {Run,Attack,SetPos,None,                 //Actions characters can make during cutscene 
+                        FaceRight, FaceLeft,                    //Turn character                       
                         IntroRun,IntroSetPos}                   //Actions character make at their intro. Specially made for those not on scene     
 
         [System.Serializable]
@@ -55,6 +56,7 @@ public class CutsceneManager : MonoBehaviour {
     bool currentActionComplete = true;
     bool borderTransitionComplete = false;
     bool forcedHoldAction = false;                              //Overrides all other bools to stop next action from being played right away
+    bool runTurnDelay = false;                                  //Delays actions based on turning delay
     bool dialoguePlaying = false;
 
     private void Awake()
@@ -88,7 +90,7 @@ public class CutsceneManager : MonoBehaviour {
             }
         }
 
-        if (forcedHoldAction || dialoguePlaying)
+        if (forcedHoldAction || dialoguePlaying || runTurnDelay)
             return;
 
         if(borderTransitionComplete && movingCheckDone && currentActionComplete)
@@ -171,6 +173,8 @@ public class CutsceneManager : MonoBehaviour {
                 case Action.Attack: ActionAttack(charAction.character); break;
                 case Action.Run: ActionRun(charAction.character, charAction.destination); break;
                 case Action.SetPos: ActionSetPos(charAction.character, charAction.destination); break;
+                case Action.FaceLeft: ActionFace(charAction.character, false); break;
+                case Action.FaceRight: ActionFace(charAction.character, true); break;
                 default: break;
             }
         }
@@ -201,14 +205,51 @@ public class CutsceneManager : MonoBehaviour {
         int index = GetCharEnumInt(c);
 
         currentActionComplete = false;
+
+        if (characterList[index].transform.position.x > dest.position.x)
+        {
+            ApplyRunTurnDelay(c, dest, false);
+            return;
+        }
+
+        else if (characterList[index].transform.position.x < dest.position.x)
+        {
+            ApplyRunTurnDelay(c, dest, true);
+            return;
+        }
         characterList[index].GetComponent<Animator>().SetFloat("speed", 5f);
         isMoving[index] = true;
         endPoint[index] = dest.position;
     }
 
+    void ApplyRunTurnDelay(Character c, Transform dest, bool faceRight)
+    {
+        ActionFace(c, faceRight);
+        StartCoroutine(RunTurnDelay(c, dest));
+    }
+
+    IEnumerator RunTurnDelay(Character c, Transform dest)
+    {
+        runTurnDelay = true;
+        yield return new WaitForSeconds(.7f);
+
+        int index = GetCharEnumInt(c);
+
+        characterList[index].GetComponent<Animator>().SetFloat("speed", 5f);
+        isMoving[index] = true;
+        endPoint[index] = dest.position;
+
+        runTurnDelay = false;
+    }
+
     void ActionSetPos(Character c, Transform dest)
     {
         characterList[GetCharEnumInt(c)].transform.position = new Vector2(dest.position.x, dest.position.y);
+    }
+
+    void ActionFace(Character c, bool faceRight)
+    {
+        characterList[GetCharEnumInt(c)].GetComponent<PlayerPhysics>().SetFacing(faceRight);
     }
 
     void PlayActions(ActionEntry entry)

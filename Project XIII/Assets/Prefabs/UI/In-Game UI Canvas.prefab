@@ -135,7 +135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1000011060664280
 GameObject:
   m_ObjectHideFlags: 1
@@ -3480,7 +3480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topCutsceneBorder: {fileID: 114237504950753356}
   botCutsceneBorder: {fileID: 114796643531149310}
-  playOnAwake: 1
+  playOnAwake: 0
   cutscene:
   - actionEntries:
     - characterActions:
@@ -3497,7 +3497,7 @@ MonoBehaviour:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
               m_IntArgument: 0
-              m_FloatArgument: 5
+              m_FloatArgument: 1
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
@@ -3505,11 +3505,42 @@ MonoBehaviour:
           PublicKeyToken=null
     - characterActions:
       - character: 0
-        action: 3
+        action: 4
         destination: {fileID: 0}
       function:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 114000013910520946}
+            m_MethodName: LoadTextAsset
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+    - characterActions:
+      - character: 0
+        action: 1
+        destination: {fileID: 0}
+      function:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 114000013910520946}
+            m_MethodName: LoadTextAsset
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
 --- !u!114 &114981816733202128
