@@ -11,9 +11,10 @@ public class CutsceneManager : MonoBehaviour {
     const float BORDER_INVOKE_RATE = .01f;                      //Rate at which invoke is called
 
     public enum Character {Swordsman,Gunner,Mage,Mech}          //Selectable characters to animate
-    public enum Action {Run,Attack,SetPos,None}                 //Actions characters can make during cutscene
+    public enum Action {Run,Attack,SetPos,None,                 //Actions characters can make during cutscene                        
+                        IntroRun,IntroSetPos}                   //Actions character make at their intro. Specially made for those not on scene     
 
-    [System.Serializable]
+        [System.Serializable]
     public class CharacterAction
     {
         public Character character = Character.Swordsman;       //Character to perform action
