@@ -2759,6 +2759,7 @@ MonoBehaviour:
   rightNameTag: {fileID: 1000013268053078}
   proceedArrow: {fileID: 1000011235396252}
   dialogueUIText: {fileID: 114000012441242398}
+  cutsceneManager: {fileID: 114979405344309272}
   dialogueText:
   - {fileID: 4900000, guid: 03bdc944eb3a6f647890774e9062c54b, type: 3}
   - {fileID: 4900000, guid: 071d057ad09303848866fd35c6b8fd79, type: 3}
@@ -3479,7 +3480,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topCutsceneBorder: {fileID: 114237504950753356}
   botCutsceneBorder: {fileID: 114796643531149310}
-  playOnAwake: 0
+  playOnAwake: 1
   cutscene:
   - actionEntries:
     - characterActions:
@@ -3488,12 +3489,23 @@ MonoBehaviour:
         destination: {fileID: 0}
       function:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 114979405344309272}
+            m_MethodName: DelayAction
+            m_Mode: 4
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 5
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
     - characterActions:
       - character: 0
-        action: 2
+        action: 3
         destination: {fileID: 0}
       function:
         m_PersistentCalls:

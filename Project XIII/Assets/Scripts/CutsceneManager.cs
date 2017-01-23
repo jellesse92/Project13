@@ -11,7 +11,7 @@ public class CutsceneManager : MonoBehaviour {
     const float BORDER_INVOKE_RATE = .01f;                      //Rate at which invoke is called
 
     public enum Character {Swordsman,Gunner,Mage,Mech}          //Selectable characters to animate
-    public enum Action {Run,Attack,Fall,SetPos,None}                 //Actions characters can make during cutscene
+    public enum Action {Run,Attack,SetPos,None}                 //Actions characters can make during cutscene
 
     [System.Serializable]
     public class CharacterAction
@@ -54,6 +54,7 @@ public class CutsceneManager : MonoBehaviour {
     bool currentActionComplete = true;
     bool borderTransitionComplete = false;
     bool forcedHoldAction = false;                              //Overrides all other bools to stop next action from being played right away
+    bool dialoguePlaying = false;
 
     private void Awake()
     {
@@ -86,7 +87,7 @@ public class CutsceneManager : MonoBehaviour {
             }
         }
 
-        if (forcedHoldAction)
+        if (forcedHoldAction || dialoguePlaying)
             return;
 
         if(borderTransitionComplete && movingCheckDone && currentActionComplete)
@@ -246,5 +247,15 @@ public class CutsceneManager : MonoBehaviour {
     void HoldActions()
     {
         forcedHoldAction = false;
+    }
+
+    public void ActivateDialogueMode()
+    {
+        dialoguePlaying = true;
+    }
+
+    public void DeactivateDialogueMode()
+    {
+        dialoguePlaying = false;
     }
 }
