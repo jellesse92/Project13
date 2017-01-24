@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013667260886
 GameObject:
   m_ObjectHideFlags: 1
@@ -567,6 +567,7 @@ MonoBehaviour:
   boostStats:
     attackBoost: 0
     speedBoost: 0
+  damageScreenShake: 0.1
 --- !u!114 &114929438542912904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -578,6 +579,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5dfdb340f5147b47bc12f8882862f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackFrequencyPercentage: 40
   quickAttackVoiceList:
   - {fileID: 8300000, guid: 20962c231b0586a4aac19b4e7ef6e87c, type: 3}
   - {fileID: 8300000, guid: d6f71df1fe628b34ba9ec852432db9e4, type: 3}
@@ -595,8 +597,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 76e808e81bb2ca54e8dea5f152ccf135, type: 3}
   - {fileID: 8300000, guid: e02b8ada5a330b048940eaadf761a04e, type: 3}
   - {fileID: 8300000, guid: 3de995e453451a84491525fedd130956, type: 3}
-  xOut10ToSaySomething: 4
-  hitSparkAudio: {fileID: 0}
+  hitSparkList: []
 --- !u!114 &114983686720588552
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -612,6 +613,10 @@ MonoBehaviour:
   heavyAttack: {fileID: 0}
   quickAttackHitSpark: {fileID: 0}
   generalHitSpark: {fileID: 0}
+  dashAfterImage: {fileID: 0}
+  jumpDust: {fileID: 0}
+  runningDust: {fileID: 0}
+  landingDust: {fileID: 0}
 --- !u!198 &198000010031856604
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -18989,7 +18994,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 2ece027cb5843f44daa7d96fb0022d95, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
