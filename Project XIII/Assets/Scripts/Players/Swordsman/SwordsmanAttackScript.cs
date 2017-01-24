@@ -37,7 +37,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     const float QUICK_STUN_MULTI = 1f;                              //Stun duration multiplier for quick atack
     const float QUICK_AIR_STUN_MULTI = 1f;                          //Stun duration multiplier for air quick attack 
     const float DRAG_STUN_MULTI = 1f;                               //Stun duration multiplier for drag attack
-    
+
     HashSet<GameObject> enemyHash;
 
     //Heavy attack variables
@@ -49,6 +49,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     string attack = "";
     int damage;
 
+    enum HitType {normal, finisher, crystal};
     PlayerSoundEffects playerSoundEffects;
     SwordsmanParticleEffects playerParticleEffects;
     PlayerProperties playProp;
@@ -144,6 +145,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             enemyHash.Add(col.gameObject);
             Invoke("StopMomentum", HEAVY_DRAG_ENEMY_TIME);
         }
+        CrystalHit(col);
     }
 
     void UpdateHeavyAttack()
@@ -201,6 +203,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             col.gameObject.GetComponent<Enemy>().Damage(damage, HEAVY_AIR_STUN_MULTI);
             col.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_AIR_X_FORCE * transform.parent.localScale.x, HEAVY_AIR_Y_FORCE));
         }
+        CrystalHit(col);
     }
 
     /*
@@ -222,6 +225,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
         }
+        CrystalHit(col);
     }
 
     void TriggerQuickAttack2(Collider2D col)
@@ -235,6 +239,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
         }
+        CrystalHit(col);
     }
 
     void TriggerAirQuickAttack(Collider2D col)
@@ -248,6 +253,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             col.GetComponent<Enemy>().Damage(damage, QUICK_AIR_STUN_MULTI);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_AIR_X_FORCE * transform.parent.localScale.x, QUICK_AIR_Y_FORCE));
         }
+        CrystalHit(col);
     }
 
     /*
@@ -323,7 +329,38 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
             col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
+        }
+        CrystalHit(col);
+        
 
+    }
+
+    void HitEffect(HitType hitType, Vector3 position)
+    {
+        if(hitType == HitType.normal)
+        {
+            playerSoundEffects.PlayHitSpark();
+            playerParticleEffects.PlayHitSpark(position);
+        }
+        else if(hitType == HitType.finisher)
+        {
+            playerSoundEffects.PlayHitSpark();
+            playerParticleEffects.PlayFinisherHitSpark(position);
+        }
+        else if(hitType == HitType.crystal)
+        {
+            playerSoundEffects.PlayHitSpark();
+            playerParticleEffects.PlayHitSpark(position);
+        }
+
+    }
+
+    void CrystalHit(Collider2D collider)
+    {
+        if (collider.tag == "Crystal")
+        {
+            HitEffect(HitType.crystal, collider.transform.position);
+            collider.GetComponent<CrystalProperties>().SwitchColor();
         }
     }
 
