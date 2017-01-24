@@ -368,7 +368,7 @@ public class PlayerPhysics : MonoBehaviour {
     //Specific to freezing animations connected to whether a button has been released or not
     public void DisableAnimator()
     {
-        if(!(quickAttackReleased && heavyAttackReleased))
+        if(!(quickAttackReleased && heavyAttackReleased) && GetComponent<PlayerInput>().InputActiveState())
             myAnimator.enabled = false;
     }
 
