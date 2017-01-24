@@ -10,12 +10,12 @@ public class CutsceneManager : MonoBehaviour {
     const float BORDER_FILL_AMT = .01f;                         //Amount border fills per invoke
     const float BORDER_INVOKE_RATE = .01f;                      //Rate at which invoke is called
 
-    public enum Character {Swordsman,Gunner,Mage,Mech}          //Selectable characters to animate
-    public enum Action {Run,Attack,SetPos,None,                 //Actions characters can make during cutscene 
-                        FaceRight, FaceLeft,                    //Turn character                       
-                        IntroRun,IntroSetPos}                   //Actions character make at their intro. Specially made for those not on scene     
+    public enum Character { Swordsman, Gunner, Mage, Mech }     //Selectable characters to animate
+    public enum Action { Run, Attack, SetPos, None,             //Actions characters can make during cutscene 
+                         FaceRight, FaceLeft,                   //Turn character                       
+                         IntroSetPos, EndRun}                   //Actions character make if they're not an active player  
 
-        [System.Serializable]
+    [System.Serializable]
     public class CharacterAction
     {
         public Character character = Character.Swordsman;       //Character to perform action
@@ -36,8 +36,18 @@ public class CutsceneManager : MonoBehaviour {
         public ActionEntry[] actionEntries;                     //List of actions to happen under cutscene
     }
 
+    [System.Serializable]
+    public class CharacterCutsceneStatus
+    {
+        public bool isMoving = false;                           //Is moving on the scene in some way
+        public bool isFalling = false;                          //Is falling
+        public bool isActive = false;                           //Is an active player on the scene
+        public Vector2 destination = new Vector2();                                  
+    }
+
     public Image topCutsceneBorder;                             //Top border for cutscene
-    public Image botCutsceneBorder;                             //Bottom border for cutscene               
+    public Image botCutsceneBorder;                             //Bottom border for cutscene  
+    GameObject cameraColliders;                                 //Collider container to be disabled for cutscene             
 
     Transform playersManager;                                   //For managing player input
     GameObject[] characterList = new GameObject[4];             //List of characters to be controlled by cutscene controller
@@ -46,9 +56,8 @@ public class CutsceneManager : MonoBehaviour {
     public ActionSequence[] cutscene;
 
     //Variables for movement
-    bool[] isMoving = new bool[4];
-    bool[] isFalling = new bool[4];
-    Vector2[] endPoint = new Vector2[4];
+
+    CharacterCutsceneStatus[] characterStatuses = new CharacterCutsceneStatus[4];
 
     //Variables for managing flow of cutscene
     int currentCutscene = 0;                                    //Cutscene to be played on next cutscene call
@@ -62,14 +71,17 @@ public class CutsceneManager : MonoBehaviour {
     private void Awake()
     {
         playersManager = GameObject.FindGameObjectWithTag("PlayerList").transform;
+        cameraColliders = GameObject.FindGameObjectWithTag("Camera Wall");
+
+        for(int i = 0; i < 4; i++)
+        {
+            characterStatuses[i] = new CharacterCutsceneStatus();
+        }
+
+        characterStatuses[0].isActive = false;
 
         for(int i = 0; i < 4; i++)
             characterList[i] = playersManager.GetChild(i).gameObject;
-
-        for (int i = 0; i < 4; i++)
-        {
-            isMoving[i] = false;
-        }
 
         if (playOnAwake)
             ActivateCutscene(0);
@@ -83,11 +95,11 @@ public class CutsceneManager : MonoBehaviour {
 
         for (int i = 0; i < 4; i++)
         {
-            if (isMoving[i])
+            if (characterStatuses[i].isMoving)
             {
                 ApplyRun(i);
                 movingCheckDone = false;
-            }
+            }          
         }
 
         if (forcedHoldAction || dialoguePlaying || runTurnDelay)
@@ -102,23 +114,37 @@ public class CutsceneManager : MonoBehaviour {
     public void ActivateCutscene(int index)
     {
         Reset();
+        if (cameraColliders != null)
+            cameraColliders.SetActive(false);
         playersManager.GetComponent<PlayerInputManager>().SetInputsActive(false);
+        for (int i = 0; i < 4; i++)
+            characterStatuses[i].isActive = characterList[i].activeSelf;
+
         InvokeRepeating("TransitionInBorders", 0f, BORDER_INVOKE_RATE);
     }
 
     private void Reset()
     {
         currentActionComplete = true;
+        forcedHoldAction = false;
+        runTurnDelay = false;
         for (int i = 0; i < 4; i++)
         {
-            isMoving[i] = false;
-            isFalling[i] = false;
+            characterStatuses[i].isMoving = false;
+            characterStatuses[i].isFalling = false;
         }
     } 
 
     public void EndCutscene()
     {
         this.enabled = false;
+        if (cameraColliders != null)
+            cameraColliders.SetActive(true);
+        for (int i = 0; i < 4; i++)
+        {
+            if (!characterStatuses[i].isActive)
+                characterList[i].SetActive(false);
+        }
         InvokeRepeating("TransitionOutBorders", 0f, BORDER_INVOKE_RATE);
         currentCutscene++;
     }
@@ -175,6 +201,8 @@ public class CutsceneManager : MonoBehaviour {
                 case Action.SetPos: ActionSetPos(charAction.character, charAction.destination); break;
                 case Action.FaceLeft: ActionFace(charAction.character, false); break;
                 case Action.FaceRight: ActionFace(charAction.character, true); break;
+                case Action.IntroSetPos: ActionIntroSetPos(charAction.character, charAction.destination); break;
+                case Action.EndRun:ActionEndRun(charAction.character, charAction.destination); break;
                 default: break;
             }
         }
@@ -218,8 +246,8 @@ public class CutsceneManager : MonoBehaviour {
             return;
         }
         characterList[index].GetComponent<Animator>().SetFloat("speed", 5f);
-        isMoving[index] = true;
-        endPoint[index] = dest.position;
+        characterStatuses[index].isMoving = true;
+        characterStatuses[index].destination = dest.position;
     }
 
     void ApplyRunTurnDelay(Character c, Transform dest, bool faceRight)
@@ -236,8 +264,8 @@ public class CutsceneManager : MonoBehaviour {
         int index = GetCharEnumInt(c);
 
         characterList[index].GetComponent<Animator>().SetFloat("speed", 5f);
-        isMoving[index] = true;
-        endPoint[index] = dest.position;
+        characterStatuses[index].isMoving = true;
+        characterStatuses[index].destination = dest.position;
 
         runTurnDelay = false;
     }
@@ -252,6 +280,28 @@ public class CutsceneManager : MonoBehaviour {
         characterList[GetCharEnumInt(c)].GetComponent<PlayerPhysics>().SetFacing(faceRight);
     }
 
+    void ActionIntroSetPos(Character c, Transform dest)
+    {
+        int index = GetCharEnumInt(c);
+
+        //For characters that aren't activated as they aren't selected
+        if (!characterStatuses[index].isActive)
+        {
+            Debug.Log("'testing");
+            characterList[index].SetActive(true);
+            
+            ActionSetPos(c, dest);
+        }
+
+    }
+
+    void ActionEndRun(Character c, Transform dest)
+    {
+        //For characters that should leave the scene as they aren't played
+        if (!characterStatuses[GetCharEnumInt(c)].isActive)
+            ActionRun(c, dest);
+    }
+
     void PlayActions(ActionEntry entry)
     {
         PlayCharacterActions(entry);
@@ -262,16 +312,16 @@ public class CutsceneManager : MonoBehaviour {
     {
         Vector2 pos = characterList[index].transform.position;
 
-        if(Mathf.Abs(pos.x - endPoint[index].x) <= RUN_SPEED)
+        if(Mathf.Abs(pos.x - characterStatuses[index].destination.x) <= RUN_SPEED)
         {
-            characterList[index].transform.position = new Vector2(endPoint[index].x, characterList[index].transform.position.y);
+            characterList[index].transform.position = new Vector2(characterStatuses[index].destination.x, characterList[index].transform.position.y);
             characterList[index].transform.GetComponent<Animator>().SetFloat("speed", 0f);
-            isMoving[index] = false;
+            characterStatuses[index].isMoving = false;
             return;
         }
 
         characterList[index].transform.position = Vector2.MoveTowards(characterList[index].transform.position, 
-            new Vector2(endPoint[index].x,characterList[index].transform.position.y),RUN_SPEED);
+            new Vector2(characterStatuses[index].destination.x,characterList[index].transform.position.y),RUN_SPEED);
     }
 
     void AbortSequence()
