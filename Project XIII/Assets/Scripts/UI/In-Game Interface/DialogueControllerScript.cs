@@ -57,7 +57,10 @@ public class DialogueControllerScript : MonoBehaviour {
     {
         Reset();
         ConstructDict();
-        musicManager = GameObject.FindGameObjectWithTag("Music").GetComponent<MusicManager>();
+
+        GameObject musicObject = GameObject.FindGameObjectWithTag("Music");
+        if (musicObject != null)
+            musicManager = musicObject.GetComponent<MusicManager>();
         
         shakeScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamShakeScript>();
     }
