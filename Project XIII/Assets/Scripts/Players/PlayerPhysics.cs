@@ -88,8 +88,10 @@ public class PlayerPhysics : MonoBehaviour {
                     HeavyAttack();
                 if (myKeyPress.dashPress)
                     MovementSkill(xMove, yMove);
+                /* Not all characters have a block move. disabled for now
                 if (myKeyPress.blockPress)
                     Block();
+                    */
                 CheckForButtonReleases();
             }
         }
