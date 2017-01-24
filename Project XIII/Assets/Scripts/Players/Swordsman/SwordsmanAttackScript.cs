@@ -5,7 +5,8 @@ using UnityEngine;
 public class SwordsmanAttackScript : MonoBehaviour {
 
     //Constant for last combo hit damage additive
-    const int FINISHER_DMG_BONUS = 5;
+    const int FINISHER_DMG_BONUS = 2;
+    const int QUICK_2_DMG_BONUS = 5;
 
     //Constants for heavy attack variables 
     const float HEAVY_DRAG_ENEMY_TIME = .1f;                        //Time after initial enemy hit to keep dragging out attack
@@ -49,7 +50,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     int damage;
 
     PlayerSoundEffects playerSoundEffects;
-    PlayerParticleEffects playerParticleEffects;
+    SwordsmanParticleEffects playerParticleEffects;
     PlayerProperties playProp;
 
     void Awake()
@@ -60,7 +61,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     void Start()
     {
         playerSoundEffects = transform.parent.GetComponent<PlayerSoundEffects>();
-        playerParticleEffects = transform.parent.GetComponent<PlayerParticleEffects>();
+        playerParticleEffects = transform.parent.GetComponent<SwordsmanParticleEffects>();
         playProp = transform.parent.GetComponent<PlayerProperties>();
     }
 
@@ -70,6 +71,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
         {
             case "heavy": TriggerHeavyAttack(col); break;
             case "quick": TriggerQuickAttack(col); break;
+            case ("quick2"): TriggerQuickAttack2(col); break;
             case "quickAir": TriggerAirQuickAttack(col); break;
             case "heavyAir": TriggerAirHeavyAttack(col); break;
             case "drag": TriggerDragAttack(col);  break;
@@ -84,6 +86,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
         {
             case "heavy": UpdateHeavyAttack(); break;
             case "quick": break;
+            case "quick2": break;
             case "quickAir": break;
             case "heavyAir": break;
             case "drag": UpdateDragAttack(); break;
@@ -106,8 +109,12 @@ public class SwordsmanAttackScript : MonoBehaviour {
                 damage = playProp.GetPlayerStats().quickAttackStrength;
                 InvokeRepeating("DragAttackApplyDamage", DRAG_REPEAT_DMG_APPLY_ST, DRAG_REPEAT_DMG_RATE);
                 break;
+            case ("quick2"):
+                damage = playProp.GetPlayerStats().quickAttackStrength + QUICK_2_DMG_BONUS;
+                //Effect stuff??
+                break;
             case "finisher":
-                damage = playProp.GetPlayerStats().quickAttackStrength + FINISHER_DMG_BONUS;
+                damage = playProp.GetPlayerStats().quickAttackStrength * FINISHER_DMG_BONUS;
                 finishEffectPlayed = false;
                 break;
             default: attack = ""; break;
@@ -217,6 +224,19 @@ public class SwordsmanAttackScript : MonoBehaviour {
         }
     }
 
+    void TriggerQuickAttack2(Collider2D col)
+    {
+        if (col.tag == "Enemy")
+        {
+            //QUICK ATTACK 2 EFFECTS STUFF
+            playerSoundEffects.PlayHitSpark();
+            playerParticleEffects.PlayHitSpark(col.GetComponent<Enemy>().GetCenter());
+
+            col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
+            col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
+        }
+    }
+
     void TriggerAirQuickAttack(Collider2D col)
     {
         if (col.tag == "Enemy")
@@ -292,8 +312,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
         {
             //HEAVY ATTACK EFFECTS STUFF
             playerSoundEffects.PlayHitSpark();
-            playerParticleEffects.PlayHitSpark(col.GetComponent<Enemy>().GetCenter());
-
+            playerParticleEffects.PlayFinisherHitSpark(col.GetComponent<Enemy>().GetCenter());
             if (!finishEffectPlayed)
             {
                 finishEffectPlayed = true;

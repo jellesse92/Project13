@@ -37,6 +37,7 @@ public class PlayerInput : MonoBehaviour {
     private KeyConfig keyConfig = new KeyConfig();
     private KeyPress keyPress = new KeyPress();
     private int joystickNum = 0;
+    private bool inputEnabled = true;
 
     void Start()
 	{
@@ -45,6 +46,8 @@ public class PlayerInput : MonoBehaviour {
     
     public void GetInput()
     {
+        if (!inputEnabled)
+            return;
 
         if(joystickNum == 0)
         {
@@ -122,4 +125,13 @@ public class PlayerInput : MonoBehaviour {
 
     }
 
+    public void SetInputActive(bool b)
+    {
+        inputEnabled = b;
+    }
+
+    public bool InputActiveState()
+    {
+        return inputEnabled;
+    }
 }

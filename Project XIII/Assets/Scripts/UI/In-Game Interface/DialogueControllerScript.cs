@@ -27,7 +27,7 @@ public class DialogueControllerScript : MonoBehaviour {
 
     //Other utility scripts
     MusicManager musicManager;                                  //Script that manages music
-    SequenceFlowController sequenceScript;                      //Controls flow of the scene
+    public CutsceneManager cutsceneManager;                            //Controls the flow of cutscene
     CamShakeScript shakeScript;                                 //Controls camera shake
 
     //---Colors for large portraits
@@ -58,13 +58,13 @@ public class DialogueControllerScript : MonoBehaviour {
         Reset();
         ConstructDict();
         musicManager = GameObject.FindGameObjectWithTag("Music").GetComponent<MusicManager>();
-        sequenceScript = GameObject.FindGameObjectWithTag("Sequence").GetComponent<SequenceFlowController>();
+        
         shakeScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamShakeScript>();
     }
 
     // Use this for initialization
     void Start () {
-        //LoadTextAsset(0);
+
 	}
 	
 	// Update is called once per frame
@@ -125,11 +125,11 @@ public class DialogueControllerScript : MonoBehaviour {
     //Proceeds dialogue along or faster with input
     void WatchForProceedButton()
     {
-        if (Input.GetKeyDown(PROCEED_KEY) && !isTyping)
+        if ((Input.GetKeyDown(PROCEED_KEY) || Input.GetButtonDown("Any_X")) && !isTyping)
         {
             ProceedDialogue();
         }
-        else if (Input.GetKeyDown(PROCEED_KEY) && isTyping)
+        else if ((Input.GetKeyDown(PROCEED_KEY) || Input.GetButtonDown("Any_X")) && isTyping)
         {
             textShown = dialogueArray[currentLine].Length;
         }
@@ -154,6 +154,7 @@ public class DialogueControllerScript : MonoBehaviour {
     //Loads text to be read to current dialogue 
     public void LoadTextAsset(int index)
     {
+        cutsceneManager.ActivateDialogueMode();
         dialogueUI.SetActive(true);
         currentAsset = index;
         dialogueArray = dialogueText[index].ToString().Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
@@ -330,7 +331,7 @@ public class DialogueControllerScript : MonoBehaviour {
     {
         Reset();
         dialogueUI.SetActive(false);
-        sequenceScript.NextSequence();
+        cutsceneManager.DeactivateDialogueMode();
     }
 
     /*

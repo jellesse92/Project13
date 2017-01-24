@@ -52,7 +52,7 @@ public class MusicManager : MonoBehaviour {
         for(int i = 1; i < musicArray.Length; i++)
             StartCoroutine(StartClips(i));
 
-        nextClip = clipsPlayOnStart;
+        nextClip = clipsPlayOnStart + 1;
         ZeroVolumeClips();
 
 	}
@@ -84,7 +84,6 @@ public class MusicManager : MonoBehaviour {
             StartCoroutine(RaiseVolume(nextClip));
             nextClip++;
         }
-
     }
 
     IEnumerator RaiseVolume(int index)

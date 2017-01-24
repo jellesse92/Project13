@@ -52,4 +52,9 @@ public class InGameUIScript : MonoBehaviour {
     {
         playerStatusPanel.SetActive(true);
     }
+
+    public void DeactivateCombatUI()
+    {
+        playerStatusPanel.SetActive(false);
+    }
 }
