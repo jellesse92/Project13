@@ -35,7 +35,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000010565994356
 GameObject:
   m_ObjectHideFlags: 0
@@ -416,6 +416,7 @@ MonoBehaviour:
   boostStats:
     attackBoost: 1
     speedBoost: 1
+  damageScreenShake: 0.1
   gunnerStats:
     quickBulletSpeed: 10
     heavyBulletSpeed: 1
@@ -474,6 +475,10 @@ MonoBehaviour:
     type: 2}
   generalHitSpark: {fileID: 1000010487127902, guid: 63afc7e364c46d6499000b73cd8a92c8,
     type: 2}
+  dashAfterImage: {fileID: 0}
+  jumpDust: {fileID: 0}
+  runningDust: {fileID: 0}
+  landingDust: {fileID: 0}
 --- !u!114 &114639223482777798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -485,12 +490,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5dfdb340f5147b47bc12f8882862f85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackFrequencyPercentage: 40
   quickAttackVoiceList: []
   heavyAttackVoiceList: []
   receiveDamageVoiceList: []
   deathVoiceList: []
-  xOut10ToSaySomething: 4
-  hitSparkAudio: {fileID: 0}
+  hitSparkList: []
 --- !u!212 &212000013710255654
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -521,7 +526,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 8b8dce025dac8364f9e8ddc82de063d5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
