@@ -287,7 +287,6 @@ public class CutsceneManager : MonoBehaviour {
         //For characters that aren't activated as they aren't selected
         if (!characterStatuses[index].isActive)
         {
-            Debug.Log("'testing");
             characterList[index].SetActive(true);
             
             ActionSetPos(c, dest);

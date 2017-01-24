@@ -49,7 +49,7 @@ public class MusicManager : MonoBehaviour {
             aSource[i].volume = 0;
         }
 
-        for(int i = 1; i < musicArray.Length; i++)
+        for(int i = 1; i < clipsPlayOnStart+1; i++)
             StartCoroutine(StartClips(i));
 
         nextClip = clipsPlayOnStart + 1;
