@@ -23,6 +23,11 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     float lastOrthographicSize = 0f;                            //Keeps track of the last orthographic size
     bool orthoTransitioning = false;
 
+    //Cutscene variables
+    bool forcingMovement = false;                               //For cutscene manager to force movement of camera
+    float forcedOrthoSize = DEFAULT_ORTHO_SIZE;
+    Vector3 destination = new Vector3();                        //Destination of camera
+
     Camera cam;
 
     Vector3 velocity = Vector3.zero;
@@ -41,12 +46,19 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
+        if (forcingMovement)
+            CutsceneCamera();
         int activePlayers = ActivePlayerCount();
         if (activePlayers == 1)
             SinglePlayerCamera();
         if (activePlayers > 1)
             MultiplayerCamera();
 	}
+
+    void CutsceneCamera()
+    {
+
+    }
 
     void SinglePlayerCamera()
     {
