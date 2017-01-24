@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4368070561926510}
   - component: {fileID: 60256557531310954}
+  - component: {fileID: 58997025986402624}
   m_Layer: 0
   m_Name: Hill Collider
   m_TagString: Untagged
@@ -71,6 +72,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &58997025986402624
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1615375929550144}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 10.8, y: 1.7}
+  serializedVersion: 2
+  m_Radius: 0.5
 --- !u!60 &60256557531310954
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -86,7 +101,7 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: -2.5779514, y: -5.161291}
-      - {x: 10.75416, y: 1.8673115}
+      - {x: 10.80809, y: 2.1426744}
       - {x: 10.815966, y: -5.954131}
       - {x: -1.2420502, y: -5.918502}
       - {x: -6.1315737, y: -5.8299975}
@@ -136,6 +151,6 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e724aa28f3c3d094eb7a1c6dd26d3842, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.9558824, b: 0.9558824, a: 1}
   m_FlipX: 0
   m_FlipY: 0
