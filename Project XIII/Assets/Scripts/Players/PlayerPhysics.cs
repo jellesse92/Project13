@@ -215,14 +215,27 @@ public class PlayerPhysics : MonoBehaviour {
     {
         if (myKeyPress.horizontalAxisValue > 0 && !isFacingRight || myKeyPress.horizontalAxisValue < 0 && isFacingRight)
         {
-            myAnimator.SetTrigger("switch");
-            isFacingRight = !isFacingRight;
-
-            Vector3 scale = transform.localScale;
-            scale.x *= -1;
-
-            transform.localScale = scale;
+            ApplyFlip();
         }
+    }
+
+    public void SetFacing(bool inRightDirection)
+    {
+        if((inRightDirection && !isFacingRight) || (!inRightDirection && isFacingRight))
+        {
+            ApplyFlip();
+        }     
+    }   
+
+    void ApplyFlip()
+    {
+        myAnimator.SetTrigger("switch");
+        isFacingRight = !isFacingRight;
+
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+
+        transform.localScale = scale;
     }
 
     protected void KnockBack(float knockBackForce)
@@ -355,7 +368,7 @@ public class PlayerPhysics : MonoBehaviour {
     //Specific to freezing animations connected to whether a button has been released or not
     public void DisableAnimator()
     {
-        if(!(quickAttackReleased && heavyAttackReleased))
+        if(!(quickAttackReleased && heavyAttackReleased) && GetComponent<PlayerInput>().InputActiveState())
             myAnimator.enabled = false;
     }
 

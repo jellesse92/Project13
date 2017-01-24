@@ -34,7 +34,10 @@ public class GameController : MonoBehaviour
     public int PlayerCount = 0;
     public bool IsMusicOn = true;
     public bool IsSfxOn = true;
-    public int Volume = 100;
+    public int musicVolume = 100;
+    public int sfxVolume = 100;
+    private AudioSource[] sfxObjects;
+    private MusicManager music;
 
     public static GameController Instance
     {
@@ -44,6 +47,8 @@ public class GameController : MonoBehaviour
 
     void Awake()
     {
+        music = FindObjectOfType<MusicManager>();
+        sfxObjects = FindObjectsOfType<AudioSource>();
         DontDestroyOnLoad(transform.gameObject);
         Instance = this;
 
@@ -98,4 +103,26 @@ public class GameController : MonoBehaviour
         }
     }
 
+    public void ChangeeMusicVol(int amnt)
+    {
+        musicVolume += (musicVolume + amnt > 100 ? 0 : amnt);
+        IsMusicOn = musicVolume > 0;
+        if (!IsMusicOn)
+            musicVolume = 0;
+        music.SetMusicVolume(musicVolume / 10);
+    }
+    
+
+    public void ChangeSFXVol(int amnt)
+    {
+        foreach (AudioSource sfxObject in sfxObjects)
+        {
+            sfxVolume += (sfxVolume + amnt > 100 ? 0 : amnt);
+            IsSfxOn = sfxVolume > 0;
+            if (!IsSfxOn)
+                sfxVolume = 0;
+            sfxObject.volume = sfxVolume;
+        }
+    }
+    
 }

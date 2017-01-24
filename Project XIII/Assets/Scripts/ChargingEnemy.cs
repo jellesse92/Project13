@@ -12,7 +12,7 @@ public class ChargingEnemy : Enemy {
     public float attCoolDownTime = 3;
     public float knockBackForceX = 2000f;                   //Knockback Damage amnt for enemies
     public float knockBackForceY = 3000f;
-    private int location = 1;
+    private int location = 0;
     public bool isCoolingDown = false;
     Vector2 xyBoundary;
     GameObject leftCameraWall, rightCameraWall;
@@ -46,22 +46,23 @@ public class ChargingEnemy : Enemy {
             ManageJuggleState();
         else if (!dead)
         {
-            if (GetVisibleState() && GetPursuitState() && !stunned && !frozen)
+            if (GetVisibleState() && !stunned && !frozen)
             {
                 if (isCoolingDown)
                 {
                     anim.Play("Idle");
                 }
                 if (!isAttacking && !inAttackRange && !isCoolingDown)
+                {
                     Approach();
+                }
+
                 else if (!attEnded)
                 {
-
                     CheckAttackEnd();
                 }
             }
-            else if (!stunned)
-                anim.SetInteger("x", 0);
+
         }
 
 
@@ -128,6 +129,7 @@ public class ChargingEnemy : Enemy {
 
     private void StopCharging()
     {
+        print("initiating cool down from side: " + location);
         isCoolingDown = true;
         isInvincible = false;
         Invoke("UnsetCoolDown", attCoolDownTime);

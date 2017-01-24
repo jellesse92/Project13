@@ -125,11 +125,11 @@ public class DialogueControllerScript : MonoBehaviour {
     //Proceeds dialogue along or faster with input
     void WatchForProceedButton()
     {
-        if (Input.GetKeyDown(PROCEED_KEY) && !isTyping)
+        if ((Input.GetKeyDown(PROCEED_KEY) || Input.GetButtonDown("Any_X")) && !isTyping)
         {
             ProceedDialogue();
         }
-        else if (Input.GetKeyDown(PROCEED_KEY) && isTyping)
+        else if ((Input.GetKeyDown(PROCEED_KEY) || Input.GetButtonDown("Any_X")) && isTyping)
         {
             textShown = dialogueArray[currentLine].Length;
         }

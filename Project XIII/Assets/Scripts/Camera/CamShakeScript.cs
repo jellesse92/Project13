@@ -41,9 +41,10 @@ public class CamShakeScript : MonoBehaviour {
 
         float quakeAmtY = Random.value * shakeAmount * 2 - shakeAmount;
         float quakeAmtX = Random.value * shakeAmount * 2 - shakeAmount;
-        Vector3 pp = transform.position;
+        Vector3 pp = transform.parent.position;
         pp.y += quakeAmtY;
         pp.x += quakeAmtX;
+        pp.z = transform.position.z;
         transform.position = pp;
     }
 

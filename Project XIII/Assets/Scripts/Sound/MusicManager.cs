@@ -15,6 +15,7 @@ public class MusicManager : MonoBehaviour {
     public MusicEntry[] musicArray;
     public int clipsPlayOnStart;                            //Number of clips to play on start
     private int nextClip;                                   //Next clip to activate
+    public float maxVolume = .1f;
     AudioSource[] aSource;
 
     int indexUnmute = 0;
@@ -45,9 +46,10 @@ public class MusicManager : MonoBehaviour {
             aSource[i] = child.AddComponent<AudioSource>() as AudioSource;
             aSource[i].clip = musicArray[i].startClip;
             aSource[i].loop = true;
+            aSource[i].volume = 0;
         }
 
-        for(int i = 1; i < musicArray.Length; i++)
+        for(int i = 1; i < clipsPlayOnStart+1; i++)
             StartCoroutine(StartClips(i));
 
         nextClip = clipsPlayOnStart + 1;
@@ -57,6 +59,8 @@ public class MusicManager : MonoBehaviour {
 
     IEnumerator StartClips(int index)
     {
+
+        StartCoroutine(RaiseVolume(index));
         aSource[index].Play();
         yield return new WaitForSeconds(musicArray[index].startClip.length);
         aSource[index].clip = musicArray[index].loopClip;
@@ -85,7 +89,7 @@ public class MusicManager : MonoBehaviour {
     IEnumerator RaiseVolume(int index)
     {
         if(aSource.Length > index)
-            while(aSource[index].volume < 1f)
+            while(aSource[index].volume < maxVolume)
             {
                 aSource[index].volume += INCREASE_VOLUME_RATE;
                 yield return new WaitForSeconds(1f);
@@ -100,4 +104,9 @@ public class MusicManager : MonoBehaviour {
         StartCoroutine(RaiseVolume(0));
     }
 
+    public void SetMusicVolume(float vol)
+    {
+        maxVolume = vol;
+        aSource[nextClip - 1].volume = vol;
+    }
 }

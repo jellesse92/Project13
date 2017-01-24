@@ -32,9 +32,8 @@ public class InGameUIScript : MonoBehaviour {
     //Checks for pause button and reacts accordingly
     void checkForPause()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("Any_Start"))
         {
-            Debug.Log("test");
             if (!pausePanel.activeSelf)
             {
                 pausePanel.SetActive(true);
