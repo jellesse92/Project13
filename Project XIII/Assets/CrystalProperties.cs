@@ -6,6 +6,7 @@ public enum ColorChoice
 {
     red, blue, green
 }
+
 public class CrystalProperties : MonoBehaviour {
 
     public AudioClip crystalHit;
@@ -15,7 +16,7 @@ public class CrystalProperties : MonoBehaviour {
     SpriteRenderer mySprite;
     ParticleSystem hitParticle;
     PuzzleManager puzzleManager;
-    // Use this for initialization
+
     void Start () {
         mySprite = GetComponent<SpriteRenderer>();
         myAudio = GetComponent<AudioSource>();
@@ -46,7 +47,6 @@ public class CrystalProperties : MonoBehaviour {
 
     public bool isColorCorrect()
     {
-        //return true if the state of crystal is the correct color
         if (correctColor == ColorChoice.red && mySprite.color == Color.red)
             return true;
         else if (correctColor == ColorChoice.green && mySprite.color == Color.green)

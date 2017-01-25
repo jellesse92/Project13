@@ -4,13 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 public class PuzzleManager : MonoBehaviour {
     public UnityEvent actions;
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	    
+
     bool puzzleStateCorrect()
     {
         foreach(Transform child in transform)
