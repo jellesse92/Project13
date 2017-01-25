@@ -2,19 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum ColorChoice
+{
+    red, blue, green
+}
 public class CrystalProperties : MonoBehaviour {
 
-    public int crystalNumber = 0;
     public AudioClip crystalHit;
+    public ColorChoice correctColor;
+
     AudioSource myAudio;
     SpriteRenderer mySprite;
     ParticleSystem hitParticle;
-
+    PuzzleManager puzzleManager;
     // Use this for initialization
     void Start () {
         mySprite = GetComponent<SpriteRenderer>();
         myAudio = GetComponent<AudioSource>();
         hitParticle = transform.FindChild("HitParticle").gameObject.GetComponent<ParticleSystem>();
+        puzzleManager = transform.parent.GetComponent<PuzzleManager>();
     }
 
     public void SwitchColor()
@@ -29,6 +35,8 @@ public class CrystalProperties : MonoBehaviour {
             mySprite.color = Color.red;
         else
             mySprite.color = Color.red;
+
+        puzzleManager.executeIfCorrect();
     }
 
     public Color getColor()
@@ -36,8 +44,16 @@ public class CrystalProperties : MonoBehaviour {
         return mySprite.color;
     }
 
-    public int getCrystalNumber()
+    public bool isColorCorrect()
     {
-        return crystalNumber;
+        //return true if the state of crystal is the correct color
+        if (correctColor == ColorChoice.red && mySprite.color == Color.red)
+            return true;
+        else if (correctColor == ColorChoice.green && mySprite.color == Color.green)
+            return true;
+        else if (correctColor == ColorChoice.blue && mySprite.color == Color.blue)
+            return true;
+        else
+            return false;
     }
 }
