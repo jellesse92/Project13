@@ -14,6 +14,15 @@ public class CutsceneManager : MonoBehaviour {
     public enum Action { Run, Attack, SetPos, None,             //Actions characters can make during cutscene 
                          FaceRight, FaceLeft,                   //Turn character                       
                          IntroSetPos, EndRun}                   //Actions character make if they're not an active player  
+    public enum CameraOptions
+    {
+        Free,                                                   //Camera is free to move as it normally would
+        None,
+        Freeze,                                                 //Camera freezes position
+        ForceOrtho,                                             //Forces camera size
+        CancelForceOrtho,                                       //Cancel forced ortho size
+        Travel,                                                 //Travels to destination
+    }
 
     [System.Serializable]
     public class CharacterAction
@@ -27,13 +36,23 @@ public class CutsceneManager : MonoBehaviour {
     public class ActionEntry
     {
         public CharacterAction[] characterActions;              //Array of actions characters should make for current action sequence
+        public CameraAction[] cameraActions;                    //Actions the camera should perform
         public UnityEvent function;                             //Function to possibly be called during action event
+        public float delayNextAction = 0f;                      //Time to delay next action
     }
 
     [System.Serializable]
     public class ActionSequence
     {
         public ActionEntry[] actionEntries;                     //List of actions to happen under cutscene
+    }
+
+    [System.Serializable]
+    public class CameraAction
+    {
+        public CameraOptions cameraOption = CameraOptions.None;
+        public Transform destination;
+        public float f_param = 0f;
     }
 
     [System.Serializable]
@@ -55,6 +74,11 @@ public class CutsceneManager : MonoBehaviour {
     public bool playOnAwake = false;                            //Determines if first cutscene should be played as soon as scene starts
     public ActionSequence[] cutscene;
 
+    //Variables for controlling camera movement
+    MultiplayerCamFollowScript camScript;
+    Vector2 camDestination = new Vector2();
+    bool cameraMoving = false;
+
     //Variables for movement
 
     CharacterCutsceneStatus[] characterStatuses = new CharacterCutsceneStatus[4];
@@ -72,6 +96,7 @@ public class CutsceneManager : MonoBehaviour {
     {
         playersManager = GameObject.FindGameObjectWithTag("PlayerList").transform;
         cameraColliders = GameObject.FindGameObjectWithTag("Camera Wall");
+        camScript = GameObject.FindGameObjectWithTag("MainCamera").transform.parent.GetComponent<MultiplayerCamFollowScript>();
 
         for(int i = 0; i < 4; i++)
         {
@@ -102,10 +127,8 @@ public class CutsceneManager : MonoBehaviour {
             }          
         }
 
-        if (forcedHoldAction || dialoguePlaying || runTurnDelay)
-            return;
-
-        if(borderTransitionComplete && movingCheckDone && currentActionComplete)
+        if(borderTransitionComplete && movingCheckDone && currentActionComplete
+            &&! forcedHoldAction && !dialoguePlaying && !runTurnDelay)
         {
             PlayActionSequence();
         }
@@ -138,6 +161,7 @@ public class CutsceneManager : MonoBehaviour {
     public void EndCutscene()
     {
         this.enabled = false;
+        camScript.DeactivateCutsceneMode();
         if (cameraColliders != null)
             cameraColliders.SetActive(true);
         for (int i = 0; i < 4; i++)
@@ -190,9 +214,9 @@ public class CutsceneManager : MonoBehaviour {
         currentActionComplete = true;
     }
 
-    void PlayCharacterActions(ActionEntry entry)
+    void PlayCharacterActions(CharacterAction[] entry)
     {
-        foreach(CharacterAction charAction in entry.characterActions)
+        foreach(CharacterAction charAction in entry)
         {
             switch (charAction.action)
             {
@@ -207,6 +231,7 @@ public class CutsceneManager : MonoBehaviour {
             }
         }
     }
+
 
     int GetCharEnumInt(Character c)
     {
@@ -301,10 +326,39 @@ public class CutsceneManager : MonoBehaviour {
             ActionRun(c, dest);
     }
 
+    void PlayCameraActions(CameraAction[] entries)
+    {
+        
+        foreach(CameraAction action in entries)
+        {
+            switch (action.cameraOption)
+            {
+                case CameraOptions.Free: camScript.DeactivateCutsceneMode(); break;
+                case CameraOptions.Freeze: camScript.ActivateCutsceneMode(); break;
+                case CameraOptions.ForceOrtho: camScript.ForceOrthographicSize(action.f_param); break;
+                case CameraOptions.CancelForceOrtho: camScript.DeactivateForceOrthographicSize(); break;
+                case CameraOptions.Travel: ActionCameraTravel(action.destination, action.f_param);
+                    break;
+                default: break;
+            }
+        }
+    }
+
+    void ActionCameraTravel(Transform destination, float instant_or_not)
+    {
+        if (instant_or_not == 0f)
+            camScript.transform.position = new Vector3(destination.position.x, destination.position.y, camScript.transform.position.z);
+        else
+            camScript.ForceDestination(destination);
+    }
+
     void PlayActions(ActionEntry entry)
     {
-        PlayCharacterActions(entry);
+        PlayCharacterActions(entry.characterActions);
+        PlayCameraActions(entry.cameraActions);
         entry.function.Invoke();
+        if (entry.delayNextAction > 0f)
+            DelayAction(entry.delayNextAction);
     }
 
     void ApplyRun(int index)

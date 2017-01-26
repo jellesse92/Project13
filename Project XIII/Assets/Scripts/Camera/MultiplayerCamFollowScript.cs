@@ -27,8 +27,9 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
     //Cutscene variables
     bool forcingMovement = false;                               //For cutscene manager to force movement of camera
+    bool targetSet = false;                                     //For if there is a target destination
     float forcedOrthoSize = DEFAULT_ORTHO_SIZE;                 //Orthographic size to be set to when forced
-    Vector3 destination = new Vector3();                        //Destination of camera
+    Transform forcedDestination;                                //Destination of camera
 
     Camera cam;
 
@@ -61,6 +62,13 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     {
         if (orthoForced)
             SetOrthographicSize(forcedOrthoSize);
+        if (targetSet)
+        {
+            if(forcedDestination.position.x == transform.position.x && forcedDestination.position.y == transform.position.y)
+                EndForceDestination();
+            DampMotion(forcedDestination);
+        }
+            
     }
 
     void SinglePlayerCamera()
@@ -81,9 +89,15 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
             }
         }
 
-        Vector3 point = cam.WorldToViewportPoint(singlePlayerTrans.position);
-        Vector3 delta = singlePlayerTrans.position - cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z)); //(new Vector3(0.5, 0.5, point.z));
+        DampMotion(singlePlayerTrans);
+    }
+
+    void DampMotion(Transform target)
+    {
+        Vector3 point = cam.WorldToViewportPoint(target.position);
+        Vector3 delta = target.position - cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z)); //(new Vector3(0.5, 0.5, point.z));
         Vector3 destination = transform.position + delta;
+
         transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, dampTime);
     }
 
@@ -124,6 +138,18 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     public void DeactivateForceOrthographicSize()
     {
         orthoForced = false;
+    }
+
+    public void ForceDestination(Transform target)
+    {
+        forcingMovement = true;
+        targetSet = true;
+        forcedDestination = target;
+    }
+
+    public void EndForceDestination()
+    {
+        targetSet = false;
     }
 
     //Sets orthographic size of camera based on given parameter f
@@ -284,19 +310,13 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
             players.Add(p);
     }
 
-    public void ActivateCutsceneMode(float setOrtho = 0f)
+    public void ActivateCutsceneMode()
     {
-        if(setOrtho != 0f)
-        {
-            forcedOrthoSize = setOrtho;
-            orthoForced = true;
-        }
         forcingMovement = true;
     }
 
     public void DeactivateCutsceneMode()
     {
         forcingMovement = false;
-        orthoForced = false;
     }
 }
