@@ -5,6 +5,11 @@ using UnityEngine.Events;
 public class PuzzleManager : MonoBehaviour {
     public UnityEvent actions;
 
+    Camera mainCamera;
+    void Start()
+    {
+        mainCamera = Camera.main;
+    }
     bool puzzleStateCorrect()
     {
         foreach(Transform child in transform)
@@ -18,7 +23,10 @@ public class PuzzleManager : MonoBehaviour {
 
     public void executeIfCorrect()
     {
-        if(puzzleStateCorrect())
+        if (puzzleStateCorrect())
+        {
             actions.Invoke();
+            mainCamera.GetComponent<CamShakeScript>().StartShake(1, 2);
+        }
     }
 }
