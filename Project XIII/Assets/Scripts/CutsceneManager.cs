@@ -19,7 +19,8 @@ public class CutsceneManager : MonoBehaviour {
         Free,                                                   //Camera is free to move as it normally would
         None,
         Freeze,                                                 //Camera freezes position
-        ForceOrtho,                                             //Forces camera size
+        ForceOrtho,                                             //Forces camera size but with transition
+        InstantOrthoSet,                                        //Forcefully set camera size instantly
         CancelForceOrtho,                                       //Cancel forced ortho size
         Travel,                                                 //Travels to destination
     }
@@ -336,9 +337,9 @@ public class CutsceneManager : MonoBehaviour {
                 case CameraOptions.Free: camScript.DeactivateCutsceneMode(); break;
                 case CameraOptions.Freeze: camScript.ActivateCutsceneMode(); break;
                 case CameraOptions.ForceOrtho: camScript.ForceOrthographicSize(action.f_param); break;
+                case CameraOptions.InstantOrthoSet: camScript.ForceInstantSetOrthographicSize(action.f_param); break;
                 case CameraOptions.CancelForceOrtho: camScript.DeactivateForceOrthographicSize(); break;
-                case CameraOptions.Travel: ActionCameraTravel(action.destination, action.f_param);
-                    break;
+                case CameraOptions.Travel: ActionCameraTravel(action.destination, action.f_param);break;
                 default: break;
             }
         }

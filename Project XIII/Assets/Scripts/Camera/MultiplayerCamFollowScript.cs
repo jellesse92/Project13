@@ -152,6 +152,14 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
         targetSet = false;
     }
 
+    public void ForceInstantSetOrthographicSize(float f)
+    {
+
+        forcedOrthoSize = f;
+        orthoForced = true;
+        cam.orthographicSize = f;
+    }
+
     //Sets orthographic size of camera based on given parameter f
     void SetOrthographicSize(float f)
     {
@@ -175,7 +183,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
                 StartCoroutine(SmoothOrthograpicTransition(size));
             else if ((cam.orthographicSize < size))
                 StartCoroutine(SmoothOrthograpicExpand(size));
-            else
+            else if(!orthoForced)
                 cam.orthographicSize = size;
             
         }
