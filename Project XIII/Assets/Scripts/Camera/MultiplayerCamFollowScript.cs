@@ -156,6 +156,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     {
 
         forcedOrthoSize = f;
+        lastOrthographicSize = f;
         orthoForced = true;
         cam.orthographicSize = f;
     }
@@ -167,8 +168,16 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
         if (in2DMode)
         {
-            size = Mathf.Max(f, DEFAULT_ORTHO_SIZE);
-            size = Mathf.Min(size, MAX_ORTHO_SIZE);
+            if (orthoForced)
+            {
+                size = f;
+            }
+            else
+            {
+                size = Mathf.Max(f, DEFAULT_ORTHO_SIZE);
+                size = Mathf.Min(size, MAX_ORTHO_SIZE);
+            }
+
 
             /*
             if(lastOrthographicSize <= size)
