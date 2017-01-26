@@ -17,6 +17,8 @@ public class CrystalProperties : MonoBehaviour {
     ParticleSystem hitParticle;
     PuzzleManager puzzleManager;
 
+    static bool puzzleSolved = false;
+
     void Start () {
         mySprite = GetComponent<SpriteRenderer>();
         myAudio = GetComponent<AudioSource>();
@@ -28,16 +30,21 @@ public class CrystalProperties : MonoBehaviour {
     {
         myAudio.PlayOneShot(crystalHit);
         hitParticle.Play();
-        if (mySprite.color == Color.red)
-            mySprite.color = Color.green;
-        else if (mySprite.color == Color.green)
-            mySprite.color = Color.blue;
-        else if (mySprite.color == Color.blue)
-            mySprite.color = Color.red;
-        else
-            mySprite.color = Color.red;
 
-        puzzleManager.executeIfCorrect();
+        if (!puzzleSolved)
+        {
+
+            if (mySprite.color == Color.red)
+                mySprite.color = Color.green;
+            else if (mySprite.color == Color.green)
+                mySprite.color = Color.blue;
+            else if (mySprite.color == Color.blue)
+                mySprite.color = Color.red;
+            else
+                mySprite.color = Color.red;
+
+            puzzleSolved = puzzleManager.executeIfCorrect();
+        }
     }
 
     public Color getColor()

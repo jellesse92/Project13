@@ -21,12 +21,15 @@ public class PuzzleManager : MonoBehaviour {
         return true;
     }
 
-    public void executeIfCorrect()
+    public bool executeIfCorrect()
     {
         if (puzzleStateCorrect())
         {
             actions.Invoke();
             mainCamera.GetComponent<CamShakeScript>().StartShake(1, 2);
+            return true;
         }
+        else
+            return false;
     }
 }
