@@ -9,7 +9,8 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     const float MAX_ORTHO_SIZE = 10f;
     const float MAX_ORTHO_SIZE_3D = 40f;
 
-    const float ZOOM_DELTA = .005f;                             //Amount to zoom when zooming in or out per update
+    const float ZOOM_OUT_DELTA = .01f;                         //Amount to zoom when zooming in or out per update
+    const float ZOOM_IN_DELTA = .003f;
 
     float zoomMultiplier = 1f;
     float followDelay = .8f;
@@ -22,10 +23,11 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
     float lastOrthographicSize = 0f;                            //Keeps track of the last orthographic size
     bool orthoTransitioning = false;
+    bool orthoForced = false;                                   //If orthographic size has to be forced  
 
     //Cutscene variables
     bool forcingMovement = false;                               //For cutscene manager to force movement of camera
-    float forcedOrthoSize = DEFAULT_ORTHO_SIZE;
+    float forcedOrthoSize = DEFAULT_ORTHO_SIZE;                 //Orthographic size to be set to when forced
     Vector3 destination = new Vector3();                        //Destination of camera
 
     Camera cam;
@@ -46,25 +48,29 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
+        int activePlayers = ActivePlayerCount();
         if (forcingMovement)
             CutsceneCamera();
-        int activePlayers = ActivePlayerCount();
-        if (activePlayers == 1)
+        else if (activePlayers == 1)
             SinglePlayerCamera();
-        if (activePlayers > 1)
+        else if (activePlayers > 1)
             MultiplayerCamera();
 	}
 
     void CutsceneCamera()
     {
-
+        if (orthoForced)
+            SetOrthographicSize(forcedOrthoSize);
     }
 
     void SinglePlayerCamera()
     {
         Transform singlePlayerTrans = transform;
 
-        SetOrthographicSize(0);
+        if (orthoForced)
+            SetOrthographicSize(forcedOrthoSize);
+        else
+            SetOrthographicSize(0);
 
         foreach (GameObject player in players)
         {
@@ -79,23 +85,6 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
         Vector3 delta = singlePlayerTrans.position - cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z)); //(new Vector3(0.5, 0.5, point.z));
         Vector3 destination = transform.position + delta;
         transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, dampTime);
-
-        /*
-        Vector3 destination = new Vector3();
-        destination.x = singlePlayerTrans.position.x;
-
-        if (in2DMode)
-            destination.y = singlePlayerTrans.position.y + 2f;
-        else
-            destination.y = singlePlayerTrans.position.y;
-
-        destination.z = transform.position.z;
-
-        transform.position = Vector3.Slerp(transform.position, destination, followDelay);
-
-        if ((destination - transform.position).magnitude <= 0.05f)
-            transform.position = destination;
-        */
     }
 
     void MultiplayerCamera()
@@ -110,7 +99,11 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
             Vector3 cameraDestination;
 
             cameraDestination = midpoint - transform.forward * distance * zoomMultiplier;
-            SetOrthographicSize(distance);
+
+            if (orthoForced)
+                SetOrthographicSize(forcedOrthoSize);
+            else
+                SetOrthographicSize(distance);
 
             if(in2DMode)
                 cameraDestination.y = Mathf.Max(lowestPointY + cam.orthographicSize-5, cameraDestination.y);
@@ -120,6 +113,17 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
             if ((cameraDestination - transform.position).magnitude <= 0.05f)
                 transform.position = cameraDestination;
         }
+    }
+
+    public void ForceOrthographicSize(float size)
+    {
+        forcedOrthoSize = size;
+        orthoForced = true;
+    }
+
+    public void DeactivateForceOrthographicSize()
+    {
+        orthoForced = false;
     }
 
     //Sets orthographic size of camera based on given parameter f
@@ -132,16 +136,20 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
             size = Mathf.Max(f, DEFAULT_ORTHO_SIZE);
             size = Mathf.Min(size, MAX_ORTHO_SIZE);
 
+            /*
             if(lastOrthographicSize <= size)
             {
                 StopCoroutine(SmoothOrthograpicTransition(lastOrthographicSize));
                 lastOrthographicSize = 0f;
                 orthoTransitioning = false;
             }
+            */
 
             if ((cam.orthographicSize > size))
-                StartCoroutine(SmoothOrthograpicTransition(size) );
-            else if(!orthoTransitioning)
+                StartCoroutine(SmoothOrthograpicTransition(size));
+            else if ((cam.orthographicSize < size))
+                StartCoroutine(SmoothOrthograpicExpand(size));
+            else
                 cam.orthographicSize = size;
             
         }
@@ -163,19 +171,38 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
         while(cam.orthographicSize > size)
         {
 
-            if (cam.orthographicSize - size < ZOOM_DELTA)
+            if (cam.orthographicSize - size < ZOOM_IN_DELTA)
             {
                 cam.orthographicSize = size;
                 orthoTransitioning = false;
                 break;
             }
 
-            cam.orthographicSize -= ZOOM_DELTA;
+            cam.orthographicSize -= ZOOM_IN_DELTA;
         
             yield return new WaitForSeconds(1.0f);
         }
+    }
 
+    IEnumerator SmoothOrthograpicExpand(float size)
+    {
+        lastOrthographicSize = size;
+        orthoTransitioning = true;
 
+        while (cam.orthographicSize < size)
+        {
+
+            if ( size - cam.orthographicSize < ZOOM_OUT_DELTA)
+            {
+                cam.orthographicSize = size;
+                orthoTransitioning = false;
+                break;
+            }
+
+            cam.orthographicSize += ZOOM_OUT_DELTA;
+
+            yield return new WaitForSeconds(1.0f);
+        }
     }
 
     //Get midpoint position between all players
@@ -255,5 +282,21 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     {
         if (!players.Contains(p))
             players.Add(p);
+    }
+
+    public void ActivateCutsceneMode(float setOrtho = 0f)
+    {
+        if(setOrtho != 0f)
+        {
+            forcedOrthoSize = setOrtho;
+            orthoForced = true;
+        }
+        forcingMovement = true;
+    }
+
+    public void DeactivateCutsceneMode()
+    {
+        forcingMovement = false;
+        orthoForced = false;
     }
 }
