@@ -17,6 +17,8 @@ public class FireballScript : MonoBehaviour
     AudioSource myAudio;
     bool stopped;
 
+
+
     void Start()
     {
         myAudio = GetComponent<AudioSource>();
@@ -28,6 +30,7 @@ public class FireballScript : MonoBehaviour
 
         StartCoroutine(loop());
 
+
     }
 
     void LateUpdate()
@@ -38,6 +41,8 @@ public class FireballScript : MonoBehaviour
             GetComponent<Rigidbody2D>().gravityScale = 0;
             GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0);
         }
+
+
     }
     IEnumerator loop()
     {

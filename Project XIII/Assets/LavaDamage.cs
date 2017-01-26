@@ -6,16 +6,27 @@ public class LavaDamage : MonoBehaviour {
     public int damage;
     public bool scroll;
     public float autoScrollSpeed;
-
+    public bool followCamera;
+    Transform cameraTransform;
+    float lastCameraY;
+    float deltaY;
     // Use this for initialization
     void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void LateUpdate () {
+        cameraTransform = Camera.main.transform;
+
+    }
+
+    // Update is called once per frame
+    void LateUpdate () {
         if(scroll)
             transform.position += Vector3.right * (Time.deltaTime * autoScrollSpeed);
+
+        if (followCamera)
+        {
+            deltaY = cameraTransform.position.y - lastCameraY;
+            transform.position += Vector3.up * (deltaY * 1);
+            lastCameraY = cameraTransform.position.y;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)

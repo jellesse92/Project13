@@ -9,60 +9,60 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1013650901208140}
+  m_RootGameObject: {fileID: 1691911029517906}
   m_IsPrefabParent: 1
---- !u!1 &1013650901208140
+--- !u!1 &1691911029517906
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4862883538753936}
-  - component: {fileID: 212136059962477924}
-  - component: {fileID: 114763324236048612}
-  - component: {fileID: 114772612849840688}
-  - component: {fileID: 61196963006783270}
+  - component: {fileID: 4458942243577128}
+  - component: {fileID: 212713248904242166}
+  - component: {fileID: 114355348357015958}
+  - component: {fileID: 114273248256998884}
   m_Layer: 0
-  m_Name: Lava
+  m_Name: Lava Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4862883538753936
+--- !u!4 &4458942243577128
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1013650901208140}
-  m_LocalRotation: {x: 0, y: 0, z: -0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: -19.6, y: -7.5, z: 0}
-  m_LocalScale: {x: 300, y: 200, z: 1}
+  m_GameObject: {fileID: 1691911029517906}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 100, y: 50, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
---- !u!61 &61196963006783270
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1013650901208140}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0.0003137072, y: -0.013402752}
-  serializedVersion: 2
-  m_Size: {x: 0.13680014, y: 0.13319457}
---- !u!114 &114763324236048612
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114273248256998884
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1013650901208140}
+  m_GameObject: {fileID: 1691911029517906}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a8d770c2ab0c894a9960e2333312060, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 50
+  scroll: 0
+  autoScrollSpeed: 0
+  followCamera: 0
+--- !u!114 &114355348357015958
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1691911029517906}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e3d28cb150ad86f4a8100312a4aea7a1, type: 3}
@@ -70,27 +70,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animationRate: {x: 0.06, y: 0}
   textureName: _LavaTex
---- !u!114 &114772612849840688
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1013650901208140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a8d770c2ab0c894a9960e2333312060, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 50
-  scroll: 1
-  autoScrollSpeed: 3
-  followCamera: 1
---- !u!212 &212136059962477924
+--- !u!212 &212713248904242166
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1013650901208140}
+  m_GameObject: {fileID: 1691911029517906}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
