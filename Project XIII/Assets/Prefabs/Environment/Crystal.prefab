@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114584109297604436}
   - component: {fileID: 61374454988687742}
   - component: {fileID: 82547161910709018}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Crystal
   m_TagString: Crystal
   m_Icon: {fileID: 0}
@@ -53,8 +53,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1075541445917602}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -27, y: 4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4730196105141734}
@@ -179,8 +179,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b80679a3eb5e65d4b8a8b08b6836d143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crystalNumber: 0
   crystalHit: {fileID: 8300000, guid: dfaf72a7bb79ff24e909b536f3aad7b3, type: 3}
+  correctColor: 0
 --- !u!198 &198336727654488506
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -236,7 +236,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 677403837
+  randomSeed: 1740698482
   InitialModule:
     serializedVersion: 3
     enabled: 1
