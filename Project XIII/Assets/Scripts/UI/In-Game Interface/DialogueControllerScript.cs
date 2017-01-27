@@ -66,11 +66,6 @@ public class DialogueControllerScript : MonoBehaviour {
         shakeScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamShakeScript>();
     }
 
-    // Use this for initialization
-    void Start () {
-
-	}
-	
 	// Update is called once per frame
 	void Update () {
         if (dialogueUI.activeSelf)
