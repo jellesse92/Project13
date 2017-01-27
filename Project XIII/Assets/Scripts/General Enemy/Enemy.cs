@@ -224,6 +224,8 @@ public class Enemy : MonoBehaviour {
         stunned = true;
         yield return new WaitForSeconds(currentStunMultiplier * stunEffectiveness);
 
+        
+
         if (!flyingEnemy && !IsGrounded())
             waitForRemoveStunLand = true;
         else
