@@ -23,6 +23,7 @@ public class DialogueControllerScript : MonoBehaviour {
     public GameObject leftNameTag;                              //Name tag of left speaking character
     public GameObject rightNameTag;                             //Name tag of right speaking character
     public GameObject proceedArrow;                             //Arrow to indicate end of current dialogue line
+    public GameObject skipButton;                               //Button indicating ability to skip
     public Text dialogueUIText;                                 //Typed text for dialogue
 
     //Other utility scripts
@@ -104,6 +105,7 @@ public class DialogueControllerScript : MonoBehaviour {
         textShown = 0;
         skipUIPanel.SetActive(false);
         proceedArrow.SetActive(false);
+        skipButton.SetActive(false);
         Clear();
     }
 
@@ -176,6 +178,7 @@ public class DialogueControllerScript : MonoBehaviour {
     void typeDialogue()
     {
         proceedArrow.SetActive(!isTyping);
+        skipButton.SetActive(!isTyping);
 
         int length = dialogueArray[currentLine].Length;
         textShown += 1;
