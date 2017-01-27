@@ -46,7 +46,7 @@ public class EnemyBulletScript : MonoBehaviour {
             {
                 StartCoroutine("DeactivateBullet");
                 PlayParticle(false);
-                transform.parent.parent.GetComponent<Enemy>().ReloadAmmo();
+                transform.parent.parent.GetComponentInChildren<Enemy>().ReloadAmmo();
             }
 
         }
