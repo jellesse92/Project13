@@ -2011,7 +2011,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: aca4025c3030ac3498a49f048ecd8f18, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fd47c1d1ec171d0479afafb83d1282a1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3480,33 +3480,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   topCutsceneBorder: {fileID: 114237504950753356}
   botCutsceneBorder: {fileID: 114796643531149310}
-  playOnAwake: 0
+  playOnAwake: 1
   cutscene:
   - actionEntries:
     - characterActions:
       - character: 0
-        action: 0
+        action: 6
         destination: {fileID: 0}
+      - character: 1
+        action: 6
+        destination: {fileID: 0}
+      cameraActions:
+      - cameraOption: 4
+        destination: {fileID: 0}
+        f_param: 4
       function:
         m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 114979405344309272}
-            m_MethodName: DelayAction
-            m_Mode: 4
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 1
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
+          m_Calls: []
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
+      delayNextAction: 4
     - characterActions:
       - character: 0
-        action: 4
+        action: 0
         destination: {fileID: 0}
+      - character: 1
+        action: 0
+        destination: {fileID: 0}
+      cameraActions:
+      - cameraOption: 4
+        destination: {fileID: 0}
+        f_param: 3
       function:
         m_PersistentCalls:
           m_Calls:
@@ -3523,26 +3527,35 @@ MonoBehaviour:
             m_CallState: 2
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
+      delayNextAction: 0
     - characterActions:
       - character: 0
         action: 1
         destination: {fileID: 0}
+      cameraActions:
+      - cameraOption: 4
+        destination: {fileID: 0}
+        f_param: 2
       function:
         m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 114000013910520946}
-            m_MethodName: LoadTextAsset
-            m_Mode: 3
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
+          m_Calls: []
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
+      delayNextAction: 2
+    - characterActions:
+      - character: 0
+        action: 1
+        destination: {fileID: 0}
+      cameraActions:
+      - cameraOption: 5
+        destination: {fileID: 0}
+        f_param: 2
+      function:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      delayNextAction: 2
 --- !u!114 &114981816733202128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4452,7 +4465,7 @@ RectTransform:
   m_GameObject: {fileID: 1000011235396252}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: -1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224000012449878824}
   m_RootOrder: 1
@@ -4460,7 +4473,7 @@ RectTransform:
   m_AnchorMin: {x: 0.95, y: 0.3}
   m_AnchorMax: {x: 0.95, y: 0.3}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 10, y: 10}
+  m_SizeDelta: {x: 30, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000013040360690
 RectTransform:
