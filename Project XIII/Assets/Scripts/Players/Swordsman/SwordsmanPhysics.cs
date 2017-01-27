@@ -233,6 +233,7 @@ public class SwordsmanPhysics : PlayerPhysics{
         }
 
         playerParticleEffects.PlayDashAfterImage(true);
+        gameObject.layer = 14;
     }
 
     IEnumerator Dashing(Vector3 destination)
@@ -266,6 +267,8 @@ public class SwordsmanPhysics : PlayerPhysics{
 
         Invoke("ResetDashCount", DASH_RECOVERY_TIME);
         Invoke("StopAfterImage", STOP_AFTER_IMAGE);
+
+        gameObject.layer = 15;
     }
 
     void ResetDashCount()
