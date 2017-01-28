@@ -17,7 +17,6 @@ public class DialogueControllerScript : MonoBehaviour {
 
     //---UI objects for Dialogue
     public GameObject dialogueUI;                               //UI for dialogue to be activated when dialogue is played
-    public GameObject skipUIPanel;                              //For skipping dialogue. Jazz's favorite feature
     public Image leftPortrait;                                  //Left speaking portrait
     public Image rightPortrait;                                 //Right speaking portrait
     public GameObject leftNameTag;                              //Name tag of left speaking character
@@ -52,7 +51,6 @@ public class DialogueControllerScript : MonoBehaviour {
 
     //---Command keys for Dialogue
     static KeyCode PROCEED_KEY = KeyCode.C;                     //Proceed with dialogue at normal speed
-    static KeyCode SKIP_KEY = KeyCode.Return;                   //Bring up skip scene panel
 
     void Awake()
     {
@@ -70,7 +68,6 @@ public class DialogueControllerScript : MonoBehaviour {
 	void Update () {
         if (dialogueUI.activeSelf)
         {
-            WatchForSkipButton();
             WatchForProceedButton();
         }
     }
@@ -98,7 +95,6 @@ public class DialogueControllerScript : MonoBehaviour {
     {
         Time.timeScale = 1.0f;
         textShown = 0;
-        skipUIPanel.SetActive(false);
         proceedArrow.SetActive(false);
         skipButton.SetActive(false);
         Clear();
@@ -108,23 +104,11 @@ public class DialogueControllerScript : MonoBehaviour {
      *  ------ COMMAND FUNCTIONS
      */ 
 
-    //Watches for input to activate or deactivate skip panel
-    void WatchForSkipButton()
-    {
-        if (Input.GetKeyDown(SKIP_KEY) && !skipUIPanel.activeSelf)
-        {
-            skipUIPanel.SetActive(true);
-            Time.timeScale = 0.0f;
-        }
-        else if (Input.GetKeyDown(SKIP_KEY) && skipUIPanel.activeSelf)
-        {
-            CancelSkip();
-        }
-    }
-
     //Proceeds dialogue along or faster with input
     void WatchForProceedButton()
     {
+        if (Time.timeScale == 0f)
+            return;
         if ((Input.GetKeyDown(PROCEED_KEY) || Input.GetButtonDown("Any_X")) && !isTyping)
         {
             ProceedDialogue();
@@ -139,13 +123,6 @@ public class DialogueControllerScript : MonoBehaviour {
      *  ------ END COMMAND FUNCTIONS
      */
 
-
-    //Cancel skip action
-    public void CancelSkip()
-    {
-        skipUIPanel.SetActive(false);
-        Time.timeScale = 1.0f;
-    }
 
     /*
      *  ------ DIALOGUE READING FUNCTIONS

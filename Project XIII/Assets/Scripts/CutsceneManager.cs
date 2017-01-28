@@ -70,6 +70,7 @@ public class CutsceneManager : MonoBehaviour {
     public Image topCutsceneBorder;                             //Top border for cutscene
     public Image botCutsceneBorder;                             //Bottom border for cutscene 
     public Animator sceneTranstions;                            //For when skipping scenes 
+    public GameObject skipUIPanel;                              //Panel with skip option for cutscene
     GameObject cameraColliders;                                 //Collider container to be disabled for cutscene             
 
     Transform playersManager;                                   //For managing player input
@@ -116,6 +117,12 @@ public class CutsceneManager : MonoBehaviour {
             ActivateCutscene(0);
         else
             this.enabled = false;
+    }
+
+    private void Update()
+    {
+        if (this.enabled)
+            WatchForSkipButton();
     } 
 
     private void FixedUpdate()
@@ -137,6 +144,28 @@ public class CutsceneManager : MonoBehaviour {
             PlayActionSequence();
         }
     }
+
+    //Watches for input to activate or deactivate skip panel
+    void WatchForSkipButton()
+    {
+        if (Input.GetKeyDown(KeyCode.Return) && !skipUIPanel.activeSelf)
+        {
+            skipUIPanel.SetActive(true);
+            Time.timeScale = 0.0f;
+        }
+        else if (Input.GetKeyDown(KeyCode.Return) && skipUIPanel.activeSelf)
+        {
+            CancelSkip();
+        }
+    }
+
+    //Cancel skip action
+    public void CancelSkip()
+    {
+        skipUIPanel.SetActive(false);
+        Time.timeScale = 1.0f;
+    }
+
 
     public void ActivateCutscene(int index)
     {
@@ -162,8 +191,44 @@ public class CutsceneManager : MonoBehaviour {
         }
     } 
 
+    public void SkipCutscene()
+    {
+        if (!(cutscene[currentCutscene].characterEndLocations.Length < 4))
+            for (int i = 0; i < 4; i++)
+            {
+                characterList[i].SetActive(characterStatuses[i].isActive);
+                if (cutscene[currentCutscene].characterEndLocations[i] != null)
+                    characterList[i].transform.position = new Vector3(cutscene[currentCutscene].characterEndLocations[i].position.x,
+                        cutscene[currentCutscene].characterEndLocations[i].position.y, characterList[i].transform.position.z);
+            }
+
+        if (dialoguePlaying)
+        {
+            dialoguePlaying = false;
+            transform.parent.GetComponentInChildren<DialogueControllerScript>().EndDialogue();
+        }
+
+        Time.timeScale = 1.0f;
+        skipUIPanel.SetActive(false);
+
+        camScript.DeactivateForceOrthographicSize();
+        camScript.DeactivateCutsceneMode();
+
+        CancelInvoke("TransitionInBorders");
+        CancelInvoke("TransitionOutBorders");
+
+        cutscene[currentCutscene].endEvents.Invoke();
+        sceneTranstions.SetTrigger("replay");
+
+        topCutsceneBorder.fillAmount = 0f;
+        botCutsceneBorder.fillAmount = 0f;
+
+        EndCutscene();
+    }
+
     public void EndCutscene()
     {
+
         this.enabled = false;
         camScript.DeactivateCutsceneMode();
         if (cameraColliders != null)
@@ -207,16 +272,6 @@ public class CutsceneManager : MonoBehaviour {
     {
         if(currentAction >= cutscene[currentCutscene].actionEntries.Length)
         {
-            if (!(cutscene[currentCutscene].characterEndLocations.Length < 4))
-                for (int i = 0; i < 4; i++)
-                {
-                    characterList[i].SetActive(characterStatuses[i].isActive);
-                    if (cutscene[currentCutscene].characterEndLocations[i] != null)
-                        characterList[i].transform.position = new Vector3(cutscene[currentCutscene].characterEndLocations[i].position.x,
-                            cutscene[currentCutscene].characterEndLocations[i].position.y, characterList[i].transform.position.z);
-                }
-
-            cutscene[currentCutscene].endEvents.Invoke();
             EndCutscene();
             return;
         }

@@ -298,7 +298,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1000011630863134
 GameObject:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
@@ -2822,7 +2822,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueUI: {fileID: 1000013093602710}
-  skipUIPanel: {fileID: 1000011630863134}
   leftPortrait: {fileID: 114000010977415686}
   rightPortrait: {fileID: 114000012137025290}
   leftNameTag: {fileID: 1000011060664280}
@@ -3645,7 +3644,8 @@ MonoBehaviour:
   topCutsceneBorder: {fileID: 114237504950753356}
   botCutsceneBorder: {fileID: 114796643531149310}
   sceneTranstions: {fileID: 95000013508877734}
-  playOnAwake: 0
+  skipUIPanel: {fileID: 1000011630863134}
+  playOnAwake: 1
   cutscene:
   - actionEntries:
     - characterActions:
@@ -4313,6 +4313,7 @@ RectTransform:
   - {fileID: 224000013283730104}
   - {fileID: 224343783447433232}
   - {fileID: 224000013123430052}
+  - {fileID: 224000012720316218}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4598,14 +4599,14 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011630863134}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224000013772285122}
   - {fileID: 224000012397245238}
-  m_Father: {fileID: 224000013123430052}
-  m_RootOrder: 2
+  m_Father: {fileID: 224000011435696128}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4702,7 +4703,6 @@ RectTransform:
   m_Children:
   - {fileID: 224000010957413292}
   - {fileID: 224000012449878824}
-  - {fileID: 224000012720316218}
   m_Father: {fileID: 224000011435696128}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
