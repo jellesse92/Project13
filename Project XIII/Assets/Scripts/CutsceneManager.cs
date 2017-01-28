@@ -46,6 +46,8 @@ public class CutsceneManager : MonoBehaviour {
     public class ActionSequence
     {
         public ActionEntry[] actionEntries;                     //List of actions to happen under cutscene
+        public Transform[] characterEndLocations = new Transform[4]; //0 = Swordsman, 1 = Gunner, 2 = Mage, 3 = Mech
+        public UnityEvent endEvents;
     }
 
     [System.Serializable]
@@ -66,7 +68,8 @@ public class CutsceneManager : MonoBehaviour {
     }
 
     public Image topCutsceneBorder;                             //Top border for cutscene
-    public Image botCutsceneBorder;                             //Bottom border for cutscene  
+    public Image botCutsceneBorder;                             //Bottom border for cutscene 
+    public Animator sceneTranstions;                            //For when skipping scenes 
     GameObject cameraColliders;                                 //Collider container to be disabled for cutscene             
 
     Transform playersManager;                                   //For managing player input
@@ -198,13 +201,22 @@ public class CutsceneManager : MonoBehaviour {
         }
         topCutsceneBorder.fillAmount -= BORDER_FILL_AMT;
         botCutsceneBorder.fillAmount -= BORDER_FILL_AMT;
-
     }
 
     void PlayActionSequence()
     {
         if(currentAction >= cutscene[currentCutscene].actionEntries.Length)
         {
+            if (!(cutscene[currentCutscene].characterEndLocations.Length < 4))
+                for (int i = 0; i < 4; i++)
+                {
+                    characterList[i].SetActive(characterStatuses[i].isActive);
+                    if (cutscene[currentCutscene].characterEndLocations[i] != null)
+                        characterList[i].transform.position = new Vector3(cutscene[currentCutscene].characterEndLocations[i].position.x,
+                            cutscene[currentCutscene].characterEndLocations[i].position.y, characterList[i].transform.position.z);
+                }
+
+            cutscene[currentCutscene].endEvents.Invoke();
             EndCutscene();
             return;
         }
