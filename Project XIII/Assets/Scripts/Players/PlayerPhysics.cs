@@ -96,16 +96,9 @@ public class PlayerPhysics : MonoBehaviour {
                 CheckForButtonReleases();
             }
         }
-
-        Landing();
-
         ClassSpecificUpdate();
         myPlayerInput.ResetKeyPress();
-
-    }
-    protected void LateUpdate()
-    {
-
+        Landing();
     }
 
     public virtual void ClassSpecificStart()
@@ -173,7 +166,6 @@ public class PlayerPhysics : MonoBehaviour {
         else
         {
             isJumping = true;
-            Debug.Log("air");
         }
 
 
