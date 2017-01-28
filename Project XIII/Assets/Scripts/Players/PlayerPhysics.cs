@@ -30,6 +30,7 @@ public class PlayerPhysics : MonoBehaviour {
     //Ground detection
     float distToGround;                                 //Distance from the ground
     int layerMask;                                      //Layers to check for ground
+    public float groundCheckingOffset = 2f;
 
     protected void Start () {
         myAnimator = GetComponent<Animator>();
@@ -170,7 +171,11 @@ public class PlayerPhysics : MonoBehaviour {
         if (isGrounded())
             isJumping = false;
         else
+        {
             isJumping = true;
+            Debug.Log("air");
+        }
+
 
         if (!isJumping)
         {
@@ -328,7 +333,7 @@ public class PlayerPhysics : MonoBehaviour {
 
     public bool isGrounded()
     {
-        if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround +2f, layerMask))
+        if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround +groundCheckingOffset, layerMask))
         {
             return true;
         }
