@@ -256,6 +256,7 @@ public class PlayerProperties : MonoBehaviour{
     IEnumerator ApplyStun(float duration)
     {
         isStunned = true;
+        GetComponent<PlayerPhysics>().CancelWasGroundedInvoke();
         GetComponent<Animator>().enabled = true;
         GetComponent<Animator>().SetTrigger("stun");
         yield return new WaitForSeconds(duration);

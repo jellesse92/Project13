@@ -7,6 +7,9 @@ public class PlayerPhysics : MonoBehaviour {
     const float DEFAULT_GRAVITY_FORCE = 8f;
     const float MIN_GRAVITY_FORCE = 4f;
 
+    const float JUMP_CD = .1f;
+    const float JUMP_GRACE_TIME = .3f;
+
     protected Rigidbody2D myRigidbody;
     protected Animator myAnimator;
     protected PlayerProperties playerProperties;
@@ -31,6 +34,10 @@ public class PlayerPhysics : MonoBehaviour {
     float distToGround;                                 //Distance from the ground
     int layerMask;                                      //Layers to check for ground
     public float groundCheckingOffset = 2f;
+    bool jumpedRecently = false;
+    bool wasGrounded = false;
+    bool jumpGraceTimeInvoked = false;
+    bool jumped = false;
 
     protected void Start () {
         myAnimator = GetComponent<Animator>();
@@ -139,8 +146,14 @@ public class PlayerPhysics : MonoBehaviour {
 
     protected void Jump()
     {
-        if (!isJumping && !cannotJump)
+        if (!isJumping && !cannotJump && !jumpedRecently)
         {
+            VelocityY(0);
+            CancelInvoke("CancelWasGrounded");
+            CancelWasGrounded();
+            jumpedRecently = true;
+            Invoke("CancelWaitJump", JUMP_CD);
+
             isJumping = true;
             GetComponent<Rigidbody2D>().gravityScale = MIN_GRAVITY_FORCE;
 
@@ -151,6 +164,14 @@ public class PlayerPhysics : MonoBehaviour {
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0, physicStats.jumpForce), ForceMode2D.Impulse);
         }
 
+    }
+
+    void CancelWaitJump()
+    {
+        jumpedRecently = false;
+        jumped = true;
+        jumpGraceTimeInvoked = false;
+        CancelInvoke("CancelWasGrounded");
     }
 
     protected void JumpReleased()
@@ -327,11 +348,33 @@ public class PlayerPhysics : MonoBehaviour {
     {
         if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround +groundCheckingOffset, layerMask))
         {
+            wasGrounded = true;
+            jumped = false;
             return true;
         }
+        else if (!jumpGraceTimeInvoked)
+        {
+            jumpGraceTimeInvoked = true;
+            Invoke("CancelWasGrounded", JUMP_GRACE_TIME);
+        }
+
+        if (wasGrounded && !jumped)
+            return true;
+
         return false;
     }
 
+    void CancelWasGrounded()
+    {
+        wasGrounded = false;
+        jumpGraceTimeInvoked = false;
+    }
+
+    public void CancelWasGroundedInvoke()
+    {
+        CancelInvoke("CancelWasGrounded");
+        CancelWasGrounded();
+    }
     
     protected void CheckForButtonReleases()
     {
