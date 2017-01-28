@@ -8,9 +8,9 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     //Constants for managing quick dashing skill
     const float DASH_DISTANCE = 10f;            //Distance of dash
-    const float DASH_RECOVERY_TIME = 0.5f;        //Time it takes to recover dashes
+    const float DASH_RECOVERY_TIME = 0.5f;      //Time it takes to recover dashes
     const float MAX_CHAIN_DASH = 1;             //Max amount of dashes that can be chained
-    const float STOP_AFTER_IMAGE = .005f;        //Time to stop creating afterimages
+    const float STOP_AFTER_IMAGE = .005f;       //Time to stop creating afterimages
 
     //Constant for charging ground heavy slash attack
     const float MAX_CHARGE = 2f;                //Max amount of time multiplier allowed to be applied to charge distance
@@ -30,6 +30,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     float yInputAxis = 0f;
     int dashCount = 0;                          //Checks how many dashes have been chained
     bool checkGroundForDash = false;            //Bool that determines to check for grounded before resetting dash count
+    bool disableDash = false;
 
     //Combo Variable
     bool inCombo = false;                       //Checks if swordsman able to combo
@@ -106,6 +107,8 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     public override void MovementSkill(float xMove, float yMove)
     {
+        if (disableDash)
+            return;
         base.MovementSkill(xMove,yMove);
 
         xInputAxis = xMove;
@@ -372,6 +375,16 @@ public class SwordsmanPhysics : PlayerPhysics{
     public void SetAttackType(string type)
     {
         attackScript.SetAttackType(type);
+    }
+
+    public void EnableDash()
+    {
+        disableDash = false;
+    }
+
+    public void DisableDash()
+    {
+        disableDash = true;
     }
 
 }
