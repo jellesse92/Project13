@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class TemporaryTransitionScript : MonoBehaviour {
 
@@ -9,7 +10,7 @@ public class TemporaryTransitionScript : MonoBehaviour {
     {
         if(col.tag == "Player")
         {
-            Application.LoadLevel(sceneIndex);
+            SceneManager.LoadScene(sceneIndex);
         }
     }
 }

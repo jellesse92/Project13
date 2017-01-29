@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using UnityEngine.SceneManagement;
 
 public class PlayerSelectScript : MonoBehaviour {
 
@@ -197,7 +198,6 @@ public class PlayerSelectScript : MonoBehaviour {
 
     void LoadNextScene()
     {
-      
-        Application.LoadLevel(2);
+        SceneManager.LoadScene(2);
     }
 }
