@@ -17,10 +17,10 @@ public class GunnerPhysics : PlayerPhysics{
     const float DK_DELTA_Y = -1f;               //Amount to move in the y direction per an update for down kick
 
     GunnerStats gunnerStat;
-    BulletProjectile bulletScript;
-    Vector3 gunPoint;
-    Vector2 velocity;
-    float bulletSpeed;
+    //BulletProjectile bulletScript;
+    //Vector3 gunPoint;
+    //Vector2 velocity;
+    //float bulletSpeed;
 
     public GameObject bulletSource;
     public GameObject meleeAttackBox;
@@ -28,7 +28,7 @@ public class GunnerPhysics : PlayerPhysics{
 
     //Dodge rolling variables
     float xInputAxis;
-    float yAtStart;
+    //float yAtStart;
     int dodgeCount = 0;
 
     //Pistol variables

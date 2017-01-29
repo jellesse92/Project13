@@ -7,9 +7,9 @@ public class BasicEnemy : Enemy {
 	void Start () {
         health = 100;
 	}
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+
+    // Update is called once per frame
+    public override void FixedUpdate () {
 
         Debug.Log("Is grounded?:" + IsGrounded());
         if (GetVisibleState() && GetPursuitState())

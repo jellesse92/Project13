@@ -6,7 +6,7 @@ public class CamShakeScript : MonoBehaviour {
 
     float shakeAmount;
     bool isShaking = false;
-    bool keepShaking = true;
+    //bool keepShaking = true;
 
     void Start()
     {

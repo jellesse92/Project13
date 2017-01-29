@@ -21,7 +21,7 @@ public class BasicRangeEnemy : Enemy {
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    public override void FixedUpdate()
     {
         if (GetVisibleState() && GetPursuitState())
         {
@@ -100,8 +100,4 @@ public class BasicRangeEnemy : Enemy {
     }
 
     //Reloads ammo. Public for access by bullets to restock ammo
-    public void ReloadAmmo()
-    {
-        ammo++;
-    }
 }

@@ -7,7 +7,7 @@ public class ChargingEnemyDamage : MonoBehaviour {
     public float knockBackForceX = 10f;
     public float knockBackForceY = 10f;
     public float stunDuration = 0;
-    int damage = 10;
+    //int damage = 10;
 
     // Use this for initialization
     void Start () {

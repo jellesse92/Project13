@@ -3,7 +3,7 @@ using System.Collections;
 
 public class UIAlertScript : MonoBehaviour {
 
-    InGameUIScript iguScript;
+    //InGameUIScript iguScript;
 
 	// Use this for initialization
 	void Start () {

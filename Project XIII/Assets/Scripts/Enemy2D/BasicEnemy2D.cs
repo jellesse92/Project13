@@ -26,7 +26,7 @@ public class BasicEnemy2D : Enemy {
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    public override void FixedUpdate()
     {
 
         if(isBouncing)

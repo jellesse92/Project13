@@ -27,7 +27,7 @@ public class JazzPlayer : MonoBehaviour
 
     private bool isAttacking;
     int AttackPower;
-    int AttackSpeed;
+    //int AttackSpeed;
     char direction = 'R'; //direction player is facing UDLR
 
     void Start()

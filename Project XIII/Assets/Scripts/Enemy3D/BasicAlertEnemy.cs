@@ -11,7 +11,7 @@ public class BasicAlertEnemy : AlertEnemy {
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    public override void FixedUpdate()
     {
         if (GetVisibleState() && GetPursuitState())
         {
