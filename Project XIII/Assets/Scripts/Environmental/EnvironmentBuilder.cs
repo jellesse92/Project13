@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Groundcombiner : MonoBehaviour {
-
-    PolygonCollider2D[] pieces;
+public class EnvironmentBuilder : MonoBehaviour {
+    //Put this script on the parent of your ground and wall sprites
     public List<List<Vector2>> bounds;
-    public Vector2[] other_bounds;
     PolyCombine combiner;
     public PhysicsMaterial2D groundMat;
     public PhysicsMaterial2D wallMat;

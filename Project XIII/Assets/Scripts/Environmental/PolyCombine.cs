@@ -31,6 +31,7 @@ public class PolyCombine
             {
                 allPolygonsPath.Add(new IntPoint(Mathf.Floor(polygons[i][j].x * scalingFactor), Mathf.Floor(polygons[i][j].y * scalingFactor)));
             }
+            //Clipper.CleanPolygon(allPolygonsPath, .10); Experimenting with  making the polygons smaller
             clipper.AddPath(allPolygonsPath, PolyType.ptSubject, true);
 
         }
