@@ -558,20 +558,6 @@ Prefab:
       propertyPath: m_Name
       value: Basic Enemy (2)
       objectReference: {fileID: 0}
-    - target: {fileID: 114094771904971976, guid: 512a3cf237662904eb32158e20e17e64,
-        type: 2}
-      propertyPath: health
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1464318194706696, guid: 512a3cf237662904eb32158e20e17e64, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 50342302701791648, guid: 512a3cf237662904eb32158e20e17e64,
-        type: 2}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 512a3cf237662904eb32158e20e17e64, type: 2}
   m_IsPrefabParent: 0
@@ -935,6 +921,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 198073915489568886, guid: 512a3cf237662904eb32158e20e17e64,
+        type: 2}
+      propertyPath: TriggerModule.collisionShape0
+      value: 
+      objectReference: {fileID: 1029510990}
     - target: {fileID: 1464318194706696, guid: 512a3cf237662904eb32158e20e17e64, type: 2}
       propertyPath: m_Name
       value: Basic Enemy (1)
@@ -1288,6 +1279,10 @@ Prefab:
         type: 2}
       propertyPath: m_SizeDelta.y
       value: 293
+      objectReference: {fileID: 0}
+    - target: {fileID: 1931353887421734, guid: 07a92b5373299d5439985ac79ff5411f, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 07a92b5373299d5439985ac79ff5411f, type: 2}
@@ -1977,7 +1972,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4502684993915988, guid: dfa2c1ef413e12d4682f2b1180eb50a3, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4502684993915988, guid: dfa2c1ef413e12d4682f2b1180eb50a3, type: 2}
       propertyPath: m_LocalPosition.y
@@ -2012,6 +2007,10 @@ Prefab:
       propertyPath: TriggerModule.collisionShape0
       value: 
       objectReference: {fileID: 1029510990}
+    - target: {fileID: 1820232980814022, guid: dfa2c1ef413e12d4682f2b1180eb50a3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dfa2c1ef413e12d4682f2b1180eb50a3, type: 2}
   m_IsPrefabParent: 0
@@ -2665,6 +2664,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 198496737268531430, guid: b6b49fa7b47822d40b34a9db446a7be2,
+        type: 2}
+      propertyPath: TriggerModule.collisionShape0
+      value: 
+      objectReference: {fileID: 1029510990}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b6b49fa7b47822d40b34a9db446a7be2, type: 2}
   m_IsPrefabParent: 0

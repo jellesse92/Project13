@@ -6,20 +6,19 @@ public class CoinScript : MonoBehaviour {
     ParticleSystem pickup;
     ParticleSystem myParticleSystem;
     AudioSource myAudio;
-    //AudioClip audioClip;
 
-    // Use this for initialization
     void Awake () {
         myParticleSystem = GetComponent<ParticleSystem>();
         pickup = transform.GetChild(0).GetComponent<ParticleSystem>();
         myAudio = GetComponent<AudioSource>();
-        //audioClip = myAudio.clip;
-    }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
+        int i = 0;
+        foreach (GameObject player in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            myParticleSystem.trigger.SetCollider(i, player.GetComponent<BoxCollider2D>());
+            i++;
+        }
+    }
 
     void OnParticleTrigger() {
         List<ParticleSystem.Particle> enter = new List<ParticleSystem.Particle>();
@@ -27,7 +26,7 @@ public class CoinScript : MonoBehaviour {
         for (int i = 0; i < numEnter; i++)
         {
             ParticleSystem.Particle p = enter[i];
-            pickup.transform.localPosition = p.position;
+            pickup.transform.position = p.position;
             pickup.Play();
             p.remainingLifetime = 0;
             myAudio.Play();
@@ -35,8 +34,6 @@ public class CoinScript : MonoBehaviour {
             enter[i] = p;
         }
         myParticleSystem.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);
-
-        //Debug.Log("trigger");
     }
 
 }
