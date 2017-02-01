@@ -64,8 +64,6 @@ public class PlayerInput : MonoBehaviour {
 
             keyPress.horizontalAxisValue = x;
             keyPress.verticalAxisValue = y;
-
-            Debug.Log(y);
         }
 
         if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.Space)) ||(joystickNum !=0 && Input.GetButtonDown(keyConfig.jumpButton)))
