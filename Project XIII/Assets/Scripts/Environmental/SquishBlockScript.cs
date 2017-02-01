@@ -58,7 +58,7 @@ public class SquishBlockScript : MonoBehaviour {
             moving = false;
             playSound(impact);
             killZone.SetActive(false);
-            cam.GetComponent<CamShakeScript>().StartShake(.1f);
+            cam.GetComponent<CamShakeScript>().StartShake(0.1f, 0.5f);
             Invoke("DelayReturn", returnDelay);
         }
     }

@@ -54,6 +54,13 @@ public class SwordsmanAttackScript : MonoBehaviour {
     SwordsmanParticleEffects playerParticleEffects;
     PlayerProperties playProp;
 
+    public float magShakeLaunch = 1.5f;
+    public float durShakeLaunch = 0.7f;
+    public float magShakeDragAttack = 1.5f;
+    public float durShakeDragAttack = 0.7f;
+    public float magShakefinisherAttack = 1.5f;
+    public float durShakefinisherAttack = 1.5f;
+
     void Awake()
     {
         enemyHash = new HashSet<GameObject>();
@@ -181,7 +188,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
             target.GetComponent<Enemy>().Damage(damage, HEAVY_STUN_MULTI);
         }
-        transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(.2f, .05f);
+        transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(magShakeLaunch, durShakeLaunch);
     }
 
     /*
@@ -275,7 +282,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
                 enemyHash.Add(col.gameObject);
                 if (transform.parent.parent != null)
-                    transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(.01f);
+                    transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(magShakeDragAttack, durShakeDragAttack);
                 col.GetComponent<Enemy>().Damage(damage, DRAG_STUN_MULTI);
             }
     }
@@ -317,15 +324,11 @@ public class SwordsmanAttackScript : MonoBehaviour {
         if(col.tag == "Enemy")
         {
             //HEAVY ATTACK EFFECTS STUFF
+            Debug.Log("attack");
             playerSoundEffects.PlayHitSpark();
             playerParticleEffects.PlayFinisherHitSpark(col.GetComponent<Enemy>().GetCenter());
-            if (!finishEffectPlayed)
-            {
-                finishEffectPlayed = true;
-                transform.parent.parent.GetComponent<PlayerEffectsManager>().FlashScreen();
-                transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(0.2f);
-
-            }
+            transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(magShakefinisherAttack, durShakefinisherAttack);
+            transform.parent.parent.GetComponent<PlayerEffectsManager>().FlashScreen();
 
             col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));

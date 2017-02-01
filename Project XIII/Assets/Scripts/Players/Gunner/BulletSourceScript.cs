@@ -79,7 +79,7 @@ public class BulletSourceScript : MonoBehaviour {
 
         if (transform.parent.parent != null)
         {
-            transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(.08f,.05f);
+            transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(1f, 1f);
         }
 
 

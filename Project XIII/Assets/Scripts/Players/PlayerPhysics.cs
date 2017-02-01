@@ -162,7 +162,7 @@ public class PlayerPhysics : MonoBehaviour {
             else
                 myAnimator.SetTrigger("jumpIdle");
 
-            Debug.Log(GetComponent<Rigidbody2D>().velocity.y);
+            //Debug.Log(GetComponent<Rigidbody2D>().velocity.y);
             
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0, physicStats.jumpForce), ForceMode2D.Impulse);
         }
@@ -461,11 +461,6 @@ public class PlayerPhysics : MonoBehaviour {
     public float GetDefaultGravityForce()
     {
         return DEFAULT_GRAVITY_FORCE;
-    }
-
-    public void ScreenShake(float shakeAmt, float duration)
-    {
-        transform.parent.GetComponent<PlayerEffectsManager>().ScreenShake(shakeAmt, duration);
     }
 
 }

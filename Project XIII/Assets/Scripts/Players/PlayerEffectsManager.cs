@@ -27,7 +27,7 @@ public class PlayerEffectsManager : MonoBehaviour {
         screenFlash.GetComponent<Animator>().SetTrigger("damageFlash");
     }
     //Gets the screen to shake
-    public void ScreenShake(float magnitude, float duration = .5f)
+    public void ScreenShake(float magnitude = 0.2f, float duration = 1f)
     {
         screenShake.GetComponent<CamShakeScript>().StartShake(magnitude,duration);
     }

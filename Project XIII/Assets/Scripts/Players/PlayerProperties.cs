@@ -59,7 +59,8 @@ public class PlayerProperties : MonoBehaviour{
     bool checkVoiceDone = false;
 
     //Screenshak and Screenflash
-    public float damageScreenShake = 0.1f;
+    public float magDamageScreenShake = 0.2f;
+    public float durDamageScreenShake = 0.5f;
     //Might put this in physics instead
 
     private void Awake()
@@ -171,7 +172,7 @@ public class PlayerProperties : MonoBehaviour{
         if (transform.parent.GetComponent<PlayerEffectsManager>())
         {
             //Activate Screen Flash
-            transform.parent.GetComponent<PlayerEffectsManager>().ScreenShake(damageScreenShake);
+            transform.parent.GetComponent<PlayerEffectsManager>().ScreenShake(magDamageScreenShake, durDamageScreenShake);
             //Activate Screen Shake
             transform.parent.GetComponent<PlayerEffectsManager>().DamageFlashScreen();
         }

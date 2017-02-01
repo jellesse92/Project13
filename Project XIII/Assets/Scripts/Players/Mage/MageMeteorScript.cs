@@ -36,7 +36,7 @@ public class MageMeteorScript : MonoBehaviour {
     public void ApplyDamageEffect()
     {
         if (transform.parent.parent != null)
-            transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(.01f);
+            transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(1f);
         foreach (GameObject target in enemy)
             target.GetComponent<Enemy>().Damage(damage, BLIZZARD_STUN_DURATION);
     }

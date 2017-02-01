@@ -4,7 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 public class PuzzleManager : MonoBehaviour {
     public UnityEvent actions;
-
+    public float magShakeApperance;
+    public float durShakeApperance;
     Camera mainCamera;
     void Start()
     {
@@ -26,7 +27,7 @@ public class PuzzleManager : MonoBehaviour {
         if (puzzleStateCorrect())
         {
             actions.Invoke();
-            mainCamera.GetComponent<CamShakeScript>().StartShake(1, 2);
+            mainCamera.GetComponent<CamShakeScript>().StartShake(magShakeApperance, durShakeApperance);
             return true;
         }
         else

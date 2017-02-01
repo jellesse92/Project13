@@ -286,6 +286,8 @@ MonoBehaviour:
   attackScript: {fileID: 114895810148568018}
   flashWhiteMat: {fileID: 2100000, guid: 32ca144c3968a994ba36bca47b900b62, type: 2}
   flashGoldMat: {fileID: 2100000, guid: f439c7b82fd6e194c9910cf43b943432, type: 2}
+  magHeavyAttackScreenShake: 0
+  durHeavyAttackScreenShake: 0
 --- !u!114 &114000011439112550
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -338,7 +340,8 @@ MonoBehaviour:
   boostStats:
     attackBoost: 0
     speedBoost: 0
-  damageScreenShake: 0.1
+  magDamageScreenShake: 1.5
+  durDamageScreenShake: 0.7
 --- !u!114 &114626846822014886
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -373,6 +376,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: febec76d4bb00c5418d445768375c673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  magShakeLaunch: 0.1
+  durShakeLaunch: 0.5
+  magShakeDragAttack: 0.2
+  durShakeDragAttack: 0.7
+  magShakefinisherAttack: 2
+  durShakefinisherAttack: 1.5
 --- !u!114 &114958880432912130
 MonoBehaviour:
   m_ObjectHideFlags: 1

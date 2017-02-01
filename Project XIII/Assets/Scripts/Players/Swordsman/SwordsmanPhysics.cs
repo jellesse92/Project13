@@ -48,12 +48,19 @@ public class SwordsmanPhysics : PlayerPhysics{
     bool isFlashingWhite = false;               //Determines if flashing white color
     bool isFlashingGold = false;                //Determines if flashing gold color
 
+    public float magHeavyAttackScreenShake = 1.5f;
+    public float durHeavyAttackScreenShake = 0.7f;
+
     PlayerParticleEffects playerParticleEffects;
+    PlayerEffectsManager playerEffectsManager;
 
     public override void ClassSpecificStart()
     {
         playerParticleEffects = GetComponent<PlayerParticleEffects>();
+        playerEffectsManager = transform.parent.GetComponent<PlayerEffectsManager>();
         defaultMat = GetComponent<SpriteRenderer>().material;
+
+
     }
 
     public override void ClassSpecificUpdate()
@@ -291,7 +298,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     {
         GetComponent<SwordsmanParticleEffects>().PlayChargingDust(false);
         CancelFlashing();
-        transform.parent.GetComponent<PlayerEffectsManager>().FlashScreen();
+        playerEffectsManager.FlashScreen();
 
         checkChargeTime = false;
         timeCharged = Mathf.Min(timeCharged, MAX_CHARGE);
@@ -355,7 +362,7 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     public void HeavyAttackScreenShake()
     {
-        ScreenShake(.1f, .03f);
+        playerEffectsManager.ScreenShake(magHeavyAttackScreenShake, durHeavyAttackScreenShake);
     }
 
     public void SetAttackType(string type)

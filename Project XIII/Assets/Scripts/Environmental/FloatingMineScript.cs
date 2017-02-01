@@ -32,7 +32,7 @@ public class FloatingMineScript : MonoBehaviour {
         {
             StopAllCoroutines();
             explosion.Play();
-            mainCamera.GetComponent<CamShakeScript>().StartShake(.1f);
+            mainCamera.GetComponent<CamShakeScript>().StartShake(0.3f, 0.5f);
             myAnimator.enabled = false;
             GetComponent<AudioSource>().volume = 1;
             GetComponent<AnimationEventSound>().playSound(explosionSoundEffect);

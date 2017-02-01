@@ -65,6 +65,8 @@ public class Enemy : MonoBehaviour {
     //Use in shakecam
     protected Camera mainCamera;
 
+    public float magShakeDeath = 0.5f;
+    public float durShakeDeath = 1.5f;
     // Use this for initialization
     void Awake()
     {
@@ -207,7 +209,7 @@ public class Enemy : MonoBehaviour {
             if (child.name == "Death Particles")
                 child.GetComponent<ParticleSystem>().Play();
         }
-        mainCamera.GetComponent<CamShakeScript>().StartShake(0.2f, 0.5f);
+        mainCamera.GetComponent<CamShakeScript>().StartShake(magShakeDeath, durShakeDeath);
         StopCoroutine("ApplyStun");
         anim.SetTrigger("death");
         GetComponent<SpriteRenderer>().color = default_color;

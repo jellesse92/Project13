@@ -80,7 +80,7 @@ public class ChargeSlashScript : MonoBehaviour {
             playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
             target.GetComponent<Enemy>().Damage(damage, .1f);
         }
-        transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(.2f, .05f);
+        transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(0.2f, 1f);
     }
 
 
