@@ -161,8 +161,6 @@ public class PlayerPhysics : MonoBehaviour {
                 myAnimator.SetTrigger("jumpForward");
             else
                 myAnimator.SetTrigger("jumpIdle");
-
-            Debug.Log(GetComponent<Rigidbody2D>().velocity.y);
             
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0, physicStats.jumpForce), ForceMode2D.Impulse);
         }
