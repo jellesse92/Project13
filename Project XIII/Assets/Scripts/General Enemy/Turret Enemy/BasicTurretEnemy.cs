@@ -93,7 +93,7 @@ public class BasicTurretEnemy : EnemyPhysics
                     return;
                 projectileList.GetChild(i).gameObject.SetActive(true);
                 projectileList.GetChild(i).position = projectileList.position;
-                projectileList.GetChild(i).GetComponent<Rigidbody2D>().velocity = -(transform.position - target.transform.position).normalized * BULLET_SPEED;
+                projectileList.GetChild(i).GetComponent<Rigidbody2D>().velocity = -(new Vector3(transform.position.x, transform.position.y + 1.5f,transform.position.z) - target.transform.position).normalized * BULLET_SPEED;
                 return;
             }
         }
