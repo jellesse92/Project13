@@ -7,6 +7,7 @@ public class KeyPress {
     public bool heavyAttackPress;
     public bool blockPress;
     public bool dashPress;
+    public bool rightTriggerPress;
     public float horizontalAxisValue;
     public float verticalAxisValue;
 
@@ -25,8 +26,8 @@ public class KeyConfig
     public string jumpButton = "1_X";
     public string quickAttackButton = "1_Square";
     public string heavyAttackButton = "1_Triangle";
-    public string dashButton = "1_Circle";
-    public string blockButton;
+    public string specialButton = "1_Circle";
+    public string dashAxis = "1_RightTrigger";
 
     //public string dashkey
 
@@ -38,6 +39,7 @@ public class PlayerInput : MonoBehaviour {
     private KeyPress keyPress = new KeyPress();
     private int joystickNum = 0;
     private bool inputEnabled = true;
+    private bool rightTriggerReleased = true;
 
     void Start()
 	{
@@ -70,11 +72,12 @@ public class PlayerInput : MonoBehaviour {
             keyPress.quickAttackPress = true;
         if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.X)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.heavyAttackButton)))
             keyPress.heavyAttackPress = true;
-        if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.C)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.dashButton)))
+        if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.C)) || (joystickNum != 0 && rightTriggerReleased &&(Input.GetAxis(keyConfig.dashAxis) > .5f)))
             keyPress.dashPress = true;
+        if (joystickNum != 0 && Input.GetAxis(keyConfig.dashAxis) < .1f)
+            rightTriggerReleased = true;
         if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.V)))//|| (joystickNum != 0 && Input.GetButtonDown(keyConfig.blockButton)
             keyPress.blockPress = true;
-
         if ((joystickNum == 0 && Input.GetKeyUp(KeyCode.Z)) || (joystickNum != 0 && Input.GetButtonUp(keyConfig.quickAttackButton)))
             keyPress.quickAttackReleased = true;
         if ((joystickNum == 0 && Input.GetKeyUp(KeyCode.X)) || (joystickNum != 0 && Input.GetButtonUp(keyConfig.heavyAttackButton)))
@@ -120,7 +123,8 @@ public class PlayerInput : MonoBehaviour {
         keyConfig.jumpButton = num.ToString() + "_X";
         keyConfig.quickAttackButton = num.ToString() + "_Square";
         keyConfig.heavyAttackButton = num.ToString() + "_Triangle";
-        keyConfig.dashButton = num.ToString() + "_Circle";
+        keyConfig.specialButton = num.ToString() + "_Circle";
+        keyConfig.dashAxis = num.ToString() + "_RightTrigger";
 
 
     }
