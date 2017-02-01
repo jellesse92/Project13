@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4190729925355274}
   - component: {fileID: 114632011118078478}
   - component: {fileID: 61259053401818728}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Treasure
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4181677147031504}
   - component: {fileID: 212971601335535556}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Treasure Open
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,7 +53,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4314326850503362}
   - component: {fileID: 212961581822290922}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Treasure Close
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,6 +129,9 @@ MonoBehaviour:
   shakeDuration: 0.5
   shakeMagnitude: 0.5
   testMode: 0
+  coins: {fileID: 1820232980814022, guid: dfa2c1ef413e12d4682f2b1180eb50a3, type: 2}
+  coinAmountAtOpen: 30
+  coinAmountAtHit: 5
   hitsToOpen: 3
 --- !u!212 &212961581822290922
 SpriteRenderer:

@@ -7,12 +7,22 @@ public class TreasureScript : ItemHitTrigger {
     public float shakeMagnitude = 0.1f;  
     public bool testMode = false;
 
-    public int hitsToOpen = 3;
+    public GameObject coins;
+    public int coinAmountAtOpen = 10;
+    public int coinAmountAtHit = 5;
 
+    public int hitsToOpen = 3;
+    
     Vector3 oldPosition;
     // Use this for initialization
     void Start ()
     {
+        coins = Instantiate(coins);
+        coins.transform.position = transform.position;
+        coins.transform.parent = transform;
+        coins.transform.localScale = Vector3.one;
+
+
         oldPosition = transform.position;
         if (testMode)
             PlayShake();
@@ -24,12 +34,16 @@ public class TreasureScript : ItemHitTrigger {
 
         if (hitsToOpen == 0)
             return;
-
-        if (hitsToOpen == 1)
+        else if(hitsToOpen > 1)
+            coins.GetComponent<ParticleSystem>().Emit(coinAmountAtHit);
+        else if (hitsToOpen == 1)
         {
             transform.GetChild(0).gameObject.SetActive(false);
             transform.GetChild(1).gameObject.SetActive(true);
-        }       
+            GetComponent<BoxCollider2D>().enabled = false;
+            coins.GetComponent<ParticleSystem>().Emit(coinAmountAtOpen);
+            return;
+        }
         hitsToOpen--;
     }
     void PlayShake()
