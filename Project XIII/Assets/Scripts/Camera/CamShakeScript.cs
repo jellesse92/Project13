@@ -1,62 +1,76 @@
-﻿using UnityEngine;
+﻿//Credit http://unitytipsandtricks.blogspot.com/2013/05/camera-shake.html
+
+using UnityEngine;
 using System.Collections;
 
 public class CamShakeScript : MonoBehaviour {
-    //Credit: http://newbquest.com/2014/06/the-art-of-screenshake-with-unity-2d-script/
+    public float duration = 1f;
+    public float speed = 1f;
+    public float magnitude = 0.2f;
 
-    float shakeAmount;
-    bool isShaking = false;
-    //bool keepShaking = true;
+    public bool test = false;
 
-    void Start()
+    public void PlayShake()
     {
+
+        StopAllCoroutines();
+        StartCoroutine("Shake");
     }
 
-    void FixedUpdate()
+    void Update()
     {
-
-    }
-
-    public IEnumerator InfiniteShake()
-    {
-        while (true)
+        if (test)
         {
-            StartShake(.02f);
-            yield return new WaitForSeconds(3f);
+            test = false;
+            PlayShake();
         }
     }
 
-    public void StartShake(float magnitude, float duration = .5f)
+    public void StartShake(float newMagnitude = 0.2f, float newDuration = 1f, float newSpeed = 20f)
     {
-        shakeAmount = magnitude;
-        InvokeRepeating("CameraShake", 0, .01f);
-        Invoke("StopShaking", duration);
+        duration = newDuration;
+        speed = newSpeed;
+        magnitude = newMagnitude;
+        PlayShake();
     }
 
 
-
-    void CameraShake()
+    IEnumerator Shake()
     {
-        isShaking = true;
+        float elapsed = 0.0f;
+        
+        float randomStart = Random.Range(-1000.0f, 1000.0f);
 
-        float quakeAmtY = Random.value * shakeAmount * 2 - shakeAmount;
-        float quakeAmtX = Random.value * shakeAmount * 2 - shakeAmount;
-        Vector3 pp = transform.parent.position;
-        pp.y += quakeAmtY;
-        pp.x += quakeAmtX;
-        pp.z = transform.position.z;
-        transform.position = pp;
-    }
 
-    void StopShaking()
-    {
-        CancelInvoke("CameraShake");
-        isShaking = false;
-        transform.position = transform.parent.position;
-    }
+        while (elapsed < duration)
+        {
+            //Vector3 originalCamPos = transform.position;
+            Vector3 newCamPos = transform.position;
 
-    public bool GetIsShaking()
-    {
-        return isShaking;
+            elapsed += Time.deltaTime;
+
+            float percentComplete = elapsed / duration;
+
+            // We want to reduce the shake from full power to 0 starting half way through
+            float damper = 1.0f - Mathf.Clamp(2.0f * percentComplete - 1.0f, 0.0f, 1.0f);
+
+            // Calculate the noise parameter starting randomly and going as fast as speed allows
+            float alpha = randomStart + speed * percentComplete;
+
+            // map noise to [-1, 1]
+            float x = Util.Noise.GetNoise(alpha, 0.0f, 0.0f) * 2.0f - 1.0f;
+            float y = Util.Noise.GetNoise(0.0f, alpha, 0.0f) * 2.0f - 1.0f;
+
+            x *= magnitude * damper;
+            y *= magnitude * damper;
+            newCamPos.x += x;
+            newCamPos.y += y;
+            transform.position = newCamPos;
+            //transform.position = originalCamPos;
+
+            yield return null;
+        }
+
+        
     }
 }
