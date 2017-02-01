@@ -7,10 +7,10 @@ public class SwordsmanPhysics : PlayerPhysics{
     const float Y_INPUT_THRESHOLD = .5f;        //Threshold before considering input
 
     //Constants for managing quick dashing skill
-    const float DASH_DISTANCE = 10f;            //Distance of dash
     const float DASH_RECOVERY_TIME = 0.5f;      //Time it takes to recover dashes
     const float MAX_CHAIN_DASH = 1;             //Max amount of dashes that can be chained
     const float STOP_AFTER_IMAGE = .005f;       //Time to stop creating afterimages
+    const float DASH_FORCE = 5000f;             //Amount of force to apply on character to perform movement
 
     //Constant for charging ground heavy slash attack
     const float MAX_CHARGE = 2f;                //Max amount of time multiplier allowed to be applied to charge distance
@@ -111,8 +111,16 @@ public class SwordsmanPhysics : PlayerPhysics{
             return;
         base.MovementSkill(xMove,yMove);
 
-        xInputAxis = xMove;
-        yInputAxis = yMove;
+        if (Mathf.Abs(xMove) < .01 && Mathf.Abs(yMove) < .01f)
+        {
+            xInputAxis = transform.localScale.x;
+            yInputAxis = 0f;
+        }
+        else
+        {
+            xInputAxis = xMove;
+            yInputAxis = yMove;
+        }
 
         if(dashCount < MAX_CHAIN_DASH)
             GetComponent<Animator>().SetTrigger("moveSkill");
@@ -213,53 +221,30 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     public void ExecuteDashSkill()
     {
-        RaycastHit2D hit;
-        Vector2 dir = new Vector2(xInputAxis, yInputAxis).normalized;
-
         dashCount++;
         CancelInvoke("StopAfterImage");
         CancelInvoke("ResetDashCount");
 
-        if (dir.x == 0f && dir.y == 0f)
-            dir.x = transform.localScale.x;
-
-        hit = Physics2D.Raycast(transform.position, dir, DASH_DISTANCE, LayerMask.GetMask("Default"));
-
-        if (hit.collider == null)
-            StartCoroutine(Dashing(transform.position + new Vector3(dir.x * DASH_DISTANCE, dir.y * DASH_DISTANCE, transform.position.z)));
-        else
-        {
-            float xOffset = 0f;
-            float yOffset = 0f;
-
-            StartCoroutine(Dashing(new Vector3(hit.point.x + xOffset, hit.point.y + yOffset, transform.position.z)));
-        }
+        StartCoroutine("Dashing");
 
         playerParticleEffects.PlayDashAfterImage(true);
         gameObject.layer = 14;
     }
 
-    IEnumerator Dashing(Vector3 destination)
+    IEnumerator Dashing()
     {
-        float gravity = GetComponent<Rigidbody2D>().gravityScale;
-
         DeactivateAttackMovementJump();
         VelocityY(0f);
         VelocityX(0f);
 
         GetComponent<Rigidbody2D>().gravityScale = 0f;
 
-        transform.position = Vector3.MoveTowards(transform.position, destination, DASH_DISTANCE / 5f);
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(xInputAxis, yInputAxis).normalized * DASH_FORCE);
+        yield return new WaitForSeconds(.1f);
+        VelocityX(0);
+        VelocityY(0);
 
-        for (int i = 0; i < 4; i++)
-        {
-            if (transform.position.x == destination.x && transform.position.y == destination.y)
-                break;
-            yield return new WaitForSeconds(.01f);
-            transform.position = Vector3.MoveTowards(transform.position, destination, DASH_DISTANCE / 5f);
-        }
-
-        GetComponent<Rigidbody2D>().gravityScale = gravity;
+        GetComponent<Rigidbody2D>().gravityScale = GetDefaultGravityForce();
 
         if (isGrounded())
             GetComponent<Animator>().SetTrigger("exitDash");
