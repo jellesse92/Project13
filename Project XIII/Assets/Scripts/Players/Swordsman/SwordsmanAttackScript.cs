@@ -49,7 +49,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     string attack = "";
     int damage;
 
-    enum HitType {normal, finisher, crystal};
+    enum HitType {normal, finisher, item};
     PlayerSoundEffects playerSoundEffects;
     SwordsmanParticleEffects playerParticleEffects;
     PlayerProperties playProp;
@@ -350,7 +350,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             playerSoundEffects.PlayHitSpark();
             playerParticleEffects.PlayFinisherHitSpark(position);
         }
-        else if(hitType == HitType.crystal)
+        else if(hitType == HitType.item)
         {
             playerSoundEffects.PlayHitSpark();
             playerParticleEffects.PlayHitSpark(position);
@@ -360,10 +360,10 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void CrystalHit(Collider2D collider)
     {
-        if (collider.tag == "Crystal")
+        if (collider.tag == "Item")
         {
-            HitEffect(HitType.crystal, collider.transform.position);
-            collider.GetComponent<CrystalProperties>().SwitchColor();
+            HitEffect(HitType.item, collider.transform.position);
+            collider.GetComponent<ItemHitTrigger>().ItemHit();
         }
     }
 

@@ -8,6 +8,7 @@ public class CamShakeScript : MonoBehaviour {
     public float speed = 20f;
     public float magnitude = 0.5f;
 
+    public bool useUnityPerlin = false;
     public bool test = false;
 
     public void PlayShake()
@@ -31,6 +32,7 @@ public class CamShakeScript : MonoBehaviour {
         StopAllCoroutines();
 
     }
+
     public void StartShake(float newMagnitude = 0.5f, float newDuration = 1f, float newSpeed = 20f)
     {
         duration = newDuration;
@@ -62,9 +64,18 @@ public class CamShakeScript : MonoBehaviour {
             // Calculate the noise parameter starting randomly and going as fast as speed allows
             float alpha = randomStart + speed * percentComplete;
 
-            // map noise to [-1, 1]
-            float x = Util.Noise.GetNoise(alpha, 0.0f, 0.0f) * 2.0f - 1.0f;
-            float y = Util.Noise.GetNoise(0.0f, alpha, 0.0f) * 2.0f - 1.0f;
+            // map noise in perlin noise
+            float x, y;
+            if (useUnityPerlin)
+            {
+                x = Mathf.PerlinNoise(alpha, 0.0f) * 2.0f - 1.0f;
+                y = Mathf.PerlinNoise(0.0f, alpha) * 2.0f - 1.0f;
+            }
+            else
+            {
+                x = Util.Noise.GetNoise(alpha, 0.0f, 0.0f) * 2.0f - 1.0f;
+                y = Util.Noise.GetNoise(0.0f, alpha, 0.0f) * 2.0f - 1.0f;
+            }
 
             x *= magnitude * damper;
             y *= magnitude * damper;

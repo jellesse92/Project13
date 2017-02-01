@@ -7,7 +7,7 @@ public enum ColorChoice
     red, blue, green
 }
 
-public class CrystalProperties : MonoBehaviour {
+public class CrystalProperties : ItemHitTrigger {
 
     public AudioClip crystalHit;
     public ColorChoice correctColor;
@@ -26,7 +26,7 @@ public class CrystalProperties : MonoBehaviour {
         puzzleManager = transform.parent.GetComponent<PuzzleManager>();
     }
 
-    public void SwitchColor()
+    public override void ItemHit()
     {
         myAudio.PlayOneShot(crystalHit);
         hitParticle.Play();
