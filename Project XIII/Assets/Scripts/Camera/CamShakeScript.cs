@@ -10,7 +10,6 @@ public class CamShakeScript : MonoBehaviour {
 
     public bool useUnityPerlin = false;
     public bool test = false;
-    public bool shakeParent = false;
 
     public void PlayShake()
     {
@@ -82,14 +81,13 @@ public class CamShakeScript : MonoBehaviour {
             y *= magnitude * damper;
             newCamPos.x += x;
             newCamPos.y += y;
-            if(shakeParent)
-                transform.parent.position = newCamPos;
-            else
-                transform.position = newCamPos;
-            //transform.position = originalCamPos;
+
+            transform.position = newCamPos;
 
             yield return null;
         }
+
+        transform.position = transform.parent.position;
 
         
     }

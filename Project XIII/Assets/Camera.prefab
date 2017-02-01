@@ -246,7 +246,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4000010693344792
 Transform:
   m_ObjectHideFlags: 1
@@ -528,6 +528,7 @@ MonoBehaviour:
   in2DMode: 1
   lowestPointY: 0
   lowestPointX: 0
+  cameraWall: {fileID: 1000010593848800}
   dampTime: 0.15
 --- !u!114 &114000012697778710
 MonoBehaviour:
@@ -545,7 +546,6 @@ MonoBehaviour:
   magnitude: 1
   useUnityPerlin: 0
   test: 0
-  shakeParent: 1
 --- !u!114 &114020655793978054
 MonoBehaviour:
   m_ObjectHideFlags: 1
