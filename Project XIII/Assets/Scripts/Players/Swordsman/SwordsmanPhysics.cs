@@ -291,6 +291,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     {
         GetComponent<SwordsmanParticleEffects>().PlayChargingDust(false);
         CancelFlashing();
+        transform.parent.GetComponent<PlayerEffectsManager>().FlashScreen();
 
         checkChargeTime = false;
         timeCharged = Mathf.Min(timeCharged, MAX_CHARGE);
