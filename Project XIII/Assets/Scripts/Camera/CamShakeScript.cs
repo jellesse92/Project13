@@ -4,9 +4,9 @@ using UnityEngine;
 using System.Collections;
 
 public class CamShakeScript : MonoBehaviour {
-    public float duration = 1f;
-    public float speed = 1f;
-    public float magnitude = 0.2f;
+    public float duration = 0.5f;
+    public float speed = 20f;
+    public float magnitude = 0.5f;
 
     public bool test = false;
 
@@ -31,7 +31,7 @@ public class CamShakeScript : MonoBehaviour {
         StopAllCoroutines();
 
     }
-    public void StartShake(float newMagnitude = 0.2f, float newDuration = 1f, float newSpeed = 20f)
+    public void StartShake(float newMagnitude = 0.5f, float newDuration = 1f, float newSpeed = 20f)
     {
         duration = newDuration;
         speed = newSpeed;
