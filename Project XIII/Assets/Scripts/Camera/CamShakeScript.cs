@@ -26,6 +26,11 @@ public class CamShakeScript : MonoBehaviour {
         }
     }
 
+    public void StopShake()
+    {
+        StopAllCoroutines();
+
+    }
     public void StartShake(float newMagnitude = 0.2f, float newDuration = 1f, float newSpeed = 20f)
     {
         duration = newDuration;

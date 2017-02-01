@@ -46,6 +46,7 @@ public class PlayerEffectsManager : MonoBehaviour {
                 if (child.gameObject.activeSelf && child.GetComponent<PlayerProperties>().alive)
                     return false;
             }
+            screenShake.GetComponent<CamShakeScript>().StopShake();
             deathScreen.GetComponent<DeathScreenScript>().TriggerDeath();
             return true;
         }

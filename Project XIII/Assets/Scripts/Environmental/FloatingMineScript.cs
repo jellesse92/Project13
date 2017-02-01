@@ -14,6 +14,9 @@ public class FloatingMineScript : MonoBehaviour {
     public Transform detectionRadii;                //Parent of detection radius trigger zones
     public AudioClip explosionSoundEffect;
 
+    public float magShakeTrigger = 1f;
+    public float durShakeTrigger = 0.7f;
+
     private int currentRadiusLevel = 3;             //How close player is to mine. 3 is the farthest level
     private float[] flashRates = new float[]{ INNER_DETECTION_FLASH_RATE, MIDDLE_DETECTION_FLASH_RATE, OUTER_DETECTION_FLASH_RATE };
 
@@ -32,7 +35,7 @@ public class FloatingMineScript : MonoBehaviour {
         {
             StopAllCoroutines();
             explosion.Play();
-            mainCamera.GetComponent<CamShakeScript>().StartShake(0.3f, 0.5f);
+            mainCamera.GetComponent<CamShakeScript>().StartShake(magShakeTrigger, durShakeTrigger);
             myAnimator.enabled = false;
             GetComponent<AudioSource>().volume = 1;
             GetComponent<AnimationEventSound>().playSound(explosionSoundEffect);

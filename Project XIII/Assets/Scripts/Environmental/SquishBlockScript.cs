@@ -17,6 +17,8 @@ public class SquishBlockScript : MonoBehaviour {
     public float moveSpeed;                     //Speed which block moves "down" towards destination
     public float returnSpeed;                   //Speed which block returns to origin location
     public float returnDelay;                   //Delay before initiating return
+    public float magShake = 1f;
+    public float durShake = 0.7f;
 
     //Determine if block is moving towards destination or returning to origin
     bool moving = false;
@@ -58,7 +60,7 @@ public class SquishBlockScript : MonoBehaviour {
             moving = false;
             playSound(impact);
             killZone.SetActive(false);
-            cam.GetComponent<CamShakeScript>().StartShake(0.1f, 0.5f);
+            cam.GetComponent<CamShakeScript>().StartShake(magShake, durShake);
             Invoke("DelayReturn", returnDelay);
         }
     }
