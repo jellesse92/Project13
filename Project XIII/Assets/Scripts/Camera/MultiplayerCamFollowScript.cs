@@ -32,6 +32,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     Transform forcedDestination;                                //Destination of camera
 
     Camera cam;
+    public GameObject cameraWall;
 
     Vector3 velocity = Vector3.zero;
     public float dampTime = 0.15f;
@@ -75,6 +76,8 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     {
         Transform singlePlayerTrans = transform;
 
+        SetCameraWallActive(false);
+
         if (orthoForced)
             SetOrthographicSize(forcedOrthoSize);
         else
@@ -105,6 +108,8 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     {
         Vector3 midpoint = GetPlayersMidpoint();
 
+        SetCameraWallActive(true);
+
         if (midpoint != new Vector3())
         {
             float distance = GetDistance();
@@ -127,6 +132,12 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
             if ((cameraDestination - transform.position).magnitude <= 0.05f)
                 transform.position = cameraDestination;
         }
+    }
+
+    void SetCameraWallActive(bool b)
+    {
+        if (cameraWall != null)
+            cameraWall.SetActive(b);
     }
 
     public void ForceOrthographicSize(float size)
@@ -169,24 +180,12 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
         if (in2DMode)
         {
             if (orthoForced)
-            {
                 size = f;
-            }
             else
             {
                 size = Mathf.Max(f, DEFAULT_ORTHO_SIZE);
                 size = Mathf.Min(size, MAX_ORTHO_SIZE);
             }
-
-
-            /*
-            if(lastOrthographicSize <= size)
-            {
-                StopCoroutine(SmoothOrthograpicTransition(lastOrthographicSize));
-                lastOrthographicSize = 0f;
-                orthoTransitioning = false;
-            }
-            */
 
             if ((cam.orthographicSize > size))
                 StartCoroutine(SmoothOrthograpicTransition(size));
