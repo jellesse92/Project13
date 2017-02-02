@@ -81,11 +81,13 @@ public class CamShakeScript : MonoBehaviour {
             y *= magnitude * damper;
             newCamPos.x += x;
             newCamPos.y += y;
+
             transform.position = newCamPos;
-            //transform.position = originalCamPos;
 
             yield return null;
         }
+
+        transform.position = transform.parent.position;
 
         
     }
