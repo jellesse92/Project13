@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114782916998171252}
   - component: {fileID: 61339233822717090}
   - component: {fileID: 82292687573941698}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: Rock
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -156,6 +156,8 @@ MonoBehaviour:
   rockDestroyed: {fileID: 1184306567358486, guid: 5d949a928b6a1dd479664b1c2a789acc,
     type: 2}
   rockDestroyedSound: {fileID: 8300000, guid: 8a69571699a58e14db3732ef22fe2b4e, type: 3}
+  shakeMag: 0.3
+  shakeDur: 0.5
 --- !u!212 &212230590265412384
 SpriteRenderer:
   m_ObjectHideFlags: 1

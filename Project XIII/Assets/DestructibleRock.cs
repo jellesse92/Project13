@@ -7,7 +7,8 @@ public class DestructibleRock : ItemHitTrigger
     public GameObject rockFragments;
     public GameObject rockDestroyed;
     public AudioClip rockDestroyedSound;
-
+    public float shakeMag;
+    public float shakeDur;
     int hp = 6; //need to make into actual hp that takes damage info from player
     protected override void ClassSpecificStart()
     {
@@ -36,6 +37,7 @@ public class DestructibleRock : ItemHitTrigger
 
     void Destroyed()
     {
+        Camera.main.GetComponent<CamShakeScript>().StartShake(shakeMag, shakeDur);
         rockDestroyed.GetComponent<ParticleSystem>().Play();
         GetComponent<AudioSource>().PlayOneShot(rockDestroyedSound);
         GetComponent<BoxCollider2D>().enabled = false;
