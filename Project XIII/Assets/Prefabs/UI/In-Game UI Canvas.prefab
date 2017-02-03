@@ -366,7 +366,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000012125743578
 GameObject:
   m_ObjectHideFlags: 0
@@ -545,7 +545,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1000013268053078
 GameObject:
   m_ObjectHideFlags: 1
@@ -1116,7 +1116,7 @@ Animator:
   m_GameObject: {fileID: 1000012055977280}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 17a8a3fd568f73941bbc604548484379, type: 2}
+  m_Controller: {fileID: 22100000, guid: b5d928a7af1ed7445895320582e03b5f, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2820,19 +2820,8 @@ MonoBehaviour:
   dialogueUIText: {fileID: 114000012441242398}
   cutsceneManager: {fileID: 114979405344309272}
   dialogueText:
-  - {fileID: 4900000, guid: 03bdc944eb3a6f647890774e9062c54b, type: 3}
-  - {fileID: 4900000, guid: 071d057ad09303848866fd35c6b8fd79, type: 3}
-  portraitEntries:
-  - name: Scientist
-    sprite: {fileID: 21300000, guid: 2c877e81207b47a45869a389573f4df2, type: 3}
-  - name: Gunner
-    sprite: {fileID: 21300000, guid: 18ea649184ad17f49bffd9126f68594b, type: 3}
-  - name: Mage
-    sprite: {fileID: 21300000, guid: 135c76511f21e0442918803fd9473377, type: 3}
-  - name: Swordsman
-    sprite: {fileID: 21300000, guid: 5468000492e34044084f244c62616538, type: 3}
-  - name: Mecha
-    sprite: {fileID: 21300000, guid: 135c76511f21e0442918803fd9473377, type: 3}
+  - {fileID: 4900000, guid: b042a3be214cbd649a69539852322ec7, type: 3}
+  - {fileID: 4900000, guid: 381538316368be245a70e6b82af649a0, type: 3}
 --- !u!114 &114000013975622294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3650,7 +3639,18 @@ MonoBehaviour:
         f_param: 4
       function:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 114000013910520946}
+            m_MethodName: LoadTextAsset
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
       delayNextAction: 1
@@ -5332,7 +5332,7 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013114296942}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0

@@ -73,6 +73,8 @@ public class DialogueControllerScript : MonoBehaviour {
     void Reset()
     {
         Time.timeScale = 1.0f;
+        leftPortrait.color = Color.white;
+        rightPortrait.color = Color.white;
         textShown = 0;
         delayType = false;
         proceedArrow.SetActive(false);
