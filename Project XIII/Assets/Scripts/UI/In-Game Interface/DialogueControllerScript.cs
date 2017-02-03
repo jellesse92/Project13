@@ -6,15 +6,6 @@ using System;
 
 public class DialogueControllerScript : MonoBehaviour {
 
-    //---Serializables
-
-    [System.Serializable]
-    public class PortraitEntry                                  //For making an dictionary entry for Portraits
-    {
-        public string name;                                     //Name of the character
-        public Sprite sprite;                                   //Portrait sprite of character
-    }
-
     //---UI objects for Dialogue
     public GameObject dialogueUI;                               //UI for dialogue to be activated when dialogue is played
     public Image leftPortrait;                                  //Left speaking portrait
@@ -36,10 +27,6 @@ public class DialogueControllerScript : MonoBehaviour {
 
     //---Dialogue Text and Portraits
     public TextAsset[] dialogueText;                            //Array of text assets to be used
-    public PortraitEntry[] portraitEntries;                     //Array of portrait entries to be loaded into dictionary
-
-    //---Dictionaries
-    private Dictionary<string, PortraitEntry> portraitDict;     //Dictionary of sprite portraits
 
     //---Private variables for controlling dialogue display
     private int currentLine;                                    //Current line being read
@@ -55,7 +42,6 @@ public class DialogueControllerScript : MonoBehaviour {
     void Awake()
     {
         Reset();
-        ConstructDict();
 
         GameObject musicObject = GameObject.FindGameObjectWithTag("Music");
         if (musicObject != null)
@@ -77,16 +63,6 @@ public class DialogueControllerScript : MonoBehaviour {
         if (dialogueUI.activeSelf)
         {
             typeDialogue();
-        }
-    }
-
-    //Construct dictionaries
-    void ConstructDict()
-    {
-        portraitDict = new Dictionary<string, PortraitEntry>();
-        foreach (PortraitEntry entry in portraitEntries)
-        {
-            portraitDict[entry.name] = entry;
         }
     }
 
@@ -255,14 +231,29 @@ public class DialogueControllerScript : MonoBehaviour {
     //Loads character portrait image
     void LoadPortraitImage(Image img, string key)
     {
+        img = leftPortrait;
         if (key != "None")
         {
             img.gameObject.SetActive(true);
-            img.sprite = portraitDict[key].sprite;
+            Debug.Log(key);
+            switch (key.ToLower())
+            {
+
+
+                case "gunner": img.GetComponent<Animator>().SetInteger("setCharacter", 1); break;
+                case "swordsman": img.GetComponent<Animator>().SetInteger("setCharacter", 2); break;
+                case "mage": img.GetComponent<Animator>().SetInteger("setCharacter", 3); break;
+                case "mech": img.GetComponent<Animator>().SetInteger("setCharacter", 4); break;
+                case "alice": img.GetComponent<Animator>().SetInteger("setCharacter", 5); break;
+                case "ardent": img.GetComponent<Animator>().SetInteger("setCharacter", 6); break;
+            }
+
+            img.GetComponent<Animator>().SetTrigger("fadeIn");
+
         }
         else
         {
-            img.gameObject.SetActive(false);
+            //img.gameObject.SetActive(false);
         }
 
     }
