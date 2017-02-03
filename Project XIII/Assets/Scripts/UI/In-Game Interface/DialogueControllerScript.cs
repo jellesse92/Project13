@@ -74,6 +74,7 @@ public class DialogueControllerScript : MonoBehaviour {
     {
         Time.timeScale = 1.0f;
         textShown = 0;
+        delayType = false;
         proceedArrow.SetActive(false);
         skipButton.SetActive(false);
         Clear();
