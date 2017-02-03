@@ -11,7 +11,6 @@ public class PlayerSoundEffects : MonoBehaviour {
     public AudioClip[] deathVoiceList;
 
     public AudioClip[] hitSparkList;                           //audio clip at enemy hit contact
-
     AudioSource myAudio;
     AudioClip myClip;
 
