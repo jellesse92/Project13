@@ -56,7 +56,7 @@ public class PlayerParticleEffects : MonoBehaviour {
         if (particle)
             particle.transform.position = newPosition;
     }
-    protected void PlayParticle(GameObject particle)
+    public void PlayParticle(GameObject particle)
     {
         if(particle)
             particle.GetComponent<ParticleSystem>().Play();

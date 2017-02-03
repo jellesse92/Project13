@@ -51,12 +51,16 @@ public class SwordsmanPhysics : PlayerPhysics{
     public float magHeavyAttackScreenShake = 1.5f;
     public float durHeavyAttackScreenShake = 0.7f;
 
-    PlayerParticleEffects playerParticleEffects;
+    SwordsmanParticleEffects playerParticleEffects;
+    SwordsmanSoundEffects playerSoundEffects;
+
     PlayerEffectsManager playerEffectsManager;
 
     public override void ClassSpecificStart()
     {
-        playerParticleEffects = GetComponent<PlayerParticleEffects>();
+        playerParticleEffects = GetComponent<SwordsmanParticleEffects>();
+        playerSoundEffects = GetComponent<SwordsmanSoundEffects>();
+
         playerEffectsManager = transform.parent.GetComponent<PlayerEffectsManager>();
         defaultMat = GetComponent<SpriteRenderer>().material;
 
@@ -76,11 +80,15 @@ public class SwordsmanPhysics : PlayerPhysics{
             {
                 isFlashingGold = true;
                 CancelInvoke("ChargingFlashWhite");
+                playerSoundEffects.playSound(playerSoundEffects.chargingSecondCharge);
+                playerParticleEffects.PlayParticle(playerParticleEffects.chargingSecondCharge);
                 InvokeRepeating("ChargingFlashGold", 0f, .09f);
             }
             else if(timeCharged >= 1f && timeCharged < 2f && !isFlashingWhite)
             {
                 isFlashingWhite = true;
+                playerSoundEffects.playSound(playerSoundEffects.chargingFirstCharge);
+                playerParticleEffects.PlayParticle(playerParticleEffects.chargingFirstCharge);
                 InvokeRepeating("ChargingFlashWhite", 0f, .15f);
             }
         }

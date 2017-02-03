@@ -68,7 +68,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void Start()
     {
-        playerSoundEffects = transform.parent.GetComponent<PlayerSoundEffects>();
+        playerSoundEffects = transform.parent.GetComponent<SwordsmanSoundEffects>();
         playerParticleEffects = transform.parent.GetComponent<SwordsmanParticleEffects>();
         playProp = transform.parent.GetComponent<PlayerProperties>();
     }
