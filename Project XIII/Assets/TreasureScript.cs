@@ -9,7 +9,6 @@ public class TreasureScript : ItemHitTrigger {
 
     public int hitsToOpen = 3;
     
-    Vector3 oldPosition;
     // Use this for initialization
     protected override void ClassSpecificStart()
     {

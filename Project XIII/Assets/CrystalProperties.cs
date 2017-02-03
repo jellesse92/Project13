@@ -19,7 +19,7 @@ public class CrystalProperties : ItemHitTrigger {
 
     static bool puzzleSolved = false;
 
-    void Start () {
+    protected override void ClassSpecificStart () {
         mySprite = GetComponent<SpriteRenderer>();
         myAudio = GetComponent<AudioSource>();
         hitParticle = transform.FindChild("HitParticle").gameObject.GetComponent<ParticleSystem>();
