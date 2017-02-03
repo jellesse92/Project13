@@ -6,6 +6,8 @@ using System;
 
 public class DialogueControllerScript : MonoBehaviour {
 
+    const float TYPE_DELAY_TIME = .010f;                        //Time by which to delay the speed each character is typed
+
     //---UI objects for Dialogue
     public GameObject dialogueUI;                               //UI for dialogue to be activated when dialogue is played
     public Image leftPortrait;                                  //Left speaking portrait
@@ -35,6 +37,7 @@ public class DialogueControllerScript : MonoBehaviour {
     private int textShown;                                      //Amount of text of current line shown
     private bool isTyping;                                      //Determines if current dialogue still being typed
     private bool autoType;                                      //Typing is set to automatically proceed
+    private bool delayType = false;                             //For delaying typing speed
 
     //---Command keys for Dialogue
     static KeyCode PROCEED_KEY = KeyCode.C;                     //Proceed with dialogue at normal speed
@@ -122,17 +125,27 @@ public class DialogueControllerScript : MonoBehaviour {
         currentLine = 2;
     }
 
+    void EndTypeDelay()
+    {
+        delayType = false;
+    }
+
     //Types in dialogue text
     void typeDialogue()
     {
         proceedArrow.SetActive(!isTyping);
         skipButton.SetActive(!isTyping);
+        if (!delayType)
+        {
+            int length = dialogueArray[currentLine].Length;
+            textShown += 1;
+            textShown = Math.Min(length, textShown);
+            dialogueUIText.text = dialogueArray[currentLine].Substring(0, textShown);
+            delayType = true;
+            Invoke("EndTypeDelay",TYPE_DELAY_TIME);
+        }
+        isTyping = !(textShown == dialogueArray[currentLine].Length);
 
-        int length = dialogueArray[currentLine].Length;
-        textShown += 1;
-        textShown = Math.Min(length, textShown);
-        dialogueUIText.text = dialogueArray[currentLine].Substring(0, textShown);
-        isTyping = !(textShown == length);
     }
 
     //Execute commands given from currenty examined line of text
