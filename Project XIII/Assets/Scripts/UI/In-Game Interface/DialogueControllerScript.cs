@@ -27,8 +27,8 @@ public class DialogueControllerScript : MonoBehaviour {
     static Color SPEAKING_COLOR = new Color(1f, 1f, 1f);        //Brights character portrait when speaking
     static Color FADE_COLOR = new Color(.5f, .5f, .5f);         //Darkens character when they are not speaking
 
-    //---Dialogue Text and Portraits
-    public TextAsset[] dialogueText;                            //Array of text assets to be used
+    //---Dialogue Text
+    TextAsset[] dialogueText;                                   //Array of text assets to be used. Assigned by text item in level
 
     //---Private variables for controlling dialogue display
     private int currentLine;                                    //Current line being read
@@ -53,7 +53,15 @@ public class DialogueControllerScript : MonoBehaviour {
         shakeScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamShakeScript>();
     }
 
-	// Update is called once per frame
+    private void Start()
+    {
+        GameObject textHolder = GameObject.FindGameObjectWithTag("Text");
+
+        if (textHolder != null)
+            dialogueText = textHolder.GetComponent<TextHolderScript>().textAssets;
+    }
+
+    // Update is called once per frame
 	void Update () {
         if (dialogueUI.activeSelf)
         {
