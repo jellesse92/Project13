@@ -231,15 +231,11 @@ public class DialogueControllerScript : MonoBehaviour {
     //Loads character portrait image
     void LoadPortraitImage(Image img, string key)
     {
-        img = leftPortrait;
         if (key != "None")
         {
             img.gameObject.SetActive(true);
-            Debug.Log(key);
             switch (key.ToLower())
             {
-
-
                 case "gunner": img.GetComponent<Animator>().SetInteger("setCharacter", 1); break;
                 case "swordsman": img.GetComponent<Animator>().SetInteger("setCharacter", 2); break;
                 case "mage": img.GetComponent<Animator>().SetInteger("setCharacter", 3); break;
@@ -249,11 +245,10 @@ public class DialogueControllerScript : MonoBehaviour {
             }
 
             img.GetComponent<Animator>().SetTrigger("fadeIn");
-
         }
         else
         {
-            //img.gameObject.SetActive(false);
+            img.gameObject.SetActive(false);
         }
 
     }
