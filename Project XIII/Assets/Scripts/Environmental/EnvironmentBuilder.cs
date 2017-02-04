@@ -27,10 +27,7 @@ public class EnvironmentBuilder : MonoBehaviour {
         combiner.CreateLevelCollider(gameObject, newBounds);
         ApplyGroundColliderSettings(gameObject.GetComponent<PolygonCollider2D>());
 
-        Invoke("SetGroundColliderTolerance", 3f);
-       
-       // gameObject.AddComponent<DigitalRuby.AdvancedPolygonCollider.AdvancedPolygonCollider>();
-       // gameObject.GetComponent<DigitalRuby.AdvancedPolygonCollider.AdvancedPolygonCollider>().RunInPlayMode = true;
+        SetGroundColliderTolerance();
 
     }
 
@@ -50,7 +47,7 @@ public class EnvironmentBuilder : MonoBehaviour {
     void ApplyGroundColliderSettings(PolygonCollider2D collider)
     {
         //current Settings for ground colliders
-        collider.offset = new Vector2(0, -.75f);
+        collider.offset = new Vector2(0, -.5f);
         collider.sharedMaterial = groundMat;
     }
 
