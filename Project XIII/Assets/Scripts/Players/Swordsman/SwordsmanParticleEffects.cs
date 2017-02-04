@@ -33,7 +33,7 @@ public class SwordsmanParticleEffects : PlayerParticleEffects {
         positionUpAttackDust = new Vector3(transform.position.x, transform.position.y - 2.5f, transform.position.z);
         positionUpAttack = new Vector3(transform.position.x + 0.7f, transform.position.y - 2.5f, transform.position.z);
         positionChargingTrail = new Vector3(transform.position.x, transform.position.y - 2.5f, transform.position.z);
-        positionDashTrail = new Vector3(transform.position.x, transform.position.y - 2.5f, transform.position.z);
+        positionDashTrail = new Vector3(transform.position.x + 1f, transform.position.y - 1.5f, transform.position.z);
 
         InstantiateParticle(ref chargingDust);
         InstantiateParticle(ref chargingParticles);
