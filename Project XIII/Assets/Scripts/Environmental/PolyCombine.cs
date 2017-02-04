@@ -31,7 +31,8 @@ public class PolyCombine
             {
                 allPolygonsPath.Add(new IntPoint(Mathf.Floor(polygons[i][j].x * scalingFactor), Mathf.Floor(polygons[i][j].y * scalingFactor)));
             }
-            //Clipper.CleanPolygon(allPolygonsPath, .10); Experimenting with  making the polygons smaller
+            //Clipper.CleanPolygon(allPolygonsPath, .10); //Experimenting with  making the polygons smaller
+            //Clipper.SimplifyPolygon(allPolygonsPath, PolyFillType.pftPositive);
             clipper.AddPath(allPolygonsPath, PolyType.ptSubject, true);
 
         }
@@ -42,6 +43,7 @@ public class PolyCombine
        
         //having added all the Paths added to the clipper object, we tell clipper to execute an union
         clipper.Execute(ClipType.ctUnion, solution);
+
 
         //the union may not end perfectly, so we're gonna do an offset in our polygons, that is, expand them outside a little bit
         ClipperOffset offset = new ClipperOffset();
@@ -77,22 +79,20 @@ public class PolyCombine
         colliderObj.transform.SetParent(parent.transform);
         var parPos = parent.transform.position;
         colliderObj.transform.position = new Vector2(parPos.x, parPos.y - 1f);
-
-        PolygonCollider2D collider = colliderObj.AddComponent<PolygonCollider2D>();
+        PolygonCollider2D collider = parent.GetComponent<PolygonCollider2D>();
+        parent.AddComponent<Collider2DOptimization.PolygonColliderOptimizer>();
 
         collider.pathCount = polygons.Count;
-
         for (int i = 0; i < polygons.Count; i++)
         {
             Vector2[] points = polygons[i].ToArray();
-
             collider.SetPath(i, points);
         }
     }
 
     public List<List<Vector2>> RemoveClosePointsInPolygons(List<List<Vector2>> polygons)
     {
-        float proximityLimit = 0.1f;
+        float proximityLimit = .001f;
 
         List<List<Vector2>> resultPolygons = new List<List<Vector2>>();
 
@@ -124,7 +124,6 @@ public class PolyCombine
                 resultPolygons.Add(polygon);
             }
         }
-
         return resultPolygons;
     }
 }

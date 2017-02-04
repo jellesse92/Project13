@@ -9,6 +9,8 @@ public class EnvironmentBuilder : MonoBehaviour {
     PolyCombine combiner;
     public PhysicsMaterial2D groundMat;
     public PhysicsMaterial2D wallMat;
+    public GameObject polygonHelper;
+    public int tolerance;
 
 	void Start () {
         //Get All Ground Objects
@@ -25,7 +27,18 @@ public class EnvironmentBuilder : MonoBehaviour {
         combiner.CreateLevelCollider(gameObject, newBounds);
         ApplyGroundColliderSettings(gameObject.GetComponent<PolygonCollider2D>());
 
-	}
+        Invoke("SetGroundColliderTolerance", 3f);
+       
+       // gameObject.AddComponent<DigitalRuby.AdvancedPolygonCollider.AdvancedPolygonCollider>();
+       // gameObject.GetComponent<DigitalRuby.AdvancedPolygonCollider.AdvancedPolygonCollider>().RunInPlayMode = true;
+
+    }
+
+    void SetGroundColliderTolerance()
+    {
+        gameObject.GetComponent<Collider2DOptimization.PolygonColliderOptimizer>().tolerance = tolerance;
+        gameObject.GetComponent<Collider2DOptimization.PolygonColliderOptimizer>().OnValidate();
+    }
     
     List<Vector2> TransformLocalToLocalVector2(PolygonCollider2D collider)
     {
