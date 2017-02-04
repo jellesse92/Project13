@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 61830894135930068}
   - component: {fileID: 114551739416109746}
   - component: {fileID: 82704931349914272}
+  - component: {fileID: 114340824677924852}
   m_Layer: 9
   m_Name: Basic Turret Enemy
   m_TagString: Enemy
@@ -243,8 +244,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1448145998842734}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 184.28, y: 8.4, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 124.2, y: 1.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4227750492250986}
@@ -541,6 +542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundedOffset: 0
   health: 100
+  coinDropAmount: 10
   speed: 0
   attackPower: 25
   stunnable: 1
@@ -557,6 +559,19 @@ MonoBehaviour:
   rangedProjectile: {fileID: 1290618230592718, guid: fc7cce2d67ac0ac4a936abdd6d636a35,
     type: 2}
   projectileList: {fileID: 4227750492250986}
+--- !u!114 &114340824677924852
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1669987296773304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34824e6953488334683a38050cca81c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathParticles: {fileID: 0}
+  coins: {fileID: 1820232980814022, guid: dfa2c1ef413e12d4682f2b1180eb50a3, type: 2}
 --- !u!114 &114551739416109746
 MonoBehaviour:
   m_ObjectHideFlags: 1

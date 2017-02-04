@@ -20,6 +20,7 @@ public class Enemy : MonoBehaviour {
     //In-Game information                 
     public int health;                                  //Enemy health
     int fullHealth;                                     //Health at full health to restore to
+    public int coinDropAmount;
     public float speed;                                 //Speed of enemy
     public int attackPower;                             //Base attack power of enemy
     public bool stunnable;                              //Able to be stunned
@@ -210,6 +211,8 @@ public class Enemy : MonoBehaviour {
                 child.GetComponent<ParticleSystem>().Play();
         }
         mainCamera.GetComponent<CamShakeScript>().StartShake(magShakeDeath, durShakeDeath);
+        if(GetComponent<EnemyParticleEffects>())
+            GetComponent<EnemyParticleEffects>().SpawnCoins(coinDropAmount);
         StopCoroutine("ApplyStun");
         anim.SetTrigger("death");
         GetComponent<SpriteRenderer>().color = default_color;

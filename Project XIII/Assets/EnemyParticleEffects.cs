@@ -12,4 +12,9 @@ public class EnemyParticleEffects : ParticleEffects
         InstantiateParticle(ref deathParticles);
         InstantiateParticle(ref coins);
     }
+
+    public void SpawnCoins(int amount)
+    {
+        coins.GetComponent<ParticleSystem>().Emit(amount);
+    }
 }
