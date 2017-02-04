@@ -243,6 +243,7 @@ public class SwordsmanPhysics : PlayerPhysics{
         StartCoroutine("Dashing");
 
         playerParticleEffects.PlayDashAfterImage(true);
+        playerParticleEffects.PlayDashTrail(true);
         gameObject.layer = 14;
     }
 
@@ -288,6 +289,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     void StopAfterImage()
     {
         playerParticleEffects.PlayDashAfterImage(false);
+        playerParticleEffects.PlayDashTrail(false);
     }
 
     //END DASHING FUNCTIONS
