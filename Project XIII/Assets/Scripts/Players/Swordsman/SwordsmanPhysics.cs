@@ -307,7 +307,7 @@ public class SwordsmanPhysics : PlayerPhysics{
         GetComponent<SwordsmanParticleEffects>().PlayChargingDust(false);
         CancelFlashing();
         playerEffectsManager.FlashScreen();
-
+        GetComponent<SwordsmanParticleEffects>().PlayChargingTrail(true);
         checkChargeTime = false;
         timeCharged = Mathf.Min(timeCharged, MAX_CHARGE);
         attackScript.SetForceMulti(timeCharged);
@@ -317,6 +317,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     void EndHeavyAttack()
     {
         attackBox.GetComponent<Collider2D>().enabled = false;
+        GetComponent<SwordsmanParticleEffects>().PlayChargingTrail(false);
         attackScript.Launch();
         attackScript.Reset();
     }
