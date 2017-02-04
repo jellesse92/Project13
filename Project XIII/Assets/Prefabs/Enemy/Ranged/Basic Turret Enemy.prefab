@@ -128,6 +128,7 @@ GameObject:
   - component: {fileID: 61830894135930068}
   - component: {fileID: 114551739416109746}
   - component: {fileID: 82704931349914272}
+  - component: {fileID: 114340824677924852}
   m_Layer: 9
   m_Name: Basic Turret Enemy
   m_TagString: Enemy
@@ -200,7 +201,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1872530967864610}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: -1, z: 0}
+  m_LocalPosition: {x: -0.32, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4600172547998940}
@@ -229,7 +230,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1669987296773304}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -10.4, y: -3.97, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4696473026674222}
@@ -243,8 +244,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1448145998842734}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 263.2, y: 29.7, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 124.2, y: 1.1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4227750492250986}
@@ -541,6 +542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundedOffset: 0
   health: 100
+  coinDropAmount: 10
   speed: 0
   attackPower: 25
   stunnable: 1
@@ -548,7 +550,7 @@ MonoBehaviour:
   grounded: 0
   flyingEnemy: 0
   magShakeDeath: 0.5
-  durShakeDeath: 1
+  durShakeDeath: 0.5
   facingRight: 1
   attProjectionTime: 0
   hasAttackProjection: 1
@@ -557,6 +559,19 @@ MonoBehaviour:
   rangedProjectile: {fileID: 1290618230592718, guid: fc7cce2d67ac0ac4a936abdd6d636a35,
     type: 2}
   projectileList: {fileID: 4227750492250986}
+--- !u!114 &114340824677924852
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1669987296773304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 34824e6953488334683a38050cca81c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathParticles: {fileID: 0}
+  coins: {fileID: 1820232980814022, guid: dfa2c1ef413e12d4682f2b1180eb50a3, type: 2}
 --- !u!114 &114551739416109746
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -636,7 +651,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -143044996
+  randomSeed: 1308474352
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3099,7 +3114,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1139543500
+  randomSeed: 1304392546
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5628,7 +5643,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1856251358
+  randomSeed: 559173303
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -8067,7 +8082,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1138966330
+  randomSeed: 458806799
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -10512,7 +10527,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -42130399
+  randomSeed: -144605913
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -10660,9 +10675,9 @@ ParticleSystem:
         m_Mode: 1
         m_NumColorKeys: 3
         m_NumAlphaKeys: 3
-      minColor: {r: 0, g: 0, b: 0, a: 1}
-      maxColor: {r: 1, g: 1, b: 1, a: 1}
-      minMaxState: 0
+      minColor: {r: 0, g: 0.14901961, b: 0.20392157, a: 1}
+      maxColor: {r: 0, g: 0, b: 0, a: 1}
+      minMaxState: 2
     startSize:
       scalar: 1
       maxCurve:
@@ -11220,10 +11235,10 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4278190080
+          rgba: 4294967295
         key1:
           serializedVersion: 2
-          rgba: 4278190080
+          rgba: 4294967295
         key2:
           serializedVersion: 2
           rgba: 16777215
@@ -11243,7 +11258,7 @@ ParticleSystem:
           serializedVersion: 2
           rgba: 0
         ctime0: 0
-        ctime1: 22552
+        ctime1: 65535
         ctime2: 65535
         ctime3: 0
         ctime4: 0
@@ -11259,7 +11274,7 @@ ParticleSystem:
         atime6: 0
         atime7: 0
         m_Mode: 0
-        m_NumColorKeys: 3
+        m_NumColorKeys: 2
         m_NumAlphaKeys: 2
       minGradient:
         key0:

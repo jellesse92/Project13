@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerParticleEffects : MonoBehaviour {
+public class PlayerParticleEffects : ParticleEffects {
     //All public variables uses prefab, no need to put objects in scene
     public GameObject quickAttack;
     public GameObject heavyAttack;
@@ -13,10 +13,9 @@ public class PlayerParticleEffects : MonoBehaviour {
     public GameObject runningDust;
     public GameObject landingDust;
 
-    GameObject particlesHolder;
     //public GameObject heavyHitImpact;
 
-    void Awake() //Awake since other scripts will need the variables here at start
+    protected override void ChildSpecificAwake() //Awake since other scripts will need the variables here at start
     {
         InstantiateParticles();
         ClassSpecificAwake();
@@ -26,12 +25,9 @@ public class PlayerParticleEffects : MonoBehaviour {
     {
         //Use this to add anything for the awake of children
     }
+
     void InstantiateParticles()
     {
-        particlesHolder = new GameObject();
-        particlesHolder.name = "Particles";
-        particlesHolder.transform.parent = transform;
-
         InstantiateParticle(ref generalHitSpark);
         InstantiateParticle(ref quickAttack);
         InstantiateParticle(ref heavyAttack);
@@ -40,28 +36,7 @@ public class PlayerParticleEffects : MonoBehaviour {
         InstantiateParticle(ref runningDust);
         InstantiateParticle(ref landingDust);        
     }
-
-    protected void InstantiateParticle(ref GameObject particle)
-    {
-        if (particle)
-        {
-            particle = Instantiate(particle);
-            particle.transform.position = transform.position;
-            particle.transform.parent = particlesHolder.transform;
-        }
-    }
-
-    protected void ChangeParticlePosition(ref GameObject particle, Vector3 newPosition)
-    {
-        if (particle)
-            particle.transform.position = newPosition;
-    }
-    protected void PlayParticle(GameObject particle)
-    {
-        if(particle)
-            particle.GetComponent<ParticleSystem>().Play();
-    }
-
+  
     public void PlayParticleQuickAttack()
     {
         PlayParticle(quickAttack);

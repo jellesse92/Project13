@@ -5,7 +5,7 @@ using UnityEngine;
 public class BasicMeleeEnemy : EnemyPhysics{
 
     public GameObject meleeAttackBox;
-
+    
     protected override void EnemySpecificStart()
     {
         Vector3 newCenter = transform.position; //adjust center position of the enemy, use to place particles

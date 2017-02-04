@@ -6,14 +6,7 @@ using System;
 
 public class DialogueControllerScript : MonoBehaviour {
 
-    //---Serializables
-
-    [System.Serializable]
-    public class PortraitEntry                                  //For making an dictionary entry for Portraits
-    {
-        public string name;                                     //Name of the character
-        public Sprite sprite;                                   //Portrait sprite of character
-    }
+    const float TYPE_DELAY_TIME = .010f;                        //Time by which to delay the speed each character is typed
 
     //---UI objects for Dialogue
     public GameObject dialogueUI;                               //UI for dialogue to be activated when dialogue is played
@@ -34,12 +27,8 @@ public class DialogueControllerScript : MonoBehaviour {
     static Color SPEAKING_COLOR = new Color(1f, 1f, 1f);        //Brights character portrait when speaking
     static Color FADE_COLOR = new Color(.5f, .5f, .5f);         //Darkens character when they are not speaking
 
-    //---Dialogue Text and Portraits
-    public TextAsset[] dialogueText;                            //Array of text assets to be used
-    public PortraitEntry[] portraitEntries;                     //Array of portrait entries to be loaded into dictionary
-
-    //---Dictionaries
-    private Dictionary<string, PortraitEntry> portraitDict;     //Dictionary of sprite portraits
+    //---Dialogue Text
+    TextAsset[] dialogueText;                                   //Array of text assets to be used. Assigned by text item in level
 
     //---Private variables for controlling dialogue display
     private int currentLine;                                    //Current line being read
@@ -48,6 +37,7 @@ public class DialogueControllerScript : MonoBehaviour {
     private int textShown;                                      //Amount of text of current line shown
     private bool isTyping;                                      //Determines if current dialogue still being typed
     private bool autoType;                                      //Typing is set to automatically proceed
+    private bool delayType = false;                             //For delaying typing speed
 
     //---Command keys for Dialogue
     static KeyCode PROCEED_KEY = KeyCode.C;                     //Proceed with dialogue at normal speed
@@ -55,7 +45,6 @@ public class DialogueControllerScript : MonoBehaviour {
     void Awake()
     {
         Reset();
-        ConstructDict();
 
         GameObject musicObject = GameObject.FindGameObjectWithTag("Music");
         if (musicObject != null)
@@ -64,7 +53,15 @@ public class DialogueControllerScript : MonoBehaviour {
         shakeScript = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CamShakeScript>();
     }
 
-	// Update is called once per frame
+    private void Start()
+    {
+        GameObject textHolder = GameObject.FindGameObjectWithTag("Text");
+
+        if (textHolder != null)
+            dialogueText = textHolder.GetComponent<TextHolderScript>().textAssets;
+    }
+
+    // Update is called once per frame
 	void Update () {
         if (dialogueUI.activeSelf)
         {
@@ -80,21 +77,14 @@ public class DialogueControllerScript : MonoBehaviour {
         }
     }
 
-    //Construct dictionaries
-    void ConstructDict()
-    {
-        portraitDict = new Dictionary<string, PortraitEntry>();
-        foreach (PortraitEntry entry in portraitEntries)
-        {
-            portraitDict[entry.name] = entry;
-        }
-    }
-
     //Reset dialogue reading and interface
     void Reset()
     {
         Time.timeScale = 1.0f;
+        leftPortrait.color = Color.white;
+        rightPortrait.color = Color.white;
         textShown = 0;
+        delayType = false;
         proceedArrow.SetActive(false);
         skipButton.SetActive(false);
         Clear();
@@ -146,17 +136,27 @@ public class DialogueControllerScript : MonoBehaviour {
         currentLine = 2;
     }
 
+    void EndTypeDelay()
+    {
+        delayType = false;
+    }
+
     //Types in dialogue text
     void typeDialogue()
     {
         proceedArrow.SetActive(!isTyping);
         skipButton.SetActive(!isTyping);
+        if (!delayType)
+        {
+            int length = dialogueArray[currentLine].Length;
+            textShown += 1;
+            textShown = Math.Min(length, textShown);
+            dialogueUIText.text = dialogueArray[currentLine].Substring(0, textShown);
+            delayType = true;
+            Invoke("EndTypeDelay",TYPE_DELAY_TIME);
+        }
+        isTyping = !(textShown == dialogueArray[currentLine].Length);
 
-        int length = dialogueArray[currentLine].Length;
-        textShown += 1;
-        textShown = Math.Min(length, textShown);
-        dialogueUIText.text = dialogueArray[currentLine].Substring(0, textShown);
-        isTyping = !(textShown == length);
     }
 
     //Execute commands given from currenty examined line of text
@@ -258,7 +258,17 @@ public class DialogueControllerScript : MonoBehaviour {
         if (key != "None")
         {
             img.gameObject.SetActive(true);
-            img.sprite = portraitDict[key].sprite;
+            switch (key.ToLower())
+            {
+                case "gunner": img.GetComponent<Animator>().SetInteger("setCharacter", 1); break;
+                case "swordsman": img.GetComponent<Animator>().SetInteger("setCharacter", 2); break;
+                case "mage": img.GetComponent<Animator>().SetInteger("setCharacter", 3); break;
+                case "mech": img.GetComponent<Animator>().SetInteger("setCharacter", 4); break;
+                case "alice": img.GetComponent<Animator>().SetInteger("setCharacter", 5); break;
+                case "ardent": img.GetComponent<Animator>().SetInteger("setCharacter", 6); break;
+            }
+
+            img.GetComponent<Animator>().SetTrigger("fadeIn");
         }
         else
         {

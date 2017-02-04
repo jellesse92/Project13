@@ -68,7 +68,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void Start()
     {
-        playerSoundEffects = transform.parent.GetComponent<PlayerSoundEffects>();
+        playerSoundEffects = transform.parent.GetComponent<SwordsmanSoundEffects>();
         playerParticleEffects = transform.parent.GetComponent<SwordsmanParticleEffects>();
         playProp = transform.parent.GetComponent<PlayerProperties>();
     }
@@ -152,7 +152,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             enemyHash.Add(col.gameObject);
             Invoke("StopMomentum", HEAVY_DRAG_ENEMY_TIME);
         }
-        CrystalHit(col);
+        ItemHit(col);
     }
 
     void UpdateHeavyAttack()
@@ -210,7 +210,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             col.gameObject.GetComponent<Enemy>().Damage(damage, HEAVY_AIR_STUN_MULTI);
             col.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_AIR_X_FORCE * transform.parent.localScale.x, HEAVY_AIR_Y_FORCE));
         }
-        CrystalHit(col);
+        ItemHit(col);
     }
 
     /*
@@ -232,7 +232,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
         }
-        CrystalHit(col);
+        ItemHit(col);
     }
 
     void TriggerQuickAttack2(Collider2D col)
@@ -246,7 +246,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
         }
-        CrystalHit(col);
+        ItemHit(col);
     }
 
     void TriggerAirQuickAttack(Collider2D col)
@@ -260,7 +260,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             col.GetComponent<Enemy>().Damage(damage, QUICK_AIR_STUN_MULTI);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_AIR_X_FORCE * transform.parent.localScale.x, QUICK_AIR_Y_FORCE));
         }
-        CrystalHit(col);
+        ItemHit(col);
     }
 
     /*
@@ -324,7 +324,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
         if(col.tag == "Enemy")
         {
             //HEAVY ATTACK EFFECTS STUFF
-            Debug.Log("attack");
+            //Debug.Log("attack");
             playerSoundEffects.PlayHitSpark();
             playerParticleEffects.PlayFinisherHitSpark(col.GetComponent<Enemy>().GetCenter());
             transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(magShakefinisherAttack, durShakefinisherAttack);
@@ -333,9 +333,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
         }
-        CrystalHit(col);
-        
-
+        ItemHit(col);        
     }
 
     void HitEffect(HitType hitType, Vector3 position)
@@ -358,7 +356,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     }
 
-    void CrystalHit(Collider2D collider)
+    void ItemHit(Collider2D collider)
     {
         if (collider.tag == "Item")
         {
