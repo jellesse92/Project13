@@ -9,12 +9,14 @@ public class SwordsmanParticleEffects : PlayerParticleEffects {
     public GameObject chargingSecondCharge;
     public GameObject chargingTrail;
 
+    public GameObject dashTrail;
     public GameObject upAttackDust;
     public GameObject finisherHitSpark;
     
     Vector3 positionChargingDust;
     Vector3 positionChargingTrail;
 
+    Vector3 positionDashTrail;
     Vector3 positionJumpDust;
     Vector3 positionRunningDust;
     Vector3 positionLandingDust;
@@ -31,6 +33,7 @@ public class SwordsmanParticleEffects : PlayerParticleEffects {
         positionUpAttackDust = new Vector3(transform.position.x, transform.position.y - 2.5f, transform.position.z);
         positionUpAttack = new Vector3(transform.position.x + 0.7f, transform.position.y - 2.5f, transform.position.z);
         positionChargingTrail = new Vector3(transform.position.x, transform.position.y - 2.5f, transform.position.z);
+        positionDashTrail = new Vector3(transform.position.x, transform.position.y - 2.5f, transform.position.z);
 
         InstantiateParticle(ref chargingDust);
         InstantiateParticle(ref chargingParticles);
@@ -39,6 +42,7 @@ public class SwordsmanParticleEffects : PlayerParticleEffects {
         InstantiateParticle(ref upAttackDust);
         InstantiateParticle(ref finisherHitSpark);
         InstantiateParticle(ref chargingTrail);
+        InstantiateParticle(ref dashTrail);
 
         ChangeParticlePosition(ref chargingDust, positionChargingDust);
         ChangeParticlePosition(ref jumpDust, positionJumpDust);
@@ -47,6 +51,7 @@ public class SwordsmanParticleEffects : PlayerParticleEffects {
         ChangeParticlePosition(ref upAttackDust, positionUpAttackDust);
         ChangeParticlePosition(ref quickAttack, positionUpAttack);
         ChangeParticlePosition(ref chargingTrail, positionChargingTrail);
+        ChangeParticlePosition(ref dashTrail, positionDashTrail);
 
     }
 
@@ -72,6 +77,14 @@ public class SwordsmanParticleEffects : PlayerParticleEffects {
             chargingTrail.GetComponent<ParticleSystem>().Play();
         else
             chargingTrail.GetComponent<ParticleSystem>().Stop();
+    }
+
+    public void PlayDashTrail(bool play)
+    {
+        if (play)
+            dashTrail.GetComponent<ParticleSystem>().Play();
+        else
+            dashTrail.GetComponent<ParticleSystem>().Stop();
     }
 
     public void PlayUpAttackDust()
