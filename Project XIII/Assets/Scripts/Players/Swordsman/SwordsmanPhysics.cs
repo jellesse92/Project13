@@ -191,6 +191,9 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     void PlayNextComboHit()
     {
+        if (!GetComponent<PlayerProperties>().alive)
+            return;
+
         string triggerString = "combo" + currentCombo.ToString();
         comboPressed = false;
         comboAnimFinished = false;
