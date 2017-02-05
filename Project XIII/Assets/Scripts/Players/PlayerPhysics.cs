@@ -143,8 +143,6 @@ public class PlayerPhysics : MonoBehaviour {
 
             if (absSpeed < X_ABS_ACCEPT) 
             {
-
-                Debug.Log(myKeyPress.verticalAxisValue > Y_NEGATIVE_ACCEPT);
                 if(myKeyPress.verticalAxisValue < Y_NEGATIVE_ACCEPT)
                 {
                     if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
