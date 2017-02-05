@@ -158,12 +158,8 @@ public class PlayerPhysics : MonoBehaviour {
                         myAnimator.SetTrigger("standUp");
                     }
                 }
-
-
             }
             
-
-
             myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
             myAnimator.SetFloat("speed", absSpeed);
             if (!isJumping)

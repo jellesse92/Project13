@@ -42,6 +42,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     //Heavy attack variables
     float forceMulti = 1f;                                          //Force based on how much swordsman charged attack
+    bool stopInvoked = false;
 
     //Combo finisher variable
     bool finishEffectPlayed = false;                                //Finisher effect has been played
@@ -109,7 +110,10 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
         switch (attack)
         {
-            case ("heavy"): damage = playProp.GetPlayerStats().heavyAttackStrength; break;
+            case ("heavy"):
+                damage = playProp.GetPlayerStats().heavyAttackStrength;
+                stopInvoked = false;
+                break;
             case ("quick"): damage = playProp.GetPlayerStats().quickAttackStrength; break;
             case ("quickAir"): damage = playProp.GetPlayerStats().quickAirAttackStrength; break;
             case ("heavyAir"): damage = playProp.GetPlayerStats().heavyAirAttackStrengh; break;
@@ -150,7 +154,11 @@ public class SwordsmanAttackScript : MonoBehaviour {
         if (col.tag == "Enemy" && !enemyHash.Contains(col.gameObject))
         {
             enemyHash.Add(col.gameObject);
-            Invoke("StopMomentum", HEAVY_DRAG_ENEMY_TIME);
+            if (!stopInvoked)
+            {
+                stopInvoked = true;
+                Invoke("StopMomentum", HEAVY_DRAG_ENEMY_TIME);
+            }
         }
         ItemHit(col);
     }
@@ -161,9 +169,11 @@ public class SwordsmanAttackScript : MonoBehaviour {
         {
             target.transform.position = new Vector3(transform.position.x + HEAVY_X_OFFSET * transform.parent.localScale.x, target.transform.position.y, target.transform.position.z);
 
-            //HEAVY ATTACK PARTICLE STUFF
+            //Original effect
+            /*
             playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
             playerSoundEffects.PlayHitSpark();
+            */
 
             target.GetComponent<Enemy>().Damage(0, .2f);
         }
