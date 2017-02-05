@@ -43,6 +43,8 @@ public class PlayerPhysics : MonoBehaviour {
     bool jumpGraceTimeInvoked = false;
     bool jumped = false;
 
+    public GameObject shadow;                           //For placing shadow at character's feet
+
     protected void Start () {
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -376,6 +378,8 @@ public class PlayerPhysics : MonoBehaviour {
         {
             wasGrounded = true;
             jumped = false;
+            if (shadow != null)
+                shadow.SetActive(true);
             return true;
         }
         else if (!jumpGraceTimeInvoked)
@@ -386,6 +390,9 @@ public class PlayerPhysics : MonoBehaviour {
 
         if (wasGrounded && !jumped)
             return true;
+
+        if (shadow != null)
+            shadow.SetActive(false);
 
         return false;
     }
