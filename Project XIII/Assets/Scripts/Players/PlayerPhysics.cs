@@ -3,6 +3,10 @@ using System.Collections;
 
 public class PlayerPhysics : MonoBehaviour {
 
+    //Variables for bad controller callibration
+    float Y_NEGATIVE_ACCEPT = -.02f;
+    float X_ABS_ACCEPT = .01f;
+
     //Constants for changing gravity force for jumping
     const float DEFAULT_GRAVITY_FORCE = 8f;
     const float MIN_GRAVITY_FORCE = 4f;
@@ -135,8 +139,33 @@ public class PlayerPhysics : MonoBehaviour {
     {
         if (!cannotMovePlayer)
         {
+            float absSpeed = Mathf.Abs(myKeyPress.horizontalAxisValue);
+
+            if (absSpeed < X_ABS_ACCEPT) 
+            {
+
+                Debug.Log(myKeyPress.verticalAxisValue > Y_NEGATIVE_ACCEPT);
+                if(myKeyPress.verticalAxisValue < Y_NEGATIVE_ACCEPT)
+                {
+                    if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+                        myAnimator.SetTrigger("crouch");
+                }
+
+                else
+                {
+                    if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Crouch Idle"))
+                    {
+                        myAnimator.SetTrigger("standUp");
+                    }
+                }
+
+
+            }
+            
+
+
             myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
-            myAnimator.SetFloat("speed", Mathf.Abs(myKeyPress.horizontalAxisValue));
+            myAnimator.SetFloat("speed", absSpeed);
             if (!isJumping)
                 Flip();
         }
