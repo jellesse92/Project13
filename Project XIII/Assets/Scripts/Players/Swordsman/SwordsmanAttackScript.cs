@@ -15,6 +15,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     const float HEAVY_X_LAUNCH_FORCE = 18000f;                      //Launce force for heavy attack
     const float HEAVY_Y_LAUNCH_FORCE = 30000f;
     const float HEAVY_X_OFFSET = 4f;                                //Where enemy is dragged relative to the swordsman
+    const int HEAVY_FINISHER_DPH = 1;                               //Heavy finisher's damage per hit
 
     //Constants for heavy air attack variables
     const float HEAVY_AIR_X_FORCE = 7000f;                          //X force to be applied on hit for air heavy attack
@@ -208,14 +209,20 @@ public class SwordsmanAttackScript : MonoBehaviour {
             //target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_Y_LAUNCE_FORCE * transform.parent.localScale.x, forceMulti * HEAVY_Y_LAUNCH_FORCE_MULTIPLIER));
 
             target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_X_LAUNCH_FORCE * transform.parent.localScale.x, HEAVY_Y_LAUNCH_FORCE));
-
             playerSoundEffects.PlayHitSpark();
             playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
             target.GetComponent<Enemy>().Damage(damage, HEAVY_STUN_MULTI);
         }
 
-        InvokeRepeating("HeavyFinisherTier1", .05f, .1f);
-        Invoke("EndHeavyFinisher", 1.05f);
+
+        if(heavyTier > 0)
+        {
+            InvokeRepeating("HeavyFinisher", .05f, .1f);
+            if (heavyTier == 1)
+                Invoke("EndHeavyFinisher", .55f);
+            else if (heavyTier == 2)
+                Invoke("EndHeavyFinisher", 1.05f);
+        }
 
         enemyInHeavyFinisher = enemyHash;
         transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(magShakeLaunch, durShakeLaunch);
@@ -223,14 +230,14 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void EndHeavyFinisher()
     {
-        CancelInvoke("HeavyFinisherTier1");
+        CancelInvoke("HeavyFinisher");
         foreach(GameObject target in enemyInHeavyFinisher)
         {
             target.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
 
-    void HeavyFinisherTier1()
+    void HeavyFinisher()
     {
         foreach(GameObject target in enemyInHeavyFinisher)
         {
@@ -243,7 +250,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
         target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
         target.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 3000f));
         target.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll; 
-        target.GetComponent<Enemy>().Damage(1, .2f);
+        target.GetComponent<Enemy>().Damage(HEAVY_FINISHER_DPH, .2f);
 
         //Special effects stuff
         playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
