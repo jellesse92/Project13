@@ -10,8 +10,10 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     //Constants for heavy attack variables 
     const float HEAVY_DRAG_ENEMY_TIME = .1f;                        //Time after initial enemy hit to keep dragging out attack
-    const float HEAVY_X_LAUNCH_FORCE_MULTIPLIER = 18000f;           //Multiplier for how much to push enemy at the end of hit in the X direction
-    const float HEAVY_Y_LAUNCH_FORCE_MULTIPLIER = 18000f;           //Multiplier for how much to push enemy at the end of hit in the Y direction
+    //const float HEAVY_X_LAUNCH_FORCE_MULTIPLIER = 18000f;           //Multiplier for how much to push enemy at the end of hit in the X direction
+    //const float HEAVY_Y_LAUNCH_FORCE_MULTIPLIER = 18000f;           //Multiplier for how much to push enemy at the end of hit in the Y direction
+    const float HEAVY_X_LAUNCH_FORCE = 18000f;                      //Launce force for heavy attack
+    const float HEAVY_Y_LAUNCH_FORCE = 30000f;
     const float HEAVY_X_OFFSET = 4f;                                //Where enemy is dragged relative to the swordsman
 
     //Constants for heavy air attack variables
@@ -43,6 +45,8 @@ public class SwordsmanAttackScript : MonoBehaviour {
     //Heavy attack variables
     float forceMulti = 1f;                                          //Force based on how much swordsman charged attack
     bool stopInvoked = false;
+    HashSet<GameObject> enemyInHeavyFinisher = new HashSet<GameObject>();
+    int heavyTier = 0;
 
     //Combo finisher variable
     bool finishEffectPlayed = false;                                //Finisher effect has been played
@@ -184,21 +188,66 @@ public class SwordsmanAttackScript : MonoBehaviour {
         transform.parent.GetComponent<PlayerPhysics>().VelocityX(0);
     }
 
+    /*
     public void SetForceMulti(float force)
     {
         forceMulti = force;
+    }
+    */
+
+    public void SetHeavyTier(int tier)
+    {
+        heavyTier = tier;
     }
 
     public void Launch()
     {
         foreach (GameObject target in enemyHash)
         {
-            target.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceMulti * HEAVY_X_LAUNCH_FORCE_MULTIPLIER * transform.parent.localScale.x, forceMulti * HEAVY_Y_LAUNCH_FORCE_MULTIPLIER));
+            //OLD ATTACK SCRIPT
+            //target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_Y_LAUNCE_FORCE * transform.parent.localScale.x, forceMulti * HEAVY_Y_LAUNCH_FORCE_MULTIPLIER));
+
+            target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_X_LAUNCH_FORCE * transform.parent.localScale.x, HEAVY_Y_LAUNCH_FORCE));
+
             playerSoundEffects.PlayHitSpark();
             playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
             target.GetComponent<Enemy>().Damage(damage, HEAVY_STUN_MULTI);
         }
+
+        InvokeRepeating("HeavyFinisherTier1", .05f, .1f);
+        Invoke("EndHeavyFinisher", 1.05f);
+
+        enemyInHeavyFinisher = enemyHash;
         transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(magShakeLaunch, durShakeLaunch);
+    }
+
+    void EndHeavyFinisher()
+    {
+        CancelInvoke("HeavyFinisherTier1");
+        foreach(GameObject target in enemyInHeavyFinisher)
+        {
+            target.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+        }
+    }
+
+    void HeavyFinisherTier1()
+    {
+        foreach(GameObject target in enemyInHeavyFinisher)
+        {
+            HeavyFinisherDamage(target);
+        }
+    }
+
+    void HeavyFinisherDamage(GameObject target)
+    {
+        target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+        target.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 3000f));
+        target.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll; 
+        target.GetComponent<Enemy>().Damage(1, .2f);
+
+        //Special effects stuff
+        playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
+        playerSoundEffects.PlayHitSpark();
     }
 
     /*
