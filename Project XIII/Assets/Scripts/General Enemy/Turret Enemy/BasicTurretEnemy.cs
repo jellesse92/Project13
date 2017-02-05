@@ -6,11 +6,13 @@ public class BasicTurretEnemy : EnemyPhysics
 {
     const int AMMO_AMOUNT = 20;                             //Amount of ammo to be created
     const float BULLET_SPEED = 15f;                         //Speed of bullet
-    const float RANGED_ATTACK_COOLDOWN = 1f;                //Cooldown for attack
+    const float RANGED_ATTACK_COOLDOWN = 1.5f;              //Cooldown for attack
 
     public GameObject rangedProjectile;                     //Projectiles to be shot
     public Transform projectileList;                        //Transform containing projectiles
     public Transform projectileOrigin;                      //Where projectiles should spawn from
+
+    bool attackOnCD = false;
 
     // Use this for initialization
     void Start()
@@ -49,7 +51,7 @@ public class BasicTurretEnemy : EnemyPhysics
 
         if (!inAttackRange && canMove)
             ApproachTarget();
-        else if (canAttack)
+        else if (canAttack && !attackOnCD)
             ExecuteAttack();
     }
 
@@ -61,7 +63,6 @@ public class BasicTurretEnemy : EnemyPhysics
 
     public void EndTurn()
     {
-
         turning = false;
     }
 
@@ -80,7 +81,14 @@ public class BasicTurretEnemy : EnemyPhysics
         if (currentAmmo > 0)
         {
             base.ExecuteAttack();
+            attackOnCD = true;
+            Invoke("EndAttackCD", RANGED_ATTACK_COOLDOWN);
         }
+    }
+
+    void EndAttackCD()
+    {
+        attackOnCD = false;
     }
 
     public void FireBullet()
