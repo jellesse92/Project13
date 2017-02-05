@@ -73,6 +73,17 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     public override void ClassSpecificUpdate()
     {
+        if (!GetComponent<PlayerProperties>().alive)
+        {
+            if (checkChargeTime)
+            {
+                CancelHeavyCharge();
+                myAnimator.enabled = true;
+            }
+            return;
+        }
+
+
         if (inCombo)
             WatchForCombo();
         if (checkGroundForDash)
