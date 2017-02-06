@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GravityRockFragment : MonoBehaviour {
+    /*
     public bool turnForce = true;
     bool pastTurnForce = true;
     bool change = false;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
 	// Update is called once per frame
 	void LateUpdate () {
         if (change)
@@ -25,13 +21,27 @@ public class GravityRockFragment : MonoBehaviour {
             change = true;
         }
     }
-
+    */
     public void TurnForceOverTime(bool turnOn)
     {
-        var fo = GetComponent<ParticleSystem>().forceOverLifetime;
+        var forceOverLifetime = GetComponent<ParticleSystem>().forceOverLifetime;
+        var emmision = GetComponent<ParticleSystem>().emission;
+        var collision = GetComponent<ParticleSystem>().collision;
+        var rotationOverLifetime = GetComponent<ParticleSystem>().rotationOverLifetime;
+
         if (turnOn)
-            fo.enabled = true;
+        {
+            forceOverLifetime.enabled = true;
+            emmision.enabled = true;
+            collision.enabled = false;
+            rotationOverLifetime.enabled = true;
+        }
         else
-            fo.enabled = false;
+        {
+            forceOverLifetime.enabled = false;
+            emmision.enabled = false;
+            collision.enabled = true;
+            rotationOverLifetime.enabled = false;
+        }
     }
 }
