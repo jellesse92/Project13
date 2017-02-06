@@ -26,7 +26,7 @@ public class EnvironmentBuilder : MonoBehaviour {
         var newBounds = combiner.UniteCollisionPolygons(bounds);
         combiner.CreateLevelCollider(gameObject, newBounds);
         ApplyGroundColliderSettings(gameObject.GetComponent<PolygonCollider2D>());
-
+        ApplyWallColliderSettings(walls);
         SetGroundColliderTolerance();
 
     }
@@ -51,12 +51,14 @@ public class EnvironmentBuilder : MonoBehaviour {
         collider.sharedMaterial = groundMat;
     }
 
-    void ApplyWallColliderSettings(Collider2D[] colliders)
+    void ApplyWallColliderSettings(GameObject[] walls)
     {
-        //current settings for wall colliders
-        foreach (Collider2D col in colliders)
+        foreach ( GameObject wall in walls)
         {
-            col.sharedMaterial = wallMat;
+            PolygonCollider2D collider = wall.GetComponent<PolygonCollider2D>();
+            collider.sharedMaterial = wallMat;
         }
+        //current settings for wall colliders
+
     }
 }
