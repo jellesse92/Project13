@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Core
+  m_Name: Particles Sheet
   m_Shader: {fileID: 200, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
@@ -16,46 +16,40 @@ Material:
     serializedVersion: 2
     m_TexEnvs:
     - first:
-        name: _BumpMap
-      second:
-        m_Texture: {fileID: 2800000, guid: 523a969a44e5dbd4cbb2c3b9d563767e, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 2800000, guid: a96b0de0b8629284c8c2c88f5a3a7f91, type: 3}
+        m_Texture: {fileID: 2800000, guid: 70c79dd5d17dc4140952e94cc3897574, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
-        name: _BumpAmt
-      second: 19.642857
+        name: _ColorStrB
+      second: 2.21875
     - first:
-        name: _ColorStrength
-      second: 1
+        name: _ColorStrG
+      second: 0.01
     - first:
-        name: _CoreStrength
-      second: 5
-    - first:
-        name: _CutOutLightCore
-      second: 0.23214285
+        name: _ColorStrR
+      second: 0.01
     - first:
         name: _InvFade
       second: 3
-    - first:
-        name: _TintStrength
-      second: 5
     m_Colors:
     - first:
         name: _Color
       second: {r: 1, g: 1, b: 1, a: 1}
     - first:
-        name: _CoreColor
-      second: {r: 0, g: 0, b: 0, a: 1}
-    - first:
         name: _EmisColor
       second: {r: 0.2, g: 0.2, b: 0.2, a: 0}
     - first:
         name: _TintColor
-      second: {r: 0.36764705, g: 0.45050701, b: 1, a: 1}
+      second: {r: 0.82079124, g: 0.31617647, b: 1, a: 1}
+    - first:
+        name: _TintColorB
+      second: {r: 0.5955882, g: 0.6820487, b: 1, a: 1}
+    - first:
+        name: _TintColorG
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _TintColorR
+      second: {r: 1, g: 1, b: 1, a: 1}
