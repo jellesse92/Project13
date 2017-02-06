@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4243509567415380}
   - component: {fileID: 212639279888487892}
   - component: {fileID: 60457759037368766}
-  - component: {fileID: 114664723965569362}
   m_Layer: 0
   m_Name: cliff_flippable_extension
   m_TagString: Wall
@@ -36,7 +35,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1873590881787750}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -159.40216, y: 10.497247, z: 0}
+  m_LocalPosition: {x: -33.590492, y: 24.022758, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -53,7 +52,7 @@ PolygonCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: -0.5}
+  m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
     - - {x: -1.51, y: -2.9199998}
@@ -62,39 +61,6 @@ PolygonCollider2D:
       - {x: 1.48, y: 2.9199998}
       - {x: -1.51, y: 2.9199998}
       - {x: -1.51, y: -2.34}
---- !u!114 &114664723965569362
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1873590881787750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c55c83d4c4dd1145ad5fbbab3c3df36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AlphaTolerance: 20
-  DistanceThreshold: 8
-  Scale: 1
-  Decompose: 0
-  RunInPlayMode: 0
-  UseCache: 0
-  lastAlphaTolerance: 20
-  lastScale: 1
-  lastDistanceThreshold: 8
-  lastDecompose: 0
-  lastSprite: {fileID: 21300000, guid: acf61603205d8e4408a69fd2aa6c8313, type: 3}
-  lastRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 303
-    height: 585
-  lastOffset: {x: 151.5, y: 292.5}
-  lastPixelsPerUnit: 100
-  lastFlipX: 0
-  lastFlipY: 0
-  editorCache: []
 --- !u!212 &212639279888487892
 SpriteRenderer:
   m_ObjectHideFlags: 1

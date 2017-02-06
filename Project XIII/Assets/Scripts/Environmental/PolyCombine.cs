@@ -79,7 +79,7 @@ public class PolyCombine
         colliderObj.transform.SetParent(parent.transform);
         var parPos = parent.transform.position;
         colliderObj.transform.position = new Vector2(parPos.x, parPos.y - 1f);
-        PolygonCollider2D collider = parent.GetComponent<PolygonCollider2D>();
+        PolygonCollider2D collider = parent.AddComponent<PolygonCollider2D>();
         parent.AddComponent<Collider2DOptimization.PolygonColliderOptimizer>();
 
         collider.pathCount = polygons.Count;
