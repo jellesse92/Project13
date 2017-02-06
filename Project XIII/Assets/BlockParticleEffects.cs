@@ -6,6 +6,6 @@ public class BlockParticleEffects : ParticleEffects {
     public GameObject gravityRockFragment;
 	
 	protected override void ChildSpecificAwake() {
-        InstantiateParticle(ref gravityRockFragment);
+        InstantiateParticle(ref gravityRockFragment);        
     }
 }

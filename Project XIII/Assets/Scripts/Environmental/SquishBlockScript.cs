@@ -39,6 +39,7 @@ public class SquishBlockScript : MonoBehaviour {
         cam = GameObject.FindGameObjectWithTag("MainCamera");
         origin = block.position;
         GetComponent<BlockParticleEffects>().ChangeParticlePosition(ref GetComponent<BlockParticleEffects>().gravityRockFragment, destination.position);
+        GetComponent<BlockParticleEffects>().gravityRockFragment.GetComponent<ParticleSystem>().Play();
         gravityRockFragments = GetComponent<BlockParticleEffects>().gravityRockFragment.GetComponent<GravityRockFragment>();
     }
 
