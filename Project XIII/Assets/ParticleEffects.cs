@@ -33,7 +33,7 @@ public class ParticleEffects : MonoBehaviour {
         }
     }
 
-    protected void ChangeParticlePosition(ref GameObject particle, Vector3 newPosition)
+    public void ChangeParticlePosition(ref GameObject particle, Vector3 newPosition)
     {
         if (particle)
             particle.transform.position = newPosition;

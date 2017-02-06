@@ -36,6 +36,7 @@ GameObject:
   - component: {fileID: 4000012330882620}
   - component: {fileID: 114000010649538316}
   - component: {fileID: 82315443868292350}
+  - component: {fileID: 114545172855688398}
   m_Layer: 21
   m_Name: Squish Block
   m_TagString: Untagged
@@ -352,7 +353,7 @@ MonoBehaviour:
   killZone: {fileID: 1942459667345088}
   moveSpeed: 1
   returnSpeed: 0.09
-  returnDelay: 0.05
+  returnDelay: 1
   magShake: 0.1
   durShake: 0.3
   impact: {fileID: 8300000, guid: 2cdfcd23733905848bfb1389b80aaf67, type: 3}
@@ -394,6 +395,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d58f3fa8435d7f4c8bb57ff0c2e0e0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114545172855688398
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012026053274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13b9524f9056671498adbcc9ce238444, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravityRockFragment: {fileID: 1280305590052138, guid: 9e0aebf771503aa4abf50408c70612d6,
+    type: 2}
 --- !u!212 &212000010468699646
 SpriteRenderer:
   m_ObjectHideFlags: 1
