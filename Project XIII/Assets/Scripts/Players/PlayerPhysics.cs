@@ -3,6 +3,10 @@ using System.Collections;
 
 public class PlayerPhysics : MonoBehaviour {
 
+    //Variables for bad controller callibration
+    float Y_NEGATIVE_ACCEPT = -.02f;
+    float X_ABS_ACCEPT = .01f;
+
     //Constants for changing gravity force for jumping
     const float DEFAULT_GRAVITY_FORCE = 8f;
     const float MIN_GRAVITY_FORCE = 4f;
@@ -38,6 +42,8 @@ public class PlayerPhysics : MonoBehaviour {
     bool wasGrounded = false;
     bool jumpGraceTimeInvoked = false;
     bool jumped = false;
+
+    public GameObject shadow;                           //For placing shadow at character's feet
 
     protected void Start () {
         myAnimator = GetComponent<Animator>();
@@ -135,8 +141,27 @@ public class PlayerPhysics : MonoBehaviour {
     {
         if (!cannotMovePlayer)
         {
+            float absSpeed = Mathf.Abs(myKeyPress.horizontalAxisValue);
+
+            if (absSpeed < X_ABS_ACCEPT) 
+            {
+                if(myKeyPress.verticalAxisValue < Y_NEGATIVE_ACCEPT)
+                {
+                    if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+                        myAnimator.SetTrigger("crouch");
+                }
+
+                else
+                {
+                    if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Crouch Idle"))
+                    {
+                        myAnimator.SetTrigger("standUp");
+                    }
+                }
+            }
+            
             myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
-            myAnimator.SetFloat("speed", Mathf.Abs(myKeyPress.horizontalAxisValue));
+            myAnimator.SetFloat("speed", absSpeed);
             if (!isJumping)
                 Flip();
         }
@@ -353,6 +378,8 @@ public class PlayerPhysics : MonoBehaviour {
         {
             wasGrounded = true;
             jumped = false;
+            if (shadow != null)
+                shadow.SetActive(true);
             return true;
         }
         else if (!jumpGraceTimeInvoked)
@@ -363,6 +390,9 @@ public class PlayerPhysics : MonoBehaviour {
 
         if (wasGrounded && !jumped)
             return true;
+
+        if (shadow != null)
+            shadow.SetActive(false);
 
         return false;
     }

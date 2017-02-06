@@ -30,12 +30,18 @@ public class SquishBlockScript : MonoBehaviour {
     AudioSource myAudio;
     public AudioClip impact;
 
+    //Particle
+    GravityRockFragment gravityRockFragments;
+
     // Use this for initialization
     void Start () {
         myAudio = GetComponent<AudioSource>();
         cam = GameObject.FindGameObjectWithTag("MainCamera");
         origin = block.position;
-	}
+        GetComponent<BlockParticleEffects>().ChangeParticlePosition(ref GetComponent<BlockParticleEffects>().gravityRockFragment, destination.position);
+        GetComponent<BlockParticleEffects>().gravityRockFragment.GetComponent<ParticleSystem>().Play();
+        gravityRockFragments = GetComponent<BlockParticleEffects>().gravityRockFragment.GetComponent<GravityRockFragment>();
+    }
 
     void FixedUpdate()
     {
@@ -60,6 +66,7 @@ public class SquishBlockScript : MonoBehaviour {
             moving = false;
             playSound(impact);
             killZone.SetActive(false);
+            gravityRockFragments.TurnForceOverTime(true);
             cam.GetComponent<CamShakeScript>().StartShake(magShake, durShake);
             Invoke("DelayReturn", returnDelay);
         }
@@ -71,6 +78,7 @@ public class SquishBlockScript : MonoBehaviour {
         block.position = Vector2.MoveTowards(block.position, origin, returnSpeed);
         if (block.position == origin)
         {
+            gravityRockFragments.TurnForceOverTime(false);
             returning = false;
         }
 

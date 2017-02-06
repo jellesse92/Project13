@@ -15,7 +15,10 @@ public class SwordsmanPhysics : PlayerPhysics{
     //Constant for charging ground heavy slash attack
     const float MAX_CHARGE = 2f;                //Max amount of time multiplier allowed to be applied to charge distance
     const float TIER_1_CHARGE = .8f;            //Tier one charge for beginning to flash white
-    const float CHARGE_FORCE_MULTIPLIER = 3000f;//Multiplier for distance to travel after charging attack
+    const float TIER_2_FORCE_MOD = 1f;          //Amount to multiply charge for tier 2 charge
+    const float TIER_1_FORCE_MOD = .8f;         //Amount to multiply charge for tier 1 charge
+    const float TIER_0_FORCE_MOD = .4f;         //Amount to multiply charge for basic charge
+    const float CHARGE_FORCE_MULTIPLIER = 1800f;//Multiplier for distance to travel after charging attack
 
     //Constant for max combo hit types
     const int MAX_COMBO = 3;                    //Maximum combo hit types
@@ -42,6 +45,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     //Heavy attack variables
     bool checkChargeTime = false;               //Determines if should check for time charging
     float timeCharged;                          //Time attack has been charged
+    int chargeLevel = 0;                        //Level of charge
     Material defaultMat;                        //Default sprite material
     public Material flashWhiteMat;              //White flashing material
     public Material flashGoldMat;               //Gold flashing material
@@ -69,6 +73,17 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     public override void ClassSpecificUpdate()
     {
+        if (!GetComponent<PlayerProperties>().alive)
+        {
+            if (checkChargeTime)
+            {
+                CancelHeavyCharge();
+                myAnimator.enabled = true;
+            }
+            return;
+        }
+
+
         if (inCombo)
             WatchForCombo();
         if (checkGroundForDash)
@@ -187,6 +202,9 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     void PlayNextComboHit()
     {
+        if (!GetComponent<PlayerProperties>().alive)
+            return;
+
         string triggerString = "combo" + currentCombo.ToString();
         comboPressed = false;
         comboAnimFinished = false;
@@ -306,14 +324,31 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     void ExecuteHeavyAttack()
     {
+        float chargeMultiplier = GetChargeMod();
         GetComponent<SwordsmanParticleEffects>().PlayChargingDust(false);
         CancelFlashing();
         playerEffectsManager.FlashScreen();
         GetComponent<SwordsmanParticleEffects>().PlayChargingTrail(true);
         checkChargeTime = false;
-        timeCharged = Mathf.Min(timeCharged, MAX_CHARGE);
-        attackScript.SetForceMulti(timeCharged);
-        AddForceX(CHARGE_FORCE_MULTIPLIER * timeCharged);
+        //attackScript.SetForceMulti(chargeMultiplier);     //OLD HEAVY ATTACK SCRIPT
+        attackScript.SetHeavyTier(chargeLevel);
+        AddForceX(CHARGE_FORCE_MULTIPLIER * chargeMultiplier);
+    }
+
+    float GetChargeMod()
+    {
+        if (timeCharged < TIER_1_CHARGE)
+        {
+            chargeLevel = 0;
+            return TIER_0_FORCE_MOD;
+        }
+        else if (timeCharged < MAX_CHARGE)
+        {
+            chargeLevel = 1;
+            return TIER_1_FORCE_MOD;
+        }
+        chargeLevel = 2;
+        return TIER_2_FORCE_MOD;
     }
 
     void EndHeavyAttack()

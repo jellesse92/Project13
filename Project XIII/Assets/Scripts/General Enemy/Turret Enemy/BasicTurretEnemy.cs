@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class BasicTurretEnemy : EnemyPhysics
 {
-
     const int AMMO_AMOUNT = 20;                             //Amount of ammo to be created
     const float BULLET_SPEED = 15f;                         //Speed of bullet
-    const float RANGED_ATTACK_COOLDOWN = 1f;                //Cooldown for attack
+    const float RANGED_ATTACK_COOLDOWN = 1.5f;              //Cooldown for attack
 
-    public GameObject rangedProjectile;                    //Projectiles to be shot
-    public Transform projectileList;                       //Transform containing projectiles
+    public GameObject rangedProjectile;                     //Projectiles to be shot
+    public Transform projectileList;                        //Transform containing projectiles
+    public Transform projectileOrigin;                      //Where projectiles should spawn from
+
+    bool attackOnCD = false;
 
     // Use this for initialization
     void Start()
@@ -49,7 +51,7 @@ public class BasicTurretEnemy : EnemyPhysics
 
         if (!inAttackRange && canMove)
             ApproachTarget();
-        else if (canAttack)
+        else if (canAttack && !attackOnCD)
             ExecuteAttack();
     }
 
@@ -61,7 +63,6 @@ public class BasicTurretEnemy : EnemyPhysics
 
     public void EndTurn()
     {
-
         turning = false;
     }
 
@@ -80,7 +81,14 @@ public class BasicTurretEnemy : EnemyPhysics
         if (currentAmmo > 0)
         {
             base.ExecuteAttack();
+            attackOnCD = true;
+            Invoke("EndAttackCD", RANGED_ATTACK_COOLDOWN);
         }
+    }
+
+    void EndAttackCD()
+    {
+        attackOnCD = false;
     }
 
     public void FireBullet()
@@ -92,8 +100,12 @@ public class BasicTurretEnemy : EnemyPhysics
                 if (target == null)
                     return;
                 projectileList.GetChild(i).gameObject.SetActive(true);
-                projectileList.GetChild(i).position = projectileList.position;
-                projectileList.GetChild(i).GetComponent<Rigidbody2D>().velocity = -(new Vector3(transform.position.x, transform.position.y + 1.5f,transform.position.z) - target.transform.position).normalized * BULLET_SPEED;
+
+                Vector3 projectileSpawnPoint = projectileOrigin.position;
+                if (!facingRight)
+                    projectileSpawnPoint = new Vector3(projectileSpawnPoint.x - 5f, projectileSpawnPoint.y, projectileSpawnPoint.z);
+                projectileList.GetChild(i).position = projectileSpawnPoint;
+                projectileList.GetChild(i).GetComponent<Rigidbody2D>().velocity = -(projectileSpawnPoint - new Vector3(target.transform.position.x,target.transform.position.y - 1f, target.transform.position.z)).normalized * BULLET_SPEED;
                 return;
             }
         }
