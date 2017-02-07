@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class MultiplayerCamFollowScript : MonoBehaviour {
 
-    const float DEFAULT_ORTHO_SIZE = 7f;
+    const float DEFAULT_ORTHO_SIZE = 8f;
     const float DEFAULT_ORTHO_SIZE_3D = 20f;
     const float MAX_ORTHO_SIZE = 10f;
     const float MAX_ORTHO_SIZE_3D = 40f;

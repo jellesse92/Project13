@@ -48,6 +48,7 @@ public class CutsceneManager : MonoBehaviour {
         public ActionEntry[] actionEntries;                     //List of actions to happen under cutscene
         public Transform[] characterEndLocations = new Transform[4]; //0 = Swordsman, 1 = Gunner, 2 = Mage, 3 = Mech
         public UnityEvent endEvents;
+        public bool playNext;                                   //Sets to play next cutscene right away
     }
 
     [System.Serializable]
@@ -113,7 +114,7 @@ public class CutsceneManager : MonoBehaviour {
         for(int i = 0; i < 4; i++)
             characterList[i] = playersManager.GetChild(i).gameObject;
 
-        //ActivateCutscene(1);
+        ActivateCutscene(1);
 
         if (playOnAwake)
             ActivateCutscene(0);
@@ -232,6 +233,13 @@ public class CutsceneManager : MonoBehaviour {
 
     public void EndCutscene()
     {
+        if (cutscene[currentCutscene].playNext)
+        {
+            currentCutscene++;
+            currentAction = 0;
+            ActivateCutscene(currentCutscene);
+            return;
+        }
 
         this.enabled = false;
         camScript.DeactivateCutsceneMode();
