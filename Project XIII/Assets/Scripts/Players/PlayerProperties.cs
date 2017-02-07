@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class PlayerStats
@@ -141,6 +142,14 @@ public class PlayerProperties : MonoBehaviour{
         GetComponent<SpriteRenderer>().sortingLayerName = "Special Effects";
         GetComponent<SpriteRenderer>().sortingOrder = 1;
         GetComponent<Animator>().SetTrigger("finalDeath");
+        Invoke("RestartLevel", 3f);
+    }
+
+    void RestartLevel()
+    {
+        Debug.Log("TEMPORARY");
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void StopTime() //move this to player physics maybe? 
