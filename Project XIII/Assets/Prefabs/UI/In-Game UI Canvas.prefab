@@ -2819,9 +2819,6 @@ MonoBehaviour:
   skipButton: {fileID: 1000011235396252}
   dialogueUIText: {fileID: 114000012441242398}
   cutsceneManager: {fileID: 114979405344309272}
-  dialogueText:
-  - {fileID: 4900000, guid: b042a3be214cbd649a69539852322ec7, type: 3}
-  - {fileID: 4900000, guid: 381538316368be245a70e6b82af649a0, type: 3}
 --- !u!114 &114000013975622294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3625,91 +3622,54 @@ MonoBehaviour:
   skipUIPanel: {fileID: 1000011630863134}
   playOnAwake: 0
   cutscene:
+  - actionEntries: []
+    characterEndLocations:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    endEvents:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
   - actionEntries:
     - characterActions:
       - character: 0
-        action: 6
-        destination: {fileID: 0}
-      - character: 1
-        action: 6
+        action: 0
         destination: {fileID: 0}
       cameraActions:
-      - cameraOption: 4
+      - cameraOption: 2
         destination: {fileID: 0}
-        f_param: 4
+        f_param: 0
+      - cameraOption: 6
+        destination: {fileID: 0}
+        f_param: 0
       function:
         m_PersistentCalls:
           m_Calls:
-          - m_Target: {fileID: 114000013910520946}
-            m_MethodName: LoadTextAsset
-            m_Mode: 3
+          - m_Target: {fileID: 95000013598321502}
+            m_MethodName: SetTrigger
+            m_Mode: 5
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
-              m_StringArgument: 
+              m_StringArgument: flash
               m_BoolArgument: 0
             m_CallState: 2
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
-      delayNextAction: 1
-    - characterActions:
-      - character: 0
-        action: 0
-        destination: {fileID: 0}
-      - character: 1
-        action: 0
-        destination: {fileID: 0}
-      cameraActions:
-      - cameraOption: 4
-        destination: {fileID: 0}
-        f_param: 3
+      delayNextAction: 5
+    - characterActions: []
+      cameraActions: []
       function:
         m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 114000013910520946}
-            m_MethodName: LoadTextAsset
-            m_Mode: 3
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
+          m_Calls: []
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
       delayNextAction: 0
-    - characterActions:
-      - character: 0
-        action: 1
-        destination: {fileID: 0}
-      cameraActions:
-      - cameraOption: 4
-        destination: {fileID: 0}
-        f_param: 2
-      function:
-        m_PersistentCalls:
-          m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
-      delayNextAction: 2
-    - characterActions:
-      - character: 0
-        action: 1
-        destination: {fileID: 0}
-      cameraActions:
-      - cameraOption: 5
-        destination: {fileID: 0}
-        f_param: 2
-      function:
-        m_PersistentCalls:
-          m_Calls: []
-        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
-          PublicKeyToken=null
-      delayNextAction: 2
     characterEndLocations:
     - {fileID: 0}
     - {fileID: 0}

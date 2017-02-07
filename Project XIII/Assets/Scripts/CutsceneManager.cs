@@ -113,6 +113,8 @@ public class CutsceneManager : MonoBehaviour {
         for(int i = 0; i < 4; i++)
             characterList[i] = playersManager.GetChild(i).gameObject;
 
+        //ActivateCutscene(1);
+
         if (playOnAwake)
             ActivateCutscene(0);
         else
@@ -170,6 +172,8 @@ public class CutsceneManager : MonoBehaviour {
     public void ActivateCutscene(int index)
     {
         Reset();
+        camScript.ActivateCutsceneMode();
+        currentCutscene = index;
         if (cameraColliders != null)
             cameraColliders.SetActive(false);
         playersManager.GetComponent<PlayerInputManager>().SetInputsActive(false);
@@ -365,7 +369,10 @@ public class CutsceneManager : MonoBehaviour {
 
     void ActionSetPos(Character c, Transform dest)
     {
-        characterList[GetCharEnumInt(c)].transform.position = new Vector2(dest.position.x, dest.position.y);
+        int index = GetCharEnumInt(c);
+        if (!characterStatuses[index].isActive)
+            characterList[index].SetActive(true);
+        characterList[index].transform.position = new Vector2(dest.position.x, dest.position.y);
     }
 
     void ActionFace(Character c, bool faceRight)
