@@ -83,6 +83,7 @@ public class DialogueControllerScript : MonoBehaviour {
         Time.timeScale = 1.0f;
         leftPortrait.color = Color.white;
         rightPortrait.color = Color.white;
+        dialogueUIText.text = "";
         textShown = 0;
         delayType = false;
         proceedArrow.SetActive(false);

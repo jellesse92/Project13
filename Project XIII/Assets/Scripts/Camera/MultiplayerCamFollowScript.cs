@@ -37,9 +37,12 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     Vector3 velocity = Vector3.zero;
     public float dampTime = 0.15f;
 
+    GameController gcScript;
+
     // Use this for initialization
     void Start () {
         GameObject[] tempPlayerFind = GameObject.FindGameObjectsWithTag("Player");
+        gcScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
         foreach(GameObject p in tempPlayerFind)
         {

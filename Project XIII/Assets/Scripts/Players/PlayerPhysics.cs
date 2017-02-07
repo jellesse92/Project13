@@ -277,6 +277,8 @@ public class PlayerPhysics : MonoBehaviour {
 
     void ApplyFlip()
     {
+        if (myAnimator == null)
+            myAnimator = GetComponent<Animator>();
         myAnimator.SetTrigger("switch");
         isFacingRight = !isFacingRight;
 

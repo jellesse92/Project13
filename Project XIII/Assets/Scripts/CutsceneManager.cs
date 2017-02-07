@@ -114,8 +114,6 @@ public class CutsceneManager : MonoBehaviour {
         for(int i = 0; i < 4; i++)
             characterList[i] = playersManager.GetChild(i).gameObject;
 
-        ActivateCutscene(1);
-
         if (playOnAwake)
             ActivateCutscene(0);
         else
@@ -175,6 +173,7 @@ public class CutsceneManager : MonoBehaviour {
         Reset();
         camScript.ActivateCutsceneMode();
         currentCutscene = index;
+        currentAction = 0;
         if (cameraColliders != null)
             cameraColliders.SetActive(false);
         playersManager.GetComponent<PlayerInputManager>().SetInputsActive(false);
@@ -214,6 +213,8 @@ public class CutsceneManager : MonoBehaviour {
                         cutscene[currentCutscene].characterEndLocations[i].position.y, characterList[i].transform.position.z);
             }
 
+        CancelInvoke();
+
         if (dialoguePlaying)
         {
             dialoguePlaying = false;
@@ -247,8 +248,10 @@ public class CutsceneManager : MonoBehaviour {
             ActivateCutscene(currentCutscene);
             return;
         }
+        CancelInvoke();
 
         this.enabled = false;
+        camScript.DeactivateForceOrthographicSize();
         camScript.DeactivateCutsceneMode();
         if (cameraColliders != null)
             cameraColliders.SetActive(true);
@@ -400,10 +403,10 @@ public class CutsceneManager : MonoBehaviour {
         int index = GetCharEnumInt(c);
 
         //For characters that aren't activated as they aren't selected
+
         if (!characterStatuses[index].isActive)
         {
             characterList[index].SetActive(true);
-            Debug.Log("test");
             
             ActionSetPos(c, dest);
         }

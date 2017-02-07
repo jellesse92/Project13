@@ -93,7 +93,11 @@ public class GameController : MonoBehaviour
         {
             Transform character = playerList.GetChild(i);
             if (PlayerCharacters[i].player == -1)
+            {
+                character.GetComponent<PlayerInput>().SetJoystickNum(-1);
                 character.gameObject.SetActive(false);
+            }
+
             else
             {
                 character.GetComponent<PlayerProperties>().playerNumber = PlayerCharacters[i].player;
@@ -123,6 +127,11 @@ public class GameController : MonoBehaviour
                 sfxVolume = 0;
             sfxObject.volume = sfxVolume;
         }
+    }
+
+    public bool GetPlayerActiveStatus(int index)
+    {
+        return false;
     }
     
 }

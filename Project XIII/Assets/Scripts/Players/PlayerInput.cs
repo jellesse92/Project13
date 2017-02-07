@@ -48,7 +48,7 @@ public class PlayerInput : MonoBehaviour {
     
     public void GetInput()
     {
-        if (!inputEnabled)
+        if (!inputEnabled || joystickNum == -1)
             return;
 
         if(joystickNum == 0)

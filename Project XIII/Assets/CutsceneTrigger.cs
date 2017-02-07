@@ -12,6 +12,7 @@ public class CutsceneTrigger : MonoBehaviour {
         {
             CutsceneManager script = transform.parent.parent.GetComponent<CutscenePropManager>().GetScript();
             script.ActivateCutscene(cutsceneToTrigger);
+            GetComponent<Collider2D>().enabled = false;
         }
 
     }
