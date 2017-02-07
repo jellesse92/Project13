@@ -37,16 +37,14 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     Vector3 velocity = Vector3.zero;
     public float dampTime = 0.15f;
 
-    GameController gcScript;
-
     // Use this for initialization
     void Start () {
         GameObject[] tempPlayerFind = GameObject.FindGameObjectsWithTag("Player");
-        gcScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
         foreach(GameObject p in tempPlayerFind)
         {
-            players.Add(p);
+            if(p.GetComponent<PlayerInput>().GetJoystick() != -1)
+                players.Add(p);
         }
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 	}
@@ -88,7 +86,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
         foreach (GameObject player in players)
         {
-            if (player.activeSelf)
+            if (player.activeSelf && player.GetComponent<PlayerInput>().GetJoystick()!=-1)
             {
                 singlePlayerTrans = player.transform;
                 break;
@@ -152,6 +150,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     public void DeactivateForceOrthographicSize()
     {
         orthoForced = false;
+        targetSet = false;
     }
 
     public void ForceDestination(Transform target)
@@ -312,7 +311,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     {
         int active = 0;
         foreach (GameObject player in players)
-            if (player.activeSelf)
+            if (player.activeSelf && player.GetComponent<PlayerInput>().GetJoystick()!= -1)
                 active++;
         return active;
     }

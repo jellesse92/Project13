@@ -6,7 +6,7 @@ public class PlayerInputManager : MonoBehaviour {
     GameController gcScript;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         gcScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         gcScript.AssignInputs(transform);
     }
