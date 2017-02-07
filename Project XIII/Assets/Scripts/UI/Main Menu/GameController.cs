@@ -87,7 +87,15 @@ public class GameController : MonoBehaviour
         }
 
         if (numberOfSelectedPlayers == 0)
+        {
+            for(int i = 0; i < 4; i++)
+            {
+                if (!playerList.GetChild(i).gameObject.activeSelf)
+                    playerList.GetChild(i).GetComponent<PlayerInput>().SetJoystickNum(-1);
+            }
             return;
+        }
+
 
         for (int i = 0; i < numberOfAvailablePlayers; i++)
         {
