@@ -7,7 +7,9 @@ public class RandomAttackShake : MonoBehaviour {
 
     public float shakeMag;
     public float shakeDur;
-    public float weightModifierBetweenShake;
+    public float minWait;
+    public float maxWait;
+    public AudioClip[] soundEffects;
 
     GameObject rockFragment;
     float secondToWait;
@@ -27,9 +29,10 @@ public class RandomAttackShake : MonoBehaviour {
     {
         while (true)
         {
-            secondToWait = Mathf.Clamp(Random.value * weightModifierBetweenShake, 5, weightModifierBetweenShake);
-            yield return new WaitForSeconds(secondToWait);
+            yield return new WaitForSeconds(Random.Range(minWait, maxWait));
             shake.StartShake(shakeMag, shakeDur);
+            GetComponent<AudioSource>().PlayOneShot(soundEffects[Random.Range(0, soundEffects.Length)]);
+
             GetComponent<AudioSource>().Play();
             rockFragment.GetComponent<ParticleSystem>().Play();
         }
