@@ -354,11 +354,16 @@ public class SwordsmanPhysics : PlayerPhysics{
     void EndHeavyAttack()
     {
         attackBox.GetComponent<Collider2D>().enabled = false;
-        GetComponent<SwordsmanParticleEffects>().PlayChargingTrail(false);
+        StartCoroutine(EndChargingTrail(0.5f));
         attackScript.Launch();
         attackScript.Reset();
     }
 
+    IEnumerator EndChargingTrail(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        GetComponent<SwordsmanParticleEffects>().PlayChargingTrail(false);
+    }
     void ChargingShake()
     {
         if (transform.rotation.z == 0f)
