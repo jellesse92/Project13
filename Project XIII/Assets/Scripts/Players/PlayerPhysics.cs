@@ -70,7 +70,7 @@ public class PlayerPhysics : MonoBehaviour {
         
 
         distToGround = GetComponent<Collider2D>().bounds.extents.y;
-        layerMask = (LayerMask.GetMask("Default"));
+        layerMask = (LayerMask.GetMask("Default","Item"));
 
         ClassSpecificStart();
     }
