@@ -179,7 +179,14 @@ public class CutsceneManager : MonoBehaviour {
             cameraColliders.SetActive(false);
         playersManager.GetComponent<PlayerInputManager>().SetInputsActive(false);
         for (int i = 0; i < 4; i++)
+        {
             characterStatuses[i].isActive = characterList[i].activeSelf;
+            if (characterList[i].activeSelf)
+            {
+                characterList[i].GetComponent<Animator>().SetFloat("speed", 0f);
+            }
+        }
+
 
         InvokeRepeating("TransitionInBorders", 0f, BORDER_INVOKE_RATE);
     }
@@ -396,6 +403,7 @@ public class CutsceneManager : MonoBehaviour {
         if (!characterStatuses[index].isActive)
         {
             characterList[index].SetActive(true);
+            Debug.Log("test");
             
             ActionSetPos(c, dest);
         }
