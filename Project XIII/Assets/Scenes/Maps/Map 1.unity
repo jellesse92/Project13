@@ -596,6 +596,7 @@ PolygonCollider2D:
       - {x: 131.25186, y: -3.299531}
       - {x: 129.69751, y: -6.759052}
       - {x: 144.92267, y: -6.754985}
+      - {x: 146.12177, y: -7.317503}
       - {x: 119.48033, y: -13.614958}
       - {x: 101.33484, y: -4.3712068}
       - {x: 80.31563, y: -5.6315327}
@@ -745,7 +746,14 @@ PolygonCollider2D:
       - {x: 80.02434, y: 18.426865}
       - {x: 102.15578, y: 11.725475}
       - {x: 162.99052, y: -10.818634}
-      - {x: 165.94275, y: -23.093666}
+      - {x: 182.21312, y: -21.029043}
+      - {x: 172.72897, y: -49.67991}
+      - {x: 164.97472, y: -79.30452}
+      - {x: 164.90962, y: -46.773685}
+      - {x: 166.6747, y: -40.873066}
+      - {x: 169.46713, y: -35.2219}
+      - {x: 169.487, y: -22.88101}
+      - {x: 164.6024, y: -22.89183}
       - {x: 160.38368, y: -21.440107}
       - {x: 152.72618, y: -18.329866}
       - {x: 117.31422, y: -18.361671}
@@ -6959,6 +6967,49 @@ Transform:
   m_Father: {fileID: 540412900}
   m_RootOrder: 96
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1405622791
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1405622792}
+  - component: {fileID: 1405622793}
+  m_Layer: 0
+  m_Name: Wall (9)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1405622792
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1405622791}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 145.7, y: -17.84, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2119546207}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1405622793
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1405622791}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 579f4fce7b948724093c8eea66ecd84b, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 1, y: 21}
 --- !u!1 &1408516433
 GameObject:
   m_ObjectHideFlags: 0
@@ -11406,6 +11457,7 @@ Transform:
   - {fileID: 761322976}
   - {fileID: 1896309784}
   - {fileID: 1408516434}
+  - {fileID: 1405622792}
   m_Father: {fileID: 133989288}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
