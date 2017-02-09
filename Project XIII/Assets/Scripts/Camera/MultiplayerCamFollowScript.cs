@@ -100,10 +100,14 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     }
 
     void DampMotion(Transform target)
-    {
+    {        
         Vector3 destination = target.position;
-        destination.y += yOffset;
-        destination.x += xOffset;
+        if (target.localScale.x < 0)
+            destination.x -= xOffset;
+        else
+            destination.x += xOffset;
+
+        destination.y += yOffset;        
         destination.z = transform.position.z;
         transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, dampTime);
     }
