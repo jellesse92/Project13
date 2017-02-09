@@ -12,6 +12,9 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     const float ZOOM_OUT_DELTA = .01f;                         //Amount to zoom when zooming in or out per update
     const float ZOOM_IN_DELTA = .003f;
 
+    public float xOffset = 6;
+    public float yOffset = 3;
+
     float zoomMultiplier = 1f;
     float followDelay = .8f;
 
@@ -98,9 +101,9 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
     void DampMotion(Transform target)
     {
-        Vector3 point = cam.WorldToViewportPoint(target.position);
-        Vector3 delta = target.position - cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z)); //(new Vector3(0.5, 0.5, point.z));
-        Vector3 destination = transform.position + delta;
+        Vector3 destination = target.position;
+        destination.y += yOffset;
+        destination.x += xOffset;
 
         transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, dampTime);
     }

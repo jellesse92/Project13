@@ -52,7 +52,7 @@ public class CamShakeScript : MonoBehaviour {
         while (elapsed < duration)
         {
             //Vector3 originalCamPos = transform.position;
-            Vector3 newCamPos = transform.parent.position;
+            Vector3 newCamPos = transform.position;
 
             elapsed += Time.deltaTime;
 

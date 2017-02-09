@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class LoadOnEnter : StateMachineBehaviour {
+public class LoadOnEnter : StateMachineBehaviour {    
     public int sceneIndex = 1;
 	 // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
