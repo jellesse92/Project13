@@ -1,28 +1,23 @@
-﻿//Credit http://unitytipsandtricks.blogspot.com/2013/05/camera-shake.html
-
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 public class CamShakeScript : MonoBehaviour {
-    public float duration = 0.5f;
-    public float speed = 20f;
-    public float magnitude = 0.5f;
+    const float FREQUENCY = 0.2f;
 
-    public bool useUnityPerlin = false;
-    public bool test = false;
+    public float duration = 1f;
+    public float magnitude = 2f;
+    public bool debugTest = false;
 
     public void PlayShake()
     {
-
         StopAllCoroutines();
         StartCoroutine("Shake");
     }
 
-    void Update()
+    void Start()
     {
-        if (test)
+        if (debugTest)
         {
-            test = false;
             PlayShake();
         }
     }
@@ -30,13 +25,11 @@ public class CamShakeScript : MonoBehaviour {
     public void StopShake()
     {
         StopAllCoroutines();
-
     }
 
-    public void StartShake(float newMagnitude = 0.5f, float newDuration = 1f, float newSpeed = 20f)
+    public void StartShake(float newMagnitude = 2f, float newDuration = 1f)
     {
         duration = newDuration;
-        speed = newSpeed;
         magnitude = newMagnitude;
         PlayShake();
     }
@@ -45,50 +38,46 @@ public class CamShakeScript : MonoBehaviour {
     IEnumerator Shake()
     {
         float elapsed = 0.0f;
-        
-        float randomStart = Random.Range(-1000.0f, 1000.0f);
+        float seed = Time.time + 0.1f; //Use time as seed
 
+        Vector3 newCamPos;
+        Vector3 oldCamPos;
 
+        float percentComplete;
+        float damper;
+        float x, y;
+
+        oldCamPos = transform.parent.position;
         while (elapsed < duration)
         {
-            //Vector3 originalCamPos = transform.position;
-            Vector3 newCamPos = transform.position;
-
+            oldCamPos = transform.parent.position;
+            newCamPos = transform.position;
             elapsed += Time.deltaTime;
+            percentComplete = elapsed / duration;
+            
+            damper = 1 - percentComplete; // Damper increase to 1 as it gets more complete
+            
+            seed += FREQUENCY; //higher the frequency the more change to the perlin
 
-            float percentComplete = elapsed / duration;
-
-            // We want to reduce the shake from full power to 0 starting half way through
-            float damper = 1.0f - Mathf.Clamp(2.0f * percentComplete - 1.0f, 0.0f, 1.0f);
-
-            // Calculate the noise parameter starting randomly and going as fast as speed allows
-            float alpha = randomStart + speed * percentComplete;
-
-            // map noise in perlin noise
-            float x, y;
-            if (useUnityPerlin)
-            {
-                x = Mathf.PerlinNoise(alpha, 0.0f) * 2.0f - 1.0f;
-                y = Mathf.PerlinNoise(0.0f, alpha) * 2.0f - 1.0f;
-            }
-            else
-            {
-                x = Util.Noise.GetNoise(alpha, 0.0f, 0.0f) * 2.0f - 1.0f;
-                y = Util.Noise.GetNoise(0.0f, alpha, 0.0f) * 2.0f - 1.0f;
-            }
-
+            // use seed to generte a number from perlin noise (* 2 - 1) is use to get a negative number
+            x = Mathf.PerlinNoise(seed, 0.0f) * 2 - 1;
+            y = Mathf.PerlinNoise(0.0f, seed) * 2 - 1;
+            Debug.Log(x);
             x *= magnitude * damper;
             y *= magnitude * damper;
+
             newCamPos.x += x;
             newCamPos.y += y;
+            
+            newCamPos.x = Mathf.Clamp(newCamPos.x, oldCamPos.x - Mathf.Abs(x), oldCamPos.x + Mathf.Abs(x));
+            newCamPos.y = Mathf.Clamp(newCamPos.y, oldCamPos.y - Mathf.Abs(y), oldCamPos.y + Mathf.Abs(y));
 
             transform.position = newCamPos;
-
             yield return null;
         }
-
+        transform.position = oldCamPos;
         //transform.position = transform.parent.position;
 
-        
+
     }
 }

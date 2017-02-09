@@ -104,7 +104,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
         Vector3 destination = target.position;
         destination.y += yOffset;
         destination.x += xOffset;
-
+        destination.z = transform.position.z;
         transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, dampTime);
     }
 
