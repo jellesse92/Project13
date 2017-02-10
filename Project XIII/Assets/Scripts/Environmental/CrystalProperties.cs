@@ -1,13 +1,14 @@
-﻿    using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ColorChoice
-{
-    red, blue, green
-}
+
 
 public class CrystalProperties : ItemHitTrigger {
+    public enum ColorChoice
+    {
+        red, blue, green
+    }
 
     public AudioClip crystalHit;
     public ColorChoice correctColor;
