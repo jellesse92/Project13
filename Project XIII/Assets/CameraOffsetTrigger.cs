@@ -49,14 +49,12 @@ public class CameraOffsetTrigger : MonoBehaviour {
     }
     void NegativeYOffset()
     {
-        if(cameraFollowScript.yOffset > 0)
-            cameraFollowScript.yOffset *= -1;
+        cameraFollowScript.yOffset = Mathf.Abs(defaultYOffset) * -1; 
     }
 
     void PositiveYOffset()
     {
-        if (cameraFollowScript.yOffset < 0)
-            cameraFollowScript.yOffset *= -1;
+        cameraFollowScript.yOffset = Mathf.Abs(defaultYOffset);
     }
 
     void CustomYOffset()
