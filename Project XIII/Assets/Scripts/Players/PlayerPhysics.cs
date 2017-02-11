@@ -149,7 +149,7 @@ public class PlayerPhysics : MonoBehaviour {
 
             float absSpeed = Mathf.Abs(myKeyPress.horizontalAxisValue);
 
-            if (myKeyPress.verticalAxisValue < previousVertical)
+            if (myKeyPress.verticalAxisValue < previousVertical && myKeyPress.verticalAxisValue < 0)
             {
                 if (canCrouch)
                 {
@@ -160,7 +160,7 @@ public class PlayerPhysics : MonoBehaviour {
                 }
             }
             
-            if ( myKeyPress.verticalAxisValue > previousVertical || myKeyPress.verticalAxisValue == 0)
+            if ( myKeyPress.verticalAxisValue > previousVertical || myKeyPress.verticalAxisValue >= 0)
             {
                 if (canStandUp)
                 {
