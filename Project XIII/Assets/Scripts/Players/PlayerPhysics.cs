@@ -153,7 +153,8 @@ public class PlayerPhysics : MonoBehaviour {
             {
                 if (canCrouch)
                 {
-                    myAnimator.SetTrigger("crouch");
+                    myAnimator.SetBool("standUp", false);
+                    myAnimator.SetBool("crouch", true);
                     canCrouch = false;
                     canStandUp = true;
                 }
@@ -164,13 +165,12 @@ public class PlayerPhysics : MonoBehaviour {
                 if (canStandUp)
                 {
                     myAnimator.SetBool("standUp", true);
+                    myAnimator.SetBool("crouch", false);
                     canCrouch = true;
                     canStandUp = false;
                 }
             }
-            else
-                myAnimator.SetBool("standUp", false);
-            if (checkCount >= 2)
+            if (checkCount >= 1)
             {
                 checkCount = 0;
                 previousVertical = myKeyPress.verticalAxisValue;
