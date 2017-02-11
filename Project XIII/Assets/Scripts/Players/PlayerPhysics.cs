@@ -177,10 +177,14 @@ public class PlayerPhysics : MonoBehaviour {
             }
             checkCount += 1;
 
-            myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
-            myAnimator.SetFloat("speed", absSpeed);
-            if (!isJumping)
-                Flip();
+            if(canCrouch && myAnimator.GetBool("standUp"))
+            {
+                myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
+                myAnimator.SetFloat("speed", absSpeed);
+                if (!isJumping)
+                    Flip();
+            }
+
         }
         if(zeroVelocity)
             myRigidbody.velocity = new Vector2(0, 0);
