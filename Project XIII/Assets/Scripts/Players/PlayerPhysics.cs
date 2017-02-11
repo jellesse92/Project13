@@ -9,9 +9,7 @@ public class PlayerPhysics : MonoBehaviour {
 
     //Use for crouching
     float previousVertical = 0;
-    bool canStandUp = false;
-    bool canCrouch = true;
-    int checkCount = 0;
+
     //Constants for changing gravity force for jumping
     const float DEFAULT_GRAVITY_FORCE = 8f;
     const float MIN_GRAVITY_FORCE = 4f;
@@ -149,35 +147,8 @@ public class PlayerPhysics : MonoBehaviour {
 
             float absSpeed = Mathf.Abs(myKeyPress.horizontalAxisValue);
 
-            if (myKeyPress.verticalAxisValue < previousVertical && myKeyPress.verticalAxisValue < 0)
-            {
-                if (canCrouch)
-                {
-                    myAnimator.SetBool("standUp", false);
-                    myAnimator.SetBool("crouch", true);
-                    canCrouch = false;
-                    canStandUp = true;
-                }
-            }
-            
-            if ( myKeyPress.verticalAxisValue > previousVertical || myKeyPress.verticalAxisValue >= 0)
-            {
-                if (canStandUp)
-                {
-                    myAnimator.SetBool("standUp", true);
-                    myAnimator.SetBool("crouch", false);
-                    canCrouch = true;
-                    canStandUp = false;
-                }
-            }
-            if (checkCount >= 1)
-            {
-                checkCount = 0;
-                previousVertical = myKeyPress.verticalAxisValue;
-            }
-            checkCount += 1;
-
-            if(canCrouch && myAnimator.GetBool("standUp"))
+            Crouching();           
+            if(!myAnimator.GetBool("crouch") && myAnimator.GetBool("standUp"))
             {
                 myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
                 myAnimator.SetFloat("speed", absSpeed);
@@ -188,6 +159,21 @@ public class PlayerPhysics : MonoBehaviour {
         }
         if(zeroVelocity)
             myRigidbody.velocity = new Vector2(0, 0);
+    }
+
+    void Crouching()
+    {
+        if (myKeyPress.verticalAxisValue < previousVertical && myKeyPress.verticalAxisValue < 0 && !myAnimator.GetBool("crouch"))
+        {
+            myAnimator.SetBool("standUp", false);
+            myAnimator.SetBool("crouch", true);
+        }
+        if ((myKeyPress.verticalAxisValue > previousVertical || myKeyPress.verticalAxisValue >= 0) && !myAnimator.GetBool("standUp"))
+        {
+            myAnimator.SetBool("standUp", true);
+            myAnimator.SetBool("crouch", false);            
+        }
+        previousVertical = myKeyPress.verticalAxisValue;        
     }
 
     protected void Jump()
