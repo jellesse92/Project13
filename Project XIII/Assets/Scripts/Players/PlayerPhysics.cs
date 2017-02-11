@@ -95,6 +95,8 @@ public class PlayerPhysics : MonoBehaviour {
                 float yMove = myKeyPress.verticalAxisValue;
 
                 Movement();
+                Crouching();
+
                 if (myKeyPress.jumpPress)
                     Jump();
                 if (myKeyPress.jumpReleased)
@@ -142,17 +144,13 @@ public class PlayerPhysics : MonoBehaviour {
 
     protected void Movement()
     {
-        if (!cannotMovePlayer)
+        if (!cannotMovePlayer && !myAnimator.GetBool("crouch"))
         {
-            Crouching();            
-            if(!myAnimator.GetBool("crouch"))
-            {
                 myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
                 myAnimator.SetFloat("speed", Mathf.Abs(myKeyPress.horizontalAxisValue));
                 if (!isJumping)
                     Flip();
-            }
-        }
+        }        
         if(zeroVelocity)
             myRigidbody.velocity = new Vector2(0, 0);
     }
@@ -188,7 +186,6 @@ public class PlayerPhysics : MonoBehaviour {
             
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0, physicStats.jumpForce), ForceMode2D.Impulse);
         }
-
     }
 
     void CancelWaitJump()
@@ -206,7 +203,6 @@ public class PlayerPhysics : MonoBehaviour {
 
     protected void Landing()
     {
-
         if (isGrounded())
             isJumping = false;
         else
