@@ -7,6 +7,11 @@ public class PlayerPhysics : MonoBehaviour {
     float Y_NEGATIVE_ACCEPT = -.09f;
     float X_ABS_ACCEPT = .01f;
 
+    //Use for crouching
+    float previousVertical = 0;
+    bool canStandUp = false;
+    bool canCrouch = true;
+    int checkCount = 0;
     //Constants for changing gravity force for jumping
     const float DEFAULT_GRAVITY_FORCE = 8f;
     const float MIN_GRAVITY_FORCE = 4f;
@@ -141,25 +146,37 @@ public class PlayerPhysics : MonoBehaviour {
     {
         if (!cannotMovePlayer)
         {
+
             float absSpeed = Mathf.Abs(myKeyPress.horizontalAxisValue);
 
-            if (absSpeed < X_ABS_ACCEPT) 
+            if (myKeyPress.verticalAxisValue < previousVertical)
             {
-                if(myKeyPress.verticalAxisValue < Y_NEGATIVE_ACCEPT)
+                if (canCrouch)
                 {
-                    if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-                        myAnimator.SetTrigger("crouch");
-                }
-
-                else
-                {
-                    if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Crouch Idle"))
-                    {
-                        myAnimator.SetTrigger("standUp");
-                    }
+                    myAnimator.SetTrigger("crouch");
+                    canCrouch = false;
+                    canStandUp = true;
                 }
             }
             
+            if ( myKeyPress.verticalAxisValue > previousVertical)
+            {
+                if (canStandUp)
+                {
+                    myAnimator.SetBool("standUp", true);
+                    canCrouch = true;
+                    canStandUp = false;
+                }
+            }
+            else
+                myAnimator.SetBool("standUp", false);
+            if (checkCount >= 2)
+            {
+                checkCount = 0;
+                previousVertical = myKeyPress.verticalAxisValue;
+            }
+            checkCount += 1;
+
             myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
             myAnimator.SetFloat("speed", absSpeed);
             if (!isJumping)
