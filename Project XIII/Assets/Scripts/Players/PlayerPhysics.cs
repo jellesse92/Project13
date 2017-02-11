@@ -160,7 +160,7 @@ public class PlayerPhysics : MonoBehaviour {
                 }
             }
             
-            if ( myKeyPress.verticalAxisValue > previousVertical)
+            if ( myKeyPress.verticalAxisValue > previousVertical || myKeyPress.verticalAxisValue == 0)
             {
                 if (canStandUp)
                 {
