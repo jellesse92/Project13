@@ -147,7 +147,6 @@ public class PlayerPhysics : MonoBehaviour {
             {
                 if(myKeyPress.verticalAxisValue < Y_NEGATIVE_ACCEPT)
                 {
-                    Debug.Log(myKeyPress.verticalAxisValue);
                     if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
                         myAnimator.SetTrigger("crouch");
                 }

@@ -62,7 +62,7 @@ public class CamShakeScript : MonoBehaviour {
             // use seed to generte a number from perlin noise (* 2 - 1) is use to get a negative number
             x = Mathf.PerlinNoise(seed, 0.0f) * 2 - 1;
             y = Mathf.PerlinNoise(0.0f, seed) * 2 - 1;
-            Debug.Log(x);
+            //Debug.Log(x);
             x *= magnitude * damper;
             y *= magnitude * damper;
 
