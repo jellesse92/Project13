@@ -144,18 +144,14 @@ public class PlayerPhysics : MonoBehaviour {
     {
         if (!cannotMovePlayer)
         {
-
-            float absSpeed = Mathf.Abs(myKeyPress.horizontalAxisValue);
-
-            Crouching();           
-            if(!myAnimator.GetBool("crouch") && myAnimator.GetBool("standUp"))
+            Crouching();            
+            if(!myAnimator.GetBool("crouch"))
             {
                 myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
-                myAnimator.SetFloat("speed", absSpeed);
+                myAnimator.SetFloat("speed", Mathf.Abs(myKeyPress.horizontalAxisValue));
                 if (!isJumping)
                     Flip();
             }
-
         }
         if(zeroVelocity)
             myRigidbody.velocity = new Vector2(0, 0);
@@ -163,17 +159,11 @@ public class PlayerPhysics : MonoBehaviour {
 
     void Crouching()
     {
-        if (myKeyPress.verticalAxisValue < previousVertical && myKeyPress.verticalAxisValue < 0 && !myAnimator.GetBool("crouch"))
-        {
-            myAnimator.SetBool("standUp", false);
+        if (myKeyPress.verticalAxisValue < previousVertical && myKeyPress.verticalAxisValue < 0)
             myAnimator.SetBool("crouch", true);
-        }
-        if ((myKeyPress.verticalAxisValue > previousVertical || myKeyPress.verticalAxisValue >= 0) && !myAnimator.GetBool("standUp"))
-        {
-            myAnimator.SetBool("standUp", true);
-            myAnimator.SetBool("crouch", false);            
-        }
-        previousVertical = myKeyPress.verticalAxisValue;        
+        else if (myKeyPress.verticalAxisValue > previousVertical || myKeyPress.verticalAxisValue >= 0)
+            myAnimator.SetBool("crouch", false);
+        previousVertical = myKeyPress.verticalAxisValue;
     }
 
     protected void Jump()
@@ -245,8 +235,7 @@ public class PlayerPhysics : MonoBehaviour {
         }
     }
     protected virtual void HeavyAttack()
-    {
-       
+    {       
         if (!cannotAttack)
         {
             if (isJumping)
