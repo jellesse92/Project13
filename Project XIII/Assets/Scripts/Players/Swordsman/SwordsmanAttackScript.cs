@@ -391,6 +391,10 @@ public class SwordsmanAttackScript : MonoBehaviour {
         {
             //HEAVY ATTACK EFFECTS STUFF
             //Debug.Log("attack");
+            Vector3 newPosition = transform.position;
+            newPosition.x += (1.5f * transform.localScale.x / Mathf.Abs(transform.localScale.x));
+            transform.position = newPosition;
+
             playerSoundEffects.PlayHitSpark();
             playerParticleEffects.PlayFinisherHitSpark(col.GetComponent<Enemy>().GetCenter());
             transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(magShakefinisherAttack, durShakefinisherAttack);
@@ -401,6 +405,8 @@ public class SwordsmanAttackScript : MonoBehaviour {
         }
         ItemHit(col);        
     }
+
+
 
     void HitEffect(HitType hitType, Vector3 position)
     {

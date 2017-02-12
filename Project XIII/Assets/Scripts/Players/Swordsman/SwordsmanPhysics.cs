@@ -438,4 +438,10 @@ public class SwordsmanPhysics : PlayerPhysics{
         disableDash = true;
     }
 
+    public void AttackCAnimationAdjustment()
+    {
+        Vector3 newPosition = transform.position;
+        newPosition.x += (1.5f * transform.localScale.x / Mathf.Abs(transform.localScale.x));
+        transform.position = newPosition;
+    }
 }
