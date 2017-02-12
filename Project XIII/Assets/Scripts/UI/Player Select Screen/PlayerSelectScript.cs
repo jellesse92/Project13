@@ -2,10 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using UnityEngine.SceneManagement;
 
 public class PlayerSelectScript : MonoBehaviour {
-
+    int SCENE_INDEX_TO_LOAD = 2;
     GameController gcScript;                        //Script which carries information of what player controls what character
 
     public GameObject[] selectReticles;             //Reticles to be activated upon player join
@@ -20,10 +19,11 @@ public class PlayerSelectScript : MonoBehaviour {
     public AudioClip buttonSelected;
 
     AudioSource myAudio;
-
+    LoadSceneManager loadSceneManager;
 
     void Start()
     {
+        loadSceneManager = GameObject.FindGameObjectWithTag("LoadSceneManager").GetComponent<LoadSceneManager>();
         gcScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         myAudio = GetComponent<AudioSource>();
         Cursor.visible = false;
@@ -198,6 +198,7 @@ public class PlayerSelectScript : MonoBehaviour {
 
     void LoadNextScene()
     {
-        SceneManager.LoadScene(2);
+        loadSceneManager.ChangeSceneIndex(SCENE_INDEX_TO_LOAD);
+        loadSceneManager.ActivateFadeScreenToLoad();
     }
 }

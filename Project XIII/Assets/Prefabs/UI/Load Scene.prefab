@@ -22,13 +22,32 @@ GameObject:
   - component: {fileID: 222676267475987912}
   - component: {fileID: 114328696587867056}
   - component: {fileID: 225469055971849490}
+  - component: {fileID: 95976981128958524}
+  - component: {fileID: 114350268114055490}
   m_Layer: 5
   m_Name: Load Scene
-  m_TagString: Untagged
+  m_TagString: LoadSceneManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &95976981128958524
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1165949518770136}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4742c1f305f204441ad8a97da0c22d63, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114328696587867056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -56,6 +75,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114350268114055490
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1165949518770136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dc85d12e610e0c429efb06fb443b4b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &222676267475987912
 CanvasRenderer:
   m_ObjectHideFlags: 1
