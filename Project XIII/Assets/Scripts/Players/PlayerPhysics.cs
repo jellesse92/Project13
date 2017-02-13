@@ -97,14 +97,19 @@ public class PlayerPhysics : MonoBehaviour {
                 Movement();
                 Crouching();
 
+                //Prioritizes jump in the case both buttons pressed at the same time
                 if (myKeyPress.jumpPress)
                     Jump();
+                else
+                {
+                    if (myKeyPress.quickAttackPress)
+                        QuickAttack();
+                    if (myKeyPress.heavyAttackPress)
+                        HeavyAttack();
+                }
                 if (myKeyPress.jumpReleased)
                     JumpReleased();
-                if (myKeyPress.quickAttackPress)
-                    QuickAttack();
-                if (myKeyPress.heavyAttackPress)
-                    HeavyAttack();
+
                 if (myKeyPress.dashPress)
                     MovementSkill(xMove, yMove);
                 /* Not all characters have a block move. disabled for now
