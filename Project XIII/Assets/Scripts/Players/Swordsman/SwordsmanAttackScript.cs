@@ -289,6 +289,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void TriggerQuickAttack(Collider2D col)
     {
+        transform.position = transform.parent.position;
         if (col.tag == "Enemy")
         {
             //QUICK ATTACK EFFECTS STUFF
@@ -387,7 +388,8 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void TriggerFinisherAttack(Collider2D col)
     {
-        if(col.tag == "Enemy")
+        transform.position = transform.parent.position;
+        if (col.tag == "Enemy")
         {
             //HEAVY ATTACK EFFECTS STUFF
             //Debug.Log("attack");
