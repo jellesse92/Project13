@@ -229,7 +229,11 @@ public class PlayerPhysics : MonoBehaviour {
     {
         if (!cannotAttack)
         {
-            if (isJumping || jumpedRecently)
+
+            if (isJumping 
+                || (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Jump Start Foward")
+                || myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Jump Idle"))
+                || myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Jump Start Idle"))
                 myAnimator.SetTrigger("airQuickAttack");
             else
                 myAnimator.SetTrigger("quickAttack");
@@ -239,7 +243,10 @@ public class PlayerPhysics : MonoBehaviour {
     {       
         if (!cannotAttack)
         {
-            if (isJumping)
+            if (isJumping 
+                || (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Jump Start Foward")
+                || myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Jump Idle"))
+                || myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Jump Start Idle"))
                 myAnimator.SetTrigger("airHeavyAttack");
             else
                 myAnimator.SetTrigger("heavyAttack");
