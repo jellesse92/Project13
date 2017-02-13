@@ -289,7 +289,6 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void TriggerQuickAttack(Collider2D col)
     {
-        transform.position = transform.parent.position;
         if (col.tag == "Enemy")
         {
             //QUICK ATTACK EFFECTS STUFF
@@ -388,14 +387,10 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void TriggerFinisherAttack(Collider2D col)
     {
-        transform.position = transform.parent.position;
         if (col.tag == "Enemy")
         {
             //HEAVY ATTACK EFFECTS STUFF
             //Debug.Log("attack");
-            Vector3 newPosition = transform.position;
-            newPosition.x += (1.5f * transform.localScale.x / Mathf.Abs(transform.localScale.x));
-            transform.position = newPosition;
 
             playerSoundEffects.PlayHitSpark();
             playerParticleEffects.PlayFinisherHitSpark(col.GetComponent<Enemy>().GetCenter());
