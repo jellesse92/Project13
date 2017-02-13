@@ -229,7 +229,7 @@ public class PlayerPhysics : MonoBehaviour {
     {
         if (!cannotAttack)
         {
-            if (isJumping)
+            if (isJumping || jumpedRecently)
                 myAnimator.SetTrigger("airQuickAttack");
             else
                 myAnimator.SetTrigger("quickAttack");
