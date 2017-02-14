@@ -18,6 +18,8 @@ public class DialogueControllerScript : MonoBehaviour {
     public GameObject skipButton;                               //Button indicating ability to skip
     public Text dialogueUIText;                                 //Typed text for dialogue
 
+    public Material fadeMat;                                    //Used to fade portraits
+
     //Other utility scripts
     MusicManager musicManager;                                  //Script that manages music
     public CutsceneManager cutsceneManager;                            //Controls the flow of cutscene
@@ -281,14 +283,14 @@ public class DialogueControllerScript : MonoBehaviour {
     //Sets speaker character
     void setCharSpeaker(Image img, GameObject nameTag)
     {
-        img.color = SPEAKING_COLOR;
+        img.material = null;
         nameTag.SetActive(true);
     }
 
     //Sets character to be listener
     void setCharListener(Image img, GameObject nameTag)
     {
-        img.color = FADE_COLOR;
+        img.material = fadeMat;
         nameTag.SetActive(false);
     }
 
