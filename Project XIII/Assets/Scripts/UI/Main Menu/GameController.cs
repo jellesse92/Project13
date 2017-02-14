@@ -32,6 +32,7 @@ public class GameController : MonoBehaviour
     public PlayerInfo[] playersInfos;
     public CharacterSetting[] PlayerCharacters = new CharacterSetting[4];   //Refers to character information instead of player information
     public int PlayerCount = 0;
+    public bool cutsceneEnabled = true;
     public bool IsMusicOn = true;
     public bool IsSfxOn = true;
     public int musicVolume = 100;

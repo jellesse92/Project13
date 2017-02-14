@@ -85,7 +85,7 @@ public class CutsceneManager : MonoBehaviour {
     Vector2 camDestination = new Vector2();
     bool cameraMoving = false;
 
-    //Variables for movement
+    GameController gcScript;
 
     CharacterCutsceneStatus[] characterStatuses = new CharacterCutsceneStatus[4];
 
@@ -103,6 +103,7 @@ public class CutsceneManager : MonoBehaviour {
         playersManager = GameObject.FindGameObjectWithTag("PlayerList").transform;
         cameraColliders = GameObject.FindGameObjectWithTag("Camera Wall");
         camScript = GameObject.FindGameObjectWithTag("MainCamera").transform.parent.GetComponent<MultiplayerCamFollowScript>();
+        gcScript = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
 
         for(int i = 0; i < 4; i++)
         {
@@ -170,6 +171,8 @@ public class CutsceneManager : MonoBehaviour {
 
     public void ActivateCutscene(int index)
     {
+        if (!gcScript.cutsceneEnabled)
+            return;
         Reset();
         camScript.ActivateCutsceneMode();
         currentCutscene = index;
