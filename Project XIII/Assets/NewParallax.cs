@@ -11,7 +11,8 @@ public class NewParallax : MonoBehaviour
     public bool parallaxXAxis;
     public bool parallaxYAxis;
 
-    public float parallaxSpeed;
+    public float parallaxXSpeed;
+    public float parallaxYSpeed;
 
     public bool autoScroll;
     public float autoScrollSpeed;
@@ -56,7 +57,7 @@ public class NewParallax : MonoBehaviour
         if (parallaxXAxis)
         {
             deltaX = cameraTransform.position.x - lastCameraX;
-            transform.position += Vector3.right * (deltaX * parallaxSpeed);
+            transform.position += Vector3.right * (deltaX * parallaxXSpeed);
             lastCameraX = cameraTransform.position.x;
 
         }
@@ -64,7 +65,7 @@ public class NewParallax : MonoBehaviour
         if (parallaxYAxis)
         {
             deltaY = cameraTransform.position.y - lastCameraY;
-            transform.position += Vector3.up * (deltaY * parallaxSpeed);
+            transform.position += Vector3.up * (deltaY * parallaxYSpeed);
             lastCameraY = cameraTransform.position.y;
         }
 
