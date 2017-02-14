@@ -134,6 +134,8 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
             if(in2DMode)
                 cameraDestination.y = Mathf.Max(lowestPointY + cam.orthographicSize-5, cameraDestination.y);
+
+            cameraDestination.y -= 5f;
                     
             transform.position = Vector3.Slerp(transform.position, cameraDestination, followDelay);
 

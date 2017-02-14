@@ -5,8 +5,8 @@ using UnityEngine;
 public class BasicTurretEnemy : EnemyPhysics
 {
     const int AMMO_AMOUNT = 20;                             //Amount of ammo to be created
-    const float BULLET_SPEED = 15f;                         //Speed of bullet
-    const float RANGED_ATTACK_COOLDOWN = 1.5f;              //Cooldown for attack
+    const float BULLET_SPEED = 10f;                         //Speed of bullet
+    const float RANGED_ATTACK_COOLDOWN = 2.5f;              //Cooldown for attack
 
     public GameObject rangedProjectile;                     //Projectiles to be shot
     public Transform projectileList;                        //Transform containing projectiles
