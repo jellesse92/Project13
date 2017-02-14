@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerPhysics : MonoBehaviour {
 
     //Variables for bad controller callibration
-    float Y_NEGATIVE_ACCEPT = -.09f;
+    float Y_NEGATIVE_ACCEPT = -.2f;
     float X_ABS_ACCEPT = .01f;
 
     //Use for crouching
@@ -162,9 +162,9 @@ public class PlayerPhysics : MonoBehaviour {
 
     void Crouching()
     {
-        if (myKeyPress.verticalAxisValue < previousVertical && myKeyPress.verticalAxisValue < 0)
+        if (myKeyPress.verticalAxisValue <  Y_NEGATIVE_ACCEPT)
             myAnimator.SetBool("crouch", true);
-        else if (myKeyPress.verticalAxisValue > previousVertical || myKeyPress.verticalAxisValue >= 0)
+        else if (myKeyPress.verticalAxisValue >= Y_NEGATIVE_ACCEPT)
             myAnimator.SetBool("crouch", false);
         previousVertical = myKeyPress.verticalAxisValue;
     }
