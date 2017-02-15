@@ -48,7 +48,7 @@ public class PlayerPhysics : MonoBehaviour {
     bool jumpSpent = false;
 
     public GameObject shadow;                           //For placing shadow at character's feet
-
+    Vector3 shadowScale;
     protected void Start () {
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -64,6 +64,8 @@ public class PlayerPhysics : MonoBehaviour {
         cannotAttack = false;
         zeroVelocity = false;
 
+        if(shadow)
+            shadowScale = shadow.transform.localScale;
         //Holding buttons
         checkQuickAttackUp = false;
         quickAttackReleased = true;
@@ -123,7 +125,8 @@ public class PlayerPhysics : MonoBehaviour {
         ClassSpecificUpdate();
         myPlayerInput.ResetKeyPress();
         Landing();
-        HandleShadow();
+        if (shadow)
+            HandleShadow();
     }
 
     public virtual void ClassSpecificStart()
@@ -401,11 +404,15 @@ public class PlayerPhysics : MonoBehaviour {
     }
 
     void HandleShadow()
-    {
+    {        
+        float scaleChange;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector3.up, Mathf.Infinity, layerMask);
-        if (hit && hit.distance > 1f)
+        if (hit && hit.distance > 2f)
         {
+            scaleChange = 2.76f/hit.distance;
+            //Debug.Log(scaleChange);
             shadow.transform.position = hit.point;
+            shadow.transform.localScale = new Vector3(shadowScale.x * scaleChange, shadowScale.y * scaleChange, shadowScale.z);
         }
     }
 
