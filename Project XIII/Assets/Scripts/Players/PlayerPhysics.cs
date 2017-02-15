@@ -172,9 +172,9 @@ public class PlayerPhysics : MonoBehaviour {
 
     void Crouching()
     {
-        if (myKeyPress.verticalAxisValue <  Y_NEGATIVE_ACCEPT)
+        if (myKeyPress.verticalAxisValue < previousVertical && myKeyPress.verticalAxisValue < 0 && myKeyPress.verticalAxisValue < Y_NEGATIVE_ACCEPT)
             myAnimator.SetBool("crouch", true);
-        else if (myKeyPress.verticalAxisValue >= Y_NEGATIVE_ACCEPT)
+        else if (myKeyPress.verticalAxisValue > previousVertical || myKeyPress.verticalAxisValue >= 0 && myKeyPress.verticalAxisValue >= Y_NEGATIVE_ACCEPT)
             myAnimator.SetBool("crouch", false);
         previousVertical = myKeyPress.verticalAxisValue;
     }
