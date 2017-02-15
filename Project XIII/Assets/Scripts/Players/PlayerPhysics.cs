@@ -409,10 +409,10 @@ public class PlayerPhysics : MonoBehaviour {
     void HandleShadow()
     {        
         float scaleChange;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector3.up, Mathf.Infinity, layerMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector3.up, 30, layerMask);
         if (hit && hit.distance > DISTANCE_CENTER_TO_FEET)
         {            
-            scaleChange = (1/Mathf.Clamp(Mathf.Log(hit.distance - DISTANCE_CENTER_TO_FEET), 1, 20));            
+            scaleChange = (1/Mathf.Clamp(Mathf.Log(hit.distance - DISTANCE_CENTER_TO_FEET), 1, 30));            
             shadow.transform.position = hit.point;
             shadow.transform.localScale = new Vector3(shadowScale.x * scaleChange, shadowScale.y * scaleChange, shadowScale.z);
         }
