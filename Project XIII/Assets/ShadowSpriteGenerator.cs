@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class ShadowSpriteGenerator : MonoBehaviour {
 
-    public float centerToShadowOffset = 2.76f;
-
+    public float centerToShadowOffSet = 2.76f;
+    public float shadowSpriteOffSet = 5.6f;
+    public bool changingSprite = true;
     public GameObject shadow;
     public GameObject shadowSprite;
 
@@ -26,20 +27,23 @@ public class ShadowSpriteGenerator : MonoBehaviour {
 
     void HandleShadow(){
         float scaleChange;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector3.up, 30, layerMask);
-        if (hit && hit.distance > centerToShadowOffset)
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector3.up, 20, layerMask);
+        //Debug.Log(hit.distance);
+        if (hit && hit.distance > centerToShadowOffSet)
         {
-            scaleChange = (1 / Mathf.Clamp(Mathf.Log(hit.distance - centerToShadowOffset), 1, 30));
+            scaleChange = (1 / Mathf.Clamp(Mathf.Log(hit.distance - centerToShadowOffSet), 1, 30));
             shadow.transform.position = hit.point;
             shadow.transform.localScale = new Vector3(shadowScale.x * scaleChange, shadowScale.y * scaleChange, shadowScale.z);
         }
-
-        if (shadowSprite && hit.distance > centerToShadowOffset)
+        
+        if (shadowSprite && hit.distance > centerToShadowOffSet)
         {
-            shadowSprite.GetComponent<SpriteRenderer>().sprite = spriteToCopy.GetComponent<SpriteRenderer>().sprite;
+            if(changingSprite)
+                shadowSprite.GetComponent<SpriteRenderer>().sprite = spriteToCopy.GetComponent<SpriteRenderer>().sprite;
             Vector3 newPosition = shadowSprite.transform.position;
-            newPosition.y = transform.position.y - (hit.distance - centerToShadowOffset) * 2 - 5.6f;
+            newPosition.y = transform.position.y - (hit.distance - centerToShadowOffSet) * 2 - shadowSpriteOffSet;
             shadowSprite.transform.position = newPosition;
         }
+        
     }
 }
