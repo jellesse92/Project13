@@ -5,7 +5,7 @@ public class PlayerPhysics : MonoBehaviour {
 
     //Variables for bad controller callibration
     float Y_NEGATIVE_ACCEPT = -.2f;
-    float X_ABS_ACCEPT = .01f;
+    float X_ABS_ACCEPT = .2f;
 
     //Use for crouching
     float previousVertical = 0;
@@ -45,6 +45,7 @@ public class PlayerPhysics : MonoBehaviour {
     bool wasGrounded = false;
     bool jumpGraceTimeInvoked = false;
     bool jumped = false;
+    bool jumpSpent = false;
 
     public GameObject shadow;                           //For placing shadow at character's feet
 
