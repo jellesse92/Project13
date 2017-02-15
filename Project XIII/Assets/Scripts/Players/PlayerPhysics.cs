@@ -2,8 +2,6 @@
 using System.Collections;
 
 public class PlayerPhysics : MonoBehaviour {
-    //use for shadow
-    const float DISTANCE_CENTER_TO_FEET = 2.76f;
     //Variables for bad controller callibration
     float Y_NEGATIVE_ACCEPT = -.2f;
     float X_ABS_ACCEPT = .2f;
@@ -48,12 +46,6 @@ public class PlayerPhysics : MonoBehaviour {
     bool jumped = false;
     bool jumpSpent = false;
 
-    public GameObject shadow;                           //For placing shadow at character's feet
-    public GameObject shadowSprite;                         
-
-    Vector3 shadowScale;
-
-
     protected void Start () {
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -69,8 +61,6 @@ public class PlayerPhysics : MonoBehaviour {
         cannotAttack = false;
         zeroVelocity = false;
 
-        if(shadow)
-            shadowScale = shadow.transform.localScale;
         //Holding buttons
         checkQuickAttackUp = false;
         quickAttackReleased = true;
@@ -130,8 +120,7 @@ public class PlayerPhysics : MonoBehaviour {
         ClassSpecificUpdate();
         myPlayerInput.ResetKeyPress();
         Landing();
-        if (shadow)
-            HandleShadow();
+        
     }
 
     public virtual void ClassSpecificStart()
@@ -407,29 +396,7 @@ public class PlayerPhysics : MonoBehaviour {
 
         return false;
     }
-
-    void HandleShadow()
-    {        
-        float scaleChange;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector3.up, 30, layerMask);
-        if (hit && hit.distance > DISTANCE_CENTER_TO_FEET)
-        {            
-            scaleChange = (1/Mathf.Clamp(Mathf.Log(hit.distance - DISTANCE_CENTER_TO_FEET), 1, 30));            
-            shadow.transform.position = hit.point;
-            shadow.transform.localScale = new Vector3(shadowScale.x * scaleChange, shadowScale.y * scaleChange, shadowScale.z);
-        }
-
-        shadowSprite.GetComponent<SpriteRenderer>().sprite = GetComponent<SpriteRenderer>().sprite;
-
-        if (shadowSprite && hit.distance > DISTANCE_CENTER_TO_FEET)
-        {
-            Vector3 newPosition = shadowSprite.transform.position;
-            newPosition.y = transform.position.y - (hit.distance - DISTANCE_CENTER_TO_FEET)*2 - 5.6f;
-            shadowSprite.transform.position = newPosition;
-        }
-        
-    }
-
+    
     void CancelWasGrounded()
     {
         wasGrounded = false;

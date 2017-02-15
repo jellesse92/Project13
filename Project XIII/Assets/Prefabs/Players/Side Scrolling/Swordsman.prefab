@@ -70,15 +70,15 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1549557187169108
+--- !u!1 &1737948386260366
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4230750741958018}
-  - component: {fileID: 212318453404050882}
+  - component: {fileID: 4038677437346888}
+  - component: {fileID: 212002719395984138}
   m_Layer: 0
   m_Name: Shadow Sprite
   m_TagString: Untagged
@@ -86,17 +86,33 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1752291435813698
+--- !u!1 &1794475451596630
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4474705641230766}
-  - component: {fileID: 212694290181313246}
+  - component: {fileID: 4449145576857322}
+  - component: {fileID: 114007558145678100}
   m_Layer: 15
   m_Name: Shadow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1977136182212960
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4196214643488530}
+  - component: {fileID: 212153656762502200}
+  m_Layer: 15
+  m_Name: Shadow Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,34 +143,48 @@ Transform:
   m_Children:
   - {fileID: 4000011051847818}
   - {fileID: 4927104563732910}
-  - {fileID: 4474705641230766}
-  - {fileID: 4230750741958018}
+  - {fileID: 4449145576857322}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4230750741958018
+--- !u!4 &4038677437346888
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1549557187169108}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 1737948386260366}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -2, y: -5.6, z: 0}
   m_LocalScale: {x: 1, y: -1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4000012182819958}
-  m_RootOrder: 3
+  m_Father: {fileID: 4449145576857322}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4474705641230766
+--- !u!4 &4196214643488530
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1752291435813698}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_GameObject: {fileID: 1977136182212960}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -2.8, z: 0}
   m_LocalScale: {x: 0.6, y: 0.2, z: 1}
   m_Children: []
+  m_Father: {fileID: 4449145576857322}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4449145576857322
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1794475451596630}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4196214643488530}
+  - {fileID: 4038677437346888}
   m_Father: {fileID: 4000012182819958}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -342,8 +372,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheckingOffset: 2
-  shadow: {fileID: 1752291435813698}
-  shadowSprite: {fileID: 1549557187169108}
   attackBox: {fileID: 1352759767500384}
   attackScript: {fileID: 114895810148568018}
   flashWhiteMat: {fileID: 2100000, guid: 32ca144c3968a994ba36bca47b900b62, type: 2}
@@ -404,6 +432,20 @@ MonoBehaviour:
     speedBoost: 0
   magDamageScreenShake: 2
   durDamageScreenShake: 0.5
+--- !u!114 &114007558145678100
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1794475451596630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7eb519247d12c743b909d720d3ccb7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerToShadowOffset: 2.76
+  shadow: {fileID: 1977136182212960}
+  shadowSprite: {fileID: 1737948386260366}
 --- !u!114 &114719117606138066
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -520,12 +562,12 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
---- !u!212 &212318453404050882
+--- !u!212 &212002719395984138
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1549557187169108}
+  m_GameObject: {fileID: 1737948386260366}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -555,12 +597,12 @@ SpriteRenderer:
   m_Color: {r: 0, g: 0, b: 0, a: 0.384}
   m_FlipX: 0
   m_FlipY: 0
---- !u!212 &212694290181313246
+--- !u!212 &212153656762502200
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1752291435813698}
+  m_GameObject: {fileID: 1977136182212960}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
