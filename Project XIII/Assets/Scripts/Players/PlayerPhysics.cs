@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PlayerPhysics : MonoBehaviour {
     //use for shadow
-    const float DISTANCE_CENTER_TO_FEET = 2.6f;
+    const float DISTANCE_CENTER_TO_FEET = 2.76f;
     //Variables for bad controller callibration
     float Y_NEGATIVE_ACCEPT = -.2f;
     float X_ABS_ACCEPT = .2f;
@@ -49,6 +49,8 @@ public class PlayerPhysics : MonoBehaviour {
     bool jumpSpent = false;
 
     public GameObject shadow;                           //For placing shadow at character's feet
+    public GameObject shadowSprite;                         
+
     Vector3 shadowScale;
 
 
@@ -416,6 +418,16 @@ public class PlayerPhysics : MonoBehaviour {
             shadow.transform.position = hit.point;
             shadow.transform.localScale = new Vector3(shadowScale.x * scaleChange, shadowScale.y * scaleChange, shadowScale.z);
         }
+
+        shadowSprite.GetComponent<SpriteRenderer>().sprite = GetComponent<SpriteRenderer>().sprite;
+
+        if (shadowSprite && hit.distance > DISTANCE_CENTER_TO_FEET)
+        {
+            Vector3 newPosition = shadowSprite.transform.position;
+            newPosition.y = transform.position.y - (hit.distance - DISTANCE_CENTER_TO_FEET)*2 - 5.6f;
+            shadowSprite.transform.position = newPosition;
+        }
+        
     }
 
     void CancelWasGrounded()
