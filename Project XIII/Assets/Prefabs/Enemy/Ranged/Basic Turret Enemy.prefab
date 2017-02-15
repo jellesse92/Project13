@@ -309,7 +309,7 @@ Transform:
   m_GameObject: {fileID: 1574610190872836}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -2.11, z: 0}
-  m_LocalScale: {x: 1.3, y: 0.2, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 4110655209103918}
   m_RootOrder: 0
@@ -692,6 +692,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   centerToShadowOffSet: 0
   shadowSpriteOffSet: 0
+  changingSprite: 1
+  enableShadowSprite: 1
   shadow: {fileID: 1574610190872836}
   shadowSprite: {fileID: 1800181267835684}
 --- !u!114 &114340824677924852
@@ -786,7 +788,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -930256545
+  randomSeed: 1537641329
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5778,7 +5780,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -89522001
+  randomSeed: 145011728
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -10662,7 +10664,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 721229827
+  randomSeed: 74332128
   InitialModule:
     serializedVersion: 3
     enabled: 1
