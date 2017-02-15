@@ -123,6 +123,7 @@ public class PlayerPhysics : MonoBehaviour {
         ClassSpecificUpdate();
         myPlayerInput.ResetKeyPress();
         Landing();
+        HandleShadow();
     }
 
     public virtual void ClassSpecificStart()
@@ -385,8 +386,6 @@ public class PlayerPhysics : MonoBehaviour {
         {
             wasGrounded = true;
             jumped = false;
-            if (shadow != null)
-                shadow.SetActive(true);
             return true;
         }
         else if (!jumpGraceTimeInvoked)
@@ -398,10 +397,16 @@ public class PlayerPhysics : MonoBehaviour {
         if (wasGrounded && !jumped)
             return true;
 
-        if (shadow != null)
-            shadow.SetActive(false);
-
         return false;
+    }
+
+    void HandleShadow()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector3.up, Mathf.Infinity, layerMask);
+        if (hit && hit.distance > 1f)
+        {
+            shadow.transform.position = hit.point;
+        }
     }
 
     void CancelWasGrounded()
