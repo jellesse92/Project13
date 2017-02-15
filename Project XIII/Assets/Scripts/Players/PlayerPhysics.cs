@@ -407,10 +407,11 @@ public class PlayerPhysics : MonoBehaviour {
     {        
         float scaleChange;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector3.up, Mathf.Infinity, layerMask);
-        if (hit && hit.distance > 2f)
+        if (hit && hit.distance > 2.6f)
         {
-            scaleChange = 2.76f/hit.distance;
-            //Debug.Log(scaleChange);
+            
+            scaleChange = (1/Mathf.Clamp(Mathf.Log(hit.distance - 2.6f), 1, 20));
+            Debug.Log(scaleChange);
             shadow.transform.position = hit.point;
             shadow.transform.localScale = new Vector3(shadowScale.x * scaleChange, shadowScale.y * scaleChange, shadowScale.z);
         }
