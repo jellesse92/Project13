@@ -52,6 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4154807113760520}
   - component: {fileID: 114674030083859374}
+  - component: {fileID: 95975817091858644}
   m_Layer: 15
   m_Name: Shadow
   m_TagString: Untagged
@@ -100,6 +101,23 @@ Transform:
   m_Father: {fileID: 4154807113760520}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &95975817091858644
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1888993926400134}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 998ac77c5275c2e40a183c3c8b2420b2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114674030083859374
 MonoBehaviour:
   m_ObjectHideFlags: 1

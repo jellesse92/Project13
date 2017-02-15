@@ -52,7 +52,11 @@ public class ShadowSpriteGenerator : MonoBehaviour {
             Vector3 newPosition = shadowSprite.transform.position;
             newPosition.y = transform.position.y - (hit.distance - centerToShadowOffSet) * 2 - shadowSpriteOffSet;
             shadowSprite.transform.position = newPosition;
-        }
-        
+        }        
+    }
+
+    public void FadeShadow()
+    {
+        GetComponent<Animator>().SetTrigger("Fade");
     }
 }

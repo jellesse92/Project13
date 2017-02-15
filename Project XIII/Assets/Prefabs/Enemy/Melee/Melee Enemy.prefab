@@ -86,6 +86,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4663871751277912}
   - component: {fileID: 114346602363051512}
+  - component: {fileID: 95742158459291128}
   m_Layer: 15
   m_Name: Shadow
   m_TagString: Untagged
@@ -451,6 +452,23 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95742158459291128
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1430380791723302}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 998ac77c5275c2e40a183c3c8b2420b2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114094771904971976
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -492,6 +510,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   centerToShadowOffSet: 0
   shadowSpriteOffSet: 0
+  changingSprite: 1
+  enableShadowSprite: 1
+  changingHeight: 1
   shadow: {fileID: 1045185723452390}
   shadowSprite: {fileID: 1135726248734806}
 --- !u!114 &114350392447182964

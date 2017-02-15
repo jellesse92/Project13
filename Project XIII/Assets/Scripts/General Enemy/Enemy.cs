@@ -209,6 +209,8 @@ public class Enemy : MonoBehaviour {
         {
             if (child.name == "Death Particles")
                 child.GetComponent<ParticleSystem>().Play();
+            if (child.name == "Shadow")
+                child.GetComponent<ShadowSpriteGenerator>().FadeShadow();
         }
         mainCamera.GetComponent<CamShakeScript>().StartShake(magShakeDeath, durShakeDeath);
         if(GetComponent<EnemyParticleEffects>())
