@@ -2,7 +2,8 @@
 using System.Collections;
 
 public class PlayerPhysics : MonoBehaviour {
-
+    //use for shadow
+    const float DISTANCE_CENTER_TO_FEET = 2.6f;
     //Variables for bad controller callibration
     float Y_NEGATIVE_ACCEPT = -.2f;
     float X_ABS_ACCEPT = .2f;
@@ -49,6 +50,8 @@ public class PlayerPhysics : MonoBehaviour {
 
     public GameObject shadow;                           //For placing shadow at character's feet
     Vector3 shadowScale;
+
+
     protected void Start () {
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -407,11 +410,9 @@ public class PlayerPhysics : MonoBehaviour {
     {        
         float scaleChange;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector3.up, Mathf.Infinity, layerMask);
-        if (hit && hit.distance > 2.6f)
-        {
-            
-            scaleChange = (1/Mathf.Clamp(Mathf.Log(hit.distance - 2.6f), 1, 20));
-            Debug.Log(scaleChange);
+        if (hit && hit.distance > DISTANCE_CENTER_TO_FEET)
+        {            
+            scaleChange = (1/Mathf.Clamp(Mathf.Log(hit.distance - DISTANCE_CENTER_TO_FEET), 1, 20));            
             shadow.transform.position = hit.point;
             shadow.transform.localScale = new Vector3(shadowScale.x * scaleChange, shadowScale.y * scaleChange, shadowScale.z);
         }
