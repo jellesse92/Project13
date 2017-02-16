@@ -229,7 +229,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4000012182819958, guid: 608bbe457514b2541ad7c46c7eb2b471, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 4000012182819958, guid: 608bbe457514b2541ad7c46c7eb2b471, type: 2}
       propertyPath: m_LocalPosition.y
@@ -362,11 +362,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actions:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1600338546}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1600338548}
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  magShakeApperance: 0
-  durShakeApperance: 0
+  magShakeApperance: 1
+  durShakeApperance: 2
 --- !u!4 &43640043
 Transform:
   m_ObjectHideFlags: 0
@@ -6428,6 +6450,11 @@ Prefab:
       propertyPath: m_LocalScale.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114584109297604436, guid: a6bb91cf2c8261d42a38bacbfa9e0ab4,
+        type: 2}
+      propertyPath: correctColor
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a6bb91cf2c8261d42a38bacbfa9e0ab4, type: 2}
   m_IsPrefabParent: 0
@@ -7989,6 +8016,16 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: efcad76cadbc08c4aad0886b33ee904b, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1600338546 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1666910047460076, guid: 1bf33a384e69ec245a10806204c8896c,
+    type: 2}
+  m_PrefabInternal: {fileID: 974180611}
+--- !u!82 &1600338548 stripped
+AudioSource:
+  m_PrefabParentObject: {fileID: 82683547952987480, guid: 1bf33a384e69ec245a10806204c8896c,
+    type: 2}
+  m_PrefabInternal: {fileID: 974180611}
 --- !u!1001 &1601254792
 Prefab:
   m_ObjectHideFlags: 0

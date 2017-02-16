@@ -62,21 +62,24 @@ public class ShadowSpriteGenerator : MonoBehaviour {
 
 
     void InteractLightSource()
-    {        
-        float distanceDifference = transform.parent.position.x - lightSource.position.x;
-        float characterFacing = transform.parent.localScale.x / Mathf.Abs(transform.parent.localScale.x);
-        float horizontalShear = distanceDifference * characterFacing * magnitudeShadowChange;
+    {
+        if (lightSource && enableShadowSprite)
+        {
+            float distanceDifference = transform.parent.position.x - lightSource.position.x;
+            float characterFacing = transform.parent.localScale.x / Mathf.Abs(transform.parent.localScale.x);
+            float horizontalShear = distanceDifference * characterFacing * magnitudeShadowChange;
 
-        Vector3 newPosition = shadowSprite.transform.localPosition;
-        newPosition.x = horizontalShear * 2.9f;
+            Vector3 newPosition = shadowSprite.transform.localPosition;
+            newPosition.x = horizontalShear * 2.9f;
 
-        shadowSprite.transform.localPosition = newPosition;
-        shadowSprite.GetComponent<Renderer>().sharedMaterial.SetFloat("_HorizontalSkew", horizontalShear);
+            shadowSprite.transform.localPosition = newPosition;
+            shadowSprite.GetComponent<Renderer>().sharedMaterial.SetFloat("_HorizontalSkew", horizontalShear);
 
-        Color newColor = shadowSprite.GetComponent<SpriteRenderer>().color;
-        float newAlpha = Mathf.Abs(1 - (Mathf.Clamp(Mathf.Abs(horizontalShear),0,5) / 5));
-        newColor.a = Mathf.Clamp01(newAlpha) * 0.7f;
-        shadowSprite.GetComponent<SpriteRenderer>().color = newColor;
+            Color newColor = shadowSprite.GetComponent<SpriteRenderer>().color;
+            float newAlpha = Mathf.Abs(1 - (Mathf.Clamp(Mathf.Abs(horizontalShear), 0, 5) / 5));
+            newColor.a = Mathf.Clamp01(newAlpha) * 0.7f;
+            shadowSprite.GetComponent<SpriteRenderer>().color = newColor;
+        }
     }
 
     public void ChangeFacingDirection()
