@@ -16,7 +16,7 @@ public class ShadowSpriteGenerator : MonoBehaviour {
     Vector3 shadowScale;
     int layerMask;
     GameObject spriteToCopy;
-
+    Transform lightSource;
 
 	void Start () {
         layerMask = (LayerMask.GetMask("Default", "Item"));
@@ -34,6 +34,9 @@ public class ShadowSpriteGenerator : MonoBehaviour {
 
         if (changingSprite)
             shadowSprite.GetComponent<SpriteRenderer>().sprite = spriteToCopy.GetComponent<SpriteRenderer>().sprite;
+
+        if (lightSource)
+            InteractLightSource();
     }
 
     void RayCastShadow(){
@@ -46,13 +49,30 @@ public class ShadowSpriteGenerator : MonoBehaviour {
             shadow.transform.position = hit.point;
             shadow.transform.localScale = new Vector3(shadowScale.x * scaleChange, shadowScale.y * scaleChange, shadowScale.z);
         }
-        
+       
         if (enableShadowSprite && hit.distance > centerToShadowOffSet)
         {
             Vector3 newPosition = shadowSprite.transform.position;
             newPosition.y = transform.position.y - (hit.distance - centerToShadowOffSet) * 2 - shadowSpriteOffSet;
-            shadowSprite.transform.position = newPosition;
+            shadowSprite.transform.position = newPosition;            
         }        
+    }
+    void InteractLightSource()
+    {
+        
+        float distanceDifference = transform.parent.position.x - lightSource.position.x;
+        float characterFacing = transform.parent.localScale.x / Mathf.Abs(transform.parent.localScale.x);
+        float horizontalShear = distanceDifference * characterFacing;
+        Vector3 newPosition = shadowSprite.transform.localPosition;
+        newPosition.x = horizontalShear * 3;
+        Debug.Log(horizontalShear * 3);
+        shadowSprite.transform.localPosition = newPosition;
+        shadowSprite.GetComponent<Renderer>().sharedMaterial.SetFloat("_HorizontalSkew", horizontalShear);
+
+    }
+    public void SendLightSource(Transform newlightSource)
+    {
+        lightSource = newlightSource;        
     }
 
     public void FadeShadow()

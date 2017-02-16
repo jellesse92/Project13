@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4867184501347558}
   - component: {fileID: 198996361141118924}
   - component: {fileID: 199535112527651178}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,9 +37,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4275701714894372}
   - component: {fileID: 212382902130168174}
-  m_Layer: 0
+  - component: {fileID: 61908218795147422}
+  - component: {fileID: 114724924261109910}
+  m_Layer: 4
   m_Name: Torch
-  m_TagString: Untagged
+  m_TagString: Torch
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -54,7 +56,7 @@ GameObject:
   - component: {fileID: 4648957180948424}
   - component: {fileID: 198699676795432484}
   - component: {fileID: 199267275089106238}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: FireEmbers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +73,7 @@ GameObject:
   - component: {fileID: 4966259752157214}
   - component: {fileID: 198346925915285488}
   - component: {fileID: 199766103632101204}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: FlamesParticleEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +87,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1186224591093088}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 11.55, y: 0, z: 0}
+  m_LocalPosition: {x: 2.1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4966259752157214}
@@ -133,6 +135,31 @@ Transform:
   m_Father: {fileID: 4275701714894372}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &61908218795147422
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1186224591093088}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 20, y: 6}
+--- !u!114 &114724924261109910
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1186224591093088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57acdcd24684200489296ed7253cad63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198346925915285488
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -188,7 +215,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1118134639
+  randomSeed: -470806301
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5270,7 +5297,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 467230105
+  randomSeed: 669122451
   InitialModule:
     serializedVersion: 3
     enabled: 1
