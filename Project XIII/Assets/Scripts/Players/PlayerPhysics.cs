@@ -38,6 +38,7 @@ public class PlayerPhysics : MonoBehaviour {
 
     //Ground detection
     float distToGround;                                 //Distance from the ground
+    float characterWidth;                               //Width of character to cast secondary raycasting
     int layerMask;                                      //Layers to check for ground
     bool wasGrounded = false;
     public float groundCheckingOffset = 2f;
@@ -74,6 +75,7 @@ public class PlayerPhysics : MonoBehaviour {
         
 
         distToGround = GetComponent<Collider2D>().bounds.extents.y;
+        characterWidth = GetComponent<Collider2D>().bounds.extents.x;
         layerMask = (LayerMask.GetMask("Default","Item"));
 
         ClassSpecificStart();
@@ -385,7 +387,10 @@ public class PlayerPhysics : MonoBehaviour {
 
     public bool isGrounded()
     {
-        if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround +groundCheckingOffset - jumpGroundCheckNegativeOffset, layerMask))
+        if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround +groundCheckingOffset - jumpGroundCheckNegativeOffset, layerMask)
+            || Physics2D.Raycast(transform.position + new Vector3(characterWidth,0f,0f), -Vector3.up, distToGround + groundCheckingOffset - jumpGroundCheckNegativeOffset, layerMask)
+            || Physics2D.Raycast(transform.position - new Vector3(characterWidth, 0f, 0f), -Vector3.up, distToGround + groundCheckingOffset - jumpGroundCheckNegativeOffset, layerMask)
+            )
         {
             jumpSpent = false;
             wasGrounded = true;
@@ -438,8 +443,6 @@ public class PlayerPhysics : MonoBehaviour {
                 checkHeavyAttackUp = false;
             }
         }
-
-
     }
 
     public void CheckForQuickRelease()
