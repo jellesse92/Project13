@@ -47,7 +47,6 @@ public class PlayerPhysics : MonoBehaviour {
 
     //Ground detecction related to jumping
     float jumpGroundCheckNegativeOffset = 0f;
-    bool jumped = false;
     bool jumpSpent = false;
 
     protected void Start () {
@@ -203,7 +202,6 @@ public class PlayerPhysics : MonoBehaviour {
     void CancelWaitJump()
     {
         jumpGroundCheckNegativeOffset = 0f;
-        jumped = true;
         groundedGraceTimeInvoked = false;
         CancelInvoke("CancelWasGrounded");
     }
@@ -390,9 +388,9 @@ public class PlayerPhysics : MonoBehaviour {
         if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround +groundCheckingOffset - jumpGroundCheckNegativeOffset, layerMask))
         {
             jumpSpent = false;
-            jumped = false;
             wasGrounded = true;
-
+            CancelInvoke("CancelWasGrounded");
+            groundedGraceTimeInvoked = false;
             return true;
         }
         else if (!groundedGraceTimeInvoked)
@@ -401,7 +399,7 @@ public class PlayerPhysics : MonoBehaviour {
             Invoke("CancelWasGrounded", GROUNDED_GRACE_TIME);
         }
 
-        if (wasGrounded && !jumped)
+        if (wasGrounded && !jumpSpent)
             return true;
 
         return false;
