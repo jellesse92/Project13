@@ -13,7 +13,7 @@ public class ShadowSpriteGenerator : MonoBehaviour {
 
     public GameObject shadow;
     public GameObject shadowSprite;
-    float magnitudeShadowChange = 0.5f;
+    float magnitudeShadowChange = 1f;
     Vector3 shadowScale;
     int layerMask;
     GameObject spriteToCopy;
@@ -44,7 +44,7 @@ public class ShadowSpriteGenerator : MonoBehaviour {
     void RayCastShadow(){
         float scaleChange;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, -Vector3.up, 40, layerMask);
-        //Debug.Log(hit.distance);
+
         if (hit && hit.distance > centerToShadowOffSet)
         {
             scaleChange = (1 / Mathf.Clamp(Mathf.Log(hit.distance - centerToShadowOffSet), 1, 30));
@@ -52,13 +52,15 @@ public class ShadowSpriteGenerator : MonoBehaviour {
             shadow.transform.localScale = new Vector3(shadowScale.x * scaleChange, shadowScale.y * scaleChange, shadowScale.z);
         }
        
-        if (enableShadowSprite && hit.distance > centerToShadowOffSet)
+        if (lightSource && enableShadowSprite && hit.distance > centerToShadowOffSet)
         {
             Vector3 newPosition = shadowSprite.transform.position;
             newPosition.y = transform.position.y - (hit.distance - centerToShadowOffSet) * 2 - shadowSpriteOffSet;
-            shadowSprite.transform.position = newPosition;            
-        }        
+            shadowSprite.transform.position = newPosition;
+        }
     }
+
+
     void InteractLightSource()
     {        
         float distanceDifference = transform.parent.position.x - lightSource.position.x;
@@ -71,6 +73,10 @@ public class ShadowSpriteGenerator : MonoBehaviour {
         shadowSprite.transform.localPosition = newPosition;
         shadowSprite.GetComponent<Renderer>().sharedMaterial.SetFloat("_HorizontalSkew", horizontalShear);
 
+        Color newColor = shadowSprite.GetComponent<SpriteRenderer>().color;
+        float newAlpha = Mathf.Abs(1 - (Mathf.Clamp(Mathf.Abs(horizontalShear),0,3) / 3));
+        newColor.a = Mathf.Clamp01(newAlpha);
+        shadowSprite.GetComponent<SpriteRenderer>().color = newColor;
     }
     public void SendLightSource(Transform newlightSource)
     {
