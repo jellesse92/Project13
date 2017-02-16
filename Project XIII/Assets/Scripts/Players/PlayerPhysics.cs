@@ -46,9 +46,13 @@ public class PlayerPhysics : MonoBehaviour {
     //Ground detection delay for continuing ground attacks off ledge
     bool groundedGraceTimeInvoked = false;
 
-    //Ground detecction related to jumping
+    //Ground detection related to jumping
     float jumpGroundCheckNegativeOffset = 0f;
     bool jumpSpent = false;
+
+    //Ground detecion related to movement skills
+    bool moveSkillPerformed = false;
+    bool moveSkillDelayCheck = false;
 
     protected void Start () {
         myAnimator = GetComponent<Animator>();
@@ -146,9 +150,18 @@ public class PlayerPhysics : MonoBehaviour {
 
     public virtual void MovementSkill(float xMove, float yMove)
     {
+        moveSkillPerformed = true;
+        moveSkillDelayCheck = true;
+        Debug.Log("here");
+        Invoke("EndMoveSkillDelayCheck", JUMP_RAY_RESTRAIN_TIME);
         if (!cannotMovePlayer)
             return;
         //This function is used for when specific class movement based skills
+    }
+
+    void EndMoveSkillDelayCheck()
+    {
+        moveSkillDelayCheck = false;
     }
 
     protected void Movement()
@@ -194,8 +207,6 @@ public class PlayerPhysics : MonoBehaviour {
                 myAnimator.SetTrigger("jumpForward");
             else
                 myAnimator.SetTrigger("jumpIdle");
-
-            //Debug.Log(GetComponent<Rigidbody2D>().velocity.y);
             
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0, physicStats.jumpForce), ForceMode2D.Impulse);
         }
@@ -237,10 +248,7 @@ public class PlayerPhysics : MonoBehaviour {
         if (!cannotAttack)
         {
 
-            if (isJumping 
-                || (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Jump Start Foward")
-                || myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Jump Idle"))
-                || myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Jump Start Idle"))
+            if (isJumping)
                 myAnimator.SetTrigger("airQuickAttack");
             else
                 myAnimator.SetTrigger("quickAttack");
@@ -250,10 +258,7 @@ public class PlayerPhysics : MonoBehaviour {
     {       
         if (!cannotAttack)
         {
-            if (isJumping 
-                || (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Jump Start Foward")
-                || myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Jump Idle"))
-                || myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Jump Start Idle"))
+            if (isJumping)
                 myAnimator.SetTrigger("airHeavyAttack");
             else
                 myAnimator.SetTrigger("heavyAttack");
@@ -396,6 +401,10 @@ public class PlayerPhysics : MonoBehaviour {
             wasGrounded = true;
             CancelInvoke("CancelWasGrounded");
             groundedGraceTimeInvoked = false;
+
+            if (!moveSkillDelayCheck)
+                moveSkillPerformed = false;
+
             return true;
         }
         else if (!groundedGraceTimeInvoked)
@@ -404,7 +413,7 @@ public class PlayerPhysics : MonoBehaviour {
             Invoke("CancelWasGrounded", GROUNDED_GRACE_TIME);
         }
 
-        if (wasGrounded && !jumpSpent)
+        if (wasGrounded && !jumpSpent && !moveSkillPerformed)
             return true;
 
         return false;
