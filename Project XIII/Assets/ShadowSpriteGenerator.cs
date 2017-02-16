@@ -68,7 +68,7 @@ public class ShadowSpriteGenerator : MonoBehaviour {
         float horizontalShear = distanceDifference * characterFacing * magnitudeShadowChange;
 
         Vector3 newPosition = shadowSprite.transform.localPosition;
-        newPosition.x = horizontalShear * 3;
+        newPosition.x = horizontalShear * 2.9f;
 
         shadowSprite.transform.localPosition = newPosition;
         shadowSprite.GetComponent<Renderer>().sharedMaterial.SetFloat("_HorizontalSkew", horizontalShear);
