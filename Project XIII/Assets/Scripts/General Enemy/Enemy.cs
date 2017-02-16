@@ -5,6 +5,8 @@ using System.Collections.Generic;
 //Class to be inherited by all enemy scripts
 public class Enemy : MonoBehaviour {
 
+    const float END_PURSUIT_TIME = 2f;                  //Time to end pursuit based on loss of sight
+
     HashSet<GameObject> playersInView = new HashSet<GameObject>();
 
     protected GameObject centerObjectPosition;          //use to get center of enemy, might be different for each child
@@ -135,6 +137,7 @@ public class Enemy : MonoBehaviour {
         if(health <= 0)
             anim.SetTrigger("revive");
 
+        CancelInvoke("RemoveTarget");
         isInvincible = false;
         dead = false;
 
@@ -281,7 +284,11 @@ public class Enemy : MonoBehaviour {
 
         return null;
     }
-    
+
+    /*
+     * TARGET DETECTION FUNCTIONS 
+     */
+
     //Sets the target player
     public void SetTarget(GameObject tar)
     {
@@ -290,6 +297,8 @@ public class Enemy : MonoBehaviour {
     
     public void AddTargetList(GameObject tar)
     {
+        if (tar == target)
+            CancelInvoke("RemoveTarget");
         if (playerList == null)
             playerList = tar.transform.parent.gameObject;
         if (!playersInView.Contains(tar))
@@ -311,9 +320,24 @@ public class Enemy : MonoBehaviour {
                 }
             }
             else
-                target = null;
+            {
+                if (!target.GetComponent<PlayerProperties>().alive)
+                    target = null;
+                else
+                    Invoke("RemoveTarget", END_PURSUIT_TIME);
+            }
+
         }
     }
+
+    void RemoveTarget()
+    {
+        target = null;
+    }
+
+    /*
+     * END TARGET DETECTION FUNCTIONS 
+     */
 
     //Sets if enemy is in attack range
     public void SetAttackInRange(bool b)
