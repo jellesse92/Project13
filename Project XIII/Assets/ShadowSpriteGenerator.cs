@@ -19,7 +19,7 @@ public class ShadowSpriteGenerator : MonoBehaviour {
     GameObject spriteToCopy;
     Transform lightSource;
 
-	void Start () {
+    void Start () {
         layerMask = (LayerMask.GetMask("Default", "Item"));
         spriteToCopy = transform.parent.gameObject;
 
@@ -78,6 +78,12 @@ public class ShadowSpriteGenerator : MonoBehaviour {
         newColor.a = Mathf.Clamp01(newAlpha) * 0.7f;
         shadowSprite.GetComponent<SpriteRenderer>().color = newColor;
     }
+
+    public void ChangeFacingDirection()
+    {
+        InteractLightSource();
+    }
+
     public void SendLightSource(Transform newlightSource)
     {
         lightSource = newlightSource;        

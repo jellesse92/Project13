@@ -54,6 +54,9 @@ public class PlayerPhysics : MonoBehaviour {
     bool moveSkillPerformed = false;
     bool moveSkillDelayCheck = false;
 
+    //Using for turning
+    ShadowSpriteGenerator shadowSpriteGenerator;
+
     protected void Start () {
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -81,6 +84,12 @@ public class PlayerPhysics : MonoBehaviour {
         distToGround = GetComponent<Collider2D>().bounds.extents.y;
         characterWidth = GetComponent<Collider2D>().bounds.extents.x;
         layerMask = (LayerMask.GetMask("Default","Item"));
+
+        foreach (Transform child in transform)
+        {
+            if (child.name == "Shadow")
+                shadowSpriteGenerator = child.GetComponent<ShadowSpriteGenerator>();
+        }
 
         ClassSpecificStart();
     }
@@ -299,6 +308,8 @@ public class PlayerPhysics : MonoBehaviour {
         scale.x *= -1;
 
         transform.localScale = scale;
+
+        shadowSpriteGenerator.ChangeFacingDirection();
     }
 
     protected void KnockBack(float knockBackForce)
