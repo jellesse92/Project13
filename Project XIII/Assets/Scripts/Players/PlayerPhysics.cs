@@ -309,7 +309,8 @@ public class PlayerPhysics : MonoBehaviour {
 
         transform.localScale = scale;
 
-        shadowSpriteGenerator.ChangeFacingDirection();
+        if(shadowSpriteGenerator != null)
+            shadowSpriteGenerator.ChangeFacingDirection();
     }
 
     protected void KnockBack(float knockBackForce)
