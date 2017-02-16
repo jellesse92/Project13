@@ -161,6 +161,8 @@ public class PlayerPhysics : MonoBehaviour {
 
     void Crouching()
     {
+        if (Mathf.Abs(myKeyPress.horizontalAxisValue) > X_ABS_ACCEPT)           //Prioritze motion over crouching
+            return;
         if (myKeyPress.verticalAxisValue < previousVertical && myKeyPress.verticalAxisValue < 0 && myKeyPress.verticalAxisValue < Y_NEGATIVE_ACCEPT)
             myAnimator.SetBool("crouch", true);
         else if (myKeyPress.verticalAxisValue > previousVertical || myKeyPress.verticalAxisValue >= 0 && myKeyPress.verticalAxisValue >= Y_NEGATIVE_ACCEPT)
