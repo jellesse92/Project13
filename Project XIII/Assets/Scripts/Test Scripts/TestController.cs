@@ -13,7 +13,10 @@ public class TestController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        playerList = GameObject.FindGameObjectWithTag("PlayerList").transform;
+        if (testingMode)
+            playerList = GameObject.FindGameObjectWithTag("PlayerList").transform;
+        else
+            this.enabled = false;
 	}
 	
 	// Update is called once per frame
