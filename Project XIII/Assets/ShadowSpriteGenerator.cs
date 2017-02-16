@@ -62,7 +62,9 @@ public class ShadowSpriteGenerator : MonoBehaviour {
 
 
     void InteractLightSource()
-    {        
+    {
+        if (lightSource == null)
+            return;
         float distanceDifference = transform.parent.position.x - lightSource.position.x;
         float characterFacing = transform.parent.localScale.x / Mathf.Abs(transform.parent.localScale.x);
         float horizontalShear = distanceDifference * characterFacing * magnitudeShadowChange;
