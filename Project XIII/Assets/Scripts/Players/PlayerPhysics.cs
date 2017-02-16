@@ -13,8 +13,8 @@ public class PlayerPhysics : MonoBehaviour {
     const float DEFAULT_GRAVITY_FORCE = 8f;
     const float MIN_GRAVITY_FORCE = 4f;
 
-    const float JUMP_CD = .1f;
-    const float JUMP_GRACE_TIME = .3f;
+    const float JUMP_RAY_RESTRAIN_TIME = .2f;
+    const float GROUNDED_GRACE_TIME = .3f;
 
     protected Rigidbody2D myRigidbody;
     protected Animator myAnimator;
@@ -39,10 +39,14 @@ public class PlayerPhysics : MonoBehaviour {
     //Ground detection
     float distToGround;                                 //Distance from the ground
     int layerMask;                                      //Layers to check for ground
-    public float groundCheckingOffset = 2f;
-    bool jumpedRecently = false;
     bool wasGrounded = false;
-    bool jumpGraceTimeInvoked = false;
+    public float groundCheckingOffset = 2f;
+
+    //Ground detection delay for continuing ground attacks off ledge
+    bool groundedGraceTimeInvoked = false;
+
+    //Ground detecction related to jumping
+    float jumpGroundCheckNegativeOffset = 0f;
     bool jumped = false;
     bool jumpSpent = false;
 
@@ -172,15 +176,17 @@ public class PlayerPhysics : MonoBehaviour {
 
     protected void Jump()
     {
-        if (!isJumping && !cannotJump && !jumpedRecently)
+        if (!jumpSpent && !cannotJump)
         {
             VelocityY(0);
             CancelInvoke("CancelWasGrounded");
             CancelWasGrounded();
-            jumpedRecently = true;
-            Invoke("CancelWaitJump", JUMP_CD);
 
+            Invoke("CancelWaitJump", JUMP_RAY_RESTRAIN_TIME);
+            jumpGroundCheckNegativeOffset = 1f;
             isJumping = true;
+            jumpSpent = true;
+
             GetComponent<Rigidbody2D>().gravityScale = MIN_GRAVITY_FORCE;
 
             if (Mathf.Abs(myKeyPress.horizontalAxisValue) > 0.1)
@@ -196,9 +202,9 @@ public class PlayerPhysics : MonoBehaviour {
 
     void CancelWaitJump()
     {
-        jumpedRecently = false;
+        jumpGroundCheckNegativeOffset = 0f;
         jumped = true;
-        jumpGraceTimeInvoked = false;
+        groundedGraceTimeInvoked = false;
         CancelInvoke("CancelWasGrounded");
     }
 
@@ -381,16 +387,18 @@ public class PlayerPhysics : MonoBehaviour {
 
     public bool isGrounded()
     {
-        if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround +groundCheckingOffset, layerMask))
+        if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround +groundCheckingOffset - jumpGroundCheckNegativeOffset, layerMask))
         {
-            wasGrounded = true;
+            jumpSpent = false;
             jumped = false;
+            wasGrounded = true;
+
             return true;
         }
-        else if (!jumpGraceTimeInvoked)
+        else if (!groundedGraceTimeInvoked)
         {
-            jumpGraceTimeInvoked = true;
-            Invoke("CancelWasGrounded", JUMP_GRACE_TIME);
+            groundedGraceTimeInvoked = true;
+            Invoke("CancelWasGrounded", GROUNDED_GRACE_TIME);
         }
 
         if (wasGrounded && !jumped)
@@ -402,7 +410,7 @@ public class PlayerPhysics : MonoBehaviour {
     void CancelWasGrounded()
     {
         wasGrounded = false;
-        jumpGraceTimeInvoked = false;
+        groundedGraceTimeInvoked = false;
     }
 
     public void CancelWasGroundedInvoke()
