@@ -29,6 +29,10 @@ public class BasicTurretEnemy : EnemyPhysics
         }
     }
 
+    public override void OnTriggerEnter2D(Collider2D col){}
+
+    public override void OnTriggerExit2D(Collider2D collision){}
+
     public override void ApproachTarget()
     {
 

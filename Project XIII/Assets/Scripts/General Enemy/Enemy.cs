@@ -114,27 +114,19 @@ public class Enemy : MonoBehaviour {
     }
 
     //Call when enter a trigger field. If entering player trigger field and visible, activate pursuit status
-    void OnTriggerEnter2D(Collider2D col)
+    public virtual void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag == "Detection Field")
         {
             target = col.transform.parent.gameObject;
-
-            if (!playersInView.Contains(target))
-                playersInView.Add(target);
-
-            if (playerList == null)
-                playerList = target.transform.parent.gameObject;
+            AddTargetList(target);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public virtual void OnTriggerExit2D(Collider2D collision)
     {
         if(collision.tag == "Detection Field")
-        {
-            if (playersInView.Contains(collision.transform.parent.gameObject))
-                playersInView.Remove(collision.transform.parent.gameObject);
-        }
+            RemoveTargetList(collision.transform.parent.gameObject);
     }
 
     //Resets position and alert status
@@ -231,8 +223,6 @@ public class Enemy : MonoBehaviour {
         stunned = true;
         yield return new WaitForSeconds(currentStunMultiplier * stunEffectiveness);
 
-        
-
         if (!flyingEnemy && !IsGrounded())
             waitForRemoveStunLand = true;
         else
@@ -298,6 +288,32 @@ public class Enemy : MonoBehaviour {
         target = tar;
     }
     
+    public void AddTargetList(GameObject tar)
+    {
+        if (playerList == null)
+            playerList = tar.transform.parent.gameObject;
+        if (!playersInView.Contains(tar))
+            playersInView.Add(tar);
+    }
+
+    public void RemoveTargetList(GameObject tar)
+    {
+        if (playersInView.Contains(tar))
+            playersInView.Remove(tar);
+        if(target == tar)
+        {
+            if (playersInView.Count > 0)
+            {
+                foreach (GameObject newTarget in playersInView)
+                {
+                    target = newTarget;
+                    break;
+                }
+            }
+            else
+                target = null;
+        }
+    }
 
     //Sets if enemy is in attack range
     public void SetAttackInRange(bool b)
