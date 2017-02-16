@@ -74,8 +74,8 @@ public class ShadowSpriteGenerator : MonoBehaviour {
         shadowSprite.GetComponent<Renderer>().sharedMaterial.SetFloat("_HorizontalSkew", horizontalShear);
 
         Color newColor = shadowSprite.GetComponent<SpriteRenderer>().color;
-        float newAlpha = Mathf.Abs(1 - (Mathf.Clamp(Mathf.Abs(horizontalShear),0,3) / 3));
-        newColor.a = Mathf.Clamp01(newAlpha);
+        float newAlpha = Mathf.Abs(1 - (Mathf.Clamp(Mathf.Abs(horizontalShear),0,5) / 5));
+        newColor.a = Mathf.Clamp01(newAlpha) * 0.7f;
         shadowSprite.GetComponent<SpriteRenderer>().color = newColor;
     }
     public void SendLightSource(Transform newlightSource)
