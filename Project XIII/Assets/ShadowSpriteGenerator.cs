@@ -9,10 +9,11 @@ public class ShadowSpriteGenerator : MonoBehaviour {
     public bool changingSprite = true;
     public bool enableShadowSprite = true;
     public bool changingHeight = true;
+    public bool lightInteraction = true;
 
     public GameObject shadow;
     public GameObject shadowSprite;
-
+    float magnitudeShadowChange = 0.5f;
     Vector3 shadowScale;
     int layerMask;
     GameObject spriteToCopy;
@@ -26,16 +27,17 @@ public class ShadowSpriteGenerator : MonoBehaviour {
             shadowSprite.SetActive(false);
 
         shadowScale = shadow.transform.localScale;
+        shadowSprite.GetComponent<Renderer>().sharedMaterial.SetFloat("_HorizontalSkew", -0.7f);
     }
 
     void FixedUpdate(){
         if(changingHeight)
             RayCastShadow();
 
-        if (changingSprite)
+        if (enableShadowSprite && changingSprite)
             shadowSprite.GetComponent<SpriteRenderer>().sprite = spriteToCopy.GetComponent<SpriteRenderer>().sprite;
 
-        if (lightSource)
+        if (lightSource && enableShadowSprite)
             InteractLightSource();
     }
 
@@ -58,14 +60,14 @@ public class ShadowSpriteGenerator : MonoBehaviour {
         }        
     }
     void InteractLightSource()
-    {
-        
+    {        
         float distanceDifference = transform.parent.position.x - lightSource.position.x;
         float characterFacing = transform.parent.localScale.x / Mathf.Abs(transform.parent.localScale.x);
-        float horizontalShear = distanceDifference * characterFacing;
+        float horizontalShear = distanceDifference * characterFacing * magnitudeShadowChange;
+
         Vector3 newPosition = shadowSprite.transform.localPosition;
         newPosition.x = horizontalShear * 3;
-        Debug.Log(horizontalShear * 3);
+
         shadowSprite.transform.localPosition = newPosition;
         shadowSprite.GetComponent<Renderer>().sharedMaterial.SetFloat("_HorizontalSkew", horizontalShear);
 

@@ -152,7 +152,6 @@ public class PlayerPhysics : MonoBehaviour {
     {
         moveSkillPerformed = true;
         moveSkillDelayCheck = true;
-        Debug.Log("here");
         Invoke("EndMoveSkillDelayCheck", JUMP_RAY_RESTRAIN_TIME);
         if (!cannotMovePlayer)
             return;
