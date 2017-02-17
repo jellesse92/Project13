@@ -131,10 +131,8 @@ public class PlayerPhysics : MonoBehaviour {
 
                 if (myKeyPress.dashPress)
                     MovementSkill(xMove, yMove);
-                /* Not all characters have a block move. disabled for now
                 if (myKeyPress.blockPress)
-                    Block();
-                    */
+                    Heal();
                 CheckForButtonReleases();
             }
         }
@@ -143,6 +141,7 @@ public class PlayerPhysics : MonoBehaviour {
         Landing();
         
     }
+
 
     public virtual void ClassSpecificStart()
     {
@@ -175,6 +174,11 @@ public class PlayerPhysics : MonoBehaviour {
         moveSkillDelayCheck = false;
     }
 
+    void Heal()
+    {
+        if (playerProperties.healingItem > 0 && !myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Ground.Item Use"))
+            myAnimator.SetTrigger("itemUse");
+    }
     protected void Movement()
     {
         if (!cannotMovePlayer && !myAnimator.GetBool("crouch"))

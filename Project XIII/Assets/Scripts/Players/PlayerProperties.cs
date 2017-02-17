@@ -36,6 +36,7 @@ public class PlayerProperties : MonoBehaviour{
     public int lives = 3;
     public int maxHealth = 100;
     public int currentHealth = 100;
+    public int healingItem = 3;
     public int cash = 0;
 
     public bool isKnockedInAir = false;
@@ -312,5 +313,11 @@ public class PlayerProperties : MonoBehaviour{
     public void MakeNotInvul()
     {
         isInvincibile = false;
+    }
+
+    public void Heal()
+    {
+        currentHealth = maxHealth;
+        healingItem--;
     }
 }
