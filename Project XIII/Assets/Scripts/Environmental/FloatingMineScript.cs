@@ -42,6 +42,11 @@ public class FloatingMineScript : MonoBehaviour {
             col.gameObject.GetComponent<PlayerProperties>().TakeDamage(DAMAGE);
             GetComponent<SpriteRenderer>().enabled = false;
             GetComponent<Collider2D>().enabled = false;
+            foreach (Transform child in transform)
+            {
+                if (child.name == "Shadow")
+                    child.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -49,6 +54,11 @@ public class FloatingMineScript : MonoBehaviour {
     {
         GetComponent<SpriteRenderer>().enabled = true;
         GetComponent<Collider2D>().enabled = true;
+        foreach (Transform child in transform)
+        {
+            if (child.name == "Shadow")
+                child.gameObject.SetActive(true);
+        }
     } 
 
     public void StopFlashing()
