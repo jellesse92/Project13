@@ -319,5 +319,7 @@ public class PlayerProperties : MonoBehaviour{
     {
         currentHealth = maxHealth;
         healingItem--;
+        if (psScript != null)
+            psScript.GetComponent<PlayerStatusUIScript>().SetHealth(playerNumber, 100);
     }
 }
