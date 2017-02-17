@@ -12,7 +12,7 @@ public class PlayerParticleEffects : ParticleEffects {
     public GameObject jumpDust;
     public GameObject runningDust;
     public GameObject landingDust;
-
+    public GameObject heal;
     //public GameObject heavyHitImpact;
 
     protected override void ChildSpecificAwake() //Awake since other scripts will need the variables here at start
@@ -34,9 +34,11 @@ public class PlayerParticleEffects : ParticleEffects {
         InstantiateParticle(ref dashAfterImage);
         InstantiateParticle(ref jumpDust);
         InstantiateParticle(ref runningDust);
-        InstantiateParticle(ref landingDust);        
+        InstantiateParticle(ref landingDust);
+        InstantiateParticle(ref heal);
+
     }
-  
+
     public void PlayParticleQuickAttack()
     {
         PlayParticle(quickAttack);
@@ -77,5 +79,10 @@ public class PlayerParticleEffects : ParticleEffects {
         }
         else
             dashAfterImage.GetComponent<ParticleSystem>().Stop();
+    }
+
+    public void PlayParticleHeal()
+    {
+        PlayParticle(heal);
     }
 }
