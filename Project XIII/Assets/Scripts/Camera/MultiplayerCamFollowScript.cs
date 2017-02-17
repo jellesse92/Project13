@@ -144,13 +144,19 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
             if(in2DMode)
                 cameraDestination.y = Mathf.Max(lowestPointY + cam.orthographicSize-5, cameraDestination.y);
 
-            cameraDestination.y -= 5f;
-                    
-            transform.position = Vector3.Slerp(transform.position, cameraDestination, followDelay);
+            if (crouching)
+                cameraDestination.y -= (5f + CROUCHING_INCREAMENT);
+            else
+                cameraDestination.y -= 5f;
+            
+            Vector3 newCameraDestination = Vector3.Slerp(transform.position, cameraDestination, followDelay);
+            newCameraDestination.z = transform.position.z;
+            transform.position = Vector3.SmoothDamp(transform.position, newCameraDestination, ref velocity, dampTime);
 
             if ((cameraDestination - transform.position).magnitude <= 0.05f)
                 transform.position = cameraDestination;
         }
+
     }
 
     void SetCameraWallActive(bool b)
