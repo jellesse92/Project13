@@ -81,7 +81,8 @@ public class EnemyPhysics : Enemy{
     //Runs behavior of enemy engaged with player
     public virtual void RunEngagedBehavior()
     {
-
+        if (RunSpecificEngagedBehavior())
+            return;
         if (!inAttackRange && canMove)
             ApproachTarget();
         else if (canAttack && !attackDelay)
@@ -98,6 +99,15 @@ public class EnemyPhysics : Enemy{
         {
             anim.SetInteger("x", 0);
         }
+    }
+
+    public virtual bool RunSpecificEngagedBehavior()
+    {
+        return false;
+        //Behavior that is neither approaching the target when in range
+        //Running
+        //Evasive maneuvers. ETC. Ignores ability to attack
+
     }
 
     //Check when to next check if enemy bounced

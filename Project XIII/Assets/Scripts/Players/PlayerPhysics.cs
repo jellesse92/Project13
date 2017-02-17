@@ -161,12 +161,18 @@ public class PlayerPhysics : MonoBehaviour {
 
     public virtual void MovementSkill(float xMove, float yMove)
     {
-        moveSkillPerformed = true;
-        moveSkillDelayCheck = true;
-        Invoke("EndMoveSkillDelayCheck", JUMP_RAY_RESTRAIN_TIME);
+        MoveSkillExecuted();
         if (!cannotMovePlayer)
             return;
         //This function is used for when specific class movement based skills
+    }
+
+    public void MoveSkillExecuted()
+    {
+        CancelInvoke("EndMoveSkillDelayCheck");
+        moveSkillPerformed = true;
+        moveSkillDelayCheck = true;
+        Invoke("EndMoveSkillDelayCheck", JUMP_RAY_RESTRAIN_TIME);
     }
 
     void EndMoveSkillDelayCheck()

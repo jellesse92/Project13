@@ -5,6 +5,7 @@ using UnityEngine;
 public class BasicMeleeEnemy : EnemyPhysics{
 
     public GameObject meleeAttackBox;
+    public bool runnerEnabled = false;               //May randomly decide to run if below a certain amount of health
     
     protected override void EnemySpecificStart()
     {

@@ -236,6 +236,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     {
         attackScript.Reset();
         attackScript.SetAttackType("drag");
+        MoveSkillExecuted();
     }
 
     public void EndDragAttack()
