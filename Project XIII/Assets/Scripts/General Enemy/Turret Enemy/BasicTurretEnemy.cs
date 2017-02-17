@@ -13,6 +13,8 @@ public class BasicTurretEnemy : EnemyPhysics
     public Transform projectileOrigin;                      //Where projectiles should spawn from
 
     bool attackOnCD = false;
+    bool acquiredTargetLocation = false;
+    Vector3 targetLocation = new Vector3();
 
     // Use this for initialization
     void Start()
@@ -35,18 +37,15 @@ public class BasicTurretEnemy : EnemyPhysics
 
     public override void ApproachTarget()
     {
-
         if (target.transform.position.x > transform.position.x)
         {
             if (!facingRight)
                 Turn();
-
         }
         else if (target.transform.position.x < transform.position.x)
         {
             if (facingRight)
                 Turn();
-
         }
     }
 
@@ -55,6 +54,8 @@ public class BasicTurretEnemy : EnemyPhysics
 
         if (!inAttackRange && canMove)
             ApproachTarget();
+        else if (!acquiredTargetLocation)
+            AcquireTarget();
         else if (canAttack && !attackOnCD)
             ExecuteAttack();
     }
@@ -75,6 +76,12 @@ public class BasicTurretEnemy : EnemyPhysics
         Invoke("SetCanAttackTrue", RANGED_ATTACK_COOLDOWN);
     }
 
+    //NOTE TO SELF, CONSIDER WHAT HAPPENS WHEN STUNNED
+    void AcquireTarget()
+    {
+        acquiredTargetLocation = true;
+    }
+
     void SetCanAttackTrue()
     {
         canAttack = true;
@@ -85,6 +92,7 @@ public class BasicTurretEnemy : EnemyPhysics
         if (currentAmmo > 0)
         {
             base.ExecuteAttack();
+            acquiredTargetLocation = false;
             attackOnCD = true;
             Invoke("EndAttackCD", RANGED_ATTACK_COOLDOWN);
         }
