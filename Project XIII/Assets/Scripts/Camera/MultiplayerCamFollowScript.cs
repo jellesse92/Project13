@@ -12,6 +12,8 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     const float ZOOM_OUT_DELTA = .01f;                         //Amount to zoom when zooming in or out per update
     const float ZOOM_IN_DELTA = .003f;
 
+    const float CROUCHING_INCREAMENT = 4;
+
     public float xOffset = 6;
     public float yOffset = 3;
 
@@ -27,7 +29,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     float lastOrthographicSize = 0f;                            //Keeps track of the last orthographic size
     bool orthoTransitioning = false;
     bool orthoForced = false;                                   //If orthographic size has to be forced  
-
+    bool crouching = false;
     //Cutscene variables
     bool forcingMovement = false;                               //For cutscene manager to force movement of camera
     bool targetSet = false;                                     //For if there is a target destination
@@ -107,11 +109,18 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
         else
             destination.x += xOffset;
 
-        destination.y += yOffset;        
+        if(crouching)
+            destination.y += yOffset - CROUCHING_INCREAMENT;
+        else
+            destination.y += yOffset;     
         destination.z = transform.position.z;
         transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, dampTime);
     }
 
+    public void SetCrouch(bool value)
+    {
+        crouching = value;
+    }
     void MultiplayerCamera()
     {
         Vector3 midpoint = GetPlayersMidpoint();

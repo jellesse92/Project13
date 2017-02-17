@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+
 public class PlayerPhysics : MonoBehaviour {
     //Variables for bad controller callibration
-    float Y_NEGATIVE_ACCEPT = -.2f;
-    float X_ABS_ACCEPT = .2f;
-
-    //Use for crouching
-    float previousVertical = 0;
+    const float Y_NEGATIVE_ACCEPT = -.2f;
+    const float X_ABS_ACCEPT = .2f;
 
     //Constants for changing gravity force for jumping
     const float DEFAULT_GRAVITY_FORCE = 8f;
@@ -15,6 +13,10 @@ public class PlayerPhysics : MonoBehaviour {
 
     const float JUMP_RAY_RESTRAIN_TIME = .2f;
     const float GROUNDED_GRACE_TIME = .3f;
+
+    //Use for crouching
+    float previousVertical = 0;
+    MultiplayerCamFollowScript cameraScript;
 
     protected Rigidbody2D myRigidbody;
     protected Animator myAnimator;
@@ -58,6 +60,7 @@ public class PlayerPhysics : MonoBehaviour {
     ShadowSpriteGenerator shadowSpriteGenerator;
 
     protected void Start () {
+        cameraScript = Camera.main.transform.parent.GetComponent<MultiplayerCamFollowScript>();
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
         playerProperties = GetComponent<PlayerProperties>();
@@ -188,9 +191,16 @@ public class PlayerPhysics : MonoBehaviour {
     void Crouching()
     {
         if (myKeyPress.verticalAxisValue < previousVertical && myKeyPress.verticalAxisValue < 0 && myKeyPress.verticalAxisValue < Y_NEGATIVE_ACCEPT && (Mathf.Abs(myKeyPress.horizontalAxisValue) <= X_ABS_ACCEPT))
+        {
+            cameraScript.SetCrouch(true);
             myAnimator.SetBool("crouch", true);
+
+        }
         else if (myKeyPress.verticalAxisValue > previousVertical || myKeyPress.verticalAxisValue >= 0 && myKeyPress.verticalAxisValue >= Y_NEGATIVE_ACCEPT)
+        {
+            cameraScript.SetCrouch(false);
             myAnimator.SetBool("crouch", false);
+        }
         previousVertical = myKeyPress.verticalAxisValue;
     }
 
