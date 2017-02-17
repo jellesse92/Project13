@@ -280,7 +280,7 @@ public class PlayerProperties : MonoBehaviour{
     {
         isInvincibile = true;
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 5; i++)
         {
             GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .75f);
             yield return new WaitForSeconds(damageImmuneTime/7f);

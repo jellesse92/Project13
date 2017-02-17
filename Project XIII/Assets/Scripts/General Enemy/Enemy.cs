@@ -5,7 +5,8 @@ using System.Collections.Generic;
 //Class to be inherited by all enemy scripts
 public class Enemy : MonoBehaviour {
 
-    const float END_PURSUIT_TIME = 2f;                  //Time to end pursuit based on loss of sight
+    const float END_PURSUIT_TIME = 1.3f;                //Time to end pursuit based on loss of sight
+    const float ATTACK_DELAY_AFTER_STUN_TIME = .5f;     //Time delayed from attacking after having been stunned
 
     HashSet<GameObject> playersInView = new HashSet<GameObject>();
 
@@ -34,6 +35,7 @@ public class Enemy : MonoBehaviour {
     protected bool stunned;                             //Determines if enemy is stunned
     protected bool isFrozen = false;                    //Determines if enemy is debuff frozen
     protected bool frozen;                              //Determines if enemy is not meant to move
+    protected bool attackDelay = false;                 //Attack should be delayed irrelevant to projection time
     float currentStunMultiplier;                        //Current stun time multiplier to be applied
 
     //Detection and Pursuit Variables
@@ -234,8 +236,17 @@ public class Enemy : MonoBehaviour {
 
     void RecoverFromStun()
     {
+        CancelInvoke("EndAttackDelay");
         anim.SetTrigger("stunRecovery");
         stunned = false;
+        attackDelay = true;
+        Invoke("EndAttackDelay", ATTACK_DELAY_AFTER_STUN_TIME);
+    }
+
+    void EndAttackDelay()
+    {
+        Debug.Log("testing");
+        attackDelay = false;
     }
 
     //Gets if enemy is visible or not

@@ -84,7 +84,7 @@ public class EnemyPhysics : Enemy{
 
         if (!inAttackRange && canMove)
             ApproachTarget();
-        else if (canAttack)
+        else if (canAttack && !attackDelay)
         {
             anim.SetInteger("x", 0);
             anim.SetTrigger("projectAttack");
