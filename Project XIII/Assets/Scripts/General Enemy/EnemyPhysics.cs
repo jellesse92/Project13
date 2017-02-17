@@ -94,6 +94,10 @@ public class EnemyPhysics : Enemy{
             else
                 Invoke("ExecuteAttack", attProjectionTime);
         }
+        else
+        {
+            anim.SetInteger("x", 0);
+        }
     }
 
     //Check when to next check if enemy bounced
