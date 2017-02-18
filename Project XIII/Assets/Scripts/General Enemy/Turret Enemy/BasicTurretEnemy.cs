@@ -131,8 +131,6 @@ public class BasicTurretEnemy : EnemyPhysics
                 projectileList.GetChild(i).gameObject.SetActive(true);
 
                 Vector3 projectileSpawnPoint = projectileOrigin.position;
-                if (!facingRight)
-                    projectileSpawnPoint = new Vector3(projectileSpawnPoint.x - 5f, projectileSpawnPoint.y, projectileSpawnPoint.z);
                 projectileList.GetChild(i).position = projectileSpawnPoint;
                 projectileList.GetChild(i).GetComponent<Rigidbody2D>().velocity = -(projectileSpawnPoint - new Vector3(targetLocation.x, targetLocation.y - 1f, targetLocation.z)).normalized * BULLET_SPEED;
                 return;
