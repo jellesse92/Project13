@@ -222,8 +222,12 @@ public class Enemy : MonoBehaviour {
             transform.parent.GetComponent<FightZoneLockScript>().ReportDead();
     }
 
+    //Run functions specific to enemy type that need to be reset for stuns
+    public virtual void SpecificStunCancel(){}
+
     IEnumerator ApplyStun()
     {
+        SpecificStunCancel();
         anim.SetTrigger("stun");
         stunned = true;
         yield return new WaitForSeconds(currentStunMultiplier * stunEffectiveness);
