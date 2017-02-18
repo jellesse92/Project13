@@ -38,7 +38,12 @@ public class ShadowSpriteGenerator : MonoBehaviour {
             shadowSprite.GetComponent<SpriteRenderer>().sprite = spriteToCopy.GetComponent<SpriteRenderer>().sprite;
 
         if (lightSource && enableShadowSprite)
+        {
+            shadowSprite.SetActive(true);
             InteractLightSource();
+        }
+        else
+            shadowSprite.SetActive(false);
     }
 
     void RayCastShadow(){
