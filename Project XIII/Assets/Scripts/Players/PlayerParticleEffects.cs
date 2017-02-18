@@ -13,6 +13,8 @@ public class PlayerParticleEffects : ParticleEffects {
     public GameObject runningDust;
     public GameObject landingDust;
     public GameObject heal;
+    public GameObject fireDamage;
+
     //public GameObject heavyHitImpact;
 
     protected override void ChildSpecificAwake() //Awake since other scripts will need the variables here at start
@@ -36,7 +38,7 @@ public class PlayerParticleEffects : ParticleEffects {
         InstantiateParticle(ref runningDust);
         InstantiateParticle(ref landingDust);
         InstantiateParticle(ref heal);
-
+        InstantiateParticle(ref fireDamage);
     }
 
     public void PlayParticleQuickAttack()

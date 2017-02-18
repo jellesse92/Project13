@@ -31,19 +31,23 @@ public class LavaDamage : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag != "Enemy")
+        if (col.tag == "Enemy")
         {
-            if (col.tag == "Player")
-                col.GetComponent<PlayerProperties>().TakeDamage(damage);
+            col.GetComponent<Enemy>().Damage(damage);
+            col.GetComponent<EnemyParticleEffects>().PlayParticle(col.GetComponent<EnemyParticleEffects>().fireDamage);
+        }
+        else if (col.tag == "Player")
+        {
+            col.GetComponent<PlayerProperties>().TakeDamage(damage);
+            col.GetComponent<PlayerParticleEffects>().PlayParticle(col.GetComponent<PlayerParticleEffects>().fireDamage);
         }
     }
 
     void OnTriggerStay2D(Collider2D col)
     {
-        if (col.tag != "Enemy")
-        {
-            if (col.tag == "Player")
-                col.GetComponent<PlayerProperties>().TakeDamage(damage);
-        }
+        if (col.tag == "Enemy")
+            col.GetComponent<Enemy>().Damage(damage);
+        else if (col.tag == "Player")
+            col.GetComponent<PlayerProperties>().TakeDamage(damage);
     }
 }
