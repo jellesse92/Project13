@@ -10,6 +10,11 @@ public class LavaDamage : MonoBehaviour {
     Transform cameraTransform;
     float lastCameraY;
     float deltaY;
+    float lastCameraX;
+    float deltaX;
+
+    Vector3 velocity = Vector3.zero;
+    Vector3 newPosition;
     // Use this for initialization
     void Start () {
         cameraTransform = Camera.main.transform;
@@ -26,6 +31,13 @@ public class LavaDamage : MonoBehaviour {
             deltaY = cameraTransform.position.y - lastCameraY;
             transform.position += Vector3.up * (deltaY * 1);
             lastCameraY = cameraTransform.position.y;
+
+            if (cameraTransform.position.x - transform.position.x > 40)
+            {
+                newPosition = new Vector3(cameraTransform.position.x - 40, transform.position.y, 0);
+                transform.position = Vector3.SmoothDamp(transform.position, newPosition, ref velocity, 0.15f);
+
+            }
         }
     }
 
