@@ -13,7 +13,7 @@ public class TestController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        if (testingMode)
+        if (testingMode && GameObject.FindGameObjectWithTag("PlayerList"))
             playerList = GameObject.FindGameObjectWithTag("PlayerList").transform;
         else
             this.enabled = false;
