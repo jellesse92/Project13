@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class GameData {
     public static GameData current;
+    public bool loaded;
     public int scene;
-    public Vector3 playerPosition;
+    public float playerPositionX;
+    public float playerPositionY;
 }

@@ -21,7 +21,7 @@ public static class DataManager{
         if (File.Exists(Application.persistentDataPath + "/data.sav"))
         {
             BinaryFormatter binaryFormatter = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/savedGames.gd", FileMode.Open);
+            FileStream file = File.Open(Application.persistentDataPath + "/data.sav", FileMode.Open);
             savedGame = (GameData)binaryFormatter.Deserialize(file);
             file.Close();
             GameData.current = savedGame;
