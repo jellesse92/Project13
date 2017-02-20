@@ -20,7 +20,7 @@ public class PlayerData
     public float positionX = 0;
     public float positionY = 0;
     public int level = 1;
-    public int money = 0;
+    public int souls = 0;
     public int strength = 1;
     public int defense = 1;
     public int speed = 1;
