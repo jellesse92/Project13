@@ -13,12 +13,15 @@ public class LevelUpUIManager : MonoBehaviour {
     public Text speed;
 
     PlayerData newPlayerStats;
+    int cost;
+
     // Use this for initialization
     void Start() {
-        UpdateUIText();
+        UpdateUITextUsingGameData();
+        newPlayerStats = GameData.current.player1;
     }
 
-    void UpdateUIText()
+    void UpdateUITextUsingGameData()
     {
         level.text = GameData.current.player1.level.ToString();
         souls.text = GameData.current.player1.souls.ToString();
@@ -55,21 +58,60 @@ public class LevelUpUIManager : MonoBehaviour {
         newPlayerStats.speed = Int32.Parse(speed.text);
     }
 
-    void IncreamentLevel()
-    {
-        level.text = (Int32.Parse(level.text) + 1).ToString();
-    }
-
-
-    void IncreamentStrength()
-
+    bool LevelUp() //return true if level up, return false if not enough souls to level
     {
         UpdateNewPlayerStats();
-        int cost = CalculateCost(newPlayerStats.level);
+        cost = CalculateCost(newPlayerStats.level);
 
-        //if (cost <)
-        strength.text = (Int32.Parse(strength.text) + 1).ToString();
+        if (newPlayerStats.souls >= cost)
+        {
+            newPlayerStats.level += 1;
+            newPlayerStats.souls -= cost;
+            return true;
+        }
+        return false;
     }
-    
-      
+   
+    public void IncreamentStrength()
+    {
+        if (LevelUp())
+        {
+            newPlayerStats.strength += 1;
+            UpdateUITextUsingNewStats();
+        }
+    }
+
+    public void IncreamentDefense()
+    {
+        if (LevelUp())
+        {
+            newPlayerStats.defense += 1;
+            UpdateUITextUsingNewStats();
+        }
+    }
+
+    public void IncreamentSpeed()
+    {
+        if (LevelUp())
+        {
+            newPlayerStats.speed += 1;
+            UpdateUITextUsingNewStats();
+        }
+    }
+
+    public void UpdateCostUI()
+    {
+        cost = CalculateCost(newPlayerStats.level);
+        requiredSouls.text = cost.ToString();
+    }
+
+    public void Confirm()
+    {
+        GameData.current.player1 = newPlayerStats;
+    }
+
+    public void Cancel()
+    {
+        UpdateUITextUsingGameData();
+    }
 }
