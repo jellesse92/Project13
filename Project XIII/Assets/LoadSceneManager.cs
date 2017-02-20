@@ -13,7 +13,6 @@ public class LoadSceneManager : MonoBehaviour {
             changePlayersPosition();
             GameData.current.isLoaded = false;
         }
-
     }
 
     public void ActivateFadeScreenToLoad()
@@ -43,8 +42,8 @@ public class LoadSceneManager : MonoBehaviour {
     {
         GameObject[] playersFound = GameObject.FindGameObjectsWithTag("Player");
         Vector3 newPosition = new Vector3();        
-        newPosition.x = GameData.current.playerPositionX;
-        newPosition.y = GameData.current.playerPositionY;
+        newPosition.x = GameData.current.player1.positionX;
+        newPosition.y = GameData.current.player1.positionY;
 
         foreach (GameObject player in playersFound)
         {

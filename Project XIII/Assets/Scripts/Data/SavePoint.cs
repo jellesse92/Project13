@@ -12,8 +12,8 @@ public class SavePoint : MonoBehaviour {
             if (GameData.current == null)
                 GameData.current = new GameData();
             GameData.current.scene = SceneManager.GetActiveScene().buildIndex;
-            GameData.current.playerPositionX = collider.transform.position.x;
-            GameData.current.playerPositionY = collider.transform.position.y;
+            GameData.current.player1.positionX = collider.transform.position.x;
+            GameData.current.player1.positionY = collider.transform.position.y;
             DataManager.SaveData();
         }
     }
