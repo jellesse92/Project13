@@ -24,8 +24,6 @@ public class LevelUpUIManager : MonoBehaviour {
 
     void UpdateUITextUsingGameData()
     {
-        Debug.Log(GameData.current);
-        Debug.Log(GameData.current.player1);
         level.text = GameData.current.player1.level.ToString();
         souls.text = GameData.current.player1.souls.ToString();
         strength.text = GameData.current.player1.strength.ToString();
