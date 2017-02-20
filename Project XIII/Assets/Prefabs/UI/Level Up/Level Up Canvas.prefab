@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 222085421278123310}
   - component: {fileID: 114587909259661610}
   m_Layer: 5
-  m_Name: Number
+  m_Name: Speed Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 222045725567009720}
   - component: {fileID: 114021619431722184}
   m_Layer: 5
-  m_Name: Number
+  m_Name: Souls Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,7 +161,7 @@ GameObject:
   - component: {fileID: 222169419368025138}
   - component: {fileID: 114253833640480410}
   m_Layer: 5
-  m_Name: Number
+  m_Name: Required Souls Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 222709911667899246}
   - component: {fileID: 114585315932996198}
   m_Layer: 5
-  m_Name: Number
+  m_Name: Strength Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 222333780035029034}
   - component: {fileID: 114081298652918324}
   m_Layer: 5
-  m_Name: Number
+  m_Name: Defense Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 222626863004062226}
   - component: {fileID: 114159569283346916}
   m_Layer: 5
-  m_Name: Number
+  m_Name: Level Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -708,7 +708,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114549485141983632}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114483915880364754}
+        m_MethodName: IncreamentSpeed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114391075767159538
@@ -749,7 +760,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114312054404987602}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114483915880364754}
+        m_MethodName: IncreamentStrength
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114391602925726462
@@ -862,12 +884,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa52db539064ab49aebcb2a2949add0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  level: {fileID: 0}
-  souls: {fileID: 0}
-  requiredSouls: {fileID: 0}
-  strength: {fileID: 0}
-  defense: {fileID: 0}
-  speed: {fileID: 0}
+  level: {fileID: 114159569283346916}
+  souls: {fileID: 114021619431722184}
+  requiredSouls: {fileID: 114253833640480410}
+  strength: {fileID: 114585315932996198}
+  defense: {fileID: 114081298652918324}
+  speed: {fileID: 114587909259661610}
 --- !u!114 &114499901288552634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -927,7 +949,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114031083799451362}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114483915880364754}
+        m_MethodName: IncreamentDefense
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114549485141983632
@@ -995,7 +1028,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114033731229819444}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114483915880364754}
+        m_MethodName: Cancel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114573530005336878
@@ -1063,7 +1107,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114573530005336878}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114483915880364754}
+        m_MethodName: Accept
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114585315932996198

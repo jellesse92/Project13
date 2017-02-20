@@ -4,7 +4,7 @@ using UnityEngine;
 
 [System.Serializable]
 public class GameData {
-    public static GameData current;
+    public static GameData current = new GameData();
     public bool isLoaded = false;
     public int scene = 1;
 
@@ -20,7 +20,7 @@ public class PlayerData
     public float positionX = 0;
     public float positionY = 0;
     public int level = 1;
-    public int souls = 0;
+    public int souls = 10000;
     public int strength = 1;
     public int defense = 1;
     public int speed = 1;

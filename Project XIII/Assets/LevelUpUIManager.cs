@@ -19,10 +19,13 @@ public class LevelUpUIManager : MonoBehaviour {
     void Start() {
         UpdateUITextUsingGameData();
         newPlayerStats = GameData.current.player1;
+        UpdateCostUI();
     }
 
     void UpdateUITextUsingGameData()
     {
+        Debug.Log(GameData.current);
+        Debug.Log(GameData.current.player1);
         level.text = GameData.current.player1.level.ToString();
         souls.text = GameData.current.player1.souls.ToString();
         strength.text = GameData.current.player1.strength.ToString();
@@ -45,7 +48,7 @@ public class LevelUpUIManager : MonoBehaviour {
             return 100;
         else {
             int cost = CalculateCost(currentLevel - 1);
-            return (int)(cost + cost * 0.1f);
+            return (int)(cost + cost * 0.4f);
         }
     }
 
@@ -62,11 +65,11 @@ public class LevelUpUIManager : MonoBehaviour {
     {
         UpdateNewPlayerStats();
         cost = CalculateCost(newPlayerStats.level);
-
         if (newPlayerStats.souls >= cost)
         {
             newPlayerStats.level += 1;
             newPlayerStats.souls -= cost;
+            UpdateCostUI();
             return true;
         }
         return false;
@@ -105,7 +108,7 @@ public class LevelUpUIManager : MonoBehaviour {
         requiredSouls.text = cost.ToString();
     }
 
-    public void Confirm()
+    public void Accept()
     {
         GameData.current.player1 = newPlayerStats;
     }
