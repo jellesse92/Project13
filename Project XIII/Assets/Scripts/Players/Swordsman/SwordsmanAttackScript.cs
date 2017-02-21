@@ -39,7 +39,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     const float QUICK_AIR_STUN_MULTI = 1f;                          //Stun duration multiplier for air quick attack 
     const float DRAG_STUN_MULTI = 1f;                               //Stun duration multiplier for drag attack
 
-    HashSet<GameObject> enemyHash;
+    HashSet<GameObject> enemyHash;                                  //Hash of enemies that should be hit
 
     //Heavy attack variables
     float forceMulti = 1f;                                          //Force based on how much swordsman charged attack
@@ -163,6 +163,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
                 Invoke("StopMomentum", HEAVY_DRAG_ENEMY_TIME);
             }
         }
+
         OtherHitsManage(col);
     }
 
@@ -170,15 +171,19 @@ public class SwordsmanAttackScript : MonoBehaviour {
     {
         foreach (GameObject target in enemyHash)
         {
-            target.transform.position = new Vector3(transform.position.x + HEAVY_X_OFFSET * transform.parent.localScale.x, target.transform.position.y, target.transform.position.z);
+            if(target.tag == "Enemy")
+            {
+                target.transform.position = new Vector3(transform.position.x + HEAVY_X_OFFSET * transform.parent.localScale.x, target.transform.position.y, target.transform.position.z);
 
-            //Original effect
-            /*
-            playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
-            playerSoundEffects.PlayHitSpark();
-            */
+                //Original effect
+                /*
+                playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
+                playerSoundEffects.PlayHitSpark();
+                */
 
-            target.GetComponent<Enemy>().Damage(0, .2f);
+                target.GetComponent<Enemy>().Damage(0, .2f);
+            }
+
         }
     }
 
@@ -196,10 +201,13 @@ public class SwordsmanAttackScript : MonoBehaviour {
     {
         foreach (GameObject target in enemyHash)
         {
-            target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_X_LAUNCH_FORCE * transform.parent.localScale.x, HEAVY_Y_LAUNCH_FORCE));
-            playerSoundEffects.PlayHitSpark();
-            playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
-            target.GetComponent<Enemy>().Damage(damage, HEAVY_STUN_MULTI);
+            if(target.tag == "Enemy")
+            {
+                target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_X_LAUNCH_FORCE * transform.parent.localScale.x, HEAVY_Y_LAUNCH_FORCE));
+                playerSoundEffects.PlayHitSpark();
+                playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
+                target.GetComponent<Enemy>().Damage(damage, HEAVY_STUN_MULTI);
+            }
         }
 
 
@@ -221,7 +229,8 @@ public class SwordsmanAttackScript : MonoBehaviour {
         CancelInvoke("HeavyFinisher");
         foreach(GameObject target in enemyInHeavyFinisher)
         {
-            target.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+            if(target.tag == "Enemy")
+                target.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
 
@@ -345,18 +354,22 @@ public class SwordsmanAttackScript : MonoBehaviour {
     void UpdateDragAttack()
     {
         foreach (GameObject target in enemyHash)
-            target.transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+            if(target.tag == "Enemy")
+                target.transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
     }
 
     void DragAttackApplyDamage()
     {
         foreach(GameObject target in enemyHash)
         {
-            //DRAG ATTACK EFFECTS STUFF
-            playerSoundEffects.PlayHitSpark();
-            playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
+            if(target.tag == "Enemy")
+            {
+                //DRAG ATTACK EFFECTS STUFF
+                playerSoundEffects.PlayHitSpark();
+                playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
 
-            target.GetComponent<Enemy>().Damage(DRAG_DAMAGE, DRAG_STUN_MULTI);
+                target.GetComponent<Enemy>().Damage(DRAG_DAMAGE, DRAG_STUN_MULTI);
+            }
         }
     }
 
