@@ -148,16 +148,21 @@ public class SwordsmanAttackScript : MonoBehaviour {
         CancelInvoke("DragAttackApplyDamage");
     }
 
+    bool CheckAcceptTag(Collider2D col)
+    {
+        return (col.tag == "Enemy" || col.tag == "Item" || col.tag == "Destructible Projectile");
+    }
+
     /*
      *  HEAVY ATTACK FUNCTIONS
      */
       
     void TriggerHeavyAttack(Collider2D col)
     {
-        if (col.tag == "Enemy" && !enemyHash.Contains(col.gameObject))
+        if (CheckAcceptTag(col) && !enemyHash.Contains(col.gameObject))
         {
             enemyHash.Add(col.gameObject);
-            if (!stopInvoked)
+            if (col.tag != "Destructible Projectile" && !stopInvoked)
             {
                 stopInvoked = true;
                 Invoke("StopMomentum", HEAVY_DRAG_ENEMY_TIME);
@@ -180,7 +185,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
                 playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
                 playerSoundEffects.PlayHitSpark();
                 */
-
+                Debug.Log(target.transform.name);
                 target.GetComponent<Enemy>().Damage(0, .2f);
             }
 
@@ -210,8 +215,9 @@ public class SwordsmanAttackScript : MonoBehaviour {
             }
         }
 
+        enemyInHeavyFinisher = enemyHash;
 
-        if(heavyTier > 0)
+        if (heavyTier > 0)
         {
             InvokeRepeating("HeavyFinisher", .05f, .1f);
             if (heavyTier == 1)
@@ -220,7 +226,6 @@ public class SwordsmanAttackScript : MonoBehaviour {
                 Invoke("EndHeavyFinisher", 1.05f);
         }
 
-        enemyInHeavyFinisher = enemyHash;
         transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(magShakeLaunch, durShakeLaunch);
     }
 
@@ -244,14 +249,21 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void HeavyFinisherDamage(GameObject target)
     {
-        target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-        target.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 3000f));
-        target.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll; 
-        target.GetComponent<Enemy>().Damage(HEAVY_FINISHER_DPH, .2f);
+        if (target.tag == "Enemy")
+        {
+            target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+            target.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 3000f));
+            target.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            target.GetComponent<Enemy>().Damage(HEAVY_FINISHER_DPH, .2f);
 
-        //Special effects stuff
-        playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
-        playerSoundEffects.PlayHitSpark();
+            //Special effects stuff
+            playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
+            playerSoundEffects.PlayHitSpark();
+        }
+        else
+            OtherHitsManage(target.GetComponent<Collider2D>());
+
+
     }
 
     /*

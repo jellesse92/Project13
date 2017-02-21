@@ -137,7 +137,6 @@ public class SwordsmanPhysics : PlayerPhysics{
         {
             StartHeavyGroundCharge();
             CheckForHeavyRelease();
-            Debug.Log("testing");
             return true;
         }
 

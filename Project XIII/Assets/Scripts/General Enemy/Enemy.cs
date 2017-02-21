@@ -249,7 +249,6 @@ public class Enemy : MonoBehaviour {
 
     void EndAttackDelay()
     {
-        Debug.Log("testing");
         attackDelay = false;
     }
 
