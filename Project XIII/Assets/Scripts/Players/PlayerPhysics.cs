@@ -1,18 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerPhysics : MonoBehaviour {
 
+public class PlayerPhysics : MonoBehaviour {
     //Variables for bad controller callibration
-    float Y_NEGATIVE_ACCEPT = -.02f;
-    float X_ABS_ACCEPT = .01f;
+    const float Y_NEGATIVE_ACCEPT = -.2f;
+    const float X_ABS_ACCEPT = .2f;
 
     //Constants for changing gravity force for jumping
     const float DEFAULT_GRAVITY_FORCE = 8f;
     const float MIN_GRAVITY_FORCE = 4f;
 
-    const float JUMP_CD = .1f;
-    const float JUMP_GRACE_TIME = .3f;
+    const float JUMP_RAY_RESTRAIN_TIME = .2f;
+    const float GROUNDED_GRACE_TIME = .3f;
+
+    //Use for crouching
+    float previousVertical = 0;
+    MultiplayerCamFollowScript cameraScript;
 
     protected Rigidbody2D myRigidbody;
     protected Animator myAnimator;
@@ -36,16 +40,27 @@ public class PlayerPhysics : MonoBehaviour {
 
     //Ground detection
     float distToGround;                                 //Distance from the ground
+    float characterWidth;                               //Width of character to cast secondary raycasting
     int layerMask;                                      //Layers to check for ground
-    public float groundCheckingOffset = 2f;
-    bool jumpedRecently = false;
     bool wasGrounded = false;
-    bool jumpGraceTimeInvoked = false;
-    bool jumped = false;
+    public float groundCheckingOffset = 2f;
 
-    public GameObject shadow;                           //For placing shadow at character's feet
+    //Ground detection delay for continuing ground attacks off ledge
+    bool groundedGraceTimeInvoked = false;
+
+    //Ground detection related to jumping
+    float jumpGroundCheckNegativeOffset = 0f;
+    bool jumpSpent = false;
+
+    //Ground detecion related to movement skills
+    bool moveSkillPerformed = false;
+    bool moveSkillDelayCheck = false;
+
+    //Using for turning
+    ShadowSpriteGenerator shadowSpriteGenerator;
 
     protected void Start () {
+        cameraScript = Camera.main.transform.parent.GetComponent<MultiplayerCamFollowScript>();
         myAnimator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
         playerProperties = GetComponent<PlayerProperties>();
@@ -70,7 +85,14 @@ public class PlayerPhysics : MonoBehaviour {
         
 
         distToGround = GetComponent<Collider2D>().bounds.extents.y;
-        layerMask = (LayerMask.GetMask("Default"));
+        characterWidth = GetComponent<Collider2D>().bounds.extents.x;
+        layerMask = (LayerMask.GetMask("Default","Item"));
+
+        foreach (Transform child in transform)
+        {
+            if (child.name == "Shadow")
+                shadowSpriteGenerator = child.GetComponent<ShadowSpriteGenerator>();
+        }
 
         ClassSpecificStart();
     }
@@ -92,27 +114,34 @@ public class PlayerPhysics : MonoBehaviour {
                 float yMove = myKeyPress.verticalAxisValue;
 
                 Movement();
+                Crouching();
+
+                //Prioritizes jump in the case both buttons pressed at the same time
                 if (myKeyPress.jumpPress)
                     Jump();
+                else
+                {
+                    if (myKeyPress.quickAttackPress)
+                        QuickAttack();
+                    if (myKeyPress.heavyAttackPress)
+                        HeavyAttack();
+                }
                 if (myKeyPress.jumpReleased)
                     JumpReleased();
-                if (myKeyPress.quickAttackPress)
-                    QuickAttack();
-                if (myKeyPress.heavyAttackPress)
-                    HeavyAttack();
+
                 if (myKeyPress.dashPress)
                     MovementSkill(xMove, yMove);
-                /* Not all characters have a block move. disabled for now
                 if (myKeyPress.blockPress)
-                    Block();
-                    */
+                    Heal();
                 CheckForButtonReleases();
             }
         }
         ClassSpecificUpdate();
         myPlayerInput.ResetKeyPress();
         Landing();
+        
     }
+
 
     public virtual void ClassSpecificStart()
     {
@@ -132,73 +161,87 @@ public class PlayerPhysics : MonoBehaviour {
 
     public virtual void MovementSkill(float xMove, float yMove)
     {
+        MoveSkillExecuted();
         if (!cannotMovePlayer)
             return;
         //This function is used for when specific class movement based skills
     }
 
+    public void MoveSkillExecuted()
+    {
+        CancelInvoke("EndMoveSkillDelayCheck");
+        moveSkillPerformed = true;
+        moveSkillDelayCheck = true;
+        Invoke("EndMoveSkillDelayCheck", JUMP_RAY_RESTRAIN_TIME);
+    }
+
+    void EndMoveSkillDelayCheck()
+    {
+        moveSkillDelayCheck = false;
+    }
+
+    void Heal()
+    {
+        if (playerProperties.healingItem > 0 && !myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Ground.Item Use"))
+            myAnimator.SetTrigger("itemUse");
+    }
     protected void Movement()
     {
-        if (!cannotMovePlayer)
+        if (!cannotMovePlayer && !myAnimator.GetBool("crouch"))
         {
-            float absSpeed = Mathf.Abs(myKeyPress.horizontalAxisValue);
-
-            if (absSpeed < X_ABS_ACCEPT) 
-            {
-                if(myKeyPress.verticalAxisValue < Y_NEGATIVE_ACCEPT)
-                {
-                    if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
-                        myAnimator.SetTrigger("crouch");
-                }
-
-                else
-                {
-                    if (myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Crouch Idle"))
-                    {
-                        myAnimator.SetTrigger("standUp");
-                    }
-                }
-            }
-            
-            myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
-            myAnimator.SetFloat("speed", absSpeed);
-            if (!isJumping)
-                Flip();
-        }
+                myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
+                myAnimator.SetFloat("speed", Mathf.Abs(myKeyPress.horizontalAxisValue));
+                if (!isJumping)
+                    Flip();
+        }        
         if(zeroVelocity)
             myRigidbody.velocity = new Vector2(0, 0);
     }
 
+    void Crouching()
+    {
+        if (myKeyPress.verticalAxisValue < previousVertical && myKeyPress.verticalAxisValue < 0 && myKeyPress.verticalAxisValue < Y_NEGATIVE_ACCEPT && (Mathf.Abs(myKeyPress.horizontalAxisValue) <= X_ABS_ACCEPT))
+        {
+            cameraScript.SetCrouch(true);
+            myAnimator.SetBool("crouch", true);
+
+        }
+        else if (myKeyPress.verticalAxisValue > previousVertical || myKeyPress.verticalAxisValue >= 0 && myKeyPress.verticalAxisValue >= Y_NEGATIVE_ACCEPT)
+        {
+            cameraScript.SetCrouch(false);
+            myAnimator.SetBool("crouch", false);
+        }
+        previousVertical = myKeyPress.verticalAxisValue;
+    }
+
     protected void Jump()
     {
-        if (!isJumping && !cannotJump && !jumpedRecently)
+        if (!jumpSpent && !cannotJump)
         {
             VelocityY(0);
             CancelInvoke("CancelWasGrounded");
             CancelWasGrounded();
-            jumpedRecently = true;
-            Invoke("CancelWaitJump", JUMP_CD);
 
+            Invoke("CancelWaitJump", JUMP_RAY_RESTRAIN_TIME);
+            jumpGroundCheckNegativeOffset = 1f;
             isJumping = true;
+            jumpSpent = true;
+
             GetComponent<Rigidbody2D>().gravityScale = MIN_GRAVITY_FORCE;
 
             if (Mathf.Abs(myKeyPress.horizontalAxisValue) > 0.1)
                 myAnimator.SetTrigger("jumpForward");
             else
                 myAnimator.SetTrigger("jumpIdle");
-
-            //Debug.Log(GetComponent<Rigidbody2D>().velocity.y);
             
             GetComponent<Rigidbody2D>().AddForce(new Vector2(0, physicStats.jumpForce), ForceMode2D.Impulse);
         }
-
     }
 
     void CancelWaitJump()
     {
-        jumpedRecently = false;
-        jumped = true;
-        jumpGraceTimeInvoked = false;
+        jumpGroundCheckNegativeOffset = 0f;
+        groundedGraceTimeInvoked = false;
         CancelInvoke("CancelWasGrounded");
     }
 
@@ -209,7 +252,6 @@ public class PlayerPhysics : MonoBehaviour {
 
     protected void Landing()
     {
-
         if (isGrounded())
             isJumping = false;
         else
@@ -231,6 +273,7 @@ public class PlayerPhysics : MonoBehaviour {
     {
         if (!cannotAttack)
         {
+
             if (isJumping)
                 myAnimator.SetTrigger("airQuickAttack");
             else
@@ -238,8 +281,7 @@ public class PlayerPhysics : MonoBehaviour {
         }
     }
     protected virtual void HeavyAttack()
-    {
-       
+    {       
         if (!cannotAttack)
         {
             if (isJumping)
@@ -277,6 +319,8 @@ public class PlayerPhysics : MonoBehaviour {
 
     void ApplyFlip()
     {
+        if (myAnimator == null)
+            myAnimator = GetComponent<Animator>();
         myAnimator.SetTrigger("switch");
         isFacingRight = !isFacingRight;
 
@@ -284,6 +328,9 @@ public class PlayerPhysics : MonoBehaviour {
         scale.x *= -1;
 
         transform.localScale = scale;
+
+        if(shadowSpriteGenerator != null)
+            shadowSpriteGenerator.ChangeFacingDirection();
     }
 
     protected void KnockBack(float knockBackForce)
@@ -374,33 +421,37 @@ public class PlayerPhysics : MonoBehaviour {
 
     public bool isGrounded()
     {
-        if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround +groundCheckingOffset, layerMask))
+        if (Physics2D.Raycast(transform.position, -Vector3.up, distToGround +groundCheckingOffset - jumpGroundCheckNegativeOffset, layerMask)
+            || Physics2D.Raycast(transform.position + new Vector3(characterWidth,0f,0f), -Vector3.up, distToGround + groundCheckingOffset - jumpGroundCheckNegativeOffset, layerMask)
+            || Physics2D.Raycast(transform.position - new Vector3(characterWidth, 0f, 0f), -Vector3.up, distToGround + groundCheckingOffset - jumpGroundCheckNegativeOffset, layerMask)
+            )
         {
+            jumpSpent = false;
             wasGrounded = true;
-            jumped = false;
-            if (shadow != null)
-                shadow.SetActive(true);
+            CancelInvoke("CancelWasGrounded");
+            groundedGraceTimeInvoked = false;
+
+            if (!moveSkillDelayCheck)
+                moveSkillPerformed = false;
+
             return true;
         }
-        else if (!jumpGraceTimeInvoked)
+        else if (!groundedGraceTimeInvoked)
         {
-            jumpGraceTimeInvoked = true;
-            Invoke("CancelWasGrounded", JUMP_GRACE_TIME);
+            groundedGraceTimeInvoked = true;
+            Invoke("CancelWasGrounded", GROUNDED_GRACE_TIME);
         }
 
-        if (wasGrounded && !jumped)
+        if (wasGrounded && !jumpSpent && !moveSkillPerformed)
             return true;
-
-        if (shadow != null)
-            shadow.SetActive(false);
 
         return false;
     }
-
+    
     void CancelWasGrounded()
     {
         wasGrounded = false;
-        jumpGraceTimeInvoked = false;
+        groundedGraceTimeInvoked = false;
     }
 
     public void CancelWasGroundedInvoke()
@@ -430,8 +481,6 @@ public class PlayerPhysics : MonoBehaviour {
                 checkHeavyAttackUp = false;
             }
         }
-
-
     }
 
     public void CheckForQuickRelease()

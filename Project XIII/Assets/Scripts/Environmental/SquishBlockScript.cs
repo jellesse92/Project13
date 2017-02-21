@@ -32,7 +32,7 @@ public class SquishBlockScript : MonoBehaviour {
 
     //Particle
     GravityRockFragment gravityRockFragments;
-
+    GameObject impactRockFragment;
     // Use this for initialization
     void Start () {
         myAudio = GetComponent<AudioSource>();
@@ -40,6 +40,8 @@ public class SquishBlockScript : MonoBehaviour {
         origin = block.position;
         GetComponent<BlockParticleEffects>().ChangeParticlePosition(ref GetComponent<BlockParticleEffects>().gravityRockFragment, destination.position);
         GetComponent<BlockParticleEffects>().gravityRockFragment.GetComponent<ParticleSystem>().Play();
+        impactRockFragment = GetComponent<BlockParticleEffects>().impactRockFragments;
+        GetComponent<BlockParticleEffects>().ChangeParticlePosition(ref impactRockFragment, destination.position);
         gravityRockFragments = GetComponent<BlockParticleEffects>().gravityRockFragment.GetComponent<GravityRockFragment>();
     }
 
@@ -65,6 +67,7 @@ public class SquishBlockScript : MonoBehaviour {
         {
             moving = false;
             playSound(impact);
+            impactRockFragment.GetComponent<ParticleSystem>().Play();
             killZone.SetActive(false);
             gravityRockFragments.TurnForceOverTime(true);
             cam.GetComponent<CamShakeScript>().StartShake(magShake, durShake);

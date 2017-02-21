@@ -387,10 +387,11 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void TriggerFinisherAttack(Collider2D col)
     {
-        if(col.tag == "Enemy")
+        if (col.tag == "Enemy")
         {
             //HEAVY ATTACK EFFECTS STUFF
             //Debug.Log("attack");
+
             playerSoundEffects.PlayHitSpark();
             playerParticleEffects.PlayFinisherHitSpark(col.GetComponent<Enemy>().GetCenter());
             transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(magShakefinisherAttack, durShakefinisherAttack);
@@ -401,6 +402,8 @@ public class SwordsmanAttackScript : MonoBehaviour {
         }
         ItemHit(col);        
     }
+
+
 
     void HitEffect(HitType hitType, Vector3 position)
     {

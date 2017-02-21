@@ -5,6 +5,9 @@ using System.Collections.Generic;
 //Class to be inherited by all enemy scripts
 public class Enemy : MonoBehaviour {
 
+    const float END_PURSUIT_TIME = 1.3f;                //Time to end pursuit based on loss of sight
+    const float ATTACK_DELAY_AFTER_STUN_TIME = .5f;     //Time delayed from attacking after having been stunned
+
     HashSet<GameObject> playersInView = new HashSet<GameObject>();
 
     protected GameObject centerObjectPosition;          //use to get center of enemy, might be different for each child
@@ -32,6 +35,7 @@ public class Enemy : MonoBehaviour {
     protected bool stunned;                             //Determines if enemy is stunned
     protected bool isFrozen = false;                    //Determines if enemy is debuff frozen
     protected bool frozen;                              //Determines if enemy is not meant to move
+    protected bool attackDelay = false;                 //Attack should be delayed irrelevant to projection time
     float currentStunMultiplier;                        //Current stun time multiplier to be applied
 
     //Detection and Pursuit Variables
@@ -114,27 +118,19 @@ public class Enemy : MonoBehaviour {
     }
 
     //Call when enter a trigger field. If entering player trigger field and visible, activate pursuit status
-    void OnTriggerEnter2D(Collider2D col)
+    public virtual void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag == "Detection Field")
         {
             target = col.transform.parent.gameObject;
-
-            if (!playersInView.Contains(target))
-                playersInView.Add(target);
-
-            if (playerList == null)
-                playerList = target.transform.parent.gameObject;
+            AddTargetList(target);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    public virtual void OnTriggerExit2D(Collider2D collision)
     {
         if(collision.tag == "Detection Field")
-        {
-            if (playersInView.Contains(collision.transform.parent.gameObject))
-                playersInView.Remove(collision.transform.parent.gameObject);
-        }
+            RemoveTargetList(collision.transform.parent.gameObject);
     }
 
     //Resets position and alert status
@@ -143,6 +139,7 @@ public class Enemy : MonoBehaviour {
         if(health <= 0)
             anim.SetTrigger("revive");
 
+        CancelInvoke("RemoveTarget");
         isInvincible = false;
         dead = false;
 
@@ -209,6 +206,8 @@ public class Enemy : MonoBehaviour {
         {
             if (child.name == "Death Particles")
                 child.GetComponent<ParticleSystem>().Play();
+            if (child.name == "Shadow")
+                child.GetComponent<ShadowSpriteGenerator>().FadeShadow();
         }
         mainCamera.GetComponent<CamShakeScript>().StartShake(magShakeDeath, durShakeDeath);
         if(GetComponent<EnemyParticleEffects>())
@@ -223,13 +222,15 @@ public class Enemy : MonoBehaviour {
             transform.parent.GetComponent<FightZoneLockScript>().ReportDead();
     }
 
+    //Run functions specific to enemy type that need to be reset for stuns
+    public virtual void SpecificStunCancel(){}
+
     IEnumerator ApplyStun()
     {
+        SpecificStunCancel();
         anim.SetTrigger("stun");
         stunned = true;
         yield return new WaitForSeconds(currentStunMultiplier * stunEffectiveness);
-
-        
 
         if (!flyingEnemy && !IsGrounded())
             waitForRemoveStunLand = true;
@@ -239,8 +240,17 @@ public class Enemy : MonoBehaviour {
 
     void RecoverFromStun()
     {
+        CancelInvoke("EndAttackDelay");
         anim.SetTrigger("stunRecovery");
         stunned = false;
+        attackDelay = true;
+        Invoke("EndAttackDelay", ATTACK_DELAY_AFTER_STUN_TIME);
+    }
+
+    void EndAttackDelay()
+    {
+        Debug.Log("testing");
+        attackDelay = false;
     }
 
     //Gets if enemy is visible or not
@@ -289,13 +299,60 @@ public class Enemy : MonoBehaviour {
 
         return null;
     }
-    
+
+    /*
+     * TARGET DETECTION FUNCTIONS 
+     */
+
     //Sets the target player
     public void SetTarget(GameObject tar)
     {
         target = tar;
     }
     
+    public void AddTargetList(GameObject tar)
+    {
+        if (tar == target)
+            CancelInvoke("RemoveTarget");
+        if (playerList == null)
+            playerList = tar.transform.parent.gameObject;
+        if (!playersInView.Contains(tar))
+            playersInView.Add(tar);
+    }
+
+    public void RemoveTargetList(GameObject tar)
+    {
+        if (playersInView.Contains(tar))
+            playersInView.Remove(tar);
+        if(target == tar)
+        {
+            if (playersInView.Count > 0)
+            {
+                foreach (GameObject newTarget in playersInView)
+                {
+                    target = newTarget;
+                    break;
+                }
+            }
+            else
+            {
+                if (!target.GetComponent<PlayerProperties>().alive)
+                    target = null;
+                else
+                    Invoke("RemoveTarget", END_PURSUIT_TIME);
+            }
+
+        }
+    }
+
+    void RemoveTarget()
+    {
+        target = null;
+    }
+
+    /*
+     * END TARGET DETECTION FUNCTIONS 
+     */
 
     //Sets if enemy is in attack range
     public void SetAttackInRange(bool b)

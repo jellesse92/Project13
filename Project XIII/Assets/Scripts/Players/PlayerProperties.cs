@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class PlayerStats
@@ -35,6 +36,7 @@ public class PlayerProperties : MonoBehaviour{
     public int lives = 3;
     public int maxHealth = 100;
     public int currentHealth = 100;
+    public int healingItem = 3;
     public int cash = 0;
 
     public bool isKnockedInAir = false;
@@ -141,6 +143,14 @@ public class PlayerProperties : MonoBehaviour{
         GetComponent<SpriteRenderer>().sortingLayerName = "Special Effects";
         GetComponent<SpriteRenderer>().sortingOrder = 1;
         GetComponent<Animator>().SetTrigger("finalDeath");
+        Invoke("RestartLevel", 3f);
+    }
+
+    void RestartLevel()
+    {
+        Debug.Log("TEMPORARY");
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void StopTime() //move this to player physics maybe? 
@@ -270,7 +280,7 @@ public class PlayerProperties : MonoBehaviour{
     {
         isInvincibile = true;
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 5; i++)
         {
             GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .75f);
             yield return new WaitForSeconds(damageImmuneTime/7f);
@@ -303,5 +313,16 @@ public class PlayerProperties : MonoBehaviour{
     public void MakeNotInvul()
     {
         isInvincibile = false;
+    }
+
+    public void Heal()
+    {
+        currentHealth = maxHealth;
+        healingItem--;
+        if (psScript != null)
+        {
+            psScript.GetComponent<PlayerStatusUIScript>().SetHealth(playerNumber, 100);
+            psScript.GetComponent<PlayerStatusUIScript>().SetHealthItem(playerNumber, healingItem);
+        }
     }
 }

@@ -48,7 +48,7 @@ public class PlayerInput : MonoBehaviour {
     
     public void GetInput()
     {
-        if (!inputEnabled)
+        if (!inputEnabled || joystickNum == -1)
             return;
 
         if(joystickNum == 0)
@@ -108,6 +108,11 @@ public class PlayerInput : MonoBehaviour {
     //1 - 11 = Joystick pad input
     public void SetJoystickNum(int num)
     {
+        if(num == -1)
+        {
+            joystickNum = num;
+            return;
+        }
         if (num == 0) return;
         
         if (num < 0 || num > 11)
@@ -137,5 +142,10 @@ public class PlayerInput : MonoBehaviour {
     public bool InputActiveState()
     {
         return inputEnabled;
+    }
+
+    public int GetJoystick()
+    {  
+        return joystickNum;
     }
 }

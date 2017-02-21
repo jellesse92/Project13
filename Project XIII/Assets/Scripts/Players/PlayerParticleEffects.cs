@@ -12,6 +12,8 @@ public class PlayerParticleEffects : ParticleEffects {
     public GameObject jumpDust;
     public GameObject runningDust;
     public GameObject landingDust;
+    public GameObject heal;
+    public GameObject fireDamage;
 
     //public GameObject heavyHitImpact;
 
@@ -34,9 +36,11 @@ public class PlayerParticleEffects : ParticleEffects {
         InstantiateParticle(ref dashAfterImage);
         InstantiateParticle(ref jumpDust);
         InstantiateParticle(ref runningDust);
-        InstantiateParticle(ref landingDust);        
+        InstantiateParticle(ref landingDust);
+        InstantiateParticle(ref heal);
+        InstantiateParticle(ref fireDamage);
     }
-  
+
     public void PlayParticleQuickAttack()
     {
         PlayParticle(quickAttack);
@@ -77,5 +81,10 @@ public class PlayerParticleEffects : ParticleEffects {
         }
         else
             dashAfterImage.GetComponent<ParticleSystem>().Stop();
+    }
+
+    public void PlayParticleHeal()
+    {
+        PlayParticle(heal);
     }
 }

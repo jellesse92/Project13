@@ -141,7 +141,7 @@ Transform:
   m_GameObject: {fileID: 1000013040075764}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4000010897350588}
   m_RootOrder: 0
@@ -205,7 +205,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 15
+  m_Radius: 12
 --- !u!61 &61000012844186316
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -370,6 +370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77a2a9d59be01c9448feb4f0c9d1f478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  groundCheckingOffset: 2
   bulletSource: {fileID: 1000012771940488}
   meleeAttackBox: {fileID: 1000014162479872}
   downKickScript: {fileID: 114000011230894920}
@@ -402,6 +403,7 @@ MonoBehaviour:
   lives: 3
   maxHealth: 100
   currentHealth: 100
+  healingItem: 3
   cash: 0
   isKnockedInAir: 0
   playerStats:
@@ -416,7 +418,8 @@ MonoBehaviour:
   boostStats:
     attackBoost: 1
     speedBoost: 1
-  damageScreenShake: 0.1
+  magDamageScreenShake: 0.2
+  durDamageScreenShake: 0.5
   gunnerStats:
     quickBulletSpeed: 10
     heavyBulletSpeed: 1
@@ -479,6 +482,7 @@ MonoBehaviour:
   jumpDust: {fileID: 0}
   runningDust: {fileID: 0}
   landingDust: {fileID: 0}
+  heal: {fileID: 0}
 --- !u!114 &114639223482777798
 MonoBehaviour:
   m_ObjectHideFlags: 1

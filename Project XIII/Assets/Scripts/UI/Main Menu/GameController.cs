@@ -32,6 +32,7 @@ public class GameController : MonoBehaviour
     public PlayerInfo[] playersInfos;
     public CharacterSetting[] PlayerCharacters = new CharacterSetting[4];   //Refers to character information instead of player information
     public int PlayerCount = 0;
+    public bool cutsceneEnabled = true;
     public bool IsMusicOn = true;
     public bool IsSfxOn = true;
     public int musicVolume = 100;
@@ -87,13 +88,25 @@ public class GameController : MonoBehaviour
         }
 
         if (numberOfSelectedPlayers == 0)
+        {
+            for(int i = 0; i < 4; i++)
+            {
+                if (!playerList.GetChild(i).gameObject.activeSelf)
+                    playerList.GetChild(i).GetComponent<PlayerInput>().SetJoystickNum(-1);
+            }
             return;
+        }
+
 
         for (int i = 0; i < numberOfAvailablePlayers; i++)
         {
             Transform character = playerList.GetChild(i);
             if (PlayerCharacters[i].player == -1)
+            {
+                character.GetComponent<PlayerInput>().SetJoystickNum(-1);
                 character.gameObject.SetActive(false);
+            }
+
             else
             {
                 character.GetComponent<PlayerProperties>().playerNumber = PlayerCharacters[i].player;
@@ -123,6 +136,11 @@ public class GameController : MonoBehaviour
                 sfxVolume = 0;
             sfxObject.volume = sfxVolume;
         }
+    }
+
+    public bool GetPlayerActiveStatus(int index)
+    {
+        return false;
     }
     
 }

@@ -4,13 +4,18 @@ using System.Collections.Generic;
 
 public class MultiplayerCamFollowScript : MonoBehaviour {
 
-    const float DEFAULT_ORTHO_SIZE = 7f;
+    const float DEFAULT_ORTHO_SIZE = 8f;
     const float DEFAULT_ORTHO_SIZE_3D = 20f;
     const float MAX_ORTHO_SIZE = 10f;
     const float MAX_ORTHO_SIZE_3D = 40f;
 
     const float ZOOM_OUT_DELTA = .01f;                         //Amount to zoom when zooming in or out per update
     const float ZOOM_IN_DELTA = .003f;
+
+    const float CROUCHING_INCREAMENT = 4;
+
+    public float xOffset = 6;
+    public float yOffset = 3;
 
     float zoomMultiplier = 1f;
     float followDelay = .8f;
@@ -24,7 +29,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     float lastOrthographicSize = 0f;                            //Keeps track of the last orthographic size
     bool orthoTransitioning = false;
     bool orthoForced = false;                                   //If orthographic size has to be forced  
-
+    bool crouching = false;
     //Cutscene variables
     bool forcingMovement = false;                               //For cutscene manager to force movement of camera
     bool targetSet = false;                                     //For if there is a target destination
@@ -43,7 +48,8 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
         foreach(GameObject p in tempPlayerFind)
         {
-            players.Add(p);
+            if(p.GetComponent<PlayerInput>().GetJoystick() != -1)
+                players.Add(p);
         }
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
 	}
@@ -85,7 +91,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
         foreach (GameObject player in players)
         {
-            if (player.activeSelf)
+            if (player.activeSelf && player.GetComponent<PlayerInput>().GetJoystick()!=-1)
             {
                 singlePlayerTrans = player.transform;
                 break;
@@ -96,14 +102,25 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     }
 
     void DampMotion(Transform target)
-    {
-        Vector3 point = cam.WorldToViewportPoint(target.position);
-        Vector3 delta = target.position - cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, point.z)); //(new Vector3(0.5, 0.5, point.z));
-        Vector3 destination = transform.position + delta;
+    {        
+        Vector3 destination = target.position;
+        if (target.localScale.x < 0)
+            destination.x -= xOffset;
+        else
+            destination.x += xOffset;
 
+        if(crouching)
+            destination.y += yOffset - CROUCHING_INCREAMENT;
+        else
+            destination.y += yOffset;     
+        destination.z = transform.position.z;
         transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, dampTime);
     }
 
+    public void SetCrouch(bool value)
+    {
+        crouching = value;
+    }
     void MultiplayerCamera()
     {
         Vector3 midpoint = GetPlayersMidpoint();
@@ -126,12 +143,20 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 
             if(in2DMode)
                 cameraDestination.y = Mathf.Max(lowestPointY + cam.orthographicSize-5, cameraDestination.y);
-                    
-            transform.position = Vector3.Slerp(transform.position, cameraDestination, followDelay);
+
+            if (crouching)
+                cameraDestination.y -= (5f + CROUCHING_INCREAMENT);
+            else
+                cameraDestination.y -= 5f;
+            
+            Vector3 newCameraDestination = Vector3.Slerp(transform.position, cameraDestination, followDelay);
+            newCameraDestination.z = transform.position.z;
+            transform.position = Vector3.SmoothDamp(transform.position, newCameraDestination, ref velocity, dampTime);
 
             if ((cameraDestination - transform.position).magnitude <= 0.05f)
                 transform.position = cameraDestination;
         }
+
     }
 
     void SetCameraWallActive(bool b)
@@ -149,6 +174,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     public void DeactivateForceOrthographicSize()
     {
         orthoForced = false;
+        targetSet = false;
     }
 
     public void ForceDestination(Transform target)
@@ -309,7 +335,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     {
         int active = 0;
         foreach (GameObject player in players)
-            if (player.activeSelf)
+            if (player.activeSelf && player.GetComponent<PlayerInput>().GetJoystick()!= -1)
                 active++;
         return active;
     }

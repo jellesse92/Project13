@@ -6,6 +6,7 @@ public class CoinScript : MonoBehaviour {
     ParticleSystem pickup;
     ParticleSystem myParticleSystem;
     AudioSource myAudio;
+    int coinValue = 10;
 
     void Awake () {
         myParticleSystem = GetComponent<ParticleSystem>();
@@ -30,7 +31,7 @@ public class CoinScript : MonoBehaviour {
             pickup.Play();
             p.remainingLifetime = 0;
             myAudio.Play();
-
+            GameData.current.player1.souls += coinValue;
             enter[i] = p;
         }
         myParticleSystem.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, enter);

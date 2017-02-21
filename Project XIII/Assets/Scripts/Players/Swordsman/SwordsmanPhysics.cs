@@ -5,6 +5,7 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     //SENSITVITY CONTROLS
     const float Y_INPUT_THRESHOLD = .5f;        //Threshold before considering input
+    const float INPUT_SOFT_THRESHOLD = .1f;
 
     //Constants for managing quick dashing skill
     const float DASH_RECOVERY_TIME = 0.5f;      //Time it takes to recover dashes
@@ -235,6 +236,7 @@ public class SwordsmanPhysics : PlayerPhysics{
     {
         attackScript.Reset();
         attackScript.SetAttackType("drag");
+        MoveSkillExecuted();
     }
 
     public void EndDragAttack()
@@ -272,6 +274,12 @@ public class SwordsmanPhysics : PlayerPhysics{
         VelocityX(0f);
 
         GetComponent<Rigidbody2D>().gravityScale = 0f;
+
+        if(Mathf.Abs(xInputAxis) < INPUT_SOFT_THRESHOLD && Mathf.Abs(yInputAxis) < INPUT_SOFT_THRESHOLD)
+        {
+            xInputAxis = 1f * transform.localScale.x;
+            yInputAxis = 0f;
+        }
 
         GetComponent<Rigidbody2D>().AddForce(new Vector2(xInputAxis, yInputAxis).normalized * DASH_FORCE);
         yield return new WaitForSeconds(.1f);
@@ -354,11 +362,16 @@ public class SwordsmanPhysics : PlayerPhysics{
     void EndHeavyAttack()
     {
         attackBox.GetComponent<Collider2D>().enabled = false;
-        GetComponent<SwordsmanParticleEffects>().PlayChargingTrail(false);
+        StartCoroutine(EndChargingTrail(0.5f));
         attackScript.Launch();
         attackScript.Reset();
     }
 
+    IEnumerator EndChargingTrail(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        GetComponent<SwordsmanParticleEffects>().PlayChargingTrail(false);
+    }
     void ChargingShake()
     {
         if (transform.rotation.z == 0f)
@@ -426,4 +439,10 @@ public class SwordsmanPhysics : PlayerPhysics{
         disableDash = true;
     }
 
+    public void AttackCAnimationAdjustment()
+    {
+        Vector3 newPosition = transform.position;
+        newPosition.x += (1.5f * transform.localScale.x / Mathf.Abs(transform.localScale.x));
+        transform.position = newPosition;
+    }
 }

@@ -7,8 +7,6 @@ public class FightZoneLockScript : MonoBehaviour {
     int unlockRequirement;                      //How many enemies have to die before unlock
     int deadCount;
 
-    //TEMPORARRRRY
-    SequenceFlowController sequenceScript;
 
 	// Use this for initialization
 	void Start () {
@@ -21,8 +19,6 @@ public class FightZoneLockScript : MonoBehaviour {
                 unlockRequirement++;
         }
 
-        //TEMP TEMP TEMP
-        sequenceScript = GameObject.FindGameObjectWithTag("Sequence").GetComponent<SequenceFlowController>();
 	}
 	
     public void ReportDead()
@@ -33,8 +29,6 @@ public class FightZoneLockScript : MonoBehaviour {
         {
             wall.SetActive(false);
 
-            //TEMP TEMP TEMP
-            sequenceScript.NextSequence();
         }
 
     }

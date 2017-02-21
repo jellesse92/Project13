@@ -72,13 +72,29 @@ GameObject:
   - component: {fileID: 50000010348060984}
   - component: {fileID: 61000013141687168}
   - component: {fileID: 114319218016832942}
-  m_Layer: 0
+  m_Layer: 18
   m_Name: Block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1030863570944516
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4084289400588344}
+  - component: {fileID: 212064487370359718}
+  m_Layer: 0
+  m_Name: Shadow Sprite
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
 --- !u!1 &1037579340420130
 GameObject:
   m_ObjectHideFlags: 1
@@ -90,6 +106,38 @@ GameObject:
   - component: {fileID: 61779380353085384}
   m_Layer: 15
   m_Name: Kill Zone Activate
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1155926261226476
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4812255975897462}
+  - component: {fileID: 114939924503641098}
+  m_Layer: 15
+  m_Name: Shadow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1343280353636662
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4966806295455084}
+  - component: {fileID: 212420273230278300}
+  m_Layer: 15
+  m_Name: Shadow Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,6 +170,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 7, z: 0}
   m_LocalScale: {x: 1, y: 0.6, z: 1}
   m_Children:
+  - {fileID: 4812255975897462}
   - {fileID: 4591002580898590}
   m_Father: {fileID: 4000012330882620}
   m_RootOrder: 0
@@ -169,6 +218,19 @@ Transform:
   m_Father: {fileID: 4000012330882620}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4084289400588344
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1030863570944516}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1, y: -3.5, z: 0}
+  m_LocalScale: {x: 1, y: -1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4812255975897462}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4497134120051648
 Transform:
   m_ObjectHideFlags: 1
@@ -193,6 +255,34 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4000011251504760}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4812255975897462
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1155926261226476}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -5.44, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4966806295455084}
+  - {fileID: 4084289400588344}
+  m_Father: {fileID: 4000011251504760}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4966806295455084
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1343280353636662}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -2.11, z: 0}
+  m_LocalScale: {x: 3, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4812255975897462}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50000010348060984
@@ -277,9 +367,9 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 20
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -287,26 +377,32 @@ AudioSource:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
-      time: 0
+      time: 0.5106742
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
     - serializedVersion: 2
+      time: 0.7057582
+      value: 0.9921166
+      inSlope: -0.04041043
+      outSlope: -3.3434517
+      tangentMode: 69
+    - serializedVersion: 2
       time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
+      value: 0.008333334
+      inSlope: -1.0526316
+      outSlope: -1.0526316
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   panLevelCustomCurve:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 2
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -354,8 +450,8 @@ MonoBehaviour:
   moveSpeed: 1
   returnSpeed: 0.09
   returnDelay: 1
-  magShake: 0.1
-  durShake: 0.3
+  magShake: 0.4
+  durShake: 0.5
   impact: {fileID: 8300000, guid: 2cdfcd23733905848bfb1389b80aaf67, type: 3}
 --- !u!114 &114000013283446508
 MonoBehaviour:
@@ -408,6 +504,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gravityRockFragment: {fileID: 1280305590052138, guid: 9e0aebf771503aa4abf50408c70612d6,
     type: 2}
+  impactRockFragments: {fileID: 1686878686733384, guid: c19ddfec51c79a84db318f0809f32a2f,
+    type: 2}
+--- !u!114 &114939924503641098
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1155926261226476}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7eb519247d12c743b909d720d3ccb7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerToShadowOffSet: 0
+  shadowSpriteOffSet: 0
+  changingSprite: 0
+  enableShadowSprite: 0
+  changingHeight: 1
+  shadow: {fileID: 1343280353636662}
+  shadowSprite: {fileID: 1030863570944516}
 --- !u!212 &212000010468699646
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -441,5 +557,75 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8029181a1f3f0264e9984b764dda69d9, type: 3}
   m_Color: {r: 0.36980972, g: 0.43787533, b: 0.5294118, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+--- !u!212 &212064487370359718
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1030863570944516}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 00f63b71d7cef294f8e99ff795525490, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300000, guid: 8029181a1f3f0264e9984b764dda69d9, type: 3}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.384}
+  m_FlipX: 0
+  m_FlipY: 0
+--- !u!212 &212420273230278300
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1343280353636662}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 2
+  m_Sprite: {fileID: 21300000, guid: 97b5589171e5e6a4db05e85532c456ab, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.491}
   m_FlipX: 0
   m_FlipY: 0

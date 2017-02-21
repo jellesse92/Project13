@@ -57,5 +57,10 @@ public class PlayerStatusUIScript : MonoBehaviour {
     public void SetHealth(int index, int amount)
     {
         healthBars[index].transform.GetChild(index).GetComponent<Image>().fillAmount = 1f - amount * .01f;
+        healthLast[index] = amount;
+    }
+    public void SetHealthItem(int index, int amount)
+    {
+        lifeText[index].text = amount.ToString();
     }
 }
