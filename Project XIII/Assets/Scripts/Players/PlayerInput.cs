@@ -78,13 +78,19 @@ public class PlayerInput : MonoBehaviour {
         if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.X)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.heavyAttackButton)))
             keyPress.heavyAttackPress = true;
         if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.C)) || (joystickNum != 0 && rightTriggerReleased &&(Input.GetAxis(keyConfig.dashAxis) > TRIGGER_INPUT_DEAD_ZONE)))
+        {
             keyPress.dashPress = true;
-        if (joystickNum != 0 && Input.GetAxis(keyConfig.dashAxis) < .1f)
+            rightTriggerReleased = false;
+        }
+        if (joystickNum != 0 && Input.GetAxis(keyConfig.dashAxis) < .5f)
             rightTriggerReleased = true;
-        if (joystickNum != 0 && Input.GetAxis(keyConfig.recoveryAxis) < .1f)
+        if (joystickNum != 0 && Input.GetAxis(keyConfig.recoveryAxis) < .5f)
             leftTriggerReleased = true;
         if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.V)) || (joystickNum != 0 && leftTriggerReleased && (Input.GetAxis(keyConfig.recoveryAxis) > TRIGGER_INPUT_DEAD_ZONE)))
+        {
             keyPress.recoveryPress = true;
+            leftTriggerReleased = false;
+        }
         if ((joystickNum == 0 && Input.GetKeyUp(KeyCode.Z)) || (joystickNum != 0 && Input.GetButtonUp(keyConfig.quickAttackButton)))
             keyPress.quickAttackReleased = true;
         if ((joystickNum == 0 && Input.GetKeyUp(KeyCode.X)) || (joystickNum != 0 && Input.GetButtonUp(keyConfig.heavyAttackButton)))
