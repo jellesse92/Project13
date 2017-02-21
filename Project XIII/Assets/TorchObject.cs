@@ -26,6 +26,8 @@ public class TorchObject : ItemHitTrigger{
 
         transform.GetChild(0).GetComponent<ParticleSystem>().Clear();
         transform.GetChild(0).GetComponent<ParticleSystem>().Stop();
+        transform.GetChild(1).GetComponent<AudioSource>().Stop();
+
         foreach (GameObject shadow in shadows)
             shadow.GetComponent<ShadowSpriteGenerator>().SendLightSource(null);
     }
