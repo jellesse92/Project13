@@ -185,7 +185,6 @@ public class SwordsmanAttackScript : MonoBehaviour {
                 playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
                 playerSoundEffects.PlayHitSpark();
                 */
-                Debug.Log(target.transform.name);
                 target.GetComponent<Enemy>().Damage(0, .2f);
             }
 
@@ -458,7 +457,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     {
         if (collider.tag == "Destructible Projectile")
         {
-
+            collider.GetComponent<EnemyBulletScript>().Destroy();
         }
     }
 
