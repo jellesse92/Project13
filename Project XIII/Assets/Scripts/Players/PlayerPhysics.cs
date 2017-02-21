@@ -131,7 +131,7 @@ public class PlayerPhysics : MonoBehaviour {
 
                 if (myKeyPress.dashPress)
                     MovementSkill(xMove, yMove);
-                if (myKeyPress.blockPress)
+                if (myKeyPress.recoveryPress)
                     Heal();
                 CheckForButtonReleases();
             }
