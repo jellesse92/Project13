@@ -133,7 +133,21 @@ public class SwordsmanPhysics : PlayerPhysics{
             return true;
         }
 
+        if (CanAttackStatus() && GetComponent<PlayerInput>().getKeyPress().heavyAttackPress)
+        {
+            StartHeavyGroundCharge();
+            CheckForHeavyRelease();
+            Debug.Log("testing");
+            return true;
+        }
+
         return false;
+    }
+
+    public override void ExecuteHeavyButtonRelease()
+    {
+        Debug.Log("test");
+        myAnimator.SetTrigger("heavyAttack");
     }
 
     public override void MovementSkill(float xMove, float yMove)
@@ -338,7 +352,6 @@ public class SwordsmanPhysics : PlayerPhysics{
         playerEffectsManager.FlashScreen();
         GetComponent<SwordsmanParticleEffects>().PlayChargingTrail(true);
         checkChargeTime = false;
-        //attackScript.SetForceMulti(chargeMultiplier);     //OLD HEAVY ATTACK SCRIPT
         attackScript.SetHeavyTier(chargeLevel);
         AddForceX(CHARGE_FORCE_MULTIPLIER * chargeMultiplier);
     }

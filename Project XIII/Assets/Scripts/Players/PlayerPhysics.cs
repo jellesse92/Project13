@@ -479,8 +479,14 @@ public class PlayerPhysics : MonoBehaviour {
                 myAnimator.enabled = true;
                 heavyAttackReleased = true;
                 checkHeavyAttackUp = false;
+                ExecuteHeavyButtonRelease();
             }
         }
+    }
+
+    public virtual void ExecuteHeavyButtonRelease()
+    {
+
     }
 
     public void CheckForQuickRelease()
