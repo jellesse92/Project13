@@ -6,6 +6,7 @@ public class KeyPress {
     public bool quickAttackPress;
     public bool heavyAttackPress;
     public bool blockPress;
+    public bool recoveryPress;
     public bool dashPress;
     public bool rightTriggerPress;
     public float horizontalAxisValue;
@@ -26,7 +27,7 @@ public class KeyConfig
     public string jumpButton = "1_X";
     public string quickAttackButton = "1_Square";
     public string heavyAttackButton = "1_Triangle";
-    public string specialButton = "1_Circle";
+    public string recoveryButton = "1_Circle";
     public string dashAxis = "1_RightTrigger";
 
     //public string dashkey
@@ -76,8 +77,8 @@ public class PlayerInput : MonoBehaviour {
             keyPress.dashPress = true;
         if (joystickNum != 0 && Input.GetAxis(keyConfig.dashAxis) < .1f)
             rightTriggerReleased = true;
-        if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.V)))//|| (joystickNum != 0 && Input.GetButtonDown(keyConfig.blockButton)
-            keyPress.blockPress = true;
+        if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.V)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.recoveryButton)))
+            keyPress.recoveryPress = true;
         if ((joystickNum == 0 && Input.GetKeyUp(KeyCode.Z)) || (joystickNum != 0 && Input.GetButtonUp(keyConfig.quickAttackButton)))
             keyPress.quickAttackReleased = true;
         if ((joystickNum == 0 && Input.GetKeyUp(KeyCode.X)) || (joystickNum != 0 && Input.GetButtonUp(keyConfig.heavyAttackButton)))
@@ -92,6 +93,7 @@ public class PlayerInput : MonoBehaviour {
         keyPress.quickAttackPress = false;
         keyPress.heavyAttackPress = false;
         keyPress.blockPress = false;
+        keyPress.recoveryPress = false;
         keyPress.dashPress = false;
         keyPress.quickAttackReleased = false;
         keyPress.heavyAttackReleased = false;
@@ -128,7 +130,7 @@ public class PlayerInput : MonoBehaviour {
         keyConfig.jumpButton = num.ToString() + "_X";
         keyConfig.quickAttackButton = num.ToString() + "_Square";
         keyConfig.heavyAttackButton = num.ToString() + "_Triangle";
-        keyConfig.specialButton = num.ToString() + "_Circle";
+        keyConfig.recoveryButton = num.ToString() + "_Circle";
         keyConfig.dashAxis = num.ToString() + "_RightTrigger";
 
 

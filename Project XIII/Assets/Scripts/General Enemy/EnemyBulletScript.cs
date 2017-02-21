@@ -51,7 +51,14 @@ public class EnemyBulletScript : MonoBehaviour {
 
         }
     }
-    
+
+    public void Destroy()
+    {
+        StartCoroutine("DeactivateBullet");
+        PlayParticle(false);
+        transform.parent.parent.GetComponentInChildren<Enemy>().ReloadAmmo();
+    }
+ 
     IEnumerator DeactivateBullet()
     {
         GetComponent<Collider2D>().enabled = false;

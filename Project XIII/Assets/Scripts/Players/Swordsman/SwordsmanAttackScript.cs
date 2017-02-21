@@ -10,8 +10,6 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     //Constants for heavy attack variables 
     const float HEAVY_DRAG_ENEMY_TIME = .1f;                        //Time after initial enemy hit to keep dragging out attack
-    //const float HEAVY_X_LAUNCH_FORCE_MULTIPLIER = 18000f;           //Multiplier for how much to push enemy at the end of hit in the X direction
-    //const float HEAVY_Y_LAUNCH_FORCE_MULTIPLIER = 18000f;           //Multiplier for how much to push enemy at the end of hit in the Y direction
     const float HEAVY_X_LAUNCH_FORCE = 18000f;                      //Launce force for heavy attack
     const float HEAVY_Y_LAUNCH_FORCE = 30000f;
     const float HEAVY_X_OFFSET = 4f;                                //Where enemy is dragged relative to the swordsman
@@ -41,7 +39,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     const float QUICK_AIR_STUN_MULTI = 1f;                          //Stun duration multiplier for air quick attack 
     const float DRAG_STUN_MULTI = 1f;                               //Stun duration multiplier for drag attack
 
-    HashSet<GameObject> enemyHash;
+    HashSet<GameObject> enemyHash;                                  //Hash of enemies that should be hit
 
     //Heavy attack variables
     float forceMulti = 1f;                                          //Force based on how much swordsman charged attack
@@ -150,37 +148,46 @@ public class SwordsmanAttackScript : MonoBehaviour {
         CancelInvoke("DragAttackApplyDamage");
     }
 
+    bool CheckAcceptTag(Collider2D col)
+    {
+        return (col.tag == "Enemy" || col.tag == "Item" || col.tag == "Destructible Projectile");
+    }
+
     /*
      *  HEAVY ATTACK FUNCTIONS
      */
       
     void TriggerHeavyAttack(Collider2D col)
     {
-        if (col.tag == "Enemy" && !enemyHash.Contains(col.gameObject))
+        if (CheckAcceptTag(col) && !enemyHash.Contains(col.gameObject))
         {
             enemyHash.Add(col.gameObject);
-            if (!stopInvoked)
+            if (col.tag != "Destructible Projectile" && !stopInvoked)
             {
                 stopInvoked = true;
                 Invoke("StopMomentum", HEAVY_DRAG_ENEMY_TIME);
             }
         }
-        ItemHit(col);
+
+        OtherHitsManage(col);
     }
 
     void UpdateHeavyAttack()
     {
         foreach (GameObject target in enemyHash)
         {
-            target.transform.position = new Vector3(transform.position.x + HEAVY_X_OFFSET * transform.parent.localScale.x, target.transform.position.y, target.transform.position.z);
+            if(target.tag == "Enemy")
+            {
+                target.transform.position = new Vector3(transform.position.x + HEAVY_X_OFFSET * transform.parent.localScale.x, target.transform.position.y, target.transform.position.z);
 
-            //Original effect
-            /*
-            playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
-            playerSoundEffects.PlayHitSpark();
-            */
+                //Original effect
+                /*
+                playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
+                playerSoundEffects.PlayHitSpark();
+                */
+                target.GetComponent<Enemy>().Damage(0, .2f);
+            }
 
-            target.GetComponent<Enemy>().Damage(0, .2f);
         }
     }
 
@@ -188,13 +195,6 @@ public class SwordsmanAttackScript : MonoBehaviour {
     {
         transform.parent.GetComponent<PlayerPhysics>().VelocityX(0);
     }
-
-    /*
-    public void SetForceMulti(float force)
-    {
-        forceMulti = force;
-    }
-    */
 
     public void SetHeavyTier(int tier)
     {
@@ -205,17 +205,18 @@ public class SwordsmanAttackScript : MonoBehaviour {
     {
         foreach (GameObject target in enemyHash)
         {
-            //OLD ATTACK SCRIPT
-            //target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_Y_LAUNCE_FORCE * transform.parent.localScale.x, forceMulti * HEAVY_Y_LAUNCH_FORCE_MULTIPLIER));
-
-            target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_X_LAUNCH_FORCE * transform.parent.localScale.x, HEAVY_Y_LAUNCH_FORCE));
-            playerSoundEffects.PlayHitSpark();
-            playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
-            target.GetComponent<Enemy>().Damage(damage, HEAVY_STUN_MULTI);
+            if(target.tag == "Enemy")
+            {
+                target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_X_LAUNCH_FORCE * transform.parent.localScale.x, HEAVY_Y_LAUNCH_FORCE));
+                playerSoundEffects.PlayHitSpark();
+                playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
+                target.GetComponent<Enemy>().Damage(damage, HEAVY_STUN_MULTI);
+            }
         }
 
+        enemyInHeavyFinisher = enemyHash;
 
-        if(heavyTier > 0)
+        if (heavyTier > 0)
         {
             InvokeRepeating("HeavyFinisher", .05f, .1f);
             if (heavyTier == 1)
@@ -224,7 +225,6 @@ public class SwordsmanAttackScript : MonoBehaviour {
                 Invoke("EndHeavyFinisher", 1.05f);
         }
 
-        enemyInHeavyFinisher = enemyHash;
         transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(magShakeLaunch, durShakeLaunch);
     }
 
@@ -233,7 +233,8 @@ public class SwordsmanAttackScript : MonoBehaviour {
         CancelInvoke("HeavyFinisher");
         foreach(GameObject target in enemyInHeavyFinisher)
         {
-            target.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
+            if(target.tag == "Enemy")
+                target.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
 
@@ -247,14 +248,21 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void HeavyFinisherDamage(GameObject target)
     {
-        target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-        target.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 3000f));
-        target.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll; 
-        target.GetComponent<Enemy>().Damage(HEAVY_FINISHER_DPH, .2f);
+        if (target.tag == "Enemy")
+        {
+            target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+            target.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 3000f));
+            target.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+            target.GetComponent<Enemy>().Damage(HEAVY_FINISHER_DPH, .2f);
 
-        //Special effects stuff
-        playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
-        playerSoundEffects.PlayHitSpark();
+            //Special effects stuff
+            playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
+            playerSoundEffects.PlayHitSpark();
+        }
+        else
+            OtherHitsManage(target.GetComponent<Collider2D>());
+
+
     }
 
     /*
@@ -276,7 +284,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             col.gameObject.GetComponent<Enemy>().Damage(damage, HEAVY_AIR_STUN_MULTI);
             col.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_AIR_X_FORCE * transform.parent.localScale.x, HEAVY_AIR_Y_FORCE));
         }
-        ItemHit(col);
+        OtherHitsManage(col);
     }
 
     /*
@@ -298,7 +306,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
         }
-        ItemHit(col);
+        OtherHitsManage(col);
     }
 
     void TriggerQuickAttack2(Collider2D col)
@@ -312,7 +320,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
         }
-        ItemHit(col);
+        OtherHitsManage(col);
     }
 
     void TriggerAirQuickAttack(Collider2D col)
@@ -326,7 +334,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             col.GetComponent<Enemy>().Damage(damage, QUICK_AIR_STUN_MULTI);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_AIR_X_FORCE * transform.parent.localScale.x, QUICK_AIR_Y_FORCE));
         }
-        ItemHit(col);
+        OtherHitsManage(col);
     }
 
     /*
@@ -351,23 +359,28 @@ public class SwordsmanAttackScript : MonoBehaviour {
                     transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(magShakeDragAttack, durShakeDragAttack);
                 col.GetComponent<Enemy>().Damage(damage, DRAG_STUN_MULTI);
             }
+        OtherHitsManage(col);
     }
 
     void UpdateDragAttack()
     {
         foreach (GameObject target in enemyHash)
-            target.transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+            if(target.tag == "Enemy")
+                target.transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
     }
 
     void DragAttackApplyDamage()
     {
         foreach(GameObject target in enemyHash)
         {
-            //DRAG ATTACK EFFECTS STUFF
-            playerSoundEffects.PlayHitSpark();
-            playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
+            if(target.tag == "Enemy")
+            {
+                //DRAG ATTACK EFFECTS STUFF
+                playerSoundEffects.PlayHitSpark();
+                playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
 
-            target.GetComponent<Enemy>().Damage(DRAG_DAMAGE, DRAG_STUN_MULTI);
+                target.GetComponent<Enemy>().Damage(DRAG_DAMAGE, DRAG_STUN_MULTI);
+            }
         }
     }
 
@@ -400,7 +413,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
         }
-        ItemHit(col);        
+        OtherHitsManage(col);        
     }
 
 
@@ -425,12 +438,26 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     }
 
+    void OtherHitsManage(Collider2D collider)
+    {
+        ItemHit(collider);
+        ProjectileHit(collider);
+    }
+
     void ItemHit(Collider2D collider)
     {
         if (collider.tag == "Item")
         {
             HitEffect(HitType.item, collider.transform.position);
             collider.GetComponent<ItemHitTrigger>().ItemHit();
+        }
+    }
+
+    void ProjectileHit(Collider2D collider)
+    {
+        if (collider.tag == "Destructible Projectile")
+        {
+            collider.GetComponent<EnemyBulletScript>().Destroy();
         }
     }
 

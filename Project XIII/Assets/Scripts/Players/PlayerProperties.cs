@@ -49,6 +49,7 @@ public class PlayerProperties : MonoBehaviour{
     protected bool stunnable = true;
 
     protected bool isInvincibile = false;
+    protected bool knockbackImmune = false;
 
     private bool isKnockedBack = false;
     private int playerAngle = 0;
@@ -187,12 +188,8 @@ public class PlayerProperties : MonoBehaviour{
             transform.parent.GetComponent<PlayerEffectsManager>().DamageFlashScreen();
         }
 
-        GetComponent<Rigidbody2D>().gravityScale = GetComponent<PlayerPhysics>().GetDefaultGravityForce();
 
         currentHealth -= dmg;
-        //Prevent stacking KnockBack
-        StartCoroutine(knockXPlayer(knockBackX, knockBackY));
-        //knockXPlayer(knockBackX, knockBackY);
 
         //Play death
         if (alive && currentHealth <= 0)
@@ -201,12 +198,18 @@ public class PlayerProperties : MonoBehaviour{
             return;
         }
 
+        if (!knockbackImmune)
+        {
+            GetComponent<Rigidbody2D>().gravityScale = GetComponent<PlayerPhysics>().GetDefaultGravityForce();
+            StartCoroutine(knockXPlayer(knockBackX, knockBackY));
+
+            //Applies stun
+            if (stunnable && !isStunned)
+                StartCoroutine(ApplyStun(stunTime));
+        }
+
         //Applies invincibility
         StartCoroutine("ApplyInvin");
-
-        //Applies stun
-        if (stunnable && !isStunned)
-            StartCoroutine(ApplyStun(stunTime));
 
         //Updates player health ui
         if (psScript != null)
@@ -232,6 +235,16 @@ public class PlayerProperties : MonoBehaviour{
         }
         yield return 0;
 
+    }
+
+    public void ActivateKnockback()
+    {
+        knockbackImmune = false;
+    }
+
+    public void DeactivateKnockback()
+    {
+        knockbackImmune = true;
     }
 
     private void unsetKnockedBack()

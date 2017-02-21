@@ -131,7 +131,7 @@ public class PlayerPhysics : MonoBehaviour {
 
                 if (myKeyPress.dashPress)
                     MovementSkill(xMove, yMove);
-                if (myKeyPress.blockPress)
+                if (myKeyPress.recoveryPress)
                     Heal();
                 CheckForButtonReleases();
             }
@@ -410,6 +410,7 @@ public class PlayerPhysics : MonoBehaviour {
         cannotAttack = false;
         cannotJump = false;
         cannotMovePlayer = false;
+        GetComponent<PlayerProperties>().ActivateKnockback();
     }
 
     public void DeactivateAttackMovementJump()
@@ -484,10 +485,13 @@ public class PlayerPhysics : MonoBehaviour {
         }
     }
 
-    public virtual void ExecuteHeavyButtonRelease()
+    public void CancelCheckForButtonReleases()
     {
-
+        checkQuickAttackUp = false;
+        checkHeavyAttackUp = false;
     }
+
+    public virtual void ExecuteHeavyButtonRelease(){}
 
     public void CheckForQuickRelease()
     {
