@@ -56,11 +56,21 @@ public class PlayerStatusUIScript : MonoBehaviour {
 
     public void SetHealth(int index, int amount)
     {
+        index -= 1;
+
+        if (index < 0)  //For when testing characters unassigned to player
+            index = 0;
+
         healthBars[index].transform.GetChild(index).GetComponent<Image>().fillAmount = 1f - amount * .01f;
         healthLast[index] = amount;
     }
     public void SetHealthItem(int index, int amount)
     {
+        index -= 1;
+
+        if (index < 0)  //For when testing characters unassigned to player
+            index = 0;
+
         lifeText[index].text = amount.ToString();
     }
 }

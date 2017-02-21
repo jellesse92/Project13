@@ -2,6 +2,7 @@
 using System.Collections;
 
 public class KeyPress {
+
     public bool jumpPress;
     public bool quickAttackPress;
     public bool heavyAttackPress;
@@ -27,7 +28,7 @@ public class KeyConfig
     public string jumpButton = "1_X";
     public string quickAttackButton = "1_Square";
     public string heavyAttackButton = "1_Triangle";
-    public string recoveryButton = "1_Circle";
+    public string recoveryAxis = "1_LeftTrigger";
     public string dashAxis = "1_RightTrigger";
 
     //public string dashkey
@@ -36,11 +37,14 @@ public class KeyConfig
 
 public class PlayerInput : MonoBehaviour {
 
+    const float TRIGGER_INPUT_DEAD_ZONE = .5f;
+
     private KeyConfig keyConfig = new KeyConfig();
     private KeyPress keyPress = new KeyPress();
     private int joystickNum = 0;
     private bool inputEnabled = true;
     private bool rightTriggerReleased = true;
+    private bool leftTriggerReleased = true;
 
     void Start()
 	{
@@ -73,12 +77,20 @@ public class PlayerInput : MonoBehaviour {
             keyPress.quickAttackPress = true;
         if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.X)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.heavyAttackButton)))
             keyPress.heavyAttackPress = true;
-        if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.C)) || (joystickNum != 0 && rightTriggerReleased &&(Input.GetAxis(keyConfig.dashAxis) > .5f)))
+        if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.C)) || (joystickNum != 0 && rightTriggerReleased &&(Input.GetAxis(keyConfig.dashAxis) > TRIGGER_INPUT_DEAD_ZONE)))
+        {
             keyPress.dashPress = true;
-        if (joystickNum != 0 && Input.GetAxis(keyConfig.dashAxis) < .1f)
+            rightTriggerReleased = false;
+        }
+        if (joystickNum != 0 && Input.GetAxis(keyConfig.dashAxis) < .5f)
             rightTriggerReleased = true;
-        if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.V)) || (joystickNum != 0 && Input.GetButtonDown(keyConfig.recoveryButton)))
+        if (joystickNum != 0 && Input.GetAxis(keyConfig.recoveryAxis) < .5f)
+            leftTriggerReleased = true;
+        if ((joystickNum == 0 && Input.GetKeyDown(KeyCode.V)) || (joystickNum != 0 && leftTriggerReleased && (Input.GetAxis(keyConfig.recoveryAxis) > TRIGGER_INPUT_DEAD_ZONE)))
+        {
             keyPress.recoveryPress = true;
+            leftTriggerReleased = false;
+        }
         if ((joystickNum == 0 && Input.GetKeyUp(KeyCode.Z)) || (joystickNum != 0 && Input.GetButtonUp(keyConfig.quickAttackButton)))
             keyPress.quickAttackReleased = true;
         if ((joystickNum == 0 && Input.GetKeyUp(KeyCode.X)) || (joystickNum != 0 && Input.GetButtonUp(keyConfig.heavyAttackButton)))
@@ -130,7 +142,7 @@ public class PlayerInput : MonoBehaviour {
         keyConfig.jumpButton = num.ToString() + "_X";
         keyConfig.quickAttackButton = num.ToString() + "_Square";
         keyConfig.heavyAttackButton = num.ToString() + "_Triangle";
-        keyConfig.recoveryButton = num.ToString() + "_Circle";
+        keyConfig.recoveryAxis = num.ToString() + "_LeftTrigger";
         keyConfig.dashAxis = num.ToString() + "_RightTrigger";
 
 

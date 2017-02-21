@@ -145,7 +145,6 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     public override void ExecuteHeavyButtonRelease()
     {
-        Debug.Log("test");
         myAnimator.SetTrigger("heavyAttack");
     }
 
