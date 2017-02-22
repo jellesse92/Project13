@@ -11,6 +11,7 @@ public class TEST_InputScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        Debug.Log(Input.GetAxis("1_DPadX"));
 
         if (Input.GetKeyDown(KeyCode.Z))
             Debug.Log("Z Down");
