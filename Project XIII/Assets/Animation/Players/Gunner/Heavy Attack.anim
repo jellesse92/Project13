@@ -19,24 +19,32 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: ded76354bedde264180ca13411c771d3, type: 3}
+      value: {fileID: 21300000, guid: b4a1369a56db4244792f65cfec4787de, type: 3}
     - time: 0.083333336
-      value: {fileID: 21300000, guid: 4386e22b50190d243835adce488491c0, type: 3}
+      value: {fileID: 21300000, guid: aa1da80b162fc4c4f9a5fd234cbbd6ba, type: 3}
     - time: 0.16666667
-      value: {fileID: 21300000, guid: 8c49e2c67ce4ba94fa4695ec15efa257, type: 3}
+      value: {fileID: 21300000, guid: 1a99b53b9f303ff42ac96bd2ff0218ba, type: 3}
     - time: 0.25
-      value: {fileID: 21300000, guid: 4fd9f0eeca4c8f54bb7f8be633ac7a17, type: 3}
+      value: {fileID: 21300000, guid: 2c743523a9e9ec34991b7b8d533e0d5d, type: 3}
     - time: 0.33333334
-      value: {fileID: 21300000, guid: a59e95d0937497a4e9c13e9ca98ea49a, type: 3}
-    - time: 0.41666666
-      value: {fileID: 21300000, guid: bdea34459da227142888b0c92089801c, type: 3}
+      value: {fileID: 21300000, guid: b8764edb335f4a74880553e21cbee1ab, type: 3}
+    - time: 0.4166667
+      value: {fileID: 21300000, guid: 6bd60ce5fcf4c484f898db2bbbfc57a7, type: 3}
     - time: 0.5
-      value: {fileID: 21300000, guid: c68f64dac77d5b641bd8367e007f7609, type: 3}
+      value: {fileID: 21300000, guid: 6327974cb4a402e41ba8b48ad8b31a43, type: 3}
+    - time: 0.5833333
+      value: {fileID: 21300000, guid: 5b7a05c8e97081d4e87604d57b09e1d2, type: 3}
+    - time: 0.6666666
+      value: {fileID: 21300000, guid: e02b3ef22506e6e4e9102a04df1d8834, type: 3}
+    - time: 0.74999994
+      value: {fileID: 21300000, guid: d125792c9d0fab04dbc51f6f7e005895, type: 3}
+    - time: 0.83333325
+      value: {fileID: 21300000, guid: a57b986700f3c8b4a82f22033f58fc5f, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
-  m_SampleRate: 60
+  m_SampleRate: 12
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -50,19 +58,23 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: ded76354bedde264180ca13411c771d3, type: 3}
-    - {fileID: 21300000, guid: 4386e22b50190d243835adce488491c0, type: 3}
-    - {fileID: 21300000, guid: 8c49e2c67ce4ba94fa4695ec15efa257, type: 3}
-    - {fileID: 21300000, guid: 4fd9f0eeca4c8f54bb7f8be633ac7a17, type: 3}
-    - {fileID: 21300000, guid: a59e95d0937497a4e9c13e9ca98ea49a, type: 3}
-    - {fileID: 21300000, guid: bdea34459da227142888b0c92089801c, type: 3}
-    - {fileID: 21300000, guid: c68f64dac77d5b641bd8367e007f7609, type: 3}
+    - {fileID: 21300000, guid: b4a1369a56db4244792f65cfec4787de, type: 3}
+    - {fileID: 21300000, guid: aa1da80b162fc4c4f9a5fd234cbbd6ba, type: 3}
+    - {fileID: 21300000, guid: 1a99b53b9f303ff42ac96bd2ff0218ba, type: 3}
+    - {fileID: 21300000, guid: 2c743523a9e9ec34991b7b8d533e0d5d, type: 3}
+    - {fileID: 21300000, guid: b8764edb335f4a74880553e21cbee1ab, type: 3}
+    - {fileID: 21300000, guid: 6bd60ce5fcf4c484f898db2bbbfc57a7, type: 3}
+    - {fileID: 21300000, guid: 6327974cb4a402e41ba8b48ad8b31a43, type: 3}
+    - {fileID: 21300000, guid: 5b7a05c8e97081d4e87604d57b09e1d2, type: 3}
+    - {fileID: 21300000, guid: e02b3ef22506e6e4e9102a04df1d8834, type: 3}
+    - {fileID: 21300000, guid: d125792c9d0fab04dbc51f6f7e005895, type: 3}
+    - {fileID: 21300000, guid: a57b986700f3c8b4a82f22033f58fc5f, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.51666665
+    m_StopTime: 0.91666657
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -91,7 +103,21 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.33333334
+  - time: 0.25
+    functionName: PlayParticleHeavyAttack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.25
+    functionName: ShootHeavyBullet
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.25
     functionName: playSound
     data: 
     objectReferenceParameter: {fileID: 8300000, guid: 09e073e4baac2c44db53919386d14001,
@@ -99,21 +125,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.33333334
-    functionName: ShootHeavyBullet
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.33333334
-    functionName: PlayParticleHeavyAttack
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.5
+  - time: 0.8333333
     functionName: ActivateAttackMovementJump
     data: 
     objectReferenceParameter: {fileID: 0}
