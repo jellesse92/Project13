@@ -11,6 +11,7 @@ public class PlayerSoundEffects : MonoBehaviour {
     public AudioClip[] deathVoiceList;
 
     public AudioClip[] hitSparkList;                           //audio clip at enemy hit contact
+    public AudioClip heal;
     AudioSource myAudio;
     AudioClip myClip;
 
@@ -49,5 +50,11 @@ public class PlayerSoundEffects : MonoBehaviour {
     public void playSound(AudioClip clip)
     {
         myAudio.PlayOneShot(clip);
+    }
+
+    public void PlayHeal()
+    {
+        if (!(GetComponent<PlayerProperties>().currentHealth == GetComponent<PlayerProperties>().maxHealth))
+            myAudio.PlayOneShot(heal);
     }
 }

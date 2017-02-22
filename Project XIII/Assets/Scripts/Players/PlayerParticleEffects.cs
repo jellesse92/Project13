@@ -85,6 +85,7 @@ public class PlayerParticleEffects : ParticleEffects {
 
     public void PlayParticleHeal()
     {
-        PlayParticle(heal);
+        if(!(GetComponent<PlayerProperties>().currentHealth == GetComponent<PlayerProperties>().maxHealth))
+            PlayParticle(heal);
     }
 }

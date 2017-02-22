@@ -330,6 +330,8 @@ public class PlayerProperties : MonoBehaviour{
 
     public void Heal()
     {
+        if (currentHealth == maxHealth)
+            return;
         currentHealth = maxHealth;
         healingItem--;
         if (psScript != null)
