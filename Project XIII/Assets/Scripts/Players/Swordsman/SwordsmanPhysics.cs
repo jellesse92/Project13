@@ -443,8 +443,9 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     public void AttackCAnimationAdjustment()
     {
-        Vector3 newPosition = transform.position;
-        newPosition.x += (1.5f * transform.localScale.x / Mathf.Abs(transform.localScale.x));
-        transform.position = newPosition;
+        myRigidbody.velocity = new Vector2(14f, myRigidbody.velocity.y);
+        //Vector3 newPosition = transform.position;
+        //newPosition.x += (1.5f * transform.localScale.x / Mathf.Abs(transform.localScale.x));
+        //transform.position = newPosition;
     }
 }
