@@ -13,11 +13,11 @@ public class SwordsmanAttackScript : MonoBehaviour {
     const float HEAVY_X_LAUNCH_FORCE = 18000f;                      //Launce force for heavy attack
     const float HEAVY_Y_LAUNCH_FORCE = 30000f;
     const float HEAVY_X_OFFSET = 4f;                                //Where enemy is dragged relative to the swordsman
-    const int HEAVY_FINISHER_DPH = 1;                               //Heavy finisher's damage per hit
+    const int HEAVY_FINISHER_DPH = 15;                               //Heavy finisher's damage per hit
 
     //Constants for heavy air attack variables
-    const float HEAVY_AIR_X_FORCE = 7000f;                          //X force to be applied on hit for air heavy attack
-    const float HEAVY_AIR_Y_FORCE = -19000f;                        //Y force to be applied on hit for air heavy attack
+    const float HEAVY_AIR_X_FORCE = 9000f;                          //X force to be applied on hit for air heavy attack
+    const float HEAVY_AIR_Y_FORCE = -24000f;                        //Y force to be applied on hit for air heavy attack
 
     //Constants for quick attack variables
     const float QUICK_X_FORCE = 400f;                               //X force to be applied on hit for quick attack
@@ -30,6 +30,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     //Constants for drag attack variables
     const float DRAG_REPEAT_DMG_APPLY_ST = .03f;                     //Time to start applying repeated damage as character performs drag attack
     const float DRAG_REPEAT_DMG_RATE = .1f;                         //Rate at which damage is applied after invoke started for drag attack
+    const float DRAG_ATTACK_END_FORCE = 3000f;                      //Amount of force to apply at end of drag attack
     const int DRAG_DAMAGE = 1;
 
     //Constants for stun duration
@@ -220,9 +221,9 @@ public class SwordsmanAttackScript : MonoBehaviour {
         {
             InvokeRepeating("HeavyFinisher", .05f, .1f);
             if (heavyTier == 1)
-                Invoke("EndHeavyFinisher", .55f);
+                Invoke("EndHeavyFinisher", .35f);
             else if (heavyTier == 2)
-                Invoke("EndHeavyFinisher", 1.05f);
+                Invoke("EndHeavyFinisher", .65f);
         }
 
         transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(magShakeLaunch, durShakeLaunch);
@@ -389,6 +390,17 @@ public class SwordsmanAttackScript : MonoBehaviour {
         CancelInvoke("DragAttackApplyDamage");
     }
 
+    public void DragAttackEnd()
+    {
+        foreach(GameObject target in enemyHash)
+        {
+            if(target.tag == "Enemy")
+            {
+                target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+                target.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, DRAG_ATTACK_END_FORCE));
+            }
+        }
+    }
 
     /*
      *  END DRAG ATTACK FUNCTIONS
