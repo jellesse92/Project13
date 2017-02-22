@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Gunner Air Attack
+  m_Name: Air Heavy Attack
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -22,21 +22,21 @@ AnimationClip:
       - serializedVersion: 2
         time: 0
         value: 0
-        inSlope: 0.48000002
-        outSlope: 0.48000002
-        tangentMode: 34
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
       - serializedVersion: 2
-        time: 0.41666666
-        value: 0.2
-        inSlope: 0.48000002
-        outSlope: 0.48000002
-        tangentMode: 34
+        time: 0.083333336
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_Offset.x
-    path: AttackBox
-    classID: 61
+    attribute: m_IsActive
+    path: Melee Attack Box
+    classID: 1
     script: {fileID: 0}
   - curve:
       serializedVersion: 2
@@ -44,20 +44,42 @@ AnimationClip:
       - serializedVersion: 2
         time: 0
         value: 1
-        inSlope: 2.6399999
-        outSlope: 2.6399999
+        inSlope: 20.4
+        outSlope: 20.4
         tangentMode: 34
       - serializedVersion: 2
-        time: 0.41666666
-        value: 2.1
-        inSlope: 2.6399999
-        outSlope: 2.6399999
+        time: 0.083333336
+        value: 2.7
+        inSlope: 20.4
+        outSlope: 20.4
         tangentMode: 34
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Size.x
-    path: AttackBox
+    path: Melee Attack Box
+    classID: 61
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 9.599999
+        outSlope: 9.599999
+        tangentMode: 34
+      - serializedVersion: 2
+        time: 0.083333336
+        value: 0.8
+        inSlope: 9.599999
+        outSlope: 9.599999
+        tangentMode: 34
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Offset.x
+    path: Melee Attack Box
     classID: 61
     script: {fileID: 0}
   - curve:
@@ -66,20 +88,20 @@ AnimationClip:
       - serializedVersion: 2
         time: 0
         value: 1
-        inSlope: 2.4
-        outSlope: 2.4
+        inSlope: 12
+        outSlope: 12
         tangentMode: 34
       - serializedVersion: 2
-        time: 0.41666666
+        time: 0.083333336
         value: 2
-        inSlope: 2.4
-        outSlope: 2.4
+        inSlope: 12
+        outSlope: 12
         tangentMode: 34
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Size.y
-    path: AttackBox
+    path: Melee Attack Box
     classID: 61
     script: {fileID: 0}
   - curve:
@@ -88,70 +110,36 @@ AnimationClip:
       - serializedVersion: 2
         time: 0
         value: 0
-        inSlope: -1.2
-        outSlope: -1.2
+        inSlope: -6
+        outSlope: -6
         tangentMode: 34
       - serializedVersion: 2
-        time: 0.41666666
+        time: 0.083333336
         value: -0.5
-        inSlope: -1.2
-        outSlope: -1.2
+        inSlope: -6
+        outSlope: -6
         tangentMode: 34
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Offset.y
-    path: AttackBox
-    classID: 61
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-      - serializedVersion: 2
-        time: 0.33333334
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-      - serializedVersion: 2
-        time: 0.5833333
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_Enabled
-    path: AttackBox
+    path: Melee Attack Box
     classID: 61
     script: {fileID: 0}
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 0231037354a605847a91f28d99ae90e5, type: 3}
+      value: {fileID: 21300000, guid: 1ffe2e1860811c94481a28fe50903452, type: 3}
     - time: 0.083333336
-      value: {fileID: 21300000, guid: 26552b3733b75294a9611535ebf6bfaa, type: 3}
+      value: {fileID: 21300000, guid: 7edde47c030d1ae4ba8e9e7e36e27671, type: 3}
     - time: 0.16666667
-      value: {fileID: 21300000, guid: 61ee2ae879e076847927cb5ba8e20ee5, type: 3}
+      value: {fileID: 21300000, guid: af6d54a6ab23e9645a8265ae7fbcdb6a, type: 3}
     - time: 0.25
-      value: {fileID: 21300000, guid: 222c45b4d867aaa4f8d89b8a2f592e91, type: 3}
+      value: {fileID: 21300000, guid: 70e392e582246ed478e60d983dd92e0a, type: 3}
     - time: 0.33333334
-      value: {fileID: 21300000, guid: 567cede8ac8554b45bf0f196ed10ef6c, type: 3}
+      value: {fileID: 21300000, guid: 63b1533f932ee3c45bb7a76b181908c3, type: 3}
     - time: 0.41666666
-      value: {fileID: 21300000, guid: 66b72876ddc8e4b4e8e7a104ff391536, type: 3}
-    - time: 0.5
-      value: {fileID: 21300000, guid: 07ad7428960e64442bccae830fce30f2, type: 3}
-    - time: 0.5833333
-      value: {fileID: 21300000, guid: dd4706627c6cb5245b178fb799fd538a, type: 3}
-    - time: 0.6666667
-      value: {fileID: 21300000, guid: 65c8198c186c2594c8036ab1a88d43c0, type: 3}
+      value: {fileID: 21300000, guid: 11ed7110601f5f842bcefad52eac32cb, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -163,32 +151,32 @@ AnimationClip:
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
     genericBindings:
-    - path: 560274960
-      attribute: 413499720
+    - path: 4015424058
+      attribute: 2086281974
       script: {fileID: 0}
-      classID: 61
+      classID: 1
       customType: 0
       isPPtrCurve: 0
-    - path: 560274960
+    - path: 4015424058
       attribute: 4197328169
       script: {fileID: 0}
       classID: 61
       customType: 0
       isPPtrCurve: 0
-    - path: 560274960
+    - path: 4015424058
+      attribute: 413499720
+      script: {fileID: 0}
+      classID: 61
+      customType: 0
+      isPPtrCurve: 0
+    - path: 4015424058
       attribute: 2368279999
       script: {fileID: 0}
       classID: 61
       customType: 0
       isPPtrCurve: 0
-    - path: 560274960
+    - path: 4015424058
       attribute: 1872933342
-      script: {fileID: 0}
-      classID: 61
-      customType: 0
-      isPPtrCurve: 0
-    - path: 560274960
-      attribute: 3305885265
       script: {fileID: 0}
       classID: 61
       customType: 0
@@ -200,21 +188,18 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 0231037354a605847a91f28d99ae90e5, type: 3}
-    - {fileID: 21300000, guid: 26552b3733b75294a9611535ebf6bfaa, type: 3}
-    - {fileID: 21300000, guid: 61ee2ae879e076847927cb5ba8e20ee5, type: 3}
-    - {fileID: 21300000, guid: 222c45b4d867aaa4f8d89b8a2f592e91, type: 3}
-    - {fileID: 21300000, guid: 567cede8ac8554b45bf0f196ed10ef6c, type: 3}
-    - {fileID: 21300000, guid: 66b72876ddc8e4b4e8e7a104ff391536, type: 3}
-    - {fileID: 21300000, guid: 07ad7428960e64442bccae830fce30f2, type: 3}
-    - {fileID: 21300000, guid: dd4706627c6cb5245b178fb799fd538a, type: 3}
-    - {fileID: 21300000, guid: 65c8198c186c2594c8036ab1a88d43c0, type: 3}
+    - {fileID: 21300000, guid: 1ffe2e1860811c94481a28fe50903452, type: 3}
+    - {fileID: 21300000, guid: 7edde47c030d1ae4ba8e9e7e36e27671, type: 3}
+    - {fileID: 21300000, guid: af6d54a6ab23e9645a8265ae7fbcdb6a, type: 3}
+    - {fileID: 21300000, guid: 70e392e582246ed478e60d983dd92e0a, type: 3}
+    - {fileID: 21300000, guid: 63b1533f932ee3c45bb7a76b181908c3, type: 3}
+    - {fileID: 21300000, guid: 11ed7110601f5f842bcefad52eac32cb, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.75
+    m_StopTime: 0.5
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -236,21 +221,21 @@ AnimationClip:
       - serializedVersion: 2
         time: 0
         value: 0
-        inSlope: 0.48000002
-        outSlope: 0.48000002
-        tangentMode: 34
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
       - serializedVersion: 2
-        time: 0.41666666
-        value: 0.2
-        inSlope: 0.48000002
-        outSlope: 0.48000002
-        tangentMode: 34
+        time: 0.083333336
+        value: 1
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_Offset.x
-    path: AttackBox
-    classID: 61
+    attribute: m_IsActive
+    path: Melee Attack Box
+    classID: 1
     script: {fileID: 0}
   - curve:
       serializedVersion: 2
@@ -258,20 +243,42 @@ AnimationClip:
       - serializedVersion: 2
         time: 0
         value: 1
-        inSlope: 2.6399999
-        outSlope: 2.6399999
+        inSlope: 20.4
+        outSlope: 20.4
         tangentMode: 34
       - serializedVersion: 2
-        time: 0.41666666
-        value: 2.1
-        inSlope: 2.6399999
-        outSlope: 2.6399999
+        time: 0.083333336
+        value: 2.7
+        inSlope: 20.4
+        outSlope: 20.4
         tangentMode: 34
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Size.x
-    path: AttackBox
+    path: Melee Attack Box
+    classID: 61
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 9.599999
+        outSlope: 9.599999
+        tangentMode: 34
+      - serializedVersion: 2
+        time: 0.083333336
+        value: 0.8
+        inSlope: 9.599999
+        outSlope: 9.599999
+        tangentMode: 34
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_Offset.x
+    path: Melee Attack Box
     classID: 61
     script: {fileID: 0}
   - curve:
@@ -280,20 +287,20 @@ AnimationClip:
       - serializedVersion: 2
         time: 0
         value: 1
-        inSlope: 2.4
-        outSlope: 2.4
+        inSlope: 12
+        outSlope: 12
         tangentMode: 34
       - serializedVersion: 2
-        time: 0.41666666
+        time: 0.083333336
         value: 2
-        inSlope: 2.4
-        outSlope: 2.4
+        inSlope: 12
+        outSlope: 12
         tangentMode: 34
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Size.y
-    path: AttackBox
+    path: Melee Attack Box
     classID: 61
     script: {fileID: 0}
   - curve:
@@ -302,48 +309,20 @@ AnimationClip:
       - serializedVersion: 2
         time: 0
         value: 0
-        inSlope: -1.2
-        outSlope: -1.2
+        inSlope: -6
+        outSlope: -6
         tangentMode: 34
       - serializedVersion: 2
-        time: 0.41666666
+        time: 0.083333336
         value: -0.5
-        inSlope: -1.2
-        outSlope: -1.2
+        inSlope: -6
+        outSlope: -6
         tangentMode: 34
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_Offset.y
-    path: AttackBox
-    classID: 61
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-      - serializedVersion: 2
-        time: 0.33333334
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-      - serializedVersion: 2
-        time: 0.5833333
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_Enabled
-    path: AttackBox
+    path: Melee Attack Box
     classID: 61
     script: {fileID: 0}
   m_EulerEditorCurves: []
@@ -353,56 +332,14 @@ AnimationClip:
   m_IsEmpty: 0
   m_Events:
   - time: 0
-    functionName: DeactivateAttackMovementJump
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0
-    functionName: DeactivateVelocity
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.33333334
-    functionName: ActivateVelocity
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.33333334
-    functionName: ExecuteDownKick
+    functionName: DeactivateAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0.41666666
-    functionName: StartDownKickMove
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 15000
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.5
-    functionName: TotalDisableAnimator
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.5833333
-    functionName: CancelDownKick
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.6666667
-    functionName: ActivateAttackMovementJump
+    functionName: ActivateAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
