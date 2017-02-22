@@ -188,4 +188,13 @@ public class GunnerPhysics : PlayerPhysics{
     }
 
     
+    public void EnableDiscreteMovement()
+    {
+        discreteMovement = true;
+    }
+
+    public void DisableDiscreteMovement()
+    {
+        discreteMovement = true;
+    }
 }
