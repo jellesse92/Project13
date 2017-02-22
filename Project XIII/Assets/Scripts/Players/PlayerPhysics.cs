@@ -43,7 +43,8 @@ public class PlayerPhysics : MonoBehaviour {
     float characterWidth;                               //Width of character to cast secondary raycasting
     int layerMask;                                      //Layers to check for ground
     bool wasGrounded = false;
-    public bool discreteMovement = false;
+    public bool gunnerMovement = false;
+    bool running;
     public float groundCheckingOffset = 2f;
 
     //Ground detection delay for continuing ground attacks off ledge
@@ -190,8 +191,8 @@ public class PlayerPhysics : MonoBehaviour {
     {
         if (!cannotMovePlayer && !myAnimator.GetBool("crouch"))
         {
-            if (discreteMovement)
-                DiscreteMovement();
+            if (gunnerMovement)
+                GunnerMovement();
             else
             {
                 myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
@@ -204,13 +205,21 @@ public class PlayerPhysics : MonoBehaviour {
             myRigidbody.velocity = new Vector2(0, 0);
     }
 
-    void DiscreteMovement()
+    void GunnerMovement()
     {
-        if(myKeyPress.horizontalAxisValue > 0)
+        if (myKeyPress.horizontalAxisValue > 0 && !running)
             myRigidbody.velocity = new Vector2(Mathf.Ceil(myKeyPress.horizontalAxisValue) * physicStats.movementSpeed, myRigidbody.velocity.y);
-        else if(myKeyPress.horizontalAxisValue < 0)
+        else if (myKeyPress.horizontalAxisValue < 0 && !running)
             myRigidbody.velocity = new Vector2(Mathf.Floor(myKeyPress.horizontalAxisValue) * physicStats.movementSpeed, myRigidbody.velocity.y);
+        else
+            myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
         myAnimator.SetFloat("speed", Mathf.Ceil(Mathf.Abs(myKeyPress.horizontalAxisValue)));
+        if (myKeyPress.horizontalAxisValue == 1)
+            running = true;
+        if (myKeyPress.horizontalAxisValue == 0)
+            running = false;
+
+
     }
 
     void Crouching()

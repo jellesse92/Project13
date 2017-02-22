@@ -185,16 +185,5 @@ public class GunnerPhysics : PlayerPhysics{
     {
         GetComponent<Animator>().SetTrigger("reload");
         pistolAmmo = MAX_PISTOL_AMMO;
-    }
-
-    
-    public void EnableDiscreteMovement()
-    {
-        discreteMovement = true;
-    }
-
-    public void DisableDiscreteMovement()
-    {
-        discreteMovement = true;
-    }
+    }   
 }
