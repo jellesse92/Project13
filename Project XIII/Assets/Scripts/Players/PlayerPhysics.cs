@@ -192,34 +192,15 @@ public class PlayerPhysics : MonoBehaviour {
         if (!cannotMovePlayer && !myAnimator.GetBool("crouch"))
         {
             if (gunnerMovement)
-                GunnerMovement();
-            else
-            {
-                myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
-                myAnimator.SetFloat("speed", Mathf.Abs(myKeyPress.horizontalAxisValue));
-            }
+                myAnimator.SetBool("gunnerMovement", true);
+            myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
+            myAnimator.SetFloat("speed", Mathf.Abs(myKeyPress.horizontalAxisValue));
+            
             if (!isJumping)
                 Flip();
         }        
         if(zeroVelocity)
             myRigidbody.velocity = new Vector2(0, 0);
-    }
-
-    void GunnerMovement()
-    {
-        if (myKeyPress.horizontalAxisValue > 0 && !running)
-            myRigidbody.velocity = new Vector2(Mathf.Ceil(myKeyPress.horizontalAxisValue) * physicStats.movementSpeed, myRigidbody.velocity.y);
-        else if (myKeyPress.horizontalAxisValue < 0 && !running)
-            myRigidbody.velocity = new Vector2(Mathf.Floor(myKeyPress.horizontalAxisValue) * physicStats.movementSpeed, myRigidbody.velocity.y);
-        else
-            myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
-        myAnimator.SetFloat("speed", Mathf.Ceil(Mathf.Abs(myKeyPress.horizontalAxisValue)));
-        if (myKeyPress.horizontalAxisValue == 1)
-            running = true;
-        if (myKeyPress.horizontalAxisValue == 0)
-            running = false;
-
-
     }
 
     void Crouching()
