@@ -35,7 +35,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1000010565994356
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,7 +110,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010278685086}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4000011865433278}
@@ -415,7 +415,7 @@ MonoBehaviour:
     quickAttackSpeed: 1
     heavyAttackSpeed: 1
     movementSpeed: 13
-    jumpForce: 15
+    jumpForce: 20
   boostStats:
     attackBoost: 1
     speedBoost: 1
@@ -479,7 +479,8 @@ MonoBehaviour:
     type: 2}
   generalHitSpark: {fileID: 1000010487127902, guid: 63afc7e364c46d6499000b73cd8a92c8,
     type: 2}
-  dashAfterImage: {fileID: 0}
+  dashAfterImage: {fileID: 1663795163783518, guid: bcd54b78ca2a9c14ebb6437f3f5a314e,
+    type: 2}
   jumpDust: {fileID: 0}
   runningDust: {fileID: 0}
   landingDust: {fileID: 0}

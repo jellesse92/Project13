@@ -3,10 +3,6 @@ using System.Collections;
 
 public class GunnerPhysics : PlayerPhysics{
 
-    //Constants for Dodge Roll
-    const float DODGE_DIST_PER_INVOKE = .2f;     //Amount gunner rolls per invoke
-    const float DODGE_RECOVERY_TIME = 1f;
-    const float MAX_DODGE_CHAIN = 3;
 
     //Constants for pistol shot
     const int MAX_PISTOL_AMMO = 6;              //Amount of ammo that can be fired before reload
@@ -17,17 +13,12 @@ public class GunnerPhysics : PlayerPhysics{
     const float DK_DELTA_Y = -1f;               //Amount to move in the y direction per an update for down kick
 
     GunnerStats gunnerStat;
-    //BulletProjectile bulletScript;
-    //Vector3 gunPoint;
-    //Vector2 velocity;
-    //float bulletSpeed;
 
     public GameObject bulletSource;
     public GameObject meleeAttackBox;
     public DownKickScript downKickScript;
 
-    //Dodge rolling variables
-    float xInputAxis;
+
     //float yAtStart;
     int dodgeCount = 0;
 
@@ -39,9 +30,42 @@ public class GunnerPhysics : PlayerPhysics{
     bool checkForDKEnd = false;                     //Checks if the downkick should end
     bool kickFinished = true;                       //For if kick is too close to the ground to properly cancel animation freeze
 
+
+
+
+    //SENSITVITY CONTROLS
+    const float INPUT_SOFT_THRESHOLD = .1f;
+
+    //Constants for managing quick dashing skill
+    const float DASH_RECOVERY_TIME = 0.5f;      //Time it takes to recover dashes
+    const float MAX_CHAIN_DASH = 1;             //Max amount of dashes that can be chained
+    const float STOP_AFTER_IMAGE = .005f;       //Time to stop creating afterimages
+    const float DASH_FORCE = 5000f;             //Amount of force to apply on character to perform movement
+
+    //Dash variables
+    float xInputAxis = 0f;
+    float yInputAxis = 0f;
+    int dashCount = 0;                          //Checks how many dashes have been chained
+    bool checkGroundForDash = false;            //Bool that determines to check for grounded before resetting dash count
+    bool disableDash = false;
+
+
+
+    GunnerParticleEffects playerParticleEffects;
+
+
     public override void ClassSpecificStart()
     {
         gunnerStat = GetComponent<GunnerProperties>().GetGunnerStats();
+        playerParticleEffects = GetComponent<GunnerParticleEffects>();
+
+
+
+
+
+
+
+
         meleeAttackBox.GetComponent<MeleeAttackScript>().SetAttackStrength(GetComponent<PlayerProperties>().GetPlayerStats().quickAirAttackStrength);
         downKickScript.enabled = false;
     }
@@ -61,6 +85,14 @@ public class GunnerPhysics : PlayerPhysics{
 
         if (kickFinished)
             GetComponent<Animator>().enabled = true;
+
+
+
+
+
+
+        if (checkGroundForDash)
+            ResetDashCount();
 
     }
 
@@ -82,18 +114,94 @@ public class GunnerPhysics : PlayerPhysics{
 
     public override void MovementSkill(float xMove, float yMove)
     {
+        if (disableDash)
+            return;
         base.MovementSkill(xMove, yMove);
 
-        float dir;
+        if (Mathf.Abs(xMove) < .01 && Mathf.Abs(yMove) < .01f)
+        {
+            xInputAxis = transform.localScale.x;
+            yInputAxis = 0f;
+        }
+        else
+        {
+            xInputAxis = xMove;
+            yInputAxis = yMove;
+        }
 
-        dir = (xMove >= 0f) ? 1f : -1f;
-        dir = (xMove == 0f) ? transform.localScale.x : dir;
-
-        xInputAxis = dir;
-
-        if (dodgeCount < MAX_DODGE_CHAIN && isGrounded())
+        if (dashCount < MAX_CHAIN_DASH)
             GetComponent<Animator>().SetTrigger("moveSkill");
     }
+
+    //DASHING FUNCTIONS
+
+    public void ExecuteDashSkill()
+    {
+        dashCount++;
+        CancelInvoke("StopAfterImage");
+        CancelInvoke("ResetDashCount");
+
+        StartCoroutine("Dashing");
+
+        playerParticleEffects.PlayDashAfterImage(true);
+        //playerParticleEffects.PlayDashTrail(true);
+        gameObject.layer = 14;
+    }
+
+    IEnumerator Dashing()
+    {
+        DeactivateAttackMovementJump();
+        VelocityY(0f);
+        VelocityX(0f);
+
+        GetComponent<Rigidbody2D>().gravityScale = 0f;
+
+        if (Mathf.Abs(xInputAxis) < INPUT_SOFT_THRESHOLD && Mathf.Abs(yInputAxis) < INPUT_SOFT_THRESHOLD)
+        {
+            xInputAxis = 1f * transform.localScale.x;
+            yInputAxis = 0f;
+        }
+
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(xInputAxis, yInputAxis).normalized * DASH_FORCE);
+        yield return new WaitForSeconds(.1f);
+        VelocityX(0);
+        VelocityY(0);
+
+        GetComponent<Rigidbody2D>().gravityScale = GetDefaultGravityForce();
+
+        if (isGrounded())
+            GetComponent<Animator>().SetTrigger("exitDash");
+        else
+            GetComponent<Animator>().SetTrigger("heavyToAerial");
+
+        ActivateAttackMovementJump();
+
+        Invoke("ResetDashCount", DASH_RECOVERY_TIME);
+        Invoke("StopAfterImage", STOP_AFTER_IMAGE);
+
+        gameObject.layer = 15;
+    }
+
+    void ResetDashCount()
+    {
+        if (isGrounded())
+        {
+            dashCount = 0;
+            checkGroundForDash = false;
+        }
+        else
+            checkGroundForDash = true;
+    }
+
+    void StopAfterImage()
+    {
+        playerParticleEffects.PlayDashAfterImage(false);
+        //playerParticleEffects.PlayDashTrail(false);
+    }
+
+    //END DASHING FUNCTIONS
+
+
 
     void QuickShotRecovery()
     {
@@ -149,37 +257,6 @@ public class GunnerPhysics : PlayerPhysics{
         downKickScript.ApplyBounce();
     }
 
-    //DODGE ROLL FUNCTIONS
-
-    void ExecuteDodgeSkill()
-    {
-        CancelInvoke("FinishDodgeCD");
-        InvokeRepeating("Roll", 0f, .001f);
-        dodgeCount++;
-    }
-
-    void Roll()
-    {
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + new Vector3(xInputAxis*DODGE_DIST_PER_INVOKE,0f,0f), DODGE_DIST_PER_INVOKE);
-    }
-
-    void CancelRoll()
-    {
-        CancelInvoke("Roll");
-        Invoke("FinishDodgeCD", DODGE_RECOVERY_TIME);
-
-        if (isGrounded())
-            GetComponent<Animator>().SetTrigger("exitDash");
-        else
-            GetComponent<Animator>().SetTrigger("heavyToAerial");
-    }
-
-    void FinishDodgeCD()
-    {
-        dodgeCount = 0;
-    }
-
-    //END DODGE ROLL FUNCTIONS
 
     void ReloadPistolAmmo()
     {
