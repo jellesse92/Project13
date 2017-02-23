@@ -14,11 +14,6 @@ public class GunnerPhysics : PlayerPhysics{
 
     GunnerStats gunnerStat;
 
-
-
-
-
-
     //SENSITVITY CONTROLS
     const float INPUT_SOFT_THRESHOLD = .1f;
 
@@ -36,8 +31,8 @@ public class GunnerPhysics : PlayerPhysics{
     //Force to be applied on hit
     const float QUICK_FORCE_X = 100f;
     const float QUICK_FORCE_Y = 16000f;
-    const float HEAVY_FORCE_X = 2500f;
-    const float HEAVY_FORCE_Y = 10000f;
+    const float HEAVY_FORCE_X = 3500f;
+    const float HEAVY_FORCE_Y = 5000f;
 
     //Pistol variables
     bool pistolOnCD = false;
@@ -62,8 +57,9 @@ public class GunnerPhysics : PlayerPhysics{
     public Transform bulletSource;                          //Source of bullets
     public GameObject meleeAttackBox;                       //Attack hit box for melee attacks and scripts
 
-
     GunnerParticleEffects playerParticleEffects;
+    public Material tier1Mat;                               //Material to recolor gunner sprite for charge
+    public Material tier2Mat;                               //Material to recolor gunner sprite for tier 2 charge
 
 
     public override void ClassSpecificStart()
@@ -89,11 +85,6 @@ public class GunnerPhysics : PlayerPhysics{
 
         if (kickFinished)
             GetComponent<Animator>().enabled = true;
-
-
-
-
-
 
         if (checkGroundForDash)
             ResetDashCount();
@@ -343,8 +334,6 @@ public class GunnerPhysics : PlayerPhysics{
         meleeAttackBox.GetComponent<GunnerMeleeAttackScript>().enabled = false;
         GetComponent<PlayerProperties>().SetStunnableState(true);
     }
-
-
 
     void ReloadPistolAmmo()
     {

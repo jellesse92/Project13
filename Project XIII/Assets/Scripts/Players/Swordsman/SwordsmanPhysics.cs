@@ -14,8 +14,8 @@ public class SwordsmanPhysics : PlayerPhysics{
     const float DASH_FORCE = 5000f;             //Amount of force to apply on character to perform movement
 
     //Constant for charging ground heavy slash attack
-    const float MAX_CHARGE = 2f;                //Max amount of time multiplier allowed to be applied to charge distance
-    const float TIER_1_CHARGE = .8f;            //Tier one charge for beginning to flash white
+    const float MAX_CHARGE = 1.8f;                //Max amount of time multiplier allowed to be applied to charge distance
+    const float TIER_1_CHARGE = .6f;            //Tier one charge for beginning to flash white
     const float TIER_2_FORCE_MOD = 1f;          //Amount to multiply charge for tier 2 charge
     const float TIER_1_FORCE_MOD = .8f;         //Amount to multiply charge for tier 1 charge
     const float TIER_0_FORCE_MOD = .4f;         //Amount to multiply charge for basic charge
