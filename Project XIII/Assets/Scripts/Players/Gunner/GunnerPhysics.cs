@@ -14,7 +14,7 @@ public class GunnerPhysics : PlayerPhysics{
 
     GunnerStats gunnerStat;
 
-    public GameObject bulletSource;
+    //public GameObject bulletSource;
     public GameObject meleeAttackBox;
     public DownKickScript downKickScript;
 
@@ -37,18 +37,35 @@ public class GunnerPhysics : PlayerPhysics{
     const float INPUT_SOFT_THRESHOLD = .1f;
 
     //Constants for managing quick dashing skill
-    const float DASH_RECOVERY_TIME = 0.5f;      //Time it takes to recover dashes
-    const float MAX_CHAIN_DASH = 1;             //Max amount of dashes that can be chained
-    const float STOP_AFTER_IMAGE = .005f;       //Time to stop creating afterimages
-    const float DASH_FORCE = 5000f;             //Amount of force to apply on character to perform movement
+    const float DASH_RECOVERY_TIME = 0.5f;                  //Time it takes to recover dashes
+    const float MAX_CHAIN_DASH = 1;                         //Max amount of dashes that can be chained
+    const float STOP_AFTER_IMAGE = .005f;                   //Time to stop creating afterimages
+    const float DASH_FORCE = 5000f;                         //Amount of force to apply on character to perform movement
+
+    //Constants for mananging light and heavy attack
+    const float LIGHT_STUN_MULTI = 1f;                      //Multiplier for how long enemies should be stunned after light light
+    const float HEAVY_STUN_MULTI = 1f;                      //Multiplier for how long enemies should be stunned after heavy attack
+    const float HIT_DISCREP = .5f;                          //Discrepency from target location allowed for air juggle
+
+    //Force to be applied on hit
+    const float QUICK_FORCE_X = 100f;
+    const float QUICK_FORCE_Y = 16000f;
+    const float HEAVY_FORCE_X = 2500f;
+    const float HEAVY_FORCE_Y = 10000f;
 
     //Dash variables
     float xInputAxis = 0f;
     float yInputAxis = 0f;
-    int dashCount = 0;                          //Checks how many dashes have been chained
-    bool checkGroundForDash = false;            //Bool that determines to check for grounded before resetting dash count
+    int dashCount = 0;                                      //Checks how many dashes have been chained
+    bool checkGroundForDash = false;                        //Bool that determines to check for grounded before resetting dash count
     bool disableDash = false;
 
+    //Variables for quick and heavy attack raycasting
+    LayerMask layermask;                                    //Prevent raycast from hitting unimportant layers
+    RaycastHit2D[] hit = new RaycastHit2D[5];               //What was hit by raycast
+    RaycastHit2D[][] heavyHit = new RaycastHit2D[5][];
+
+    public Transform bulletSource;                          //Source of bullets
 
 
     GunnerParticleEffects playerParticleEffects;
@@ -58,6 +75,7 @@ public class GunnerPhysics : PlayerPhysics{
     {
         gunnerStat = GetComponent<GunnerProperties>().GetGunnerStats();
         playerParticleEffects = GetComponent<GunnerParticleEffects>();
+        layermask = (LayerMask.GetMask("Default", "Enemy"));
 
 
 
@@ -202,6 +220,90 @@ public class GunnerPhysics : PlayerPhysics{
     //END DASHING FUNCTIONS
 
 
+    //BEGIN QUICK SHOT FUNCTIONS
+
+    //Cast out quick shot ray to apply damage
+    public void QuickShot()
+    {
+        hit[0] = Physics2D.Raycast(bulletSource.position, bulletSource.right * transform.localScale.x, 50, layermask);
+        hit[1] = Physics2D.Raycast(bulletSource.position + new Vector3(0, HIT_DISCREP, 0), bulletSource.right * transform.localScale.x, 50, layermask);
+        hit[2] = Physics2D.Raycast(bulletSource.position + new Vector3(0, HIT_DISCREP * -1f, 0), bulletSource.right * transform.localScale.x, 50, layermask);
+
+        for (int i = 0; i < 3; i++)
+        {
+            //make a spark at the hit.point
+
+            if (hit[i].collider != null)
+            {
+                playerParticleEffects.PlayHitSpark(hit[i].point);
+                ApplyQuickDamage(hit[i].collider.gameObject);
+                break;
+            }
+
+        }
+
+        /*
+        Color color = Color.green;
+
+        Debug.DrawRay(bulletSource.position, bulletSource.right * (60f * transform.localScale.x), color);
+        Debug.DrawRay(bulletSource.position + new Vector3(0, .5f, 0), bulletSource.right * (60f * transform.localScale.x), color);
+        Debug.DrawRay(bulletSource.position + new Vector3(0, -.5f, 0), bulletSource.right * (60f * transform.localScale.x), color);
+        */
+
+    }
+
+    void ApplyQuickDamage(GameObject target)
+    {
+        if (target.tag == "Enemy")
+        {
+            target.GetComponent<Enemy>().Damage(physicStats.quickAttackStrength, LIGHT_STUN_MULTI);
+            if (!target.GetComponent<Enemy>().IsGrounded())
+            {
+                target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, -10f);
+                target.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_FORCE_X, QUICK_FORCE_Y));
+            }
+        }
+
+    }
+
+    //END QUICK SHOT FUNCTIONS
+
+    //BEGIN HEAVY SHOT FUNCTIONS
+
+    public void HeavyShot()
+    {
+        Debug.Log("test");
+        heavyHit[0] = Physics2D.RaycastAll(bulletSource.position, bulletSource.right * transform.localScale.x, 5f, layermask);
+        heavyHit[1] = Physics2D.RaycastAll(bulletSource.position, new Vector3(1 * transform.localScale.x, .5f, 0), 5, layermask);
+        heavyHit[2] = Physics2D.RaycastAll(bulletSource.position, new Vector3(1 * transform.localScale.x, -.5f, 0), 5, layermask);
+        heavyHit[3] = Physics2D.RaycastAll(bulletSource.position, new Vector3(1 * transform.localScale.x, -.25f, 0), 5, layermask);
+        heavyHit[4] = Physics2D.RaycastAll(bulletSource.position, new Vector3(1 * transform.localScale.x, .25f, 0), 5, layermask);
+
+        if (transform.parent != null)
+        {
+            transform.parent.GetComponent<PlayerEffectsManager>().ScreenShake(1f, 1f);
+        }
+
+
+        for (int i = 0; i < 5; i++)
+            foreach (RaycastHit2D hh in heavyHit[i])
+                if (hh)
+                    if (hh.collider.tag == "Enemy")
+                        ApplyHeavyDamage(hh.collider.gameObject, hit[i].distance);
+    }
+
+    void ApplyHeavyDamage(GameObject target, float distance)
+    {
+        if (target.tag == "Enemy")
+        {
+            target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_FORCE_X * transform.localScale.x, HEAVY_FORCE_Y));
+            target.GetComponent<Enemy>().Damage(physicStats.heavyAttackStrength, HEAVY_STUN_MULTI);
+        }
+    }
+
+    //END HEAVY SHOT FUNCTIONS 
+
+
 
     void QuickShotRecovery()
     {
@@ -210,7 +312,7 @@ public class GunnerPhysics : PlayerPhysics{
 
     void ShootQuickBullet()
     {
-        bulletSource.GetComponent<BulletSourceScript>().QuickShot(physicStats.quickAttackStrength);
+        QuickShot();
         pistolOnCD = true;
         pistolAmmo--;
         Invoke("QuickShotRecovery", QUICKSHOT_CD);
@@ -219,7 +321,7 @@ public class GunnerPhysics : PlayerPhysics{
     void ShootHeavyBullet()
     {
         KnockBack(gunnerStat.heavyAttackKnockBackForce);
-        bulletSource.GetComponent<BulletSourceScript>().HeavyShot(physicStats.heavyAttackStrength);
+        HeavyShot();
     }
 
     void ExecuteDownKick()
