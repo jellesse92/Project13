@@ -6,11 +6,13 @@ public class ShadowSpriteGenerator : MonoBehaviour {
 
     public float centerToShadowOffSet = 2.76f;
     public float shadowSpriteOffSet = 5.6f;
+    public float skewToOffsetRatio = 2.9f;
+
     public bool changingSprite = true;
     public bool enableShadowSprite = true;
     public bool changingHeight = true;
     public bool lightInteraction = true;
-
+    
     public GameObject shadow;
     public GameObject shadowSprite;
     float magnitudeShadowChange = 1f;
@@ -75,7 +77,7 @@ public class ShadowSpriteGenerator : MonoBehaviour {
             float horizontalShear = distanceDifference * characterFacing * magnitudeShadowChange;
 
             Vector3 newPosition = shadowSprite.transform.localPosition;
-            newPosition.x = horizontalShear * 2.9f;
+            newPosition.x = horizontalShear * skewToOffsetRatio;
 
             shadowSprite.transform.localPosition = newPosition;
             shadowSprite.GetComponent<Renderer>().sharedMaterial.SetFloat("_HorizontalSkew", horizontalShear);
