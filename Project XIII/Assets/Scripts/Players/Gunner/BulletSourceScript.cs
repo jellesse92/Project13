@@ -23,7 +23,7 @@ public class BulletSourceScript : MonoBehaviour {
         gunnerParticleEffects = GetComponentInParent<GunnerParticleEffects>();
         layermask = (LayerMask.GetMask("Default","Enemy"));
 	}
-
+/*
  
     //Cast out quick shot ray to apply damage
     public void QuickShot(int damage)
@@ -68,6 +68,7 @@ public class BulletSourceScript : MonoBehaviour {
         }
 
     }
+    */
 
     public void HeavyShot(int damage)
     {
