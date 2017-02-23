@@ -6,7 +6,6 @@ public class GunnerPhysics : PlayerPhysics{
 
     //Constants for pistol shot
     const int MAX_PISTOL_AMMO = 6;              //Amount of ammo that can be fired before reload
-    const float QUICKSHOT_CD = .1f;             //Cooldown between gun shots
 
     //Constants for down kick
     const float DK_DELTA_X = 1f;                //Amount to move in the x direction per an update for down kick
@@ -35,7 +34,6 @@ public class GunnerPhysics : PlayerPhysics{
     const float HEAVY_FORCE_Y = 5000f;
 
     //Pistol variables
-    bool pistolOnCD = false;
     int pistolAmmo = MAX_PISTOL_AMMO;
 
     //Dash variables
@@ -51,8 +49,8 @@ public class GunnerPhysics : PlayerPhysics{
     RaycastHit2D[][] heavyHit = new RaycastHit2D[5][];
 
     //Down kick variables
-    bool checkForDKEnd = false;                     //Checks if the downkick should end
-    bool kickFinished = true;                       //For if kick is too close to the ground to properly cancel animation freeze
+    bool checkForDKEnd = false;                             //Checks if the downkick should end
+    bool kickFinished = true;                               //For if kick is too close to the ground to properly cancel animation freeze
 
     public Transform bulletSource;                          //Source of bullets
     public GameObject meleeAttackBox;                       //Attack hit box for melee attacks and scripts
@@ -60,6 +58,12 @@ public class GunnerPhysics : PlayerPhysics{
     GunnerParticleEffects playerParticleEffects;
     public Material tier1Mat;                               //Material to recolor gunner sprite for charge
     public Material tier2Mat;                               //Material to recolor gunner sprite for tier 2 charge
+
+    //Combo Variable
+    bool inCombo = false;                                   //Checks if gunner is able to combo into mid shot animation
+    bool comboPressed = false;                              //Check if the combo button was pressed during combo
+    bool checkForCombo = false;                             //Check if script should check for next combo press input
+    bool midAnimReached = false;                            //Checks if midpoint animation for combo pistol attack has been reached
 
 
     public override void ClassSpecificStart()
@@ -83,6 +87,9 @@ public class GunnerPhysics : PlayerPhysics{
                 DownKickMove();
         }
 
+        if (inCombo)
+            WatchForCombo();
+
         if (kickFinished)
             GetComponent<Animator>().enabled = true;
 
@@ -93,17 +100,23 @@ public class GunnerPhysics : PlayerPhysics{
 
     public override bool CheckClassSpecificInput()
     {
-        if (GetComponent<PlayerInput>().getKeyPress().quickAttackPress && isGrounded())
+        if (CanAttackStatus() && GetComponent<PlayerInput>().getKeyPress().quickAttackPress && isGrounded())
         {
-            /*
-            if (pistolOnCD)
+            if (checkForCombo)
+            {
+                if (midAnimReached)
+                {
+                    PlayNextComboHit();
+                }
                 return true;
-                */
+            }
+
             if(pistolAmmo <= 0)
             {
                 ReloadPistolAmmo();
                 return true;
             }
+
         }
 
         return base.CheckClassSpecificInput();
@@ -198,6 +211,10 @@ public class GunnerPhysics : PlayerPhysics{
 
     //END DASHING FUNCTIONS
 
+    public void SetAttackType(string type)
+    {
+        meleeAttackBox.GetComponent<GunnerMeleeAttackScript>().SetAttackType(type);
+    }
 
     //BEGIN QUICK SHOT FUNCTIONS
 
@@ -245,6 +262,85 @@ public class GunnerPhysics : PlayerPhysics{
 
     }
 
+    void ShootQuickBullet()
+    {
+        QuickShot();
+        pistolAmmo--;
+    }
+
+    void ReloadPistolAmmo()
+    {
+        GetComponent<Animator>().SetTrigger("reload");
+        pistolAmmo = MAX_PISTOL_AMMO;
+    }
+
+    public void WatchForCombo()
+    {
+        if (GetComponent<PlayerInput>().getKeyPress().quickAttackPress)
+        {
+            comboPressed = true;
+        }
+    }
+
+    public void StartCombo()
+    {
+        inCombo = true;
+        checkForCombo = true;
+        midAnimReached = false;
+    }
+
+    public void ReportMidAnimReached()
+    {
+        if (comboPressed && isGrounded())
+        {
+            if (!GetComponent<PlayerProperties>().alive)
+                return;
+
+            PlayNextComboHit();
+
+            return;
+        }
+
+        midAnimReached = true;
+    }
+
+    public void ResetCombo()
+    {
+        inCombo = false;
+        midAnimReached = false;
+        checkForCombo = false;
+    }
+
+    public void FinishCombo()
+    {
+        inCombo = false;
+        StopCheckForCombo();
+    }
+
+    void PlayNextComboHit()
+    {
+        comboPressed = false;
+        midAnimReached = false;
+
+        if (pistolAmmo > 0)
+        {
+            myAnimator.SetTrigger("combo1");
+            pistolAmmo--;
+        }
+        else
+        {
+            FinishCombo();
+            myAnimator.SetTrigger("combo2");
+            pistolAmmo = MAX_PISTOL_AMMO;
+        }
+    }
+
+    void StopCheckForCombo()
+    {
+        checkForCombo = false;
+        midAnimReached = false;
+    }
+
     //END QUICK SHOT FUNCTIONS
 
     //BEGIN HEAVY SHOT FUNCTIONS
@@ -279,31 +375,17 @@ public class GunnerPhysics : PlayerPhysics{
         }
     }
 
-    //END HEAVY SHOT FUNCTIONS 
-
-    public void SetAttackType(string type)
-    {
-        meleeAttackBox.GetComponent<GunnerMeleeAttackScript>().SetAttackType(type);
-    }
-
-    void QuickShotRecovery()
-    {
-        pistolOnCD = false;
-    }
-
-    void ShootQuickBullet()
-    {
-        QuickShot();
-        pistolOnCD = true;
-        pistolAmmo--;
-        Invoke("QuickShotRecovery", QUICKSHOT_CD);
-    }
-
     void ShootHeavyBullet()
     {
         KnockBack(gunnerStat.heavyAttackKnockBackForce);
         HeavyShot();
     }
+
+
+    //END HEAVY SHOT FUNCTIONS 
+
+
+    //BEGIN HEAVY AIR ATTACK FUNCTIONS
 
     void ExecuteDownKick()
     {
@@ -335,9 +417,8 @@ public class GunnerPhysics : PlayerPhysics{
         GetComponent<PlayerProperties>().SetStunnableState(true);
     }
 
-    void ReloadPistolAmmo()
-    {
-        GetComponent<Animator>().SetTrigger("reload");
-        pistolAmmo = MAX_PISTOL_AMMO;
-    }   
+    //END HEAVY AIR ATTAACK FUNCTIONS
+
+
+
 }
