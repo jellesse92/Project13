@@ -33,6 +33,8 @@ public class GunnerPhysics : PlayerPhysics{
     const float HEAVY_FORCE_X = 3500f;
     const float HEAVY_FORCE_Y = 5000f;
 
+    //Constant for charging ground heavy slash attack
+
     //Pistol variables
     int pistolAmmo = MAX_PISTOL_AMMO;
 
@@ -322,10 +324,9 @@ public class GunnerPhysics : PlayerPhysics{
         comboPressed = false;
         midAnimReached = false;
 
-        if (pistolAmmo > 0)
+        if (pistolAmmo >= 0)
         {
             myAnimator.SetTrigger("combo1");
-            pistolAmmo--;
         }
         else
         {
