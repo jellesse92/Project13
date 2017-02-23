@@ -11,8 +11,8 @@ public class GunnerParticleEffects : PlayerParticleEffects
     void GunnerAdjustment()
     {
         if (quickAttack)
-            quickAttack.transform.position = new Vector3(transform.position.x + 1.5f, transform.position.y + 1, transform.position.z);
+            quickAttack.transform.position = new Vector3(transform.position.x + 1.5f, transform.position.y-.5f, transform.position.z);
         if (heavyAttack)
-            heavyAttack.transform.position = new Vector3(transform.position.x + 1.5f, transform.position.y + 1, transform.position.z);
+            heavyAttack.transform.position = new Vector3(transform.position.x + 1.5f, transform.position.y-.5f, transform.position.z);
     }
 }

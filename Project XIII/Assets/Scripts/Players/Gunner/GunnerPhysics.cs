@@ -118,6 +118,7 @@ public class GunnerPhysics : PlayerPhysics{
     {
         if (GetComponent<PlayerInput>().getKeyPress().quickAttackPress && isGrounded())
         {
+            return false;
             if (pistolOnCD)
                 return true;
             if(pistolAmmo <= 0)
