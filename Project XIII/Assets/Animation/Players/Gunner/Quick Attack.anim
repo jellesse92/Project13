@@ -100,14 +100,6 @@ AnimationClip:
   m_IsEmpty: 0
   m_Events:
   - time: 0
-    functionName: playSound
-    data: 
-    objectReferenceParameter: {fileID: 8300000, guid: 371401ccbdd9c6a4793d05a8c6be9a31,
-      type: 3}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0
     functionName: DeactivateAttackMovementJump
     data: 
     objectReferenceParameter: {fileID: 0}
@@ -121,22 +113,30 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.5
+  - time: 0.41666666
     functionName: ShootQuickBullet
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.5
-    functionName: PlayParticleQuickAttack
+  - time: 0.41666666
+    functionName: ActivateAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.5
-    functionName: ActivateAttack
+  - time: 0.41666666
+    functionName: playSound
+    data: 
+    objectReferenceParameter: {fileID: 8300000, guid: 371401ccbdd9c6a4793d05a8c6be9a31,
+      type: 3}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.41666666
+    functionName: PlayParticleQuickAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -156,8 +156,15 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.9166667
+  - time: 0.75
     functionName: ActivateVelocity
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.75
+    functionName: ActivateAttackMovementJump
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
