@@ -14,21 +14,7 @@ public class GunnerPhysics : PlayerPhysics{
 
     GunnerStats gunnerStat;
 
-    //public GameObject bulletSource;
-    //public GameObject meleeAttackBox;
-    public DownKickScript downKickScript;
 
-
-    //float yAtStart;
-    int dodgeCount = 0;
-
-    //Pistol variables
-    bool pistolOnCD = false;
-    int pistolAmmo = MAX_PISTOL_AMMO;
-
-    //Down kick variables
-    bool checkForDKEnd = false;                     //Checks if the downkick should end
-    bool kickFinished = true;                       //For if kick is too close to the ground to properly cancel animation freeze
 
 
 
@@ -53,6 +39,10 @@ public class GunnerPhysics : PlayerPhysics{
     const float HEAVY_FORCE_X = 2500f;
     const float HEAVY_FORCE_Y = 10000f;
 
+    //Pistol variables
+    bool pistolOnCD = false;
+    int pistolAmmo = MAX_PISTOL_AMMO;
+
     //Dash variables
     float xInputAxis = 0f;
     float yInputAxis = 0f;
@@ -64,6 +54,10 @@ public class GunnerPhysics : PlayerPhysics{
     LayerMask layermask;                                    //Prevent raycast from hitting unimportant layers
     RaycastHit2D[] hit = new RaycastHit2D[5];               //What was hit by raycast
     RaycastHit2D[][] heavyHit = new RaycastHit2D[5][];
+
+    //Down kick variables
+    bool checkForDKEnd = false;                     //Checks if the downkick should end
+    bool kickFinished = true;                       //For if kick is too close to the ground to properly cancel animation freeze
 
     public Transform bulletSource;                          //Source of bullets
     public GameObject meleeAttackBox;                       //Attack hit box for melee attacks and scripts
@@ -77,12 +71,7 @@ public class GunnerPhysics : PlayerPhysics{
         gunnerStat = GetComponent<GunnerProperties>().GetGunnerStats();
         playerParticleEffects = GetComponent<GunnerParticleEffects>();
         layermask = (LayerMask.GetMask("Default", "Enemy"));
-
-
-
-
-
-        downKickScript.enabled = false;
+        meleeAttackBox.GetComponent<GunnerMeleeAttackScript>().enabled = false;
     }
 
     public override void ClassSpecificUpdate()
@@ -270,7 +259,6 @@ public class GunnerPhysics : PlayerPhysics{
 
     public void HeavyShot()
     {
-        Debug.Log("test");
         heavyHit[0] = Physics2D.RaycastAll(bulletSource.position, bulletSource.right * transform.localScale.x, 5f, layermask);
         heavyHit[1] = Physics2D.RaycastAll(bulletSource.position, new Vector3(1 * transform.localScale.x, .5f, 0), 5, layermask);
         heavyHit[2] = Physics2D.RaycastAll(bulletSource.position, new Vector3(1 * transform.localScale.x, -.5f, 0), 5, layermask);
@@ -306,9 +294,6 @@ public class GunnerPhysics : PlayerPhysics{
         meleeAttackBox.GetComponent<GunnerMeleeAttackScript>().SetAttackType(type);
     }
 
-
-
-
     void QuickShotRecovery()
     {
         pistolOnCD = false;
@@ -330,11 +315,11 @@ public class GunnerPhysics : PlayerPhysics{
 
     void ExecuteDownKick()
     {
-        downKickScript.Reset();
+        meleeAttackBox.GetComponent<GunnerMeleeAttackScript>().Reset();
         kickFinished = false;
         checkForDKEnd = true;
-        downKickScript.enabled = true;
-        downKickScript.InvokeRepeating("ApplyDamageEffect",0f,.1f);
+        meleeAttackBox.GetComponent<GunnerMeleeAttackScript>().enabled = true;
+        meleeAttackBox.GetComponent<GunnerMeleeAttackScript>().InvokeRepeating("ApplyDamageEffect",0f,.1f);
         GetComponent<PlayerProperties>().SetStunnableState(false);
     }
 
@@ -353,15 +338,11 @@ public class GunnerPhysics : PlayerPhysics{
         GetComponent<Animator>().enabled = true;
         kickFinished = true;
         checkForDKEnd = false;
-        downKickScript.CancelInvoke("ApplyDamageEffect");
-        downKickScript.enabled = false;
+        meleeAttackBox.GetComponent<GunnerMeleeAttackScript>().CancelInvoke("ApplyDamageEffect");
+        meleeAttackBox.GetComponent<GunnerMeleeAttackScript>().enabled = false;
         GetComponent<PlayerProperties>().SetStunnableState(true);
     }
 
-    void ApplyBounce()
-    {
-        downKickScript.ApplyBounce();
-    }
 
 
     void ReloadPistolAmmo()
