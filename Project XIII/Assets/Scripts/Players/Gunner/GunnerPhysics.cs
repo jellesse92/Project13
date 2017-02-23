@@ -15,7 +15,7 @@ public class GunnerPhysics : PlayerPhysics{
     GunnerStats gunnerStat;
 
     //public GameObject bulletSource;
-    public GameObject meleeAttackBox;
+    //public GameObject meleeAttackBox;
     public DownKickScript downKickScript;
 
 
@@ -66,6 +66,7 @@ public class GunnerPhysics : PlayerPhysics{
     RaycastHit2D[][] heavyHit = new RaycastHit2D[5][];
 
     public Transform bulletSource;                          //Source of bullets
+    public GameObject meleeAttackBox;                       //Attack hit box for melee attacks and scripts
 
 
     GunnerParticleEffects playerParticleEffects;
@@ -81,10 +82,6 @@ public class GunnerPhysics : PlayerPhysics{
 
 
 
-
-
-
-        meleeAttackBox.GetComponent<MeleeAttackScript>().SetAttackStrength(GetComponent<PlayerProperties>().GetPlayerStats().quickAirAttackStrength);
         downKickScript.enabled = false;
     }
 
@@ -303,6 +300,12 @@ public class GunnerPhysics : PlayerPhysics{
     }
 
     //END HEAVY SHOT FUNCTIONS 
+
+    public void SetAttackType(string type)
+    {
+        meleeAttackBox.GetComponent<GunnerMeleeAttackScript>().SetAttackType(type);
+    }
+
 
 
 
