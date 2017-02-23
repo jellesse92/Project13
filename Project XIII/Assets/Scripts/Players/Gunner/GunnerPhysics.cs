@@ -75,6 +75,7 @@ public class GunnerPhysics : PlayerPhysics{
         playerParticleEffects = GetComponent<GunnerParticleEffects>();
         layermask = (LayerMask.GetMask("Default", "Enemy"));
         meleeAttackBox.GetComponent<GunnerMeleeAttackScript>().enabled = false;
+        myAnimator.SetBool("gunner", true);
     }
 
     public override void ClassSpecificUpdate()

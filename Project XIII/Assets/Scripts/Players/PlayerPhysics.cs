@@ -43,7 +43,6 @@ public class PlayerPhysics : MonoBehaviour {
     float characterWidth;                               //Width of character to cast secondary raycasting
     int layerMask;                                      //Layers to check for ground
     bool wasGrounded = false;
-    public bool gunnerMovement = false;
     bool running;
     public float groundCheckingOffset = 2f;
 
@@ -191,8 +190,6 @@ public class PlayerPhysics : MonoBehaviour {
     {
         if (!cannotMovePlayer && !myAnimator.GetBool("crouch"))
         {
-            if (gunnerMovement)
-                myAnimator.SetBool("gunnerMovement", true);
             myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
             myAnimator.SetFloat("speed", Mathf.Abs(myKeyPress.horizontalAxisValue));
             
