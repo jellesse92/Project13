@@ -34,14 +34,6 @@ AnimationClip:
       value: {fileID: 21300000, guid: 165a215d468aa024da34fbee5f85fe40, type: 3}
     - time: 0.5833333
       value: {fileID: 21300000, guid: be278131dd6703440ae0b9cdda42936c, type: 3}
-    - time: 0.6666666
-      value: {fileID: 21300000, guid: f0d99c1bdf0b0ee48bd29795802eecf3, type: 3}
-    - time: 0.74999994
-      value: {fileID: 21300000, guid: 9032a5628f8690641be6374cdeb7bd4e, type: 3}
-    - time: 0.83333325
-      value: {fileID: 21300000, guid: 2c88543a2350b884dbc38225204f823c, type: 3}
-    - time: 0.91666657
-      value: {fileID: 21300000, guid: db3e7573f5681e047be55f71ec4906cf, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -68,16 +60,12 @@ AnimationClip:
     - {fileID: 21300000, guid: eb48b2a9853e447479a0879e8c12837f, type: 3}
     - {fileID: 21300000, guid: 165a215d468aa024da34fbee5f85fe40, type: 3}
     - {fileID: 21300000, guid: be278131dd6703440ae0b9cdda42936c, type: 3}
-    - {fileID: 21300000, guid: f0d99c1bdf0b0ee48bd29795802eecf3, type: 3}
-    - {fileID: 21300000, guid: 9032a5628f8690641be6374cdeb7bd4e, type: 3}
-    - {fileID: 21300000, guid: 2c88543a2350b884dbc38225204f823c, type: 3}
-    - {fileID: 21300000, guid: db3e7573f5681e047be55f71ec4906cf, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.9999999
+    m_StopTime: 0.6666666
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -106,28 +94,28 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.33333334
+  - time: 0.25
     functionName: StartCombo
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.41666666
+  - time: 0.33333334
+    functionName: PlayParticleQuickAttack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.33333334
     functionName: ShootQuickBullet
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.41666666
-    functionName: ActivateAttack
-    data: 
-    objectReferenceParameter: {fileID: 0}
-    floatParameter: 0
-    intParameter: 0
-    messageOptions: 0
-  - time: 0.41666666
+  - time: 0.33333334
     functionName: playSound
     data: 
     objectReferenceParameter: {fileID: 8300000, guid: 371401ccbdd9c6a4793d05a8c6be9a31,
@@ -135,35 +123,35 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.41666666
-    functionName: PlayParticleQuickAttack
+  - time: 0.33333334
+    functionName: ActivateAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.5833333
+  - time: 0.5
     functionName: ReportMidAnimReached
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.75
+  - time: 0.5833333
     functionName: FinishCombo
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.75
+  - time: 0.5833333
     functionName: ActivateVelocity
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.75
+  - time: 0.5833333
     functionName: ActivateAttackMovementJump
     data: 
     objectReferenceParameter: {fileID: 0}
