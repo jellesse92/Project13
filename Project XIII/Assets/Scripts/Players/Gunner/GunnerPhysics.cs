@@ -242,11 +242,13 @@ public class GunnerPhysics : PlayerPhysics{
 
         }
 
+        /*
         Color color = Color.green;
 
         Debug.DrawRay(bulletSource.position, bulletSource.right * (60f * transform.localScale.x), color);
         Debug.DrawRay(bulletSource.position + new Vector3(0, .5f, 0), bulletSource.right * (60f * transform.localScale.x), color);
         Debug.DrawRay(bulletSource.position + new Vector3(0, -.5f, 0), bulletSource.right * (60f * transform.localScale.x), color);
+        */
 
     }
 
@@ -266,6 +268,40 @@ public class GunnerPhysics : PlayerPhysics{
 
     //END QUICK SHOT FUNCTIONS
 
+    //BEGIN HEAVY SHOT FUNCTIONS
+
+    public void HeavyShot()
+    {
+        Debug.Log("test");
+        heavyHit[0] = Physics2D.RaycastAll(bulletSource.position, bulletSource.right * transform.localScale.x, 5f, layermask);
+        heavyHit[1] = Physics2D.RaycastAll(bulletSource.position, new Vector3(1 * transform.localScale.x, .5f, 0), 5, layermask);
+        heavyHit[2] = Physics2D.RaycastAll(bulletSource.position, new Vector3(1 * transform.localScale.x, -.5f, 0), 5, layermask);
+        heavyHit[3] = Physics2D.RaycastAll(bulletSource.position, new Vector3(1 * transform.localScale.x, -.25f, 0), 5, layermask);
+        heavyHit[4] = Physics2D.RaycastAll(bulletSource.position, new Vector3(1 * transform.localScale.x, .25f, 0), 5, layermask);
+
+        if (transform.parent != null)
+        {
+            transform.parent.GetComponent<PlayerEffectsManager>().ScreenShake(1f, 1f);
+        }
+
+
+        for (int i = 0; i < 5; i++)
+            foreach (RaycastHit2D hh in heavyHit[i])
+                if (hh)
+                    if (hh.collider.tag == "Enemy")
+                        ApplyHeavyDamage(hh.collider.gameObject, hit[i].distance);
+    }
+
+    void ApplyHeavyDamage(GameObject target, float distance)
+    {
+        if (target.tag == "Enemy")
+        {
+            target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_FORCE_X * transform.localScale.x, HEAVY_FORCE_Y));
+            target.GetComponent<Enemy>().Damage(physicStats.heavyAttackStrength, HEAVY_STUN_MULTI);
+        }
+    }
+
+    //END HEAVY SHOT FUNCTIONS 
 
 
 
@@ -276,7 +312,6 @@ public class GunnerPhysics : PlayerPhysics{
 
     void ShootQuickBullet()
     {
-        //bulletSource.GetComponent<BulletSourceScript>().QuickShot(physicStats.quickAttackStrength);
         QuickShot();
         pistolOnCD = true;
         pistolAmmo--;
@@ -286,7 +321,7 @@ public class GunnerPhysics : PlayerPhysics{
     void ShootHeavyBullet()
     {
         KnockBack(gunnerStat.heavyAttackKnockBackForce);
-        //bulletSource.GetComponent<BulletSourceScript>().HeavyShot(physicStats.heavyAttackStrength);
+        HeavyShot();
     }
 
     void ExecuteDownKick()
