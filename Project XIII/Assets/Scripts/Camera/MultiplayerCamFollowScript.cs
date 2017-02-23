@@ -142,7 +142,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
                 SetOrthographicSize(distance);
 
             if(in2DMode)
-                cameraDestination.y = Mathf.Max(lowestPointY + cam.orthographicSize-5, cameraDestination.y);
+                cameraDestination.y = Mathf.Max(lowestPointY + cam.orthographicSize, cameraDestination.y);
 
             if (crouching)
                 cameraDestination.y -= (5f + CROUCHING_INCREAMENT);

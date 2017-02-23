@@ -35,6 +35,7 @@ public class GunnerPhysics : PlayerPhysics{
 
     //Constant for charging ground heavy slash attack
 
+
     //Pistol variables
     int pistolAmmo = MAX_PISTOL_AMMO;
 
