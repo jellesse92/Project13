@@ -16,6 +16,10 @@ public class PlayerPhysics : MonoBehaviour {
 
     //Use for crouching
     float previousVertical = 0;
+
+    //healing
+    bool canHeal = true;
+
     MultiplayerCamFollowScript cameraScript;
 
     protected Rigidbody2D myRigidbody;
@@ -183,7 +187,7 @@ public class PlayerPhysics : MonoBehaviour {
 
     void Heal()
     {
-        if (playerProperties.healingItem > 0 && !myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Ground.Item Use"))
+        if (canHeal && !isJumping && playerProperties.healingItem > 0 && !myAnimator.GetCurrentAnimatorStateInfo(0).IsName("Ground.Item Use"))
             myAnimator.SetTrigger("itemUse");
     }
     protected void Movement()
@@ -412,6 +416,7 @@ public class PlayerPhysics : MonoBehaviour {
         cannotAttack = false;
         cannotJump = false;
         cannotMovePlayer = false;
+        canHeal = true;
         GetComponent<PlayerProperties>().ActivateKnockback();
     }
 
@@ -420,6 +425,7 @@ public class PlayerPhysics : MonoBehaviour {
         cannotAttack = true;
         cannotJump = true;
         cannotMovePlayer = true;
+        canHeal = false;
     }
 
     public bool isGrounded()
