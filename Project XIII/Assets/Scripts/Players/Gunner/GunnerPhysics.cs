@@ -4,12 +4,16 @@ using System.Collections;
 public class GunnerPhysics : PlayerPhysics{
 
 
-    //Constants for pistol shot
-    const int MAX_PISTOL_AMMO = 6;              //Amount of ammo that can be fired before reload
+    //Constants for bullets
+    const int MAX_PISTOL_AMMO = 6;                          //Amount of ammo that can be fired before reload
+    const int MAX_HEAVY_AMMO = 10;                          //Amount of heavy bullets to be instantiated
+    const float HEAVY_BULLET_FORCE = 1500f;                 //Force to apply to heavy bullet
+    const float TIER_1_INVOKE_DESTRUCT = .1f;
+    const float TIER_2_INVOKE_DESTRUCT = .4f;
 
     //Constants for down kick
-    const float DK_DELTA_X = 1f;                //Amount to move in the x direction per an update for down kick
-    const float DK_DELTA_Y = -1f;               //Amount to move in the y direction per an update for down kick
+    const float DK_DELTA_X = 1f;                            //Amount to move in the x direction per an update for down kick
+    const float DK_DELTA_Y = -1f;                           //Amount to move in the y direction per an update for down kick
 
     GunnerStats gunnerStat;
 
@@ -58,6 +62,8 @@ public class GunnerPhysics : PlayerPhysics{
 
     public Transform bulletSource;                          //Source of bullets
     public GameObject meleeAttackBox;                       //Attack hit box for melee attacks and scripts
+    public GameObject heavyBulletPrefab;                    //Heavy bullet prefab
+    GameObject bulletList;
 
     GunnerParticleEffects playerParticleEffects;
     PlayerEffectsManager playerEffectsManager;
@@ -87,6 +93,19 @@ public class GunnerPhysics : PlayerPhysics{
         meleeAttackBox.GetComponent<GunnerMeleeAttackScript>().enabled = false;
         myAnimator.SetBool("gunner", true);
         defaultMat = GetComponent<SpriteRenderer>().material;
+        InstantiateBullets();
+    }
+
+    void InstantiateBullets()
+    {
+        bulletList = Instantiate(new GameObject());
+        bulletList.name = "Bullet List";
+
+        for(int i = 0; i <MAX_HEAVY_AMMO; i++)
+        {
+            GameObject bullet = (GameObject)Instantiate(heavyBulletPrefab);
+            bullet.transform.SetParent(bulletList.transform);
+        }
     }
 
     public override void ClassSpecificUpdate()
@@ -449,18 +468,10 @@ public class GunnerPhysics : PlayerPhysics{
         CancelFlashing();
         KnockBack(gunnerStat.heavyAttackKnockBackForce);
         playerEffectsManager.FlashScreen();
-        HeavyShot();
-
-        /*
-        float chargeMultiplier = GetChargeMod();
-        GetComponent<SwordsmanParticleEffects>().PlayChargingDust(false);
-        CancelFlashing();
-
-        GetComponent<SwordsmanParticleEffects>().PlayChargingTrail(true);
-        checkChargeTime = false;
-        attackScript.SetHeavyTier(chargeLevel);
-        AddForceX(CHARGE_FORCE_MULTIPLIER * chargeMultiplier);
-        */
+        if(chargeLevel == 0)
+            HeavyShot();
+        else
+            ChargedHeavyShot(chargeLevel);
     }
 
     int GetChargeLevel()
@@ -471,9 +482,32 @@ public class GunnerPhysics : PlayerPhysics{
             return 1;
         return 2;
     }
+    
+    void ChargedHeavyShot(int chargeLevel)
+    {
+        GameObject bullet = GetHeavyBullet();
+        HeavyBulletScript hbScript = bullet.GetComponentInChildren<HeavyBulletScript>();
 
+        bullet.transform.position = bulletSource.transform.position;
 
-    public void HeavyShot()
+        if(chargeLevel == 1)
+        {
+            hbScript.SetDamage(gunnerStat.heavyTier1ChargeDamage, gunnerStat.heavyTier1SplashDamage);
+            hbScript.Invoke("SelfDestruct", TIER_1_INVOKE_DESTRUCT);
+        }
+        else
+        {
+            hbScript.SetDamage(gunnerStat.heavyTier2ChargeDamage, gunnerStat.heavyTier2SplashDamage);
+            hbScript.Invoke("SelfDestruct", TIER_2_INVOKE_DESTRUCT);
+        }
+        hbScript.Initialize();
+        hbScript.SetDirection(transform.localScale.x);
+        bullet.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_BULLET_FORCE * transform.localScale.x, 0f));
+
+        
+    }
+
+    void HeavyShot()
     {
         heavyHit[0] = Physics2D.RaycastAll(bulletSource.position, bulletSource.right * transform.localScale.x, 5f, layermask);
         heavyHit[1] = Physics2D.RaycastAll(bulletSource.position, new Vector3(1 * transform.localScale.x, .5f, 0), 5, layermask);
@@ -501,6 +535,20 @@ public class GunnerPhysics : PlayerPhysics{
             target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_FORCE_X * transform.localScale.x, HEAVY_FORCE_Y));
             target.GetComponent<Enemy>().Damage(physicStats.heavyAttackStrength, HEAVY_STUN_MULTI);
         }
+    }
+
+    GameObject GetHeavyBullet()
+    {
+        GameObject result = null;
+
+        for(int i = 0; i < MAX_HEAVY_AMMO; i++)
+        {
+            if (!bulletList.transform.GetChild(i).GetChild(1).GetComponent<Collider2D>().enabled)
+                return bulletList.transform.GetChild(i).gameObject;
+            Debug.Log("testing");
+        }
+
+        return result;
     }
 
     //END HEAVY SHOT FUNCTIONS 

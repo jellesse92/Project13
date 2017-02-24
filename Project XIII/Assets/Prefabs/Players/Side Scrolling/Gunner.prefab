@@ -140,7 +140,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010278685086}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4000011865433278}
@@ -401,6 +401,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheckingOffset: 2
+  heavyBulletPrefab: {fileID: 1278291590862730, guid: 683d557c201253543be34ada128153f5,
+    type: 2}
   bulletSource: {fileID: 4000013673285880}
   meleeAttackBox: {fileID: 1874683590291094}
   tier1Mat: {fileID: 2100000, guid: 32ca144c3968a994ba36bca47b900b62, type: 2}
