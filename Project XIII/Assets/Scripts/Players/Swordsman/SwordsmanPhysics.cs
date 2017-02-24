@@ -285,6 +285,7 @@ public class SwordsmanPhysics : PlayerPhysics{
         DeactivateAttackMovementJump();
         VelocityY(0f);
         VelocityX(0f);
+        movementSkillActive = true;
 
         GetComponent<Rigidbody2D>().gravityScale = 0f;
 
@@ -296,8 +297,11 @@ public class SwordsmanPhysics : PlayerPhysics{
 
         GetComponent<Rigidbody2D>().AddForce(new Vector2(xInputAxis, yInputAxis).normalized * DASH_FORCE);
         yield return new WaitForSeconds(.1f);
+
         VelocityX(0);
         VelocityY(0);
+
+        movementSkillActive = false;
 
         GetComponent<Rigidbody2D>().gravityScale = GetDefaultGravityForce();
 

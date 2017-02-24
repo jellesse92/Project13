@@ -167,6 +167,7 @@ public class GunnerPhysics : PlayerPhysics{
         DeactivateAttackMovementJump();
         VelocityY(0f);
         VelocityX(0f);
+        movementSkillActive = true;
 
         GetComponent<Rigidbody2D>().gravityScale = 0f;
 
@@ -180,6 +181,7 @@ public class GunnerPhysics : PlayerPhysics{
         yield return new WaitForSeconds(.1f);
         VelocityX(0);
         VelocityY(0);
+        movementSkillActive = false;
 
         GetComponent<Rigidbody2D>().gravityScale = GetDefaultGravityForce();
 

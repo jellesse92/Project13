@@ -35,6 +35,7 @@ public class PlayerPhysics : MonoBehaviour {
     protected bool cannotJump;
     protected bool cannotAttack;
     protected bool zeroVelocity;
+    protected bool movementSkillActive = false;         //To prevent movement from interfering with movement skill
 
     //For checking held buttons
     protected bool checkQuickAttackUp;
@@ -192,16 +193,24 @@ public class PlayerPhysics : MonoBehaviour {
     }
     protected void Movement()
     {
-        if (!cannotMovePlayer && !myAnimator.GetBool("crouch"))
+        if (!cannotMovePlayer && !myAnimator.GetBool("crouch") && !movementSkillActive)
         {
             myRigidbody.velocity = new Vector2(myKeyPress.horizontalAxisValue * physicStats.movementSpeed, myRigidbody.velocity.y);
             myAnimator.SetFloat("speed", Mathf.Abs(myKeyPress.horizontalAxisValue));
             
             if (!isJumping)
                 Flip();
-        }        
-        if(zeroVelocity)
+        }
+        if (zeroVelocity)
+        {
             myRigidbody.velocity = new Vector2(0, 0);
+        }
+
+    }
+
+    public void ReportMovementSkillInactive()
+    {
+        movementSkillActive = false;
     }
 
     void Crouching()
