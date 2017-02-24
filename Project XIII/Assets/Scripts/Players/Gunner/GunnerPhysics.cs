@@ -33,8 +33,9 @@ public class GunnerPhysics : PlayerPhysics{
     const float HEAVY_FORCE_X = 3500f;
     const float HEAVY_FORCE_Y = 5000f;
 
-    //Constant for charging ground heavy slash attack
-
+    //Constant for charging heavy attack
+    const float MAX_CHARGE = 1.8f;                          //Max amount of time multiplier allowed to be applied to charge distance
+    const float TIER_1_CHARGE = .6f;                        //Tier one charge for beginning to flash white
 
     //Pistol variables
     int pistolAmmo = MAX_PISTOL_AMMO;
@@ -59,8 +60,11 @@ public class GunnerPhysics : PlayerPhysics{
     public GameObject meleeAttackBox;                       //Attack hit box for melee attacks and scripts
 
     GunnerParticleEffects playerParticleEffects;
+    PlayerEffectsManager playerEffectsManager;
+
     public Material tier1Mat;                               //Material to recolor gunner sprite for charge
     public Material tier2Mat;                               //Material to recolor gunner sprite for tier 2 charge
+    Material defaultMat;                                    //Default sprite material
 
     //Combo Variable
     bool inCombo = false;                                   //Checks if gunner is able to combo into mid shot animation
@@ -68,14 +72,21 @@ public class GunnerPhysics : PlayerPhysics{
     bool checkForCombo = false;                             //Check if script should check for next combo press input
     bool midAnimReached = false;                            //Checks if midpoint animation for combo pistol attack has been reached
 
+    //Variables for charging heavy attack
+    bool checkChargeTime = false;                           //Determines if should be checking charging time
+    float timeCharged = 0f;                                 //Amount of time heavy attack has been charged
+    bool isFlashingMax = false;                             //Determines if character flashing max charge effect
+    bool isFlashingTier1 = false;                           //Determines if character flashing tier 1 charge effect
 
     public override void ClassSpecificStart()
     {
         gunnerStat = GetComponent<GunnerProperties>().GetGunnerStats();
         playerParticleEffects = GetComponent<GunnerParticleEffects>();
+        playerEffectsManager = transform.parent.GetComponent<PlayerEffectsManager>();
         layermask = (LayerMask.GetMask("Default", "Enemy"));
         meleeAttackBox.GetComponent<GunnerMeleeAttackScript>().enabled = false;
         myAnimator.SetBool("gunner", true);
+        defaultMat = GetComponent<SpriteRenderer>().material;
     }
 
     public override void ClassSpecificUpdate()
@@ -91,14 +102,24 @@ public class GunnerPhysics : PlayerPhysics{
                 DownKickMove();
         }
 
+        if (!GetComponent<PlayerProperties>().alive)
+        {
+            if (checkChargeTime)
+            {
+                CancelHeavyCharge();
+                myAnimator.enabled = true;
+            }
+            return;
+        }
+
         if (inCombo)
             WatchForCombo();
-
         if (kickFinished)
             GetComponent<Animator>().enabled = true;
-
         if (checkGroundForDash)
             ResetDashCount();
+        if (checkChargeTime)
+            ManageChargeEffect();
 
     }
 
@@ -109,9 +130,7 @@ public class GunnerPhysics : PlayerPhysics{
             if (checkForCombo)
             {
                 if (midAnimReached)
-                {
                     PlayNextComboHit();
-                }
                 return true;
             }
 
@@ -120,10 +139,22 @@ public class GunnerPhysics : PlayerPhysics{
                 ReloadPistolAmmo();
                 return true;
             }
+        }
 
+
+        if (CanAttackStatus() && GetComponent<PlayerInput>().getKeyPress().heavyAttackPress)
+        {
+            StartHeavyCharge();
+            CheckForHeavyRelease();
+            return true;
         }
 
         return base.CheckClassSpecificInput();
+    }
+
+    public override void ExecuteHeavyButtonRelease()
+    {
+        myAnimator.SetTrigger("heavyAttack");
     }
 
     public override void MovementSkill(float xMove, float yMove)
@@ -350,6 +381,98 @@ public class GunnerPhysics : PlayerPhysics{
 
     //BEGIN HEAVY SHOT FUNCTIONS
 
+    void StartHeavyCharge()
+    {
+        checkChargeTime = true;
+        timeCharged = 0f;
+        //GetComponent<SwordsmanParticleEffects>().PlayChargingDust(true);
+    }
+
+    void ManageChargeEffect()
+    {
+        timeCharged += Time.fixedDeltaTime;
+        if (timeCharged >= 2f && !isFlashingMax)
+        {
+            isFlashingMax = true;
+            CancelInvoke("ChargingFlashTier1");
+            //playerSoundEffects.playSound(playerSoundEffects.chargingSecondCharge);
+            //playerParticleEffects.PlayParticle(playerParticleEffects.chargingSecondCharge);
+            InvokeRepeating("ChargingFlashMax", 0f, .09f);
+        }
+        else if (timeCharged >= 1f && timeCharged < 2f && !isFlashingTier1)
+        {
+            isFlashingTier1 = true;
+            //playerSoundEffects.playSound(playerSoundEffects.chargingFirstCharge);
+            //playerParticleEffects.PlayParticle(playerParticleEffects.chargingFirstCharge);
+            InvokeRepeating("ChargingFlashTier1", 0f, .15f);
+        }
+    }
+
+    void FlashColor(Material mat)
+    {
+        if (GetComponent<SpriteRenderer>().material == defaultMat)
+            GetComponent<SpriteRenderer>().material = mat;
+        else
+            GetComponent<SpriteRenderer>().material = defaultMat;
+    }
+
+    void ChargingFlashTier1()
+    {
+        FlashColor(tier1Mat);
+    }
+
+    void ChargingFlashMax()
+    {
+        FlashColor(tier2Mat);
+    }
+
+    void CancelFlashing()
+    {
+        CancelInvoke("ChargingFlashTier1");
+        CancelInvoke("ChargingFlashMax");
+        GetComponent<SpriteRenderer>().material = defaultMat;
+        isFlashingTier1 = false;
+        isFlashingMax = false;
+    }
+
+    public void CancelHeavyCharge()
+    {
+        //GetComponent<SwordsmanParticleEffects>().PlayChargingDust(false);
+        checkChargeTime = false;
+        CancelFlashing();
+    }
+
+    void ExecuteHeavyAttack()
+    {
+        int chargeLevel = GetChargeLevel();
+        checkChargeTime = false;
+        CancelFlashing();
+        KnockBack(gunnerStat.heavyAttackKnockBackForce);
+        playerEffectsManager.FlashScreen();
+        HeavyShot();
+
+        /*
+        float chargeMultiplier = GetChargeMod();
+        GetComponent<SwordsmanParticleEffects>().PlayChargingDust(false);
+        CancelFlashing();
+
+        GetComponent<SwordsmanParticleEffects>().PlayChargingTrail(true);
+        checkChargeTime = false;
+        attackScript.SetHeavyTier(chargeLevel);
+        AddForceX(CHARGE_FORCE_MULTIPLIER * chargeMultiplier);
+        */
+    }
+
+    int GetChargeLevel()
+    {
+        if (timeCharged < TIER_1_CHARGE)
+            return 0;
+        else if (timeCharged < MAX_CHARGE)
+            return 1;
+        return 2;
+    }
+
+
     public void HeavyShot()
     {
         heavyHit[0] = Physics2D.RaycastAll(bulletSource.position, bulletSource.right * transform.localScale.x, 5f, layermask);
@@ -379,13 +502,6 @@ public class GunnerPhysics : PlayerPhysics{
             target.GetComponent<Enemy>().Damage(physicStats.heavyAttackStrength, HEAVY_STUN_MULTI);
         }
     }
-
-    void ShootHeavyBullet()
-    {
-        KnockBack(gunnerStat.heavyAttackKnockBackForce);
-        HeavyShot();
-    }
-
 
     //END HEAVY SHOT FUNCTIONS 
 

@@ -84,30 +84,12 @@ public class SwordsmanPhysics : PlayerPhysics{
             return;
         }
 
-
         if (inCombo)
             WatchForCombo();
         if (checkGroundForDash)
             ResetDashCount();
         if (checkChargeTime)
-        {
-            timeCharged += Time.fixedDeltaTime;
-            if(timeCharged >= 2f && !isFlashingGold)
-            {
-                isFlashingGold = true;
-                CancelInvoke("ChargingFlashWhite");
-                playerSoundEffects.playSound(playerSoundEffects.chargingSecondCharge);
-                playerParticleEffects.PlayParticle(playerParticleEffects.chargingSecondCharge);
-                InvokeRepeating("ChargingFlashGold", 0f, .09f);
-            }
-            else if(timeCharged >= 1f && timeCharged < 2f && !isFlashingWhite)
-            {
-                isFlashingWhite = true;
-                playerSoundEffects.playSound(playerSoundEffects.chargingFirstCharge);
-                playerParticleEffects.PlayParticle(playerParticleEffects.chargingFirstCharge);
-                InvokeRepeating("ChargingFlashWhite", 0f, .15f);
-            }
-        }
+            ManageChargeEffect();
 
     }
 
@@ -338,6 +320,26 @@ public class SwordsmanPhysics : PlayerPhysics{
     //END DASHING FUNCTIONS
 
     //HEAVY CHARGING ATTACK FUNCTIONS
+
+    void ManageChargeEffect()
+    {
+        timeCharged += Time.fixedDeltaTime;
+        if (timeCharged >= 2f && !isFlashingGold)
+        {
+            isFlashingGold = true;
+            CancelInvoke("ChargingFlashWhite");
+            playerSoundEffects.playSound(playerSoundEffects.chargingSecondCharge);
+            playerParticleEffects.PlayParticle(playerParticleEffects.chargingSecondCharge);
+            InvokeRepeating("ChargingFlashGold", 0f, .09f);
+        }
+        else if (timeCharged >= 1f && timeCharged < 2f && !isFlashingWhite)
+        {
+            isFlashingWhite = true;
+            playerSoundEffects.playSound(playerSoundEffects.chargingFirstCharge);
+            playerParticleEffects.PlayParticle(playerParticleEffects.chargingFirstCharge);
+            InvokeRepeating("ChargingFlashWhite", 0f, .15f);
+        }
+    }
 
     void StartHeavyGroundCharge()
     {
