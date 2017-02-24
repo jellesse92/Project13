@@ -265,6 +265,16 @@ public class GunnerPhysics : PlayerPhysics{
         //playerParticleEffects.PlayDashTrail(false);
     }
 
+    public void EnableDash()
+    {
+        disableDash = false;
+    }
+
+    public void DisableDash()
+    {
+        disableDash = true;
+    }
+
     //END DASHING FUNCTIONS
 
     public void SetAttackType(string type)
