@@ -173,7 +173,14 @@ public class GunnerPhysics : PlayerPhysics{
 
     public override void ExecuteHeavyButtonRelease()
     {
-        myAnimator.SetTrigger("heavyAttack");
+        if(isGrounded())
+            myAnimator.SetTrigger("heavyAttack");
+        else
+        {
+            Debug.Log("NEED HEAVY AIR CHARGE VERSION");
+            CancelHeavyCharge();
+            myAnimator.SetTrigger("airHeavyAttack");
+        }
     }
 
     public override void MovementSkill(float xMove, float yMove)
