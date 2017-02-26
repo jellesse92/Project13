@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PauseMenu : MonoBehaviour
 {
+    int selected = 2;
     static string[] MenuOptions = { "Exit", "Stats", "Commands", "Settings" };
+    GameObject[] directionTitles;
     GameController gc;
     AudioSource[] sfxObjects;
     List<float> maxSfxVolumes;
@@ -27,9 +29,14 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") < 0)
         {
+            selected = selected > 0 ? selected - 1 : MenuOptions.Length - 1;
+            ResetTriggers();
             anim.SetTrigger("Left");
+            
         } else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetAxis("Horizontal") > 0)
         {
+            selected = selected < (MenuOptions.Length - 1) ? selected + 1 : 0; 
+            ResetTriggers();
             anim.SetTrigger("Right");
         }
     }
@@ -38,6 +45,11 @@ public class PauseMenu : MonoBehaviour
         if (gc.IsMusicOn) { }
     }
 
+    void ResetTriggers()
+    {
+        anim.ResetTrigger("Left");
+        anim.ResetTrigger("Right");
+    }
     void DecreaseSound()
     {
 
