@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour {
     public bool stunnable;                              //Able to be stunned
     public float stunEffectiveness;                     //Effectiveness of stun
     public bool grounded;                               //Checks if enemy is on the ground
-    public bool flyingEnemy = false;                    //Determines if is a flying enemy or not for stun recovery to take place only on the ground 
+    public bool flyingEnemy = false;                    //Determines if is a flying enemy or not for stun recovery to take place only on the ground
 
     protected bool dead;                                //Determines if enemy is dead
     protected bool stunned;                             //Determines if enemy is stunned
