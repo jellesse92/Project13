@@ -22,9 +22,11 @@ public class EnemySineBullet : EnemyProjectile {
     public float magnitude = .5f;                   //Size of the sine movement
     bool fired = false;
     float directionMultiplier = 1;
+    bool firstShotFired = false;
 
     Vector3 pos;
     Vector3 axis;
+    float timeStart = 0f;
 
     AudioSource myAudio;
 
@@ -47,23 +49,32 @@ public class EnemySineBullet : EnemyProjectile {
         if(!fired)
             return;
 
-        pos += (transform.right * Time.deltaTime * moveSpeed) * directionMultiplier;
-        transform.position = pos + axis * Mathf.Sin(Time.time * frequency) * magnitude;
+        if(Time.timeScale != 0f)
+        {
+            pos += (transform.right * Time.deltaTime * moveSpeed) * directionMultiplier;
+            transform.position = pos + axis * Mathf.Sin(timeStart * frequency) * magnitude;
+
+            timeStart += Time.deltaTime;
+        }
     } 
 
     public override void Fire(float x, float y, bool faceRight = true)
     {
         if (positiveStart)
-            axis = transform.up;
-        else
             axis = -transform.up;
+        else
+            axis = transform.up;
 
         if (faceRight)
             directionMultiplier = 1f;
         else
             directionMultiplier = -1f;
+
+        timeStart = 0f;
+
         pos = transform.position;
         fired = true;
+        firstShotFired = false;
     }
 
     public override void Destroy()
