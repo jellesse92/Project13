@@ -28,7 +28,7 @@ public class BasicTurretEnemy : EnemyPhysics
         for (int i = 0; i < 20; i++)
         {
             GameObject bullet = (GameObject)Instantiate(rangedProjectile);
-            bullet.GetComponent<EnemyBulletScript>().SetDamage(attackPower);
+            bullet.GetComponent<EnemyProjectile>().SetDamage(attackPower);
             bullet.transform.SetParent(projectileList);
             bullet.transform.position = projectileList.position;
             bullet.SetActive(false);

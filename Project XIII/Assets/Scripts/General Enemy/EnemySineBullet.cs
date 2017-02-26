@@ -1,7 +1,9 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
-public class EnemyBulletScript : EnemyProjectile {
+public class EnemySineBullet : EnemyProjectile {
+
     string FIREBALL_NAME = "Fireball";
     string IMPACT_NAME = "Impact";
 
@@ -11,11 +13,13 @@ public class EnemyBulletScript : EnemyProjectile {
 
     ParticleSystem fireballParticle;
     ParticleSystem impactParticle;
-    
+
+    public bool positiveStart = true;               //Travels upwards first if true
+
     AudioSource myAudio;
 
-    public override void Start()
-    {
+    // Use this for initialization
+    public override void Start () {
         base.Start();
         myAudio = GetComponent<AudioSource>();
 
@@ -41,5 +45,4 @@ public class EnemyBulletScript : EnemyProjectile {
             myAudio.PlayOneShot(impactAudio);
         }
     }
-
 }
