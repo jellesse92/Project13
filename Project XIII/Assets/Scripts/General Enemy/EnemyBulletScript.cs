@@ -25,7 +25,7 @@ public class EnemyBulletScript : EnemyProjectile {
             impactParticle = transform.Find(IMPACT_NAME).GetComponent<ParticleSystem>();
     }
 
-    public override void Fire(float x, float y)
+    public override void Fire(float x, float y, bool faceRight = true)
     {
         GetComponent<Rigidbody2D>().velocity = -(transform.position - new Vector3(x, y, transform.position.z)).normalized * BULLET_SPEED;
     }

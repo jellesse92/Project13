@@ -131,11 +131,12 @@ public class BasicTurretEnemy : EnemyPhysics
             {
                 if (target == null)
                     return;
-                bulletArray[i].gameObject.SetActive(true);
+
 
                 Vector3 projectileSpawnPoint = projectileOrigin.position;
                 bulletArray[i].transform.position = projectileSpawnPoint;
-                bulletArray[i].Fire(targetLocation.x, targetLocation.y - 1f);
+                bulletArray[i].gameObject.SetActive(true);
+                bulletArray[i].Fire(targetLocation.x, targetLocation.y - 1f, transform.localScale.x == 1f);
                 return;
             }
         }
