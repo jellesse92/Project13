@@ -11,6 +11,7 @@ public class BasicTurretEnemy : EnemyPhysics
 
     public GameObject rangedProjectile;                     //Projectiles to be shot
     public Transform projectileList;                        //Transform containing projectiles
+    public GameObject[] bulletArray;                        //Array of bullets
     public Transform projectileOrigin;                      //Where projectiles should spawn from
 
     bool attackOnCD = false;                                //Determines if attack should be on cool down
@@ -22,6 +23,7 @@ public class BasicTurretEnemy : EnemyPhysics
     void Start()
     {
         currentAmmo = AMMO_AMOUNT;
+        bulletArray = new GameObject[AMMO_AMOUNT];
 
         for (int i = 0; i < 20; i++)
         {
@@ -30,6 +32,7 @@ public class BasicTurretEnemy : EnemyPhysics
             bullet.transform.SetParent(projectileList);
             bullet.transform.position = projectileList.position;
             bullet.SetActive(false);
+            bulletArray[i] = bullet;
         }
     }
 
@@ -124,15 +127,15 @@ public class BasicTurretEnemy : EnemyPhysics
     {
         for(int i = 0; i < AMMO_AMOUNT; i++)
         {
-            if (!projectileList.GetChild(i).gameObject.activeSelf)
+            if (!bulletArray[i].activeSelf)
             {
                 if (target == null)
                     return;
-                projectileList.GetChild(i).gameObject.SetActive(true);
+                bulletArray[i].SetActive(true);
 
                 Vector3 projectileSpawnPoint = projectileOrigin.position;
-                projectileList.GetChild(i).position = projectileSpawnPoint;
-                projectileList.GetChild(i).GetComponent<Rigidbody2D>().velocity = -(projectileSpawnPoint - new Vector3(targetLocation.x, targetLocation.y - 1f, targetLocation.z)).normalized * BULLET_SPEED;
+                bulletArray[i].transform.position = projectileSpawnPoint;
+                bulletArray[i].GetComponent<Rigidbody2D>().velocity = -(projectileSpawnPoint - new Vector3(targetLocation.x, targetLocation.y - 1f, targetLocation.z)).normalized * BULLET_SPEED;
                 return;
             }
         }

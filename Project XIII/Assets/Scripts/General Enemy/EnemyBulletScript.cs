@@ -1,20 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EnemyBulletScript : MonoBehaviour {
+public class EnemyBulletScript : EnemyProjectile {
     string FIREBALL_NAME = "Fireball";
     string IMPACT_NAME = "Impact";
 
     public AudioClip impactAudio;
 
-    int damage = 10;
     ParticleSystem fireballParticle;
     ParticleSystem impactParticle;
     
     AudioSource myAudio;
 
-    void Start()
+    public override void Start()
     {
+        base.Start();
         myAudio = GetComponent<AudioSource>();
 
         if (transform.Find(FIREBALL_NAME))
@@ -46,7 +46,7 @@ public class EnemyBulletScript : MonoBehaviour {
             {
                 StartCoroutine("DeactivateBullet");
                 PlayParticle(false);
-                transform.parent.parent.GetComponentInChildren<Enemy>().ReloadAmmo();
+                enemyScript.ReloadAmmo();
             }
 
         }
@@ -56,7 +56,7 @@ public class EnemyBulletScript : MonoBehaviour {
     {
         StartCoroutine("DeactivateBullet");
         PlayParticle(false);
-        transform.parent.parent.GetComponentInChildren<Enemy>().ReloadAmmo();
+        enemyScript.ReloadAmmo();
     }
  
     IEnumerator DeactivateBullet()
@@ -65,10 +65,5 @@ public class EnemyBulletScript : MonoBehaviour {
         yield return new WaitForSeconds(2.0f);
         GetComponent<Collider2D>().enabled = true;
         gameObject.SetActive(false);
-    }
-
-    public void SetDamage(int dmg)
-    {
-        damage = dmg;
     }
 }
