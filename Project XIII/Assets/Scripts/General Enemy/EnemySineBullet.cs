@@ -41,7 +41,6 @@ public class EnemySineBullet : EnemyProjectile {
             impactParticle = transform.Find(IMPACT_NAME).GetComponent<ParticleSystem>();
 
         pos = transform.position;
-        axis = -transform.up;
     }
 
     private void Update()
