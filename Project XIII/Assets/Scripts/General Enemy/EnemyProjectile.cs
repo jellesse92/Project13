@@ -17,14 +17,6 @@ public class EnemyProjectile : MonoBehaviour {
         damage = dmg;
     }
 
-    public void SetPosition(float x, float y)
-    {
-        transform.position = new Vector3(x, y, transform.position.z);
-    }
-
-    public virtual void SetTargetPosition(float x, float y)
-    {
-
-    }
+    public virtual void Fire(float x, float y){}
 
 }
