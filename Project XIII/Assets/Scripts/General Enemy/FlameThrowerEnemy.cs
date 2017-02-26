@@ -22,6 +22,7 @@ public class FlameThrowerEnemy : EnemyPhysics {
 
     void Update()
     {
-        transform.Rotate(0, 0f, ROTATION_SPEED * Time.deltaTime);
+        if(!stunned && !frozen)
+            transform.Rotate(0, 0f, ROTATION_SPEED * Time.deltaTime);
     }
 }
