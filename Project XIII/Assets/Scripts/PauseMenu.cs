@@ -20,6 +20,7 @@ public class PauseMenu : MonoBehaviour
         gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         sfxObjects = FindObjectsOfType<AudioSource>();
         leftTitle = GameObject.Find("LeftTitle");
+        rightTitle = GameObject.Find("RightTitle");
         foreach (AudioSource sfxObject in sfxObjects)
         {
             maxSfxVolumes.Add(sfxObject.volume);
