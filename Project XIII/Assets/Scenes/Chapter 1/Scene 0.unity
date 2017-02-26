@@ -6232,7 +6232,7 @@ Prefab:
     - target: {fileID: 224281308754915568, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 134.75
+      value: 131.25
       objectReference: {fileID: 0}
     - target: {fileID: 224281308754915568, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
@@ -6242,7 +6242,7 @@ Prefab:
     - target: {fileID: 224281308754915568, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 269.5
+      value: 262.5
       objectReference: {fileID: 0}
     - target: {fileID: 224281308754915568, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
@@ -6262,7 +6262,7 @@ Prefab:
     - target: {fileID: 224507707420911616, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 404.25
+      value: 393.75
       objectReference: {fileID: 0}
     - target: {fileID: 224507707420911616, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
@@ -6272,7 +6272,7 @@ Prefab:
     - target: {fileID: 224507707420911616, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 269.5
+      value: 262.5
       objectReference: {fileID: 0}
     - target: {fileID: 224507707420911616, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
@@ -18097,6 +18097,37 @@ SpriteRenderer:
   m_Color: {r: 0.7, g: 0.14411765, b: 0.6836505, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!1 &1946543871 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000010796122734, guid: 07a92b5373299d5439985ac79ff5411f,
+    type: 2}
+  m_PrefabInternal: {fileID: 706071604}
+--- !u!114 &1946543873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1946543871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9191284b058eef549b7108b5f04e1117, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intensityMultiplier: 0.25
+  generalIntensity: 0.5
+  blackIntensity: 1
+  whiteIntensity: 1
+  midGrey: 0.2
+  dx11Grain: 0
+  softness: 0
+  monochrome: 0
+  intensities: {x: 1, y: 1, z: 1}
+  tiling: {x: 64, y: 64, z: 64}
+  monochromeTiling: 64
+  filterMode: 1
+  noiseTexture: {fileID: 2800000, guid: 7a632f967e8ad42f5bd275898151ab6a, type: 3}
+  noiseShader: {fileID: 4800000, guid: b0249d8c935344451aa4de6db76f0688, type: 3}
+  dx11NoiseShader: {fileID: 4800000, guid: 8b30686bb4322ab42ad5eb50a0210b58, type: 3}
 --- !u!1 &1948051845
 GameObject:
   m_ObjectHideFlags: 0
