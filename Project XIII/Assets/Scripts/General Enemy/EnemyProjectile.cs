@@ -35,7 +35,7 @@ public class EnemyProjectile : MonoBehaviour {
 
     public virtual void PlayParticle(bool play){}
 
-    public virtual void Fire(float x, float y){}
+    public virtual void Fire(float x, float y, bool faceRight = true){}
 
     public virtual void Destroy()
     {
