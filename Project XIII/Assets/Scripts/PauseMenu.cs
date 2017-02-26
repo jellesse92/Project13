@@ -6,7 +6,7 @@ public class PauseMenu : MonoBehaviour
 {
     int selected = 2;
     static string[] MenuOptions = { "Exit", "Stats", "Commands", "Settings" };
-    GameObject[] directionTitles;
+    GameObject leftTitle, rightTitle;
     GameController gc;
     AudioSource[] sfxObjects;
     List<float> maxSfxVolumes;
@@ -19,6 +19,7 @@ public class PauseMenu : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         sfxObjects = FindObjectsOfType<AudioSource>();
+        leftTitle = GameObject.Find("LeftTitle");
         foreach (AudioSource sfxObject in sfxObjects)
         {
             maxSfxVolumes.Add(sfxObject.volume);
