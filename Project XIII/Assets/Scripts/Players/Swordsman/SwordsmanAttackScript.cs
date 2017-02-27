@@ -151,8 +151,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     bool CheckAcceptTag(Collider2D col)
     {
-        return (col.tag == "Enemy" || col.tag == "Item" || col.tag == "Destructible Projectile");
-    }
+        return (col.CompareTag("Enemy") || col.CompareTag("Item") || col.CompareTag("Destructible Projectile"));    }
 
     /*
      *  HEAVY ATTACK FUNCTIONS
@@ -177,7 +176,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     {
         foreach (GameObject target in enemyHash)
         {
-            if(target.tag == "Enemy")
+            if (target.CompareTag("Enemy"))
             {
                 target.transform.position = new Vector3(transform.position.x + HEAVY_X_OFFSET * transform.parent.localScale.x, target.transform.position.y, target.transform.position.z);
 
@@ -206,7 +205,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     {
         foreach (GameObject target in enemyHash)
         {
-            if(target.tag == "Enemy")
+            if (target.CompareTag("Enemy"))
             {
                 target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_X_LAUNCH_FORCE * transform.parent.localScale.x, HEAVY_Y_LAUNCH_FORCE));
                 playerSoundEffects.PlayHitSpark();
@@ -234,7 +233,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
         CancelInvoke("HeavyFinisher");
         foreach(GameObject target in enemyInHeavyFinisher)
         {
-            if(target.tag == "Enemy")
+            if (target.CompareTag("Enemy"))
                 target.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeRotation;
         }
     }
@@ -249,7 +248,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void HeavyFinisherDamage(GameObject target)
     {
-        if (target.tag == "Enemy")
+        if (target.CompareTag("Enemy"))
         {
             target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
             target.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 3000f));
@@ -276,7 +275,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void TriggerAirHeavyAttack(Collider2D col)
     {
-        if (col.tag == "Enemy")
+        if (col.CompareTag("Enemy"))
         {
             //HEAVY ATTACK AIR EFFECTS STUFF
             playerSoundEffects.PlayHitSpark();
@@ -298,7 +297,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void TriggerQuickAttack(Collider2D col)
     {
-        if (col.tag == "Enemy")
+        if (col.CompareTag("Enemy"))
         {
             //QUICK ATTACK EFFECTS STUFF
             playerSoundEffects.PlayHitSpark();
@@ -312,7 +311,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void TriggerQuickAttack2(Collider2D col)
     {
-        if (col.tag == "Enemy")
+        if (col.CompareTag("Enemy"))
         {
             //QUICK ATTACK 2 EFFECTS STUFF
             playerSoundEffects.PlayHitSpark();
@@ -326,7 +325,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void TriggerAirQuickAttack(Collider2D col)
     {
-        if (col.tag == "Enemy")
+        if (col.CompareTag("Enemy"))
         {
             //QUICK ATTACK AIR EFFECTS STUFF
             playerSoundEffects.PlayHitSpark();
@@ -348,7 +347,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void TriggerDragAttack(Collider2D col)
     {
-        if (col.tag == "Enemy")
+        if (col.CompareTag("Enemy"))
             if (!enemyHash.Contains(col.gameObject))
             {
                 //DRAG ATTACK EFFECTS STUFF
@@ -366,7 +365,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     void UpdateDragAttack()
     {
         foreach (GameObject target in enemyHash)
-            if(target.tag == "Enemy")
+            if (target.CompareTag("Enemy"))
                 target.transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
     }
 
@@ -374,7 +373,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     {
         foreach(GameObject target in enemyHash)
         {
-            if(target.tag == "Enemy")
+            if (target.CompareTag("Enemy"))
             {
                 //DRAG ATTACK EFFECTS STUFF
                 playerSoundEffects.PlayHitSpark();
@@ -394,7 +393,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     {
         foreach(GameObject target in enemyHash)
         {
-            if(target.tag == "Enemy")
+            if (target.CompareTag("Enemy"))
             {
                 target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
                 target.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, DRAG_ATTACK_END_FORCE));
@@ -412,7 +411,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void TriggerFinisherAttack(Collider2D col)
     {
-        if (col.tag == "Enemy")
+        if (col.CompareTag("Enemy"))
         {
             //HEAVY ATTACK EFFECTS STUFF
             //Debug.Log("attack");
@@ -458,7 +457,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void ItemHit(Collider2D collider)
     {
-        if (collider.tag == "Item")
+        if(collider.CompareTag("Item"))
         {
             HitEffect(HitType.item, collider.transform.position);
             collider.GetComponent<ItemHitTrigger>().ItemHit();
@@ -467,7 +466,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
 
     void ProjectileHit(Collider2D collider)
     {
-        if (collider.tag == "Destructible Projectile")
+        if(collider.CompareTag("Destructible Projectile"))
         {
             collider.GetComponent<EnemyBulletScript>().Destroy();
         }
