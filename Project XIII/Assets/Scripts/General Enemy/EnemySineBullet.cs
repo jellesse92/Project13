@@ -39,9 +39,6 @@ public class EnemySineBullet : EnemyProjectile {
             fireballParticle = transform.Find(FIREBALL_NAME).GetComponent<ParticleSystem>();
         if (transform.Find(IMPACT_NAME))
             impactParticle = transform.Find(IMPACT_NAME).GetComponent<ParticleSystem>();
-
-        pos = transform.position;
-        axis = -transform.up;
     }
 
     private void Update()
@@ -79,8 +76,8 @@ public class EnemySineBullet : EnemyProjectile {
 
     public override void Destroy()
     {
-        base.Destroy();
         fired = false;
+        base.Destroy();
     }
 
     public override void PlayParticle(bool play)
