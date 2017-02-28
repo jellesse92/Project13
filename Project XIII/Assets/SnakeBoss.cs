@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnakeBoss : MonoBehaviour {
+public class SnakeBoss : Enemy {
     [System.Serializable]
     public class TimeRange
     {
@@ -14,21 +14,11 @@ public class SnakeBoss : MonoBehaviour {
     public float timeBeforeFirstAttack = 2f;
     public TimeRange timeRange;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	void LateUpdate () {
-		
-	}
-
-    void OnTriggerEnter2D(Collider2D triggerObject)
+    public override void OnTriggerEnter2D(Collider2D triggerObject)
     {
         if (triggerObject.CompareTag("Player"))
             DamagePlayer(triggerObject.gameObject);
     }
-
 
     void DamagePlayer(GameObject player)
     {

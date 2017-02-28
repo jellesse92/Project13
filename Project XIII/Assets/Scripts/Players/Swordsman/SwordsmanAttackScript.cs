@@ -208,8 +208,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             if (target.CompareTag("Enemy"))
             {
                 target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_X_LAUNCH_FORCE * transform.parent.localScale.x, HEAVY_Y_LAUNCH_FORCE));
-                playerSoundEffects.PlayHitSpark();
-                playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
+                HitEffect(HitType.normal, target.GetComponent<Enemy>().GetCenter());
                 target.GetComponent<Enemy>().Damage(damage, HEAVY_STUN_MULTI);
             }
         }
@@ -256,8 +255,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             target.GetComponent<Enemy>().Damage(HEAVY_FINISHER_DPH, .2f);
 
             //Special effects stuff
-            playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
-            playerSoundEffects.PlayHitSpark();
+            HitEffect(HitType.normal, target.GetComponent<Enemy>().GetCenter());
         }
         else
             OtherHitsManage(target.GetComponent<Collider2D>());
@@ -278,11 +276,11 @@ public class SwordsmanAttackScript : MonoBehaviour {
         if (col.CompareTag("Enemy"))
         {
             //HEAVY ATTACK AIR EFFECTS STUFF
-            playerSoundEffects.PlayHitSpark();
-            playerParticleEffects.PlayHitSpark(col.GetComponent<Enemy>().GetCenter());
+            HitEffect(HitType.normal, col.GetComponent<Enemy>().GetCenter());
 
             col.gameObject.GetComponent<Enemy>().Damage(damage, HEAVY_AIR_STUN_MULTI);
-            col.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_AIR_X_FORCE * transform.parent.localScale.x, HEAVY_AIR_Y_FORCE));
+            if(col.gameObject.GetComponent<Rigidbody2D>())
+                col.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_AIR_X_FORCE * transform.parent.localScale.x, HEAVY_AIR_Y_FORCE));
         }
         OtherHitsManage(col);
     }
@@ -300,8 +298,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
         if (col.CompareTag("Enemy"))
         {
             //QUICK ATTACK EFFECTS STUFF
-            playerSoundEffects.PlayHitSpark();
-            playerParticleEffects.PlayHitSpark(col.GetComponent<Enemy>().GetCenter());
+            HitEffect(HitType.normal, col.GetComponent<Enemy>().GetCenter());
 
             col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
@@ -314,8 +311,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
         if (col.CompareTag("Enemy"))
         {
             //QUICK ATTACK 2 EFFECTS STUFF
-            playerSoundEffects.PlayHitSpark();
-            playerParticleEffects.PlayHitSpark(col.GetComponent<Enemy>().GetCenter());
+            HitEffect(HitType.normal, col.GetComponent<Enemy>().GetCenter());
 
             col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
             col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
@@ -328,11 +324,11 @@ public class SwordsmanAttackScript : MonoBehaviour {
         if (col.CompareTag("Enemy"))
         {
             //QUICK ATTACK AIR EFFECTS STUFF
-            playerSoundEffects.PlayHitSpark();
-            playerParticleEffects.PlayHitSpark(col.GetComponent<Enemy>().GetCenter());
-
+            HitEffect(HitType.normal, col.GetComponent<Enemy>().GetCenter());
+            
             col.GetComponent<Enemy>().Damage(damage, QUICK_AIR_STUN_MULTI);
-            col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_AIR_X_FORCE * transform.parent.localScale.x, QUICK_AIR_Y_FORCE));
+            if(col.GetComponent<Rigidbody2D>())
+                col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_AIR_X_FORCE * transform.parent.localScale.x, QUICK_AIR_Y_FORCE));
         }
         OtherHitsManage(col);
     }
@@ -351,8 +347,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             if (!enemyHash.Contains(col.gameObject))
             {
                 //DRAG ATTACK EFFECTS STUFF
-                playerSoundEffects.PlayHitSpark();
-                playerParticleEffects.PlayHitSpark(col.GetComponent<Enemy>().GetCenter());
+                HitEffect(HitType.normal, col.GetComponent<Enemy>().GetCenter());
 
                 enemyHash.Add(col.gameObject);
                 if (transform.parent.parent != null)
@@ -376,8 +371,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             if (target.CompareTag("Enemy"))
             {
                 //DRAG ATTACK EFFECTS STUFF
-                playerSoundEffects.PlayHitSpark();
-                playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
+                HitEffect(HitType.normal, target.GetComponent<Enemy>().GetCenter());
 
                 target.GetComponent<Enemy>().Damage(DRAG_DAMAGE, DRAG_STUN_MULTI);
             }
@@ -416,8 +410,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             //HEAVY ATTACK EFFECTS STUFF
             //Debug.Log("attack");
 
-            playerSoundEffects.PlayHitSpark();
-            playerParticleEffects.PlayFinisherHitSpark(col.GetComponent<Enemy>().GetCenter());
+            HitEffect(HitType.finisher, col.GetComponent<Enemy>().GetCenter());
             transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(magShakefinisherAttack, durShakefinisherAttack);
             transform.parent.parent.GetComponent<PlayerEffectsManager>().FlashScreen();
 

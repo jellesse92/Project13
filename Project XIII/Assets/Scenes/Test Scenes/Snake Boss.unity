@@ -2218,6 +2218,14 @@ Prefab:
       propertyPath: m_LocalScale.y
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1500469543153456, guid: d0a56b0cbda721043bb6b03190bcbd19, type: 2}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1500469543153456, guid: d0a56b0cbda721043bb6b03190bcbd19, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d0a56b0cbda721043bb6b03190bcbd19, type: 2}
   m_IsPrefabParent: 0
@@ -4519,7 +4527,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 524445725}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.96, y: -2.61, z: 0}
+  m_LocalPosition: {x: -1.96, y: -3.52, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 659440790}
@@ -4558,7 +4566,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_RenderMode: 0
   m_SortMode: 1
   m_MinParticleSize: 0
@@ -4632,7 +4640,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1846725226
+  randomSeed: 1126859003
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -9189,7 +9197,7 @@ Prefab:
     - target: {fileID: 114000011959955482, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: yOffset
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 20000013298354812, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
@@ -9204,7 +9212,7 @@ Prefab:
     - target: {fileID: 20000013298354812, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: field of view
-      value: 40
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4533353058213702, guid: 07a92b5373299d5439985ac79ff5411f, type: 2}
       propertyPath: m_RootOrder
@@ -10483,6 +10491,33 @@ BoxCollider2D:
   m_Offset: {x: -0.6575112, y: 0.104160205}
   serializedVersion: 2
   m_Size: {x: 1.8100002, y: 1.2700001}
+--- !u!114 &806532538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 806532534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a055f200da9e4f47a135d9066d9c6b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundedOffset: 1
+  health: 1000
+  coinDropAmount: 0
+  speed: 0
+  attackPower: 0
+  stunnable: 0
+  stunEffectiveness: 0
+  grounded: 0
+  flyingEnemy: 0
+  magShakeDeath: 0.5
+  durShakeDeath: 1.5
+  damage: 50
+  timeBeforeFirstAttack: 2
+  timeRange:
+    minWait: 3
+    maxWait: 5
 --- !u!1 &812883616
 GameObject:
   m_ObjectHideFlags: 0
@@ -19983,7 +20018,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1784965972}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.39, y: -2.61, z: 0}
+  m_LocalPosition: {x: 1.39, y: -3.52, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
   m_Children: []
   m_Father: {fileID: 659440790}
@@ -20022,7 +20057,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_RenderMode: 0
   m_SortMode: 1
   m_MinParticleSize: 0
@@ -20096,7 +20131,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 1508657898
+  randomSeed: 1311346107
   InitialModule:
     serializedVersion: 3
     enabled: 1
