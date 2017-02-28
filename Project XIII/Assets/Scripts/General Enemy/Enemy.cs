@@ -77,7 +77,8 @@ public class Enemy : MonoBehaviour {
     {
         frozen = false;
         isVisible = true;
-        anim = GetComponent<Animator>();
+        if(GetComponent<Animator>())
+            anim = GetComponent<Animator>();
         distToGround = GetComponent<Collider2D>().bounds.extents.y;
         layerMask = (LayerMask.GetMask("Default"));
         default_color = GetComponent<SpriteRenderer>().color;
@@ -136,7 +137,8 @@ public class Enemy : MonoBehaviour {
     //Resets position and alert status
     public virtual void Reset()
     {
-        if(health <= 0)
+
+        if(anim && health <= 0)
             anim.SetTrigger("revive");
 
         CancelInvoke("RemoveTarget");
@@ -213,7 +215,8 @@ public class Enemy : MonoBehaviour {
         if(GetComponent<EnemyParticleEffects>())
             GetComponent<EnemyParticleEffects>().SpawnCoins(coinDropAmount);
         StopCoroutine("ApplyStun");
-        anim.SetTrigger("death");
+        if(anim)
+            anim.SetTrigger("death");
         GetComponent<SpriteRenderer>().color = default_color;
         dead = true;
         gameObject.layer = 14;
@@ -228,7 +231,8 @@ public class Enemy : MonoBehaviour {
     IEnumerator ApplyStun()
     {
         SpecificStunCancel();
-        anim.SetTrigger("stun");
+        if(anim)
+            anim.SetTrigger("stun");
         stunned = true;
         yield return new WaitForSeconds(currentStunMultiplier * stunEffectiveness);
 
@@ -241,7 +245,8 @@ public class Enemy : MonoBehaviour {
     void RecoverFromStun()
     {
         CancelInvoke("EndAttackDelay");
-        anim.SetTrigger("stunRecovery");
+        if(anim)
+            anim.SetTrigger("stunRecovery");
         stunned = false;
         attackDelay = true;
         Invoke("EndAttackDelay", ATTACK_DELAY_AFTER_STUN_TIME);
