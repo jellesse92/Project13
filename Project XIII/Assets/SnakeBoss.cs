@@ -14,6 +14,7 @@ public class SnakeBoss : Enemy {
     public float timeBeforeFirstAttack = 0.5f;
     public TimeRange timeRange;
     public ParticleSystem explosion;
+    public GameObject attackBox;
 
     bool explosionPlaying = false;
     void Start()
@@ -29,7 +30,6 @@ public class SnakeBoss : Enemy {
             explosionPlaying = true;
             StopAllCoroutines();
         }
-        gameObject.layer = 12;
     }
 
     IEnumerator AttackWaitTime(float waitTime)
@@ -42,13 +42,4 @@ public class SnakeBoss : Enemy {
         }
         
     }
-    public override void OnTriggerEnter2D(Collider2D triggerObject)
-    {
-        Debug.Log(triggerObject.tag);
-        if (triggerObject.tag == "Player")
-        {          
-            triggerObject.GetComponent<PlayerProperties>().TakeDamage(damage);
-        }
-    }
-    
 }
