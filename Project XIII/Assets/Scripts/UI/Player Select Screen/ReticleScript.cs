@@ -3,7 +3,8 @@ using System.Collections;
 
 public class ReticleScript : MonoBehaviour
 {
-
+    const float Y_DEAD_ZONE = .1f;
+    const float X_DEAD_ZONE = .1f;
     const float RETICLE_SPEED = 2f;        //Speed reticle set to move at
 
     Vector2 origin;                         //Original position to return to on reset
@@ -53,8 +54,8 @@ public class ReticleScript : MonoBehaviour
         else
         {
             //For poor calibration issues with controllers set to 0f
-            float x = (Mathf.Abs(Input.GetAxis(xInputAxis)) > 0.05) ? Input.GetAxis(xInputAxis) : 0f;
-            float y = (Mathf.Abs(Input.GetAxis(yInputAxis)) > 0.05) ? Input.GetAxis(yInputAxis) : 0f;
+            float x = (Mathf.Abs(Input.GetAxis(xInputAxis)) > X_DEAD_ZONE) ? Input.GetAxis(xInputAxis) : 0f;
+            float y = (Mathf.Abs(Input.GetAxis(yInputAxis)) > Y_DEAD_ZONE) ? Input.GetAxis(yInputAxis) : 0f;
 
             moveDir = new Vector3(x * RETICLE_SPEED, y * RETICLE_SPEED, 0f);
 
