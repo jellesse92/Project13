@@ -11,17 +11,44 @@ public class SnakeBoss : Enemy {
     }
 
     public int damage = 50;
-    public float timeBeforeFirstAttack = 2f;
+    public float timeBeforeFirstAttack = 0.5f;
     public TimeRange timeRange;
+    public ParticleSystem explosion;
 
+    bool explosionPlaying = false;
+    void Start()
+    {
+        StartCoroutine(AttackWaitTime(timeBeforeFirstAttack));
+    }
+
+    public override void FixedUpdate()
+    {
+        if (dead & !explosionPlaying)
+        {
+            explosion.Play();
+            explosionPlaying = true;
+            StopAllCoroutines();
+        }
+        gameObject.layer = 12;
+    }
+
+    IEnumerator AttackWaitTime(float waitTime)
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(waitTime);
+            GetComponentInParent<Animator>().SetTrigger("attack");
+            waitTime = Random.Range(timeRange.minWait, timeRange.maxWait);
+        }
+        
+    }
     public override void OnTriggerEnter2D(Collider2D triggerObject)
     {
-        if (triggerObject.CompareTag("Player"))
-            DamagePlayer(triggerObject.gameObject);
+        Debug.Log(triggerObject.tag);
+        if (triggerObject.tag == "Player")
+        {          
+            triggerObject.GetComponent<PlayerProperties>().TakeDamage(damage);
+        }
     }
-
-    void DamagePlayer(GameObject player)
-    {
-        player.GetComponent<PlayerProperties>().TakeDamage(damage);
-    }
+    
 }

@@ -301,7 +301,8 @@ public class SwordsmanAttackScript : MonoBehaviour {
             HitEffect(HitType.normal, col.GetComponent<Enemy>().GetCenter());
 
             col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
-            col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
+            if(col.GetComponent<Rigidbody2D>())
+                col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
         }
         OtherHitsManage(col);
     }
@@ -389,8 +390,11 @@ public class SwordsmanAttackScript : MonoBehaviour {
         {
             if (target.CompareTag("Enemy"))
             {
-                target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-                target.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, DRAG_ATTACK_END_FORCE));
+                if (target.GetComponent<Rigidbody2D>())
+                {
+                    target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+                    target.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, DRAG_ATTACK_END_FORCE));
+                }
             }
         }
     }
@@ -415,7 +419,8 @@ public class SwordsmanAttackScript : MonoBehaviour {
             transform.parent.parent.GetComponent<PlayerEffectsManager>().FlashScreen();
 
             col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
-            col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
+            if(col.GetComponent<Rigidbody2D>())
+                col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
         }
         OtherHitsManage(col);        
     }
