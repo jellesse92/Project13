@@ -2210,21 +2210,24 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 11feb3eac35784d448d47f60f3d8fd00, type: 2}
-    - target: {fileID: 4728879700104816, guid: d0a56b0cbda721043bb6b03190bcbd19, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 2
+    - target: {fileID: 114008006338496950, guid: d0a56b0cbda721043bb6b03190bcbd19,
+        type: 2}
+      propertyPath: timeBeforeFirstAttack
+      value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 4728879700104816, guid: d0a56b0cbda721043bb6b03190bcbd19, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 2
+    - target: {fileID: 61371821367397212, guid: d0a56b0cbda721043bb6b03190bcbd19,
+        type: 2}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1500469543153456, guid: d0a56b0cbda721043bb6b03190bcbd19, type: 2}
       propertyPath: m_Layer
-      value: 9
+      value: 12
       objectReference: {fileID: 0}
-    - target: {fileID: 1500469543153456, guid: d0a56b0cbda721043bb6b03190bcbd19, type: 2}
-      propertyPath: m_TagString
-      value: Enemy
+    - target: {fileID: 114008006338496950, guid: d0a56b0cbda721043bb6b03190bcbd19,
+        type: 2}
+      propertyPath: damage
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d0a56b0cbda721043bb6b03190bcbd19, type: 2}
@@ -8636,25 +8639,6 @@ SpriteRenderer:
   m_Color: {r: 0.5735294, g: 0.3584559, b: 0.3584559, a: 1}
   m_FlipX: 0
   m_FlipY: 0
---- !u!1 &669795310 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1421001850770650, guid: d0a56b0cbda721043bb6b03190bcbd19,
-    type: 2}
-  m_PrefabInternal: {fileID: 223638367}
---- !u!61 &669795313
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 669795310}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0.79276145, y: 0.07622745}
-  serializedVersion: 2
-  m_Size: {x: 1.9000006, y: 1.1500002}
 --- !u!1001 &671986703
 Prefab:
   m_ObjectHideFlags: 0
@@ -8993,25 +8977,6 @@ SpriteRenderer:
   m_Color: {r: 0.7, g: 0.14411765, b: 0.6836505, a: 1}
   m_FlipX: 0
   m_FlipY: 0
---- !u!1 &692624125 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1508376123483378, guid: d0a56b0cbda721043bb6b03190bcbd19,
-    type: 2}
-  m_PrefabInternal: {fileID: 223638367}
---- !u!61 &692624128
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 692624125}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 1.0366858, y: -0.030489646}
-  serializedVersion: 2
-  m_Size: {x: 2.2100005, y: 0.9500003}
 --- !u!1 &695148587
 GameObject:
   m_ObjectHideFlags: 0
@@ -9098,7 +9063,7 @@ Prefab:
     - target: {fileID: 224281308754915568, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 136.75
+      value: 135.75
       objectReference: {fileID: 0}
     - target: {fileID: 224281308754915568, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
@@ -9108,7 +9073,7 @@ Prefab:
     - target: {fileID: 224281308754915568, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 273.5
+      value: 271.5
       objectReference: {fileID: 0}
     - target: {fileID: 224281308754915568, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
@@ -9128,7 +9093,7 @@ Prefab:
     - target: {fileID: 224507707420911616, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 410.25
+      value: 407.25
       objectReference: {fileID: 0}
     - target: {fileID: 224507707420911616, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
@@ -9138,7 +9103,7 @@ Prefab:
     - target: {fileID: 224507707420911616, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 273.5
+      value: 271.5
       objectReference: {fileID: 0}
     - target: {fileID: 224507707420911616, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
@@ -10472,52 +10437,6 @@ SpriteRenderer:
   m_Color: {r: 0.57254905, g: 0.35686275, b: 0.35686275, a: 1}
   m_FlipX: 0
   m_FlipY: 0
---- !u!1 &806532534 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1500469543153456, guid: d0a56b0cbda721043bb6b03190bcbd19,
-    type: 2}
-  m_PrefabInternal: {fileID: 223638367}
---- !u!61 &806532537
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 806532534}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: -0.6575112, y: 0.104160205}
-  serializedVersion: 2
-  m_Size: {x: 1.8100002, y: 1.2700001}
---- !u!114 &806532538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 806532534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a055f200da9e4f47a135d9066d9c6b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundedOffset: 1
-  health: 1000
-  coinDropAmount: 0
-  speed: 0
-  attackPower: 0
-  stunnable: 0
-  stunEffectiveness: 0
-  grounded: 0
-  flyingEnemy: 0
-  magShakeDeath: 0.5
-  durShakeDeath: 1.5
-  damage: 50
-  timeBeforeFirstAttack: 2
-  timeRange:
-    minWait: 3
-    maxWait: 5
 --- !u!1 &812883616
 GameObject:
   m_ObjectHideFlags: 0
@@ -16018,25 +15937,6 @@ Transform:
   m_Father: {fileID: 564463692}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1341252463 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1296481290069130, guid: d0a56b0cbda721043bb6b03190bcbd19,
-    type: 2}
-  m_PrefabInternal: {fileID: 223638367}
---- !u!61 &1341252466
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1341252463}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: -0.45736206}
-  serializedVersion: 2
-  m_Size: {x: 0.78000027, y: 1.3900003}
 --- !u!1 &1352410905
 GameObject:
   m_ObjectHideFlags: 0
@@ -19485,25 +19385,6 @@ SpriteRenderer:
   m_Color: {r: 0.7, g: 0.14411765, b: 0.6836505, a: 1}
   m_FlipX: 0
   m_FlipY: 0
---- !u!1 &1729611733 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1436127993214806, guid: d0a56b0cbda721043bb6b03190bcbd19,
-    type: 2}
-  m_PrefabInternal: {fileID: 223638367}
---- !u!61 &1729611736
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1729611733}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: -0.3124798, y: -0.29295015}
-  serializedVersion: 2
-  m_Size: {x: 1.0400002, y: 0.8700002}
 --- !u!1 &1754164491
 GameObject:
   m_ObjectHideFlags: 0
@@ -23514,25 +23395,6 @@ Transform:
   m_Father: {fileID: 564463692}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1902069684 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1943483557394790, guid: d0a56b0cbda721043bb6b03190bcbd19,
-    type: 2}
-  m_PrefabInternal: {fileID: 223638367}
---- !u!61 &1902069687
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1902069684}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0.7927605, y: 0.07622791}
-  serializedVersion: 2
-  m_Size: {x: 1.9000003, y: 1.1500001}
 --- !u!1 &1906892361
 GameObject:
   m_ObjectHideFlags: 0
