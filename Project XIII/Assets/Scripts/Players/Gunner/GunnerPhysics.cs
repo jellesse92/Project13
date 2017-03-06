@@ -3,6 +3,7 @@ using System.Collections;
 
 public class GunnerPhysics : PlayerPhysics{
 
+    const float Y_NEG_THRESHOLD = -.1f;
 
     //Constants for bullets
     const int MAX_PISTOL_AMMO = 6;                          //Amount of ammo that can be fired before reload
@@ -114,7 +115,10 @@ public class GunnerPhysics : PlayerPhysics{
         {
             if (isGrounded())
             {
+                GetComponent<Animator>().enabled = true;
+                myAnimator.SetTrigger("aerialToGround");
                 CancelDownKick();
+
                 transform.parent.GetComponent<PlayerEffectsManager>().ScreenShake(1f, 1f);
             }
             else
@@ -144,20 +148,35 @@ public class GunnerPhysics : PlayerPhysics{
 
     public override bool CheckClassSpecificInput()
     {
-        if (CanAttackStatus() && GetComponent<PlayerInput>().getKeyPress().quickAttackPress && isGrounded())
-        {
-            if (checkForCombo)
-            {
-                if (midAnimReached)
-                    PlayNextComboHit();
-                return true;
-            }
+        float yMove = myKeyPress.verticalAxisValue;
+ 
 
-            if(pistolAmmo <= 0)
+        if (CanAttackStatus() && GetComponent<PlayerInput>().getKeyPress().quickAttackPress)
+        {
+            Debug.Log(yMove);
+            if (isGrounded())
             {
-                ReloadPistolAmmo();
+                if (checkForCombo)
+                {
+                    if (midAnimReached)
+                        PlayNextComboHit();
+                    return true;
+                }
+
+                if (pistolAmmo <= 0)
+                {
+                    ReloadPistolAmmo();
+                    return true;
+                }
+            }
+            else if(yMove < Y_NEG_THRESHOLD)
+            {
+                myAnimator.SetTrigger("downQuickAttack");
                 return true;
             }
+            
+            
+
         }
 
 
