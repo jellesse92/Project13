@@ -207,7 +207,9 @@ public class SwordsmanAttackScript : MonoBehaviour {
         {
             if (target.CompareTag("Enemy"))
             {
-                target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_X_LAUNCH_FORCE * transform.parent.localScale.x, HEAVY_Y_LAUNCH_FORCE));
+                Rigidbody2D targetRigidBody = target.GetComponent<Rigidbody2D>();
+                if(targetRigidBody!= null)
+                    targetRigidBody.AddForce(new Vector2(HEAVY_X_LAUNCH_FORCE * transform.parent.localScale.x, HEAVY_Y_LAUNCH_FORCE));
                 HitEffect(HitType.normal, target.GetComponent<Enemy>().GetCenter());
                 target.GetComponent<Enemy>().Damage(damage, HEAVY_STUN_MULTI);
             }
