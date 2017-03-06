@@ -153,8 +153,13 @@ public class GunnerPhysics : PlayerPhysics{
 
         if (CanAttackStatus() && GetComponent<PlayerInput>().getKeyPress().quickAttackPress)
         {
-            Debug.Log(yMove);
-            if (isGrounded())
+
+            if(yMove < Y_NEG_THRESHOLD && !isGrounded())
+            {
+                myAnimator.SetTrigger("downQuickAttack");
+                return true;
+            }
+            else
             {
                 if (checkForCombo)
                 {
@@ -169,13 +174,6 @@ public class GunnerPhysics : PlayerPhysics{
                     return true;
                 }
             }
-            else if(yMove < Y_NEG_THRESHOLD)
-            {
-                myAnimator.SetTrigger("downQuickAttack");
-                return true;
-            }
-            
-            
 
         }
 
