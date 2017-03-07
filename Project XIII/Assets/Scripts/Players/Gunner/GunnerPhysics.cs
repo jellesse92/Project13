@@ -36,7 +36,7 @@ public class GunnerPhysics : PlayerPhysics{
     const float QUICK_FORCE_X = 100f;
     const float QUICK_FORCE_Y = 16000f;
     const float HEAVY_FORCE_X = 3500f;
-    const float HEAVY_FORCE_Y = 5000f;
+    const float HEAVY_FORCE_Y = 6000f;
 
     //Constant for charging heavy attack
     const float MAX_CHARGE = 1.8f;                          //Max amount of time multiplier allowed to be applied to charge distance
@@ -143,13 +143,11 @@ public class GunnerPhysics : PlayerPhysics{
             ResetDashCount();
         if (checkChargeTime)
             ManageChargeEffect();
-
     }
 
     public override bool CheckClassSpecificInput()
     {
         float yMove = myKeyPress.verticalAxisValue;
- 
 
         if (CanAttackStatus() && GetComponent<PlayerInput>().getKeyPress().quickAttackPress)
         {
@@ -332,13 +330,12 @@ public class GunnerPhysics : PlayerPhysics{
 
     void ApplyQuickDamage(GameObject target)
     {
-        if (target.tag == "Enemy")
+        if (target.CompareTag("Enemy"))
         {
             target.GetComponent<Enemy>().Damage(physicStats.quickAttackStrength, LIGHT_STUN_MULTI);
             if (!target.GetComponent<Enemy>().IsGrounded())
             {
-                target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, -10f);
-                target.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_FORCE_X, QUICK_FORCE_Y));
+                target.GetComponent<Enemy>().Damage(0, LIGHT_STUN_MULTI, QUICK_FORCE_X, QUICK_FORCE_Y);
             }
         }
 
@@ -557,10 +554,7 @@ public class GunnerPhysics : PlayerPhysics{
     void ApplyHeavyDamage(GameObject target, float distance)
     {
         if (target.tag == "Enemy")
-        {
-            target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_FORCE_X * transform.localScale.x, HEAVY_FORCE_Y));
-            target.GetComponent<Enemy>().Damage(physicStats.heavyAttackStrength, HEAVY_STUN_MULTI);
-        }
+            target.GetComponent<Enemy>().Damage(physicStats.heavyAttackStrength, HEAVY_STUN_MULTI, HEAVY_FORCE_X * transform.localScale.x, HEAVY_FORCE_Y);
     }
 
     GameObject GetHeavyBullet()

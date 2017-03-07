@@ -179,12 +179,6 @@ public class SwordsmanAttackScript : MonoBehaviour {
             if (target.CompareTag("Enemy"))
             {
                 target.transform.position = new Vector3(transform.position.x + HEAVY_X_OFFSET * transform.parent.localScale.x, target.transform.position.y, target.transform.position.z);
-
-                //Original effect
-                /*
-                playerParticleEffects.PlayHitSpark(target.GetComponent<Enemy>().GetCenter());
-                playerSoundEffects.PlayHitSpark();
-                */
                 target.GetComponent<Enemy>().Damage(0, .2f);
             }
 
