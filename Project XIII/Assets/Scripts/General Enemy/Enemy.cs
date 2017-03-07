@@ -166,7 +166,7 @@ public class Enemy : MonoBehaviour {
     }
 
     //Damage script to be applied when enemy takes damage
-    public void Damage(int damage, float stunMultiplier = 0f)
+    public virtual void Damage(int damage, float stunMultiplier = 0f, float xForce = 0f, float yForce = 0f)
     {
         if (!isInvincible)
         {
@@ -193,6 +193,11 @@ public class Enemy : MonoBehaviour {
                     StartCoroutine("ApplyDamageColor");
             }
         }
+    }
+
+    public virtual void SetPos(float x, float y)
+    {
+        transform.position = new Vector2(x, y);
     }
 
     IEnumerator ApplyDamageColor()
@@ -378,7 +383,7 @@ public class Enemy : MonoBehaviour {
         return false;
     }
 
-    public void Bounce(float forceY = 15000f)
+    public virtual void Bounce(float forceY = 15000f)
     {
         isBouncing = true;
         isSquishing = false;
