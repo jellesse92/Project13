@@ -34,7 +34,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     const int DRAG_DAMAGE = 1;
 
     //Constants for stun duration
-    const float HEAVY_STUN_MULTI = 1f;                              //Stun duration multiplier for heavy attack
+    const float HEAVY_STUN_MULTI = 2f;                              //Stun duration multiplier for heavy attack
     const float HEAVY_AIR_STUN_MULTI = 6f;                          //Stun duration multiplier for air heavy attack
     const float QUICK_STUN_MULTI = 1f;                              //Stun duration multiplier for quick atack
     const float QUICK_AIR_STUN_MULTI = 1f;                          //Stun duration multiplier for air quick attack 
@@ -207,11 +207,8 @@ public class SwordsmanAttackScript : MonoBehaviour {
         {
             if (target.CompareTag("Enemy"))
             {
-                Rigidbody2D targetRigidBody = target.GetComponent<Rigidbody2D>();
-                if(targetRigidBody!= null)
-                    targetRigidBody.AddForce(new Vector2(HEAVY_X_LAUNCH_FORCE * transform.parent.localScale.x, HEAVY_Y_LAUNCH_FORCE));
                 HitEffect(HitType.normal, target.GetComponent<Enemy>().GetCenter());
-                target.GetComponent<Enemy>().Damage(damage, HEAVY_STUN_MULTI);
+                target.GetComponent<Enemy>().Damage(damage, HEAVY_STUN_MULTI,HEAVY_X_LAUNCH_FORCE * transform.parent.localScale.x, HEAVY_Y_LAUNCH_FORCE);
             }
         }
 
@@ -251,10 +248,8 @@ public class SwordsmanAttackScript : MonoBehaviour {
     {
         if (target.CompareTag("Enemy"))
         {
-            target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-            target.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 3000f));
+            target.GetComponent<Enemy>().Damage(HEAVY_FINISHER_DPH, 1f,0,3000f);
             target.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
-            target.GetComponent<Enemy>().Damage(HEAVY_FINISHER_DPH, .2f);
 
             //Special effects stuff
             HitEffect(HitType.normal, target.GetComponent<Enemy>().GetCenter());
@@ -280,9 +275,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             //HEAVY ATTACK AIR EFFECTS STUFF
             HitEffect(HitType.normal, col.GetComponent<Enemy>().GetCenter());
 
-            col.gameObject.GetComponent<Enemy>().Damage(damage, HEAVY_AIR_STUN_MULTI);
-            if(col.gameObject.GetComponent<Rigidbody2D>())
-                col.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_AIR_X_FORCE * transform.parent.localScale.x, HEAVY_AIR_Y_FORCE));
+            col.gameObject.GetComponent<Enemy>().Damage(damage, HEAVY_AIR_STUN_MULTI,HEAVY_AIR_X_FORCE * transform.parent.localScale.x, HEAVY_AIR_Y_FORCE);
         }
         OtherHitsManage(col);
     }
@@ -302,9 +295,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             //QUICK ATTACK EFFECTS STUFF
             HitEffect(HitType.normal, col.GetComponent<Enemy>().GetCenter());
 
-            col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
-            if(col.GetComponent<Rigidbody2D>())
-                col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
+            col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI, QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE);
         }
         OtherHitsManage(col);
     }
@@ -316,8 +307,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             //QUICK ATTACK 2 EFFECTS STUFF
             HitEffect(HitType.normal, col.GetComponent<Enemy>().GetCenter());
 
-            col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
-            col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
+            col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI, QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE);
         }
         OtherHitsManage(col);
     }
@@ -329,9 +319,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             //QUICK ATTACK AIR EFFECTS STUFF
             HitEffect(HitType.normal, col.GetComponent<Enemy>().GetCenter());
             
-            col.GetComponent<Enemy>().Damage(damage, QUICK_AIR_STUN_MULTI);
-            if(col.GetComponent<Rigidbody2D>())
-                col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_AIR_X_FORCE * transform.parent.localScale.x, QUICK_AIR_Y_FORCE));
+            col.GetComponent<Enemy>().Damage(damage, QUICK_AIR_STUN_MULTI, QUICK_AIR_X_FORCE * transform.parent.localScale.x, QUICK_AIR_Y_FORCE);
         }
         OtherHitsManage(col);
     }
@@ -389,16 +377,9 @@ public class SwordsmanAttackScript : MonoBehaviour {
     public void DragAttackEnd()
     {
         foreach(GameObject target in enemyHash)
-        {
             if (target.CompareTag("Enemy"))
-            {
                 if (target.GetComponent<Rigidbody2D>())
-                {
-                    target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-                    target.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, DRAG_ATTACK_END_FORCE));
-                }
-            }
-        }
+                    target.GetComponent<Enemy>().Damage(0, 0, 0, DRAG_ATTACK_END_FORCE);
     }
 
     /*
@@ -420,9 +401,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(magShakefinisherAttack, durShakefinisherAttack);
             transform.parent.parent.GetComponent<PlayerEffectsManager>().FlashScreen();
 
-            col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI);
-            if(col.GetComponent<Rigidbody2D>())
-                col.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE));
+            col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI, QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE);
         }
         OtherHitsManage(col);        
     }
