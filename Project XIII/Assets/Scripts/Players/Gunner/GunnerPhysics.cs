@@ -177,7 +177,6 @@ public class GunnerPhysics : PlayerPhysics{
 
         }
 
-
         if (CanAttackStatus() && GetComponent<PlayerInput>().getKeyPress().heavyAttackPress)
         {
             StartHeavyCharge();
@@ -190,14 +189,7 @@ public class GunnerPhysics : PlayerPhysics{
 
     public override void ExecuteHeavyButtonRelease()
     {
-        if(isGrounded())
-            myAnimator.SetTrigger("heavyAttack");
-        else
-        {
-            Debug.Log("NEED HEAVY AIR CHARGE VERSION");
-            CancelHeavyCharge();
-            myAnimator.SetTrigger("airHeavyAttack");
-        }
+        myAnimator.SetTrigger("heavyAttack");
     }
 
     public override void MovementSkill(float xMove, float yMove)
