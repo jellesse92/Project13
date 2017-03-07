@@ -166,7 +166,7 @@ public class Enemy : MonoBehaviour {
     }
 
     //Damage script to be applied when enemy takes damage
-    public virtual void Damage(int damage, float stunMultiplier = 0f, float xForce = 0f, float yForce = 0f)
+    public virtual void Damage(int damage, float stunMultiplier = 0f, float xForce = 0, float yForce = 0)
     {
         if (!isInvincible)
         {
@@ -191,6 +191,12 @@ public class Enemy : MonoBehaviour {
                 StartCoroutine(ApplyStun());
                 if (!isFrozen)
                     StartCoroutine("ApplyDamageColor");
+            }
+
+            if(xForce != 0 && yForce != 0)
+            {
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+                gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(xForce, yForce, 0));
             }
         }
     }
@@ -350,7 +356,6 @@ public class Enemy : MonoBehaviour {
                 else
                     Invoke("RemoveTarget", END_PURSUIT_TIME);
             }
-
         }
     }
 
