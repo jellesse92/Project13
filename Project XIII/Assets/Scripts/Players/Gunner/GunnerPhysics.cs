@@ -3,6 +3,7 @@ using System.Collections;
 
 public class GunnerPhysics : PlayerPhysics{
 
+    const float Y_NEG_THRESHOLD = -.1f;
 
     //Constants for bullets
     const int MAX_PISTOL_AMMO = 6;                          //Amount of ammo that can be fired before reload
@@ -114,7 +115,10 @@ public class GunnerPhysics : PlayerPhysics{
         {
             if (isGrounded())
             {
+                GetComponent<Animator>().enabled = true;
+                myAnimator.SetTrigger("aerialToGround");
                 CancelDownKick();
+
                 transform.parent.GetComponent<PlayerEffectsManager>().ScreenShake(1f, 1f);
             }
             else
@@ -144,22 +148,34 @@ public class GunnerPhysics : PlayerPhysics{
 
     public override bool CheckClassSpecificInput()
     {
-        if (CanAttackStatus() && GetComponent<PlayerInput>().getKeyPress().quickAttackPress && isGrounded())
+        float yMove = myKeyPress.verticalAxisValue;
+ 
+
+        if (CanAttackStatus() && GetComponent<PlayerInput>().getKeyPress().quickAttackPress)
         {
-            if (checkForCombo)
+
+            if(yMove < Y_NEG_THRESHOLD && !isGrounded())
             {
-                if (midAnimReached)
-                    PlayNextComboHit();
+                myAnimator.SetTrigger("downQuickAttack");
                 return true;
+            }
+            else
+            {
+                if (checkForCombo)
+                {
+                    if (midAnimReached)
+                        PlayNextComboHit();
+                    return true;
+                }
+
+                if (pistolAmmo <= 0)
+                {
+                    ReloadPistolAmmo();
+                    return true;
+                }
             }
 
-            if(pistolAmmo <= 0)
-            {
-                ReloadPistolAmmo();
-                return true;
-            }
         }
-
 
         if (CanAttackStatus() && GetComponent<PlayerInput>().getKeyPress().heavyAttackPress)
         {
@@ -173,14 +189,7 @@ public class GunnerPhysics : PlayerPhysics{
 
     public override void ExecuteHeavyButtonRelease()
     {
-        if(isGrounded())
-            myAnimator.SetTrigger("heavyAttack");
-        else
-        {
-            Debug.Log("NEED HEAVY AIR CHARGE VERSION");
-            CancelHeavyCharge();
-            myAnimator.SetTrigger("airHeavyAttack");
-        }
+        myAnimator.SetTrigger("heavyAttack");
     }
 
     public override void MovementSkill(float xMove, float yMove)
