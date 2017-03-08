@@ -3,6 +3,8 @@ using System.Collections;
 
 public class GunnerPhysics : PlayerPhysics{
 
+    enum HitType { normal, finisher, item };
+
     const float Y_NEG_THRESHOLD = -.1f;
 
     //Constants for bullets
@@ -90,7 +92,7 @@ public class GunnerPhysics : PlayerPhysics{
         gunnerStat = GetComponent<GunnerProperties>().GetGunnerStats();
         playerParticleEffects = GetComponent<GunnerParticleEffects>();
         playerEffectsManager = transform.parent.GetComponent<PlayerEffectsManager>();
-        layermask = (LayerMask.GetMask("Default", "Enemy"));
+        layermask = (LayerMask.GetMask("Default", "Enemy", "Item"));
         meleeAttackBox.GetComponent<GunnerMeleeAttackScript>().enabled = false;
         myAnimator.SetBool("gunner", true);
         defaultMat = GetComponent<SpriteRenderer>().material;
@@ -313,6 +315,7 @@ public class GunnerPhysics : PlayerPhysics{
             {
                 playerParticleEffects.PlayHitSpark(hit[i].point);
                 ApplyQuickDamage(hit[i].collider.gameObject);
+                ItemHit(hit[i].collider);
                 break;
             }
 
@@ -547,14 +550,19 @@ public class GunnerPhysics : PlayerPhysics{
         for (int i = 0; i < 5; i++)
             foreach (RaycastHit2D hh in heavyHit[i])
                 if (hh)
+                {
                     if (hh.collider.tag == "Enemy")
                         ApplyHeavyDamage(hh.collider.gameObject, hit[i].distance);
+                    ItemHit(hh.collider);
+                }
+
     }
 
     void ApplyHeavyDamage(GameObject target, float distance)
     {
         if (target.tag == "Enemy")
             target.GetComponent<Enemy>().Damage(physicStats.heavyAttackStrength, HEAVY_STUN_MULTI, HEAVY_FORCE_X * transform.localScale.x, HEAVY_FORCE_Y);
+ 
     }
 
     GameObject GetHeavyBullet()
@@ -565,7 +573,6 @@ public class GunnerPhysics : PlayerPhysics{
         {
             if (!bulletList.transform.GetChild(i).GetChild(1).GetComponent<Collider2D>().enabled)
                 return bulletList.transform.GetChild(i).gameObject;
-            Debug.Log("testing");
         }
 
         return result;
@@ -608,6 +615,36 @@ public class GunnerPhysics : PlayerPhysics{
 
     //END HEAVY AIR ATTAACK FUNCTIONS
 
+    void ItemHit(Collider2D collider)
+    {
+        if (collider.CompareTag("Item"))
+        {
+            HitEffect(HitType.item, collider.transform.position);
+            collider.GetComponent<ItemHitTrigger>().ItemHit();
+        }
+    }
+
+    void HitEffect(HitType hitType, Vector3 position)
+    {
+        /*
+        if (hitType == HitType.normal)
+        {
+            playerSoundEffects.PlayHitSpark();
+            playerParticleEffects.PlayHitSpark(position);
+        }
+        else if (hitType == HitType.finisher)
+        {
+            playerSoundEffects.PlayHitSpark();
+            playerParticleEffects.PlayFinisherHitSpark(position);
+        }
+        else if (hitType == HitType.item)
+        {
+            playerSoundEffects.PlayHitSpark();
+            playerParticleEffects.PlayHitSpark(position);
+        }
+        */
+
+    }
 
 
 }
