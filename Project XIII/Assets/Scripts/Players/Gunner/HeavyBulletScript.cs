@@ -60,7 +60,7 @@ public class HeavyBulletScript : MonoBehaviour {
     {
         dir = f;
         Transform temp = blastSplashZone.transform;
-        temp.localScale = new Vector3(f, temp.position.y, temp.position.z);
+        temp.localScale = new Vector3(f, 1f, 1f);
     }
 
     public void SetDamage(int bulletDmg, int splashDmg)
