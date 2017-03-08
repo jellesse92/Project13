@@ -615,6 +615,13 @@ public class GunnerPhysics : PlayerPhysics{
 
     //END HEAVY AIR ATTAACK FUNCTIONS
 
+    void AutoReload()
+    {
+        Debug.Log("testing");
+        myAnimator.SetTrigger("combo2");
+        pistolAmmo = MAX_PISTOL_AMMO;
+    }
+
     void ItemHit(Collider2D collider)
     {
         if (collider.CompareTag("Item"))
