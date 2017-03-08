@@ -22,8 +22,10 @@ public class HeavyBulletScript : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Enemy")
+        if (collision.CompareTag("Enemy"))
             collision.GetComponent<Enemy>().Damage(damage, HEAVY_BULLET_STUN);
+        if (collision.CompareTag("Item"))
+            collision.GetComponent<ItemHitTrigger>().ItemHit();
         Explode();
     }
 
