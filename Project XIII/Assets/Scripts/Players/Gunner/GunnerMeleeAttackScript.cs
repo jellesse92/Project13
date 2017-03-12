@@ -71,8 +71,7 @@ public class GunnerMeleeAttackScript : MonoBehaviour {
     {
         if(col.tag == "Enemy")
         {
-            col.gameObject.GetComponent<Enemy>().Damage(damage, QUICK_STUN_DURATION);
-            col.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_AIR_FORCE_X * transform.parent.localScale.x, QUICK_AIR_FORCE_Y));
+            col.gameObject.GetComponent<Enemy>().Damage(damage, QUICK_STUN_DURATION, QUICK_AIR_FORCE_X * transform.parent.localScale.x, QUICK_AIR_FORCE_Y);
             //Play particle effects here?
         }
     }

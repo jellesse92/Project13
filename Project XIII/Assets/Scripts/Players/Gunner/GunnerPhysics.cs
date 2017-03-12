@@ -3,6 +3,9 @@ using System.Collections;
 
 public class GunnerPhysics : PlayerPhysics{
 
+    enum HitType { normal, finisher, item };
+
+    const float Y_NEG_THRESHOLD = -.1f;
 
     //Constants for bullets
     const int MAX_PISTOL_AMMO = 6;                          //Amount of ammo that can be fired before reload
@@ -35,7 +38,7 @@ public class GunnerPhysics : PlayerPhysics{
     const float QUICK_FORCE_X = 100f;
     const float QUICK_FORCE_Y = 16000f;
     const float HEAVY_FORCE_X = 3500f;
-    const float HEAVY_FORCE_Y = 5000f;
+    const float HEAVY_FORCE_Y = 6000f;
 
     //Constant for charging heavy attack
     const float MAX_CHARGE = 1.8f;                          //Max amount of time multiplier allowed to be applied to charge distance
@@ -89,7 +92,7 @@ public class GunnerPhysics : PlayerPhysics{
         gunnerStat = GetComponent<GunnerProperties>().GetGunnerStats();
         playerParticleEffects = GetComponent<GunnerParticleEffects>();
         playerEffectsManager = transform.parent.GetComponent<PlayerEffectsManager>();
-        layermask = (LayerMask.GetMask("Default", "Enemy"));
+        layermask = (LayerMask.GetMask("Default", "Enemy", "Item"));
         meleeAttackBox.GetComponent<GunnerMeleeAttackScript>().enabled = false;
         myAnimator.SetBool("gunner", true);
         defaultMat = GetComponent<SpriteRenderer>().material;
@@ -114,7 +117,10 @@ public class GunnerPhysics : PlayerPhysics{
         {
             if (isGrounded())
             {
+                GetComponent<Animator>().enabled = true;
+                myAnimator.SetTrigger("aerialToGround");
                 CancelDownKick();
+
                 transform.parent.GetComponent<PlayerEffectsManager>().ScreenShake(1f, 1f);
             }
             else
@@ -139,27 +145,37 @@ public class GunnerPhysics : PlayerPhysics{
             ResetDashCount();
         if (checkChargeTime)
             ManageChargeEffect();
-
     }
 
     public override bool CheckClassSpecificInput()
     {
-        if (CanAttackStatus() && GetComponent<PlayerInput>().getKeyPress().quickAttackPress && isGrounded())
+        float yMove = myKeyPress.verticalAxisValue;
+
+        if (CanAttackStatus() && GetComponent<PlayerInput>().getKeyPress().quickAttackPress)
         {
-            if (checkForCombo)
+
+            if(yMove < Y_NEG_THRESHOLD && !isGrounded())
             {
-                if (midAnimReached)
-                    PlayNextComboHit();
+                myAnimator.SetTrigger("downQuickAttack");
                 return true;
+            }
+            else
+            {
+                if (checkForCombo)
+                {
+                    if (midAnimReached)
+                        PlayNextComboHit();
+                    return true;
+                }
+
+                if (pistolAmmo <= 0)
+                {
+                    ReloadPistolAmmo();
+                    return true;
+                }
             }
 
-            if(pistolAmmo <= 0)
-            {
-                ReloadPistolAmmo();
-                return true;
-            }
         }
-
 
         if (CanAttackStatus() && GetComponent<PlayerInput>().getKeyPress().heavyAttackPress)
         {
@@ -173,14 +189,7 @@ public class GunnerPhysics : PlayerPhysics{
 
     public override void ExecuteHeavyButtonRelease()
     {
-        if(isGrounded())
-            myAnimator.SetTrigger("heavyAttack");
-        else
-        {
-            Debug.Log("NEED HEAVY AIR CHARGE VERSION");
-            CancelHeavyCharge();
-            myAnimator.SetTrigger("airHeavyAttack");
-        }
+        myAnimator.SetTrigger("heavyAttack");
     }
 
     public override void MovementSkill(float xMove, float yMove)
@@ -306,6 +315,7 @@ public class GunnerPhysics : PlayerPhysics{
             {
                 playerParticleEffects.PlayHitSpark(hit[i].point);
                 ApplyQuickDamage(hit[i].collider.gameObject);
+                ItemHit(hit[i].collider);
                 break;
             }
 
@@ -323,13 +333,12 @@ public class GunnerPhysics : PlayerPhysics{
 
     void ApplyQuickDamage(GameObject target)
     {
-        if (target.tag == "Enemy")
+        if (target.CompareTag("Enemy"))
         {
             target.GetComponent<Enemy>().Damage(physicStats.quickAttackStrength, LIGHT_STUN_MULTI);
             if (!target.GetComponent<Enemy>().IsGrounded())
             {
-                target.GetComponent<Rigidbody2D>().velocity = new Vector2(0f, -10f);
-                target.GetComponent<Rigidbody2D>().AddForce(new Vector2(QUICK_FORCE_X, QUICK_FORCE_Y));
+                target.GetComponent<Enemy>().Damage(0, LIGHT_STUN_MULTI, QUICK_FORCE_X, QUICK_FORCE_Y);
             }
         }
 
@@ -541,17 +550,19 @@ public class GunnerPhysics : PlayerPhysics{
         for (int i = 0; i < 5; i++)
             foreach (RaycastHit2D hh in heavyHit[i])
                 if (hh)
+                {
                     if (hh.collider.tag == "Enemy")
                         ApplyHeavyDamage(hh.collider.gameObject, hit[i].distance);
+                    ItemHit(hh.collider);
+                }
+
     }
 
     void ApplyHeavyDamage(GameObject target, float distance)
     {
         if (target.tag == "Enemy")
-        {
-            target.GetComponent<Rigidbody2D>().AddForce(new Vector2(HEAVY_FORCE_X * transform.localScale.x, HEAVY_FORCE_Y));
-            target.GetComponent<Enemy>().Damage(physicStats.heavyAttackStrength, HEAVY_STUN_MULTI);
-        }
+            target.GetComponent<Enemy>().Damage(physicStats.heavyAttackStrength, HEAVY_STUN_MULTI, HEAVY_FORCE_X * transform.localScale.x, HEAVY_FORCE_Y);
+ 
     }
 
     GameObject GetHeavyBullet()
@@ -562,7 +573,6 @@ public class GunnerPhysics : PlayerPhysics{
         {
             if (!bulletList.transform.GetChild(i).GetChild(1).GetComponent<Collider2D>().enabled)
                 return bulletList.transform.GetChild(i).gameObject;
-            Debug.Log("testing");
         }
 
         return result;
@@ -605,6 +615,43 @@ public class GunnerPhysics : PlayerPhysics{
 
     //END HEAVY AIR ATTAACK FUNCTIONS
 
+    void AutoReload()
+    {
+        Debug.Log("testing");
+        myAnimator.SetTrigger("combo2");
+        pistolAmmo = MAX_PISTOL_AMMO;
+    }
+
+    void ItemHit(Collider2D collider)
+    {
+        if (collider.CompareTag("Item"))
+        {
+            HitEffect(HitType.item, collider.transform.position);
+            collider.GetComponent<ItemHitTrigger>().ItemHit();
+        }
+    }
+
+    void HitEffect(HitType hitType, Vector3 position)
+    {
+        /*
+        if (hitType == HitType.normal)
+        {
+            playerSoundEffects.PlayHitSpark();
+            playerParticleEffects.PlayHitSpark(position);
+        }
+        else if (hitType == HitType.finisher)
+        {
+            playerSoundEffects.PlayHitSpark();
+            playerParticleEffects.PlayFinisherHitSpark(position);
+        }
+        else if (hitType == HitType.item)
+        {
+            playerSoundEffects.PlayHitSpark();
+            playerParticleEffects.PlayHitSpark(position);
+        }
+        */
+
+    }
 
 
 }

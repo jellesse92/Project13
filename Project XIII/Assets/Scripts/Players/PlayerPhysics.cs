@@ -62,6 +62,9 @@ public class PlayerPhysics : MonoBehaviour {
     bool moveSkillPerformed = false;
     bool moveSkillDelayCheck = false;
 
+    //For interaction 
+    NPC npcInRange = null;
+
     //Using for turning
     ShadowSpriteGenerator shadowSpriteGenerator;
 
@@ -114,6 +117,7 @@ public class PlayerPhysics : MonoBehaviour {
     {
         if (!GetComponent<PlayerProperties>().GetStunState() && GetComponent<PlayerProperties>().alive && GetComponent<PlayerInput>().InputActiveState())
         {
+
             if (!CheckClassSpecificInput())
             {
                 float xMove = myKeyPress.horizontalAxisValue;
@@ -140,6 +144,9 @@ public class PlayerPhysics : MonoBehaviour {
                 if (myKeyPress.recoveryPress)
                     Heal();
                 CheckForButtonReleases();
+
+                if (myKeyPress.interactionPress && npcInRange != null)
+                    npcInRange.ActivateInteraction();
             }
         }
         ClassSpecificUpdate();
@@ -163,6 +170,18 @@ public class PlayerPhysics : MonoBehaviour {
     {
         //This function is used when a specific class has specific inputs to look for
         return false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("NPC"))
+            npcInRange = collision.GetComponent<NPC>();
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("NPC"))
+            npcInRange = null;
     }
 
     public virtual void MovementSkill(float xMove, float yMove)

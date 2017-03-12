@@ -8,6 +8,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     const float DEFAULT_ORTHO_SIZE_3D = 20f;
     const float MAX_ORTHO_SIZE = 10f;
     const float MAX_ORTHO_SIZE_3D = 40f;
+    const float Y_ADJUSTMENT_MULTI = 8f;
 
     const float ZOOM_OUT_DELTA = .01f;                         //Amount to zoom when zooming in or out per update
     const float ZOOM_IN_DELTA = .003f;
@@ -23,7 +24,6 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     HashSet<GameObject> players = new HashSet<GameObject>();
 
     public bool in2DMode = true;
-    public float lowestPointY = 0f;                             //Lowest point of the map the camera should be able to show
     public float lowestPointX = 0f;                             //Leftmost point of the map the camera should be able to show
 
     float lastOrthographicSize = 0f;                            //Keeps track of the last orthographic size
@@ -140,9 +140,6 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
                 SetOrthographicSize(forcedOrthoSize);
             else
                 SetOrthographicSize(distance);
-
-            if(in2DMode)
-                cameraDestination.y = Mathf.Max(lowestPointY + cam.orthographicSize, cameraDestination.y);
 
             if (crouching)
                 cameraDestination.y -= (5f + CROUCHING_INCREAMENT);
@@ -284,6 +281,8 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
             if (player.activeSelf)
             {
                 midpoint += player.transform.position;
+                midpoint += new Vector3(0, Y_ADJUSTMENT_MULTI, 0);
+
                 activeCount++;
             }
         }

@@ -98,7 +98,7 @@ public class CutsceneManager : MonoBehaviour {
     bool runTurnDelay = false;                                  //Delays actions based on turning delay
     bool dialoguePlaying = false;
 
-    private void Awake()
+    private void Start()
     {
         playersManager = GameObject.FindGameObjectWithTag("PlayerList").transform;
         cameraColliders = GameObject.FindGameObjectWithTag("Camera Wall");

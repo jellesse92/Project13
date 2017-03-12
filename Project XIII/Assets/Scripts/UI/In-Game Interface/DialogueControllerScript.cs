@@ -121,7 +121,7 @@ public class DialogueControllerScript : MonoBehaviour {
      *  ------ DIALOGUE READING FUNCTIONS
      */
 
-    //Loads text to be read to current dialogue 
+    //Loads text to be read to current dialogue based on index
     public void LoadTextAsset(int index)
     {
         cutsceneManager.ActivateDialogueMode();

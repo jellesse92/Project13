@@ -18,13 +18,14 @@ public class HeavyBulletBlast : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "Enemy" && !enemyHash.Contains(collision.gameObject))
+        if ((collision.CompareTag("Enemy") || collision.CompareTag("Item")) && !enemyHash.Contains(collision.gameObject))
             enemyHash.Add(collision.gameObject);
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.tag == "Enemy" && enemyHash.Contains(collision.gameObject))
+        if ((collision.CompareTag("Enemy") || collision.CompareTag("Item")) && enemyHash.Contains(collision.gameObject))
             enemyHash.Remove(collision.gameObject);
     }
 
@@ -39,8 +40,10 @@ public class HeavyBulletBlast : MonoBehaviour {
         TEMP_SPRITE.SetActive(true);
         foreach(GameObject target in enemyHash)
         {
-            if (target.tag == "Enemy")
+            if (target.CompareTag("Enemy"))
                 target.GetComponent<Enemy>().Damage(damage, BLAST_STUN);
+            if(target.CompareTag("Item"))
+                target.GetComponent<ItemHitTrigger>().ItemHit();
         }
         GetComponent<Collider2D>().enabled = false;
     }
