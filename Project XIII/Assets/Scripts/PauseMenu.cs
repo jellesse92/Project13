@@ -12,22 +12,43 @@ public class PauseMenu : MonoBehaviour
     AudioSource[] sfxObjects;
     List<float> maxSfxVolumes;
     public bool sfxSound = true;
+    public GameObject[] panels;
+    public List<RectTransform> panelLocations;
     Animator anim;
 
+    public void Reset()
+    {
+        print("Reset CalleD");
+        ResetTriggers();
+        selected = 1;
+        leftTitle = GameObject.Find("LeftTitle");
+        rightTitle = GameObject.Find("RightTitle");
+        UpdateDirectionalTitles();
+        for (int i = 0; i < panels.Length; i++)
+        {
+            panels[i].GetComponent<RectTransform>().anchoredPosition = panelLocations[i].anchoredPosition;
+        }
+    }
     void Awake()
     {
-        selected = 1;
+        
+        panelLocations = new List<RectTransform>();
         maxSfxVolumes = new List<float>();
         anim = GetComponentInChildren<Animator>();
         gc = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameController>();
         sfxObjects = FindObjectsOfType<AudioSource>();
-        leftTitle = GameObject.Find("LeftTitle");
-        rightTitle = GameObject.Find("RightTitle");
-        UpdateDirectionalTitles();
         foreach (AudioSource sfxObject in sfxObjects)
         {
             maxSfxVolumes.Add(sfxObject.volume);
         }
+        foreach( GameObject panel in panels)
+        {
+            panelLocations.Add(panel.GetComponent<RectTransform>());
+        }
+        Reset();
+        
+        
+
     }
 
     void Update()

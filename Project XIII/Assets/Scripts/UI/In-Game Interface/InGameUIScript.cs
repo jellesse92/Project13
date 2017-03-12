@@ -41,6 +41,7 @@ public class InGameUIScript : MonoBehaviour {
             }
             else
             {
+                pausePanel.GetComponent<PauseMenu>().Reset();
                 pausePanel.SetActive(false);
                 Time.timeScale = 1.0f;
             }
