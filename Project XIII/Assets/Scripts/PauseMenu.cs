@@ -65,14 +65,13 @@ public class PauseMenu : MonoBehaviour
             ResetTriggers();
             anim.SetTrigger("Right");
         }
-        UpdateDirectionalTitles();
     }
     void IncreaseSound()
     {
         if (gc.IsMusicOn) { }
     }
 
-    void UpdateDirectionalTitles()
+    public void UpdateDirectionalTitles()
     {
         leftTitle.GetComponent<Text>().text = MenuOptions[selected == 0? MenuOptions.Length - 1 : selected - 1];
         rightTitle.GetComponent<Text>().text = MenuOptions[selected == MenuOptions.Length - 1 ? 0 : selected + 1];
