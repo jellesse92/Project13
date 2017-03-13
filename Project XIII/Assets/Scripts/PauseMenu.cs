@@ -28,6 +28,7 @@ public class PauseMenu : MonoBehaviour
         {
             panels[i].GetComponent<RectTransform>().anchoredPosition = panelLocations[i].anchoredPosition;
         }
+        SetStats();
     }
     void Awake()
     {
@@ -81,6 +82,22 @@ public class PauseMenu : MonoBehaviour
     {
         anim.ResetTrigger("Left");
         anim.ResetTrigger("Right");
+    }
+
+    void SetStats()
+    {
+        print("hi");
+        //int count = panels[1].transform.childCount;
+        //print(count);
+        //for (int i = 0; i < panels[1].transform.childCount; i++)
+        //{
+        //    var player = panels[1].transform.GetChild(i);
+        //    for(int j = 0; i < player.childCount; i++)
+        //    {
+        //        //HP = 0, ATTACK = 1, SPEED = 2
+        //        player.GetChild(j).GetComponent<Text>().text = "HP: :D";
+        //    }
+        //}
     }
     void DecreaseSound()
     {
