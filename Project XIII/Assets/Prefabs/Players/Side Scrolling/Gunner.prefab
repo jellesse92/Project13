@@ -401,10 +401,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundCheckingOffset: 2
-  heavyBulletPrefab: {fileID: 1278291590862730, guid: 683d557c201253543be34ada128153f5,
-    type: 2}
   bulletSource: {fileID: 4000013673285880}
   meleeAttackBox: {fileID: 1874683590291094}
+  heavyBulletPrefab: {fileID: 1278291590862730, guid: 683d557c201253543be34ada128153f5,
+    type: 2}
   tier1Mat: {fileID: 2100000, guid: 32ca144c3968a994ba36bca47b900b62, type: 2}
   tier2Mat: {fileID: 2100000, guid: f439c7b82fd6e194c9910cf43b943432, type: 2}
 --- !u!114 &114000012160316626
@@ -441,11 +441,11 @@ MonoBehaviour:
   magDamageScreenShake: 0.2
   durDamageScreenShake: 0.5
   gunnerStats:
-    quickBulletSpeed: 10
-    heavyBulletSpeed: 1
-    heavyAttackCoolDown: 1.2
-    dodgeCoolDown: 1
     heavyAttackKnockBackForce: 10
+    heavyTier1ChargeDamage: 25
+    heavyTier2ChargeDamage: 40
+    heavyTier1SplashDamage: 10
+    heavyTier2SplashDamage: 20
 --- !u!114 &114000012299557240
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -496,6 +496,12 @@ MonoBehaviour:
     type: 2}
   heal: {fileID: 1626330227677728, guid: db85e909d42b47048a37467fa8144a62, type: 2}
   fireDamage: {fileID: 1048790455586534, guid: 2c7e85f4b03483447a66947c83fb7468, type: 2}
+  chargingParticles: {fileID: 1000700619077664, guid: 4465d85fa25581741ac455d21f358e28,
+    type: 2}
+  chargingFirstCharge: {fileID: 1795565944016900, guid: d3b5524849cfbb6448f09cb0661ef4ee,
+    type: 2}
+  chargingSecondCharge: {fileID: 1192945881308404, guid: 0ec349e94d0f4604dbb693e5846775e6,
+    type: 2}
 --- !u!114 &114117585663465194
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -430,7 +430,7 @@ public class GunnerPhysics : PlayerPhysics{
     {
         checkChargeTime = true;
         timeCharged = 0f;
-        //GetComponent<SwordsmanParticleEffects>().PlayChargingDust(true);
+        playerParticleEffects.PlayChargingDust(true);
     }
 
     void ManageChargeEffect()
@@ -441,14 +441,14 @@ public class GunnerPhysics : PlayerPhysics{
             isFlashingMax = true;
             CancelInvoke("ChargingFlashTier1");
             //playerSoundEffects.playSound(playerSoundEffects.chargingSecondCharge);
-            //playerParticleEffects.PlayParticle(playerParticleEffects.chargingSecondCharge);
+            playerParticleEffects.PlayParticle(playerParticleEffects.chargingSecondCharge);
             InvokeRepeating("ChargingFlashMax", 0f, .09f);
         }
         else if (timeCharged >= 1f && timeCharged < 2f && !isFlashingTier1)
         {
             isFlashingTier1 = true;
             //playerSoundEffects.playSound(playerSoundEffects.chargingFirstCharge);
-            //playerParticleEffects.PlayParticle(playerParticleEffects.chargingFirstCharge);
+            playerParticleEffects.PlayParticle(playerParticleEffects.chargingFirstCharge);
             InvokeRepeating("ChargingFlashTier1", 0f, .15f);
         }
     }
@@ -482,13 +482,14 @@ public class GunnerPhysics : PlayerPhysics{
 
     public void CancelHeavyCharge()
     {
-        //GetComponent<SwordsmanParticleEffects>().PlayChargingDust(false);
+        playerParticleEffects.PlayChargingDust(false);
         checkChargeTime = false;
         CancelFlashing();
     }
 
     void ExecuteHeavyAttack()
     {
+        playerParticleEffects.PlayChargingDust(false);
         int chargeLevel = GetChargeLevel();
         checkChargeTime = false;
         CancelFlashing();
