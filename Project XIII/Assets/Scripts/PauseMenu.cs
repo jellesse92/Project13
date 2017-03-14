@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour
 {
-    public bool testing;
+    bool testing;
     int selected = 1;
     static string[] MenuOptions = { "Exit", "Stats", "Commands", "Settings" };
     GameObject leftTitle, rightTitle;
@@ -68,6 +68,7 @@ public class PauseMenu : MonoBehaviour
     }
     void Awake()
     {
+        testing = GameObject.FindObjectOfType<TestController>().testingMode;
         inputReader = new KeyConfig();
         activePlayers = new List<PlayerProperties>();
         panelLocations = new List<RectTransform>();
