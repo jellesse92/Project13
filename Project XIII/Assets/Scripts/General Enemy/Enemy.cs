@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour {
 
     //Animator
     protected Animator anim;
+    protected GameObject myObj;                         //Object to reference for movement
 
     //In-Game information                 
     public int health;                                  //Enemy health
@@ -81,12 +82,15 @@ public class Enemy : MonoBehaviour {
             anim = GetComponent<Animator>();
         distToGround = GetComponent<Collider2D>().bounds.extents.y;
         layerMask = (LayerMask.GetMask("Default"));
-        default_color = GetComponent<SpriteRenderer>().color;
+        if(GetComponent<SpriteRenderer>() != null)
+            default_color = GetComponent<SpriteRenderer>().color;
         fullHealth = health;
         Reset();
 
+        myObj = this.gameObject;
+
         CreateCenterObject();
-        ChangeCenter(transform.position);
+        ChangeCenter(myObj.transform.position);
 
         mainCamera = Camera.main;
     }
@@ -158,7 +162,8 @@ public class Enemy : MonoBehaviour {
             }
         }
 
-        GetComponent<SpriteRenderer>().color = default_color;
+        if(GetComponent<SpriteRenderer>()!= null)
+            GetComponent<SpriteRenderer>().color = default_color;
         health = fullHealth;
         gameObject.layer = 9;
 
