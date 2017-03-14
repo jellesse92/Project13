@@ -158,7 +158,7 @@ public class CutsceneManager : MonoBehaviour {
             noSkipButton.Select();
             Time.timeScale = 0.0f;
         }
-        else if ((Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Any_Triangle")) && skipUIPanel.activeSelf)
+        else if ((Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Any_Triangle") || Input.GetButtonDown("Any_Circle")) && skipUIPanel.activeSelf)
         {
             CancelSkip();
         }
