@@ -19,7 +19,7 @@ public class Enemy : MonoBehaviour {
 
     //Animator
     protected Animator anim;
-    protected GameObject myObj;                         //Object to reference for movement
+    SpriteRenderer mySprite;
 
     //In-Game information                 
     public int health;                                  //Enemy health
@@ -78,19 +78,17 @@ public class Enemy : MonoBehaviour {
     {
         frozen = false;
         isVisible = true;
-        if(GetComponent<Animator>())
-            anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
+        mySprite = GetComponent<SpriteRenderer>();
         distToGround = GetComponent<Collider2D>().bounds.extents.y;
         layerMask = (LayerMask.GetMask("Default"));
-        if(GetComponent<SpriteRenderer>() != null)
+        if(mySprite)
             default_color = GetComponent<SpriteRenderer>().color;
         fullHealth = health;
         Reset();
 
-        myObj = this.gameObject;
-
         CreateCenterObject();
-        ChangeCenter(myObj.transform.position);
+        ChangeCenter(transform.position);
 
         mainCamera = Camera.main;
     }
@@ -162,8 +160,7 @@ public class Enemy : MonoBehaviour {
             }
         }
 
-        if(GetComponent<SpriteRenderer>()!= null)
-            GetComponent<SpriteRenderer>().color = default_color;
+        SetColor(default_color);
         health = fullHealth;
         gameObject.layer = 9;
 
@@ -186,7 +183,7 @@ public class Enemy : MonoBehaviour {
             if (health <= 0)
             {
                 StopAllCoroutines();
-                GetComponent<SpriteRenderer>().color = default_color;
+                SetColor(default_color);
                 PlayDeath();
             }
             else if (stunnable && stunMultiplier > 0)
@@ -213,9 +210,15 @@ public class Enemy : MonoBehaviour {
 
     IEnumerator ApplyDamageColor()
     {
-        GetComponent<SpriteRenderer>().material.color = Color.red;
+        SetColor(Color.red);
         yield return new WaitForSeconds(.075f);
-        GetComponent<SpriteRenderer>().material.color = default_color;
+        SetColor(default_color);
+    }
+
+    public virtual void SetColor(Color color)
+    {
+        if (mySprite != null)
+            mySprite.material.color = color;
     }
 
     public virtual void PlayDeath()
@@ -233,7 +236,7 @@ public class Enemy : MonoBehaviour {
         StopCoroutine("ApplyStun");
         if(anim)
             anim.SetTrigger("death");
-        GetComponent<SpriteRenderer>().color = default_color;
+        SetColor(default_color);
         dead = true;
         gameObject.layer = 14;
 
@@ -407,10 +410,11 @@ public class Enemy : MonoBehaviour {
 
     public IEnumerator ApplyDebuffFreeze(float duration)
     {
-        GetComponent<SpriteRenderer>().material.color = new Color(.5f, .8f, 1f,1f);
+
+        SetColor(new Color(.5f, .8f, 1f, 1f));
         isFrozen = true;
         yield return new WaitForSeconds(duration);
-        GetComponent<SpriteRenderer>().material.color = default_color;
+        SetColor(default_color);
         isFrozen = false;
     }
 

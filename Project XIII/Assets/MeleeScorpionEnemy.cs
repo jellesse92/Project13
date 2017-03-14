@@ -6,7 +6,7 @@ public class MeleeScorpionEnemy : EnemyPhysics {
 
     protected override void EnemySpecificStart()
     {
-        anim = transform.parent.GetComponentInChildren<Animator>();
+        anim = transform.GetComponentInChildren<Animator>();
     }
 
     public override void Flip()

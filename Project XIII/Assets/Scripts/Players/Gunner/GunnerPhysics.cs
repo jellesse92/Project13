@@ -618,7 +618,6 @@ public class GunnerPhysics : PlayerPhysics{
 
     void AutoReload()
     {
-        Debug.Log("testing");
         myAnimator.SetTrigger("combo2");
         pistolAmmo = MAX_PISTOL_AMMO;
     }
