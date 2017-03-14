@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject[] panels;
     public List<RectTransform> panelLocations;
     Animator anim;
+    KeyConfig inputReader;
 
     public void Reset()
     {
@@ -49,6 +51,7 @@ public class PauseMenu : MonoBehaviour
     }
     void Awake()
     {
+        inputReader = new KeyConfig();
         activePlayers = new List<PlayerProperties>();
         panelLocations = new List<RectTransform>();
         maxSfxVolumes = new List<float>();
@@ -71,18 +74,36 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") < 0)
+
+        bool isInteracting = false;
+        if(selected == 3)
         {
+            Slider[] options = panels[selected].GetComponentsInChildren<Slider>();
+            if ((Input.GetKeyDown(KeyCode.X) || Input.GetButtonDown(inputReader.jumpButton)))
+            {
+                foreach (Slider option in options)
+                {
+                    option.interactable = !option.IsInteractable();
+                }
+                options[0].Select();
+            }
+            isInteracting = options[0].IsInteractable();
+        }
+        if (!isInteracting && (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") < -0.6))
+        {
+            print(Input.GetAxis("Horizontal"));
             selected = selected > 0 ? selected - 1 : MenuOptions.Length - 1;
             ResetTriggers();
             anim.SetTrigger("Left");
+            EventSystem.current.SetSelectedGameObject(null);
 
-        } else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetAxis("Horizontal") > 0)
+        } else if (!isInteracting && (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetAxis("Horizontal") > 0.6))
         {
+            print(Input.GetAxis("Horizontal"));
             selected = selected < (MenuOptions.Length - 1) ? selected + 1 : 0; 
             ResetTriggers();
             anim.SetTrigger("Right");
+            EventSystem.current.SetSelectedGameObject(null);
         }
     }
     void IncreaseSound()
@@ -99,6 +120,7 @@ public class PauseMenu : MonoBehaviour
             Button[] options = panels[selected].GetComponentsInChildren<Button>();
             options[0].Select();
         }
+        
     }
 
     void ResetTriggers()
