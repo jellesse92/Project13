@@ -2038,6 +2038,12 @@ SpriteRenderer:
   m_Color: {r: 0.7, g: 0.14411765, b: 0.6836505, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!114 &209753031 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114805931788456598, guid: d0a56b0cbda721043bb6b03190bcbd19,
+    type: 2}
+  m_PrefabInternal: {fileID: 223638367}
+  m_Script: {fileID: 11500000, guid: 3a055f200da9e4f47a135d9066d9c6b3, type: 3}
 --- !u!1 &221601609
 GameObject:
   m_ObjectHideFlags: 0
@@ -9300,7 +9306,7 @@ Prefab:
     - target: {fileID: 224281308754915568, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -269.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224281308754915568, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
@@ -9310,7 +9316,7 @@ Prefab:
     - target: {fileID: 224281308754915568, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 539
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224507707420911616, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
@@ -9330,7 +9336,7 @@ Prefab:
     - target: {fileID: 224507707420911616, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -269.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224507707420911616, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
@@ -9340,7 +9346,7 @@ Prefab:
     - target: {fileID: 224507707420911616, guid: 07a92b5373299d5439985ac79ff5411f,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 539
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4000010958666508, guid: 07a92b5373299d5439985ac79ff5411f, type: 2}
       propertyPath: m_LocalPosition.y
@@ -14532,7 +14538,7 @@ Prefab:
     - target: {fileID: 224000013040360690, guid: f868cfbdbf764814c87ba7a531a191bd,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -45.927673
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224000013040360690, guid: f868cfbdbf764814c87ba7a531a191bd,
         type: 2}
@@ -14542,7 +14548,7 @@ Prefab:
     - target: {fileID: 224000013040360690, guid: f868cfbdbf764814c87ba7a531a191bd,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 41.855347
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224000012869146274, guid: f868cfbdbf764814c87ba7a531a191bd,
         type: 2}
@@ -14562,7 +14568,7 @@ Prefab:
     - target: {fileID: 224000012869146274, guid: f868cfbdbf764814c87ba7a531a191bd,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -45.927673
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224000012869146274, guid: f868cfbdbf764814c87ba7a531a191bd,
         type: 2}
@@ -14572,7 +14578,7 @@ Prefab:
     - target: {fileID: 224000012869146274, guid: f868cfbdbf764814c87ba7a531a191bd,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 41.855347
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114979405344309272, guid: f868cfbdbf764814c87ba7a531a191bd,
         type: 2}
@@ -15399,6 +15405,28 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e0ea35e989dfcd043b42d7053b546abc, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1238272448 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1056849861381818, guid: bb6abeabf5f3d1f41adf55a9f625a790,
+    type: 2}
+  m_PrefabInternal: {fileID: 1426351633}
+--- !u!95 &1238272453
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1238272448}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 296563e79cac7214f8ba7f258d1ee8a2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1247304095
 GameObject:
   m_ObjectHideFlags: 0
@@ -17172,27 +17200,16 @@ Prefab:
       propertyPath: m_Name
       value: Boss UI Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 114833170014132046, guid: bb6abeabf5f3d1f41adf55a9f625a790,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 332586ab586a8e9448f63876faf7090b,
-        type: 3}
-    - target: {fileID: 114833170014132046, guid: bb6abeabf5f3d1f41adf55a9f625a790,
-        type: 2}
-      propertyPath: m_Type
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114833170014132046, guid: bb6abeabf5f3d1f41adf55a9f625a790,
-        type: 2}
-      propertyPath: m_FillMethod
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114833170014132046, guid: bb6abeabf5f3d1f41adf55a9f625a790,
+    - target: {fileID: 114366605973146866, guid: bb6abeabf5f3d1f41adf55a9f625a790,
         type: 2}
       propertyPath: m_FillAmount
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114414892998290512, guid: bb6abeabf5f3d1f41adf55a9f625a790,
+        type: 2}
+      propertyPath: bossScript
+      value: 
+      objectReference: {fileID: 209753031}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bb6abeabf5f3d1f41adf55a9f625a790, type: 2}
   m_IsPrefabParent: 0
@@ -20058,23 +20075,6 @@ SpriteRenderer:
   m_Color: {r: 0.7, g: 0.14411765, b: 0.6836505, a: 1}
   m_FlipX: 0
   m_FlipY: 0
---- !u!1 &1743960015 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1421493955302506, guid: bb6abeabf5f3d1f41adf55a9f625a790,
-    type: 2}
-  m_PrefabInternal: {fileID: 1426351633}
---- !u!114 &1743960016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1743960015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1200242548, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowMaskGraphic: 1
 --- !u!1 &1754164491
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,9 +16,11 @@ public class SnakeBoss : Boss {
     public ParticleSystem explosion;
     public GameObject attackBox;
 
-    bool explosionPlaying = false;
+    bool explosionPlaying = false;                           
+
     void Start()
     {
+        frozen = true;                                                  //Boss should not attack until unfrozen to allow cutscene to play
         StartCoroutine(AttackWaitTime(timeBeforeFirstAttack));
     }
 
@@ -37,9 +39,14 @@ public class SnakeBoss : Boss {
         while (true)
         {
             yield return new WaitForSeconds(waitTime);
-            GetComponentInParent<Animator>().SetTrigger("attack");
-            waitTime = Random.Range(timeRange.minWait, timeRange.maxWait);
+            if (!frozen)
+            {
+                Debug.Log(frozen);
+                GetComponentInParent<Animator>().SetTrigger("attack");
+                waitTime = Random.Range(timeRange.minWait, timeRange.maxWait);
+            }
         }
         
     }
+    
 }
