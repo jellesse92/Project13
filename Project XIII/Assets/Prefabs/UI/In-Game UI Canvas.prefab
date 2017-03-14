@@ -2212,15 +2212,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 114000010280316404}
+    m_SelectOnRight: {fileID: 114000010280316404}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.8897059, g: 0.5429823, b: 0.82275224, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -2264,15 +2264,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 4
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 114000010188311072}
+    m_SelectOnRight: {fileID: 114000010188311072}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.8897059, g: 0.5429823, b: 0.82275224, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -4804,6 +4804,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab04104567a20a14195a51096c815bff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  testing: 1
   characters:
   - {fileID: 0}
   - {fileID: 0}
@@ -5814,6 +5815,8 @@ MonoBehaviour:
   botCutsceneBorder: {fileID: 114796643531149310}
   sceneTranstions: {fileID: 95000013508877734}
   skipUIPanel: {fileID: 1000011630863134}
+  noSkipButton: {fileID: 114000010280316404}
+  yesSkipButton: {fileID: 114000010188311072}
   playOnAwake: 1
   cutscene:
   - actionEntries:
@@ -6987,8 +6990,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 45, y: -11.718863}
-  m_SizeDelta: {x: 90, y: 23.437725}
+  m_AnchoredPosition: {x: 45, y: -11.93811}
+  m_SizeDelta: {x: 90, y: 23.87622}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000011855681118
 RectTransform:
@@ -7043,8 +7046,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 135, y: -11.718863}
-  m_SizeDelta: {x: 90, y: 23.437725}
+  m_AnchoredPosition: {x: 135, y: -11.93811}
+  m_SizeDelta: {x: 90, y: 23.87622}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000012266483196
 RectTransform:
@@ -7081,8 +7084,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -68.281136}
-  m_SizeDelta: {x: 180, y: 23.437725}
+  m_AnchoredPosition: {x: 100, y: -68.06189}
+  m_SizeDelta: {x: 180, y: 23.87622}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000012449878824
 RectTransform:
@@ -7313,8 +7316,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -38.281136}
-  m_SizeDelta: {x: 180, y: 36.56227}
+  m_AnchoredPosition: {x: 100, y: -38.06189}
+  m_SizeDelta: {x: 180, y: 36.12378}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224011317435470010
 RectTransform:
