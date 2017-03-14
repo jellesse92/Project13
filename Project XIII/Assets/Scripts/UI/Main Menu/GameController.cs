@@ -61,7 +61,7 @@ public class GameController : MonoBehaviour
             PlayerCharacters[i].player = -1;
 
         //Default settings. 1 Player set to gunner with keyboard + mouse input
-        SetPlayer(0, 1, 0);
+        //SetPlayer(0, 1, 0);
 
     }
 
@@ -122,7 +122,8 @@ public class GameController : MonoBehaviour
         IsMusicOn = musicVolume > 0;
         if (!IsMusicOn)
             musicVolume = 0;
-        music.SetMusicVolume(musicVolume);
+        if(music != null)
+            music.SetMusicVolume(musicVolume);
     }
     
 
