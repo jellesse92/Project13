@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114817484242454496}
   - component: {fileID: 114395760807240364}
   - component: {fileID: 114414892998290512}
+  - component: {fileID: 95402424018692790}
   m_Layer: 5
   m_Name: Boss UI
   m_TagString: Boss UI
@@ -66,6 +67,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!95 &95402424018692790
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1056849861381818}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 296563e79cac7214f8ba7f258d1ee8a2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114124971519506208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -132,6 +150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 336a88d6bd36dec4da5e10fb4cc4d633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossScript: {fileID: 0}
+  healthBar: {fileID: 114833170014132046}
 --- !u!114 &114670780956372784
 MonoBehaviour:
   m_ObjectHideFlags: 1

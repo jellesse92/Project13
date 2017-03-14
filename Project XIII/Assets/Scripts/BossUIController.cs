@@ -6,11 +6,13 @@ using UnityEngine.UI;
 public class BossUIController : MonoBehaviour {
 
     public Boss bossScript;
+    public Image healthBar;
     Animator myAnimator;
 
 	// Use this for initialization
 	void Start () {
         myAnimator = GetComponent<Animator>();
+        bossScript.SetHealthBar(healthBar);
 
         Debug.Log("TEMPORARY. SET TO SCRIPTED EVENT");
         Invoke("LoadHealthBar", 1f);

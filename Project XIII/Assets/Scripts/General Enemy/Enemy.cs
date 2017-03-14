@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour {
 
     //In-Game information                 
     public int health;                                  //Enemy health
-    int fullHealth;                                     //Health at full health to restore to
+    protected int fullHealth;                           //Health at full health to restore to
     public int coinDropAmount;
     public float speed;                                 //Speed of enemy
     public int attackPower;                             //Base attack power of enemy
