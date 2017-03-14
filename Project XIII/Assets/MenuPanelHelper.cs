@@ -23,7 +23,13 @@ public class MenuPanelHelper : MonoBehaviour {
     public void UpdateMusicVolume()
     {
         Slider slider = gameObject.GetComponentsInChildren<Slider>()[0];
-        gameObject.GetComponentInParent<PauseMenu>().changeSound((int)(slider.value));
+        gameObject.GetComponentInParent<PauseMenu>().changeSound(slider.value);
+    }
+
+    public void UpdateSFXVolume()
+    {
+        Slider slider = gameObject.GetComponentsInChildren<Slider>()[1];
+        gameObject.GetComponentInParent<PauseMenu>().changeSFX(slider.value);
     }
 	// Update is called once per frame
 	void Update () {

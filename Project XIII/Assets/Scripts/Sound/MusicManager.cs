@@ -50,7 +50,7 @@ public class MusicManager : MonoBehaviour {
         }
 
         for(int i = 1; i < clipsPlayOnStart+1; i++)
-            StartCoroutine(StartClips(i));
+            StartCoroutine(StartClips(1));
 
         nextClip = clipsPlayOnStart + 1;
         ZeroVolumeClips();
@@ -107,6 +107,7 @@ public class MusicManager : MonoBehaviour {
     public void SetMusicVolume(float vol)
     {
         maxVolume = vol;
-        aSource[nextClip - 1].volume = vol;
+        if(aSource != null)
+            aSource[nextClip - 1].volume = vol;
     }
 }

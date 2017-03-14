@@ -35,7 +35,7 @@ public class GameController : MonoBehaviour
     public bool cutsceneEnabled = true;
     public bool IsMusicOn = true;
     public bool IsSfxOn = true;
-    public int musicVolume = 100;
+    public float musicVolume = 1f;
     public int sfxVolume = 100;
     private AudioSource[] sfxObjects;
     private MusicManager music;
@@ -61,7 +61,7 @@ public class GameController : MonoBehaviour
             PlayerCharacters[i].player = -1;
 
         //Default settings. 1 Player set to gunner with keyboard + mouse input
-        //SetPlayer(0, 2, 0);
+        SetPlayer(0, 1, 0);
 
     }
 
@@ -116,13 +116,13 @@ public class GameController : MonoBehaviour
         }
     }
 
-    public void ChangeeMusicVol(int amnt)
+    public void ChangeMusicVol(float amnt)
     {
-        musicVolume += (musicVolume + amnt > 100 ? 0 : amnt);
+        musicVolume = amnt;
         IsMusicOn = musicVolume > 0;
         if (!IsMusicOn)
             musicVolume = 0;
-        music.SetMusicVolume(musicVolume / 10);
+        music.SetMusicVolume(musicVolume);
     }
     
 

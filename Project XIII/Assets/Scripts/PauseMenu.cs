@@ -11,7 +11,7 @@ public class PauseMenu : MonoBehaviour
     static string[] MenuOptions = { "Exit", "Stats", "Commands", "Settings" };
     GameObject leftTitle, rightTitle;
     GameController gc;
-    int currentSFXSound = 100;
+    float currentSFXSound = 100;
     AudioSource[] sfxObjects;
     List<float> maxSfxVolumes;
     public GameObject[] characters;
@@ -43,7 +43,16 @@ public class PauseMenu : MonoBehaviour
         volsliders[1].value = currentSFXSound;
 
     }
-
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+    public void UnpauseForSceneChange()
+    {
+        Reset();
+        Time.timeScale = 1.0f;
+        gameObject.SetActive(false);
+    }
     void SetActivePlayers()
     {
         //1 = Swordsman; 2 = Gunner; 3 = Mage; 4 = Mech
@@ -116,9 +125,18 @@ public class PauseMenu : MonoBehaviour
             }
         }
     }
-    public void changeSound(int amnt)
+    public void changeSound(float amnt)
     {
         gc.ChangeMusicVol(amnt);
+    }
+
+    public void changeSFX(float amnt)
+    {
+        currentSFXSound = amnt;
+        for(int i = 0; i < sfxObjects.Length; i++)
+        {
+            sfxObjects[i].volume = amnt * maxSfxVolumes[i];
+        }
     }
 
     public void UpdateDirectionalTitles()
@@ -183,10 +201,6 @@ public class PauseMenu : MonoBehaviour
     }
 
 
-    void IncreaseSFXVol()
-    {
-
-    }
 
 
 }
