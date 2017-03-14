@@ -41,7 +41,6 @@ public class SnakeBoss : Boss {
             yield return new WaitForSeconds(waitTime);
             if (!frozen)
             {
-                Debug.Log(frozen);
                 GetComponentInParent<Animator>().SetTrigger("attack");
                 waitTime = Random.Range(timeRange.minWait, timeRange.maxWait);
             }
