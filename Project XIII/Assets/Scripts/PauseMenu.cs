@@ -128,7 +128,10 @@ public class PauseMenu : MonoBehaviour
     }
     public void changeSound(float amnt)
     {
-        gc.ChangeMusicVol(amnt);
+        if (gc != null)
+        {
+            gc.ChangeMusicVol(amnt);
+        }
     }
 
     public void changeSFX(float amnt)
