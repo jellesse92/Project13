@@ -72,6 +72,8 @@ public class CutsceneManager : MonoBehaviour {
     public Image botCutsceneBorder;                             //Bottom border for cutscene 
     public Animator sceneTranstions;                            //For when skipping scenes 
     public GameObject skipUIPanel;                              //Panel with skip option for cutscene
+    public Button noSkipButton;                                 //No skip button on skip panel
+    public Button yesSkipButton;                                //Yes skip button on skip panel
     GameObject cameraColliders;                                 //Collider container to be disabled for cutscene             
 
     Transform playersManager;                                   //For managing player input
@@ -153,9 +155,10 @@ public class CutsceneManager : MonoBehaviour {
         if ((Input.GetKeyDown(KeyCode.Return)|| Input.GetButtonDown("Any_Triangle")) && !skipUIPanel.activeSelf)
         {
             skipUIPanel.SetActive(true);
+            noSkipButton.Select();
             Time.timeScale = 0.0f;
         }
-        else if ((Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Any_Triangle")) && skipUIPanel.activeSelf)
+        else if ((Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Any_Triangle") || Input.GetButtonDown("Any_Circle")) && skipUIPanel.activeSelf)
         {
             CancelSkip();
         }
