@@ -72,6 +72,7 @@ public class CutsceneManager : MonoBehaviour {
     public Image botCutsceneBorder;                             //Bottom border for cutscene 
     public Animator sceneTranstions;                            //For when skipping scenes 
     public GameObject skipUIPanel;                              //Panel with skip option for cutscene
+    public Button noSkipButton;                                 //No skip button on skip panel
     GameObject cameraColliders;                                 //Collider container to be disabled for cutscene             
 
     Transform playersManager;                                   //For managing player input
