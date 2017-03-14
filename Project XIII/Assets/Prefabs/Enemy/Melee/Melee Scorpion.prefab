@@ -75,6 +75,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1078311882701984
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4418774941432938}
+  - component: {fileID: 61514563066310790}
+  - component: {fileID: 114747088552507774}
+  m_Layer: 12
+  m_Name: Attack Range
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1108563665275792
 GameObject:
   m_ObjectHideFlags: 1
@@ -310,6 +327,23 @@ GameObject:
   - component: {fileID: 212362656626578916}
   m_Layer: 9
   m_Name: Scorpion Parts_12
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1748287430872190
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4252738209576054}
+  - component: {fileID: 61585454444049920}
+  - component: {fileID: 114681449513734444}
+  m_Layer: 12
+  m_Name: Melee Attack Box
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -582,6 +616,19 @@ Transform:
   m_Father: {fileID: 4380825051879050}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4252738209576054
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1748287430872190}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4673137023514246}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4295776658015276
 Transform:
   m_ObjectHideFlags: 1
@@ -637,6 +684,19 @@ Transform:
   - {fileID: 4221103843464928}
   m_Father: {fileID: 4137920576179642}
   m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4418774941432938
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1078311882701984}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4673137023514246}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4428300841262034
 Transform:
@@ -760,6 +820,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4137920576179642}
+  - {fileID: 4418774941432938}
+  - {fileID: 4252738209576054}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -942,6 +1004,34 @@ BoxCollider2D:
   m_Offset: {x: -0.4, y: 0}
   serializedVersion: 2
   m_Size: {x: 7, y: 1.7}
+--- !u!61 &61514563066310790
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1078311882701984}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: -2, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 3.5, y: 2}
+--- !u!61 &61585454444049920
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1748287430872190}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: -2, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 3.5, y: 2}
 --- !u!95 &95205137752135848
 Animator:
   serializedVersion: 3
@@ -986,6 +1076,31 @@ MonoBehaviour:
   hasAttackProjection: 1
   knockBackForceX: 2000
   knockBackForceY: 10
+--- !u!114 &114681449513734444
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1748287430872190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f155d452940f0745861744bc6e10efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knockBackForceX: 10
+  knockBackForceY: 10
+  stunDuration: 0.1
+--- !u!114 &114747088552507774
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1078311882701984}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1665bd2963be004881a29da36ec7146, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212031842119907034
 SpriteRenderer:
   m_ObjectHideFlags: 1
