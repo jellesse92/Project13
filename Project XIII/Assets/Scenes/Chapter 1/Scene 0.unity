@@ -1887,12 +1887,6 @@ SpriteRenderer:
   m_Color: {r: 0.7, g: 0.14411765, b: 0.6836505, a: 1}
   m_FlipX: 0
   m_FlipY: 0
---- !u!114 &174329425 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114979405344309272, guid: f868cfbdbf764814c87ba7a531a191bd,
-    type: 2}
-  m_PrefabInternal: {fileID: 1909869541}
-  m_Script: {fileID: 11500000, guid: cf26ce36f680a08408ddb9130fac9b97, type: 3}
 --- !u!1 &182213463
 GameObject:
   m_ObjectHideFlags: 0
@@ -7657,41 +7651,6 @@ SpriteRenderer:
   m_Color: {r: 0.5735294, g: 0.3584559, b: 0.3584559, a: 1}
   m_FlipX: 0
   m_FlipY: 0
---- !u!1 &859584929 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1000011393710400, guid: f868cfbdbf764814c87ba7a531a191bd,
-    type: 2}
-  m_PrefabInternal: {fileID: 1909869541}
---- !u!114 &859584930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 859584929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 9
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 174329425}
-          m_MethodName: YesSkipDeselectd
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  delegates: []
 --- !u!1 &864291060
 GameObject:
   m_ObjectHideFlags: 0
@@ -10834,41 +10793,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4000011677278212, guid: e0ea35e989dfcd043b42d7053b546abc,
     type: 2}
   m_PrefabInternal: {fileID: 871283305}
---- !u!1 &1174410398 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1000010572471012, guid: f868cfbdbf764814c87ba7a531a191bd,
-    type: 2}
-  m_PrefabInternal: {fileID: 1909869541}
---- !u!114 &1174410399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1174410398}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 9
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 174329425}
-          m_MethodName: YesSkipSelected
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
-        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  delegates: []
 --- !u!1 &1190420643
 GameObject:
   m_ObjectHideFlags: 0
@@ -17023,7 +16947,7 @@ Prefab:
     - target: {fileID: 224000013040360690, guid: f868cfbdbf764814c87ba7a531a191bd,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -157.72375
+      value: -45.914124
       objectReference: {fileID: 0}
     - target: {fileID: 224000013040360690, guid: f868cfbdbf764814c87ba7a531a191bd,
         type: 2}
@@ -17033,7 +16957,7 @@ Prefab:
     - target: {fileID: 224000013040360690, guid: f868cfbdbf764814c87ba7a531a191bd,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 265.4475
+      value: 41.828247
       objectReference: {fileID: 0}
     - target: {fileID: 224000012869146274, guid: f868cfbdbf764814c87ba7a531a191bd,
         type: 2}
@@ -17053,7 +16977,7 @@ Prefab:
     - target: {fileID: 224000012869146274, guid: f868cfbdbf764814c87ba7a531a191bd,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -157.72375
+      value: -45.914124
       objectReference: {fileID: 0}
     - target: {fileID: 224000012869146274, guid: f868cfbdbf764814c87ba7a531a191bd,
         type: 2}
@@ -17063,17 +16987,7 @@ Prefab:
     - target: {fileID: 224000012869146274, guid: f868cfbdbf764814c87ba7a531a191bd,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 265.4475
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010188311072, guid: f868cfbdbf764814c87ba7a531a191bd,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000010188311072, guid: f868cfbdbf764814c87ba7a531a191bd,
-        type: 2}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
+      value: 41.828247
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f868cfbdbf764814c87ba7a531a191bd, type: 2}

@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 222000011935574596}
   - component: {fileID: 114000010883092336}
   - component: {fileID: 114000010188311072}
+  - component: {fileID: 114720766104982798}
   m_Layer: 5
   m_Name: Yes Button
   m_TagString: Untagged
@@ -183,6 +184,7 @@ GameObject:
   - component: {fileID: 222000013288737642}
   - component: {fileID: 114000011404065882}
   - component: {fileID: 114000010280316404}
+  - component: {fileID: 114156190564207614}
   m_Layer: 5
   m_Name: No Button
   m_TagString: Untagged
@@ -2509,6 +2511,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pausePanel: {fileID: 1225377010929652}
   playerStatusPanel: {fileID: 0}
+  dialoguePanel: {fileID: 1000011021834818}
+  skipPanel: {fileID: 1000011630863134}
 --- !u!114 &114000011122490000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3454,6 +3458,36 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114156190564207614
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011393710400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 114979405344309272}
+          m_MethodName: YesSkipDeselectd
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!114 &114170876038848008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4804,7 +4838,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab04104567a20a14195a51096c815bff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testing: 1
   characters:
   - {fileID: 0}
   - {fileID: 0}
@@ -5154,6 +5187,36 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114720766104982798
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010572471012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 114979405344309272}
+          m_MethodName: YesSkipSelected
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
+        Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  delegates: []
 --- !u!114 &114728442237048866
 MonoBehaviour:
   m_ObjectHideFlags: 1
