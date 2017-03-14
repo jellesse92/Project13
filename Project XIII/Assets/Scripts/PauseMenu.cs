@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 
 public class PauseMenu : MonoBehaviour
 {
+    public bool testing;
     int selected = 1;
     static string[] MenuOptions = { "Exit", "Stats", "Commands", "Settings" };
     GameObject leftTitle, rightTitle;
@@ -175,26 +176,28 @@ public class PauseMenu : MonoBehaviour
                 player.gameObject.SetActive(false);
                 break;
             }
-
-            print("Getting Player Stats");
-            var stats = activePlayers[i].GetPlayerStats();
-            for (int j = 0; i < player.childCount; j++)
+            if (!testing)
             {
-                if(j == 3) { break; }
-                var title = player.GetChild(j).name;
-                
-                switch (title)
+                print("Getting Player Stats");
+                var stats = activePlayers[i].GetPlayerStats();
+                for (int j = 0; i < player.childCount; j++)
                 {
-                    case "HP":
-                        player.GetChild(j).GetComponent<Text>().text = "HP: " + activePlayers[i].GetCurrentHealth() + "/" + activePlayers[i].GetMaxHealth();
-                        break;
-                    case "Attack":
-                        player.GetChild(j).GetComponent<Text>().text = "Attack: " + stats.quickAttackStrength + "/" + stats.heavyAttackStrength + " " + 
-                            stats.quickAirAttackStrength + "/" + stats.heavyAirAttackStrengh;
-                        break;
-                    case "Speed":
-                        player.GetChild(j).GetComponent<Text>().text = "Speed: " + stats.movementSpeed;
-                        break;
+                    if (j == 3) { break; }
+                    var title = player.GetChild(j).name;
+
+                    switch (title)
+                    {
+                        case "HP":
+                            player.GetChild(j).GetComponent<Text>().text = "HP: " + activePlayers[i].GetCurrentHealth() + "/" + activePlayers[i].GetMaxHealth();
+                            break;
+                        case "Attack":
+                            player.GetChild(j).GetComponent<Text>().text = "Attack: " + stats.quickAttackStrength + "/" + stats.heavyAttackStrength + " " +
+                                stats.quickAirAttackStrength + "/" + stats.heavyAirAttackStrengh;
+                            break;
+                        case "Speed":
+                            player.GetChild(j).GetComponent<Text>().text = "Speed: " + stats.movementSpeed;
+                            break;
+                    }
                 }
             }
         }
