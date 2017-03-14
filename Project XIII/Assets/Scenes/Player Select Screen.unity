@@ -3022,7 +3022,7 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 100650110}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0.5
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -6289,6 +6289,11 @@ Prefab:
       propertyPath: testingMode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114000010269206230, guid: 96d928045fcb1ac4e993aa66d2f72fbf,
+        type: 2}
+      propertyPath: cutsceneEnabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 96d928045fcb1ac4e993aa66d2f72fbf, type: 2}
   m_IsPrefabParent: 0
@@ -6752,6 +6757,11 @@ Prefab:
         type: 2}
       propertyPath: m_PreserveAspect
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012733736908, guid: 072d685a89c753d44a0b893a43eee74f,
+        type: 2}
+      propertyPath: unlocked
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 072d685a89c753d44a0b893a43eee74f, type: 2}
@@ -8436,6 +8446,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1000013727452328, guid: 072d685a89c753d44a0b893a43eee74f, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012733736908, guid: 072d685a89c753d44a0b893a43eee74f,
+        type: 2}
+      propertyPath: unlocked
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -16790,6 +16805,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114000012733736908, guid: 072d685a89c753d44a0b893a43eee74f,
+        type: 2}
+      propertyPath: unlocked
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 072d685a89c753d44a0b893a43eee74f, type: 2}
   m_IsPrefabParent: 0
@@ -17093,6 +17113,11 @@ Prefab:
     - target: {fileID: 1000013727452328, guid: 072d685a89c753d44a0b893a43eee74f, type: 2}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012733736908, guid: 072d685a89c753d44a0b893a43eee74f,
+        type: 2}
+      propertyPath: unlocked
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114000013457752334, guid: 072d685a89c753d44a0b893a43eee74f, type: 2}
@@ -17582,7 +17607,7 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2100713981}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0.5
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
