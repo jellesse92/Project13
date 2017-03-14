@@ -12,7 +12,6 @@ public class Boss : Enemy {
     protected override void StunHandler(float stunMultiplier){}         //Bosses do not get normal stuns
     protected override void ForceHandler(float xForce, float yForce) {} //Bosses do not get pushed by players
     public override void SetPos(float x, float y) {}                    //Bosses do not get moved by players
-    public override void PlayDeath() {}                                 //Bosses have unique death sequences
     public override void SpecificStunCancel() { }
     public override void Bounce(float forceY = 15000){}
 
@@ -29,6 +28,27 @@ public class Boss : Enemy {
                 healthBar.fillAmount = ((float)health / (float)fullHealth);
             else
                 healthBar.fillAmount = 0f;
+    }
+
+    public override void PlayDeath()
+    {
+        StopAllCoroutines();
+
+        foreach (Transform child in transform)
+        {
+            if (child.name == "Death Particles")
+                child.GetComponent<ParticleSystem>().Play();
+            if (child.name == "Shadow")
+                child.GetComponent<ShadowSpriteGenerator>().FadeShadow();
+        }
+        mainCamera.GetComponent<CamShakeScript>().StartShake(magShakeDeath, durShakeDeath);
+        if (GetComponent<EnemyParticleEffects>())
+            GetComponent<EnemyParticleEffects>().SpawnCoins(coinDropAmount);
+        StopCoroutine("ApplyStun");
+        if (anim)
+            anim.SetTrigger("death");
+
+        dead = true;
     }
 
     public void Unfreeze()
