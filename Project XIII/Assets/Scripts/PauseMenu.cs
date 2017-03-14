@@ -18,12 +18,14 @@ public class PauseMenu : MonoBehaviour
     public bool sfxSound = true;
     public GameObject[] panels;
     public List<RectTransform> panelLocations;
+    private bool isReadingInput;
     Animator anim;
     KeyConfig inputReader;
 
     public void Reset()
     {
-        print("Reset CalleD");
+
+        isReadingInput = true;
         ResetTriggers();
         selected = 1;
         leftTitle = GameObject.Find("LeftTitle");
@@ -74,36 +76,39 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-
-        bool isInteracting = false;
-        if(selected == 3)
+        if (isReadingInput)
         {
-            Slider[] options = panels[selected].GetComponentsInChildren<Slider>();
-            if ((Input.GetKeyDown(KeyCode.X) || Input.GetButtonDown(inputReader.jumpButton)))
+            bool isInteracting = false;
+            if (selected == 3)
             {
-                foreach (Slider option in options)
+                Slider[] options = panels[selected].GetComponentsInChildren<Slider>();
+                if ((Input.GetKeyDown(KeyCode.X) || Input.GetButtonDown(inputReader.jumpButton)))
                 {
-                    option.interactable = !option.IsInteractable();
+                    foreach (Slider option in options)
+                    {
+                        option.interactable = !option.IsInteractable();
+                    }
+                    options[0].Select();
                 }
-                options[0].Select();
+                isInteracting = options[0].IsInteractable();
             }
-            isInteracting = options[0].IsInteractable();
-        }
-        if (!isInteracting && (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") < -0.6))
-        {
-            print(Input.GetAxis("Horizontal"));
-            selected = selected > 0 ? selected - 1 : MenuOptions.Length - 1;
-            ResetTriggers();
-            anim.SetTrigger("Left");
-            EventSystem.current.SetSelectedGameObject(null);
+            if (!isInteracting && (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") < -0.6))
+            {
+                isReadingInput = true;
+                selected = selected > 0 ? selected - 1 : MenuOptions.Length - 1;
+                ResetTriggers();
+                anim.SetTrigger("Left");
+                EventSystem.current.SetSelectedGameObject(null);
 
-        } else if (!isInteracting && (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetAxis("Horizontal") > 0.6))
-        {
-            print(Input.GetAxis("Horizontal"));
-            selected = selected < (MenuOptions.Length - 1) ? selected + 1 : 0; 
-            ResetTriggers();
-            anim.SetTrigger("Right");
-            EventSystem.current.SetSelectedGameObject(null);
+            }
+            else if (!isInteracting && (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetAxis("Horizontal") > 0.6))
+            {
+                isReadingInput = false;
+                selected = selected < (MenuOptions.Length - 1) ? selected + 1 : 0;
+                ResetTriggers();
+                anim.SetTrigger("Right");
+                EventSystem.current.SetSelectedGameObject(null);
+            }
         }
     }
     void IncreaseSound()
@@ -123,6 +128,12 @@ public class PauseMenu : MonoBehaviour
         
     }
 
+    public void enableInput(int selectedPanel)
+    {
+        selected = selectedPanel;
+        UpdateDirectionalTitles();
+        isReadingInput = true;
+    }
     void ResetTriggers()
     {
         anim.ResetTrigger("Left");
