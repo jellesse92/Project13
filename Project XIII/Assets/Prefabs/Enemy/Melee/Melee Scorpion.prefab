@@ -410,6 +410,7 @@ GameObject:
   - component: {fileID: 4137920576179642}
   - component: {fileID: 212992510337603846}
   - component: {fileID: 95205137752135848}
+  - component: {fileID: 114286118925132242}
   m_Layer: 9
   m_Name: Sprite
   m_TagString: Untagged
@@ -1063,7 +1064,7 @@ MonoBehaviour:
   groundedOffset: -1
   health: 100
   coinDropAmount: 0
-  speed: 0.1
+  speed: 0.15
   attackPower: 20
   stunnable: 1
   stunEffectiveness: 1
@@ -1077,6 +1078,17 @@ MonoBehaviour:
   knockBackForceX: 2000
   knockBackForceY: 10
   meleeAttackBox: {fileID: 1748287430872190}
+--- !u!114 &114286118925132242
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1840577555103626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 876b80632ce1fd044992542b4f1de0b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114681449513734444
 MonoBehaviour:
   m_ObjectHideFlags: 1
