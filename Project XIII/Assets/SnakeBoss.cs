@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnakeBoss : Enemy {
+public class SnakeBoss : Boss {
     [System.Serializable]
     public class TimeRange
     {
@@ -16,9 +16,11 @@ public class SnakeBoss : Enemy {
     public ParticleSystem explosion;
     public GameObject attackBox;
 
-    bool explosionPlaying = false;
+    bool explosionPlaying = false;                           
+
     void Start()
     {
+        frozen = true;                                                  //Boss should not attack until unfrozen to allow cutscene to play
         StartCoroutine(AttackWaitTime(timeBeforeFirstAttack));
     }
 
@@ -37,9 +39,13 @@ public class SnakeBoss : Enemy {
         while (true)
         {
             yield return new WaitForSeconds(waitTime);
-            GetComponentInParent<Animator>().SetTrigger("attack");
-            waitTime = Random.Range(timeRange.minWait, timeRange.maxWait);
+            if (!frozen)
+            {
+                GetComponentInParent<Animator>().SetTrigger("attack");
+                waitTime = Random.Range(timeRange.minWait, timeRange.maxWait);
+            }
         }
         
     }
+    
 }

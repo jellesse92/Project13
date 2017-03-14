@@ -441,7 +441,8 @@ public class SwordsmanAttackScript : MonoBehaviour {
     {
         if(collider.CompareTag("Destructible Projectile"))
         {
-            collider.GetComponent<EnemyBulletScript>().Destroy();
+            if(collider.GetComponent<EnemyBulletScript>())
+                collider.GetComponent<EnemyBulletScript>().Destroy();
         }
     }
 

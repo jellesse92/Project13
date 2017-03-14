@@ -19,10 +19,11 @@ public class Enemy : MonoBehaviour {
 
     //Animator
     protected Animator anim;
+    SpriteRenderer mySprite;
 
     //In-Game information                 
     public int health;                                  //Enemy health
-    int fullHealth;                                     //Health at full health to restore to
+    protected int fullHealth;                           //Health at full health to restore to
     public int coinDropAmount;
     public float speed;                                 //Speed of enemy
     public int attackPower;                             //Base attack power of enemy
@@ -77,11 +78,12 @@ public class Enemy : MonoBehaviour {
     {
         frozen = false;
         isVisible = true;
-        if(GetComponent<Animator>())
-            anim = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
+        mySprite = GetComponent<SpriteRenderer>();
         distToGround = GetComponent<Collider2D>().bounds.extents.y;
         layerMask = (LayerMask.GetMask("Default"));
-        default_color = GetComponent<SpriteRenderer>().color;
+        if(mySprite)
+            default_color = GetComponent<SpriteRenderer>().color;
         fullHealth = health;
         Reset();
 
@@ -158,7 +160,7 @@ public class Enemy : MonoBehaviour {
             }
         }
 
-        GetComponent<SpriteRenderer>().color = default_color;
+        SetColor(default_color);
         health = fullHealth;
         gameObject.layer = 9;
 
@@ -180,25 +182,29 @@ public class Enemy : MonoBehaviour {
 
             if (health <= 0)
             {
-                StopAllCoroutines();
-                GetComponent<SpriteRenderer>().color = default_color;
                 PlayDeath();
             }
             else if (stunnable && stunMultiplier > 0)
-            {
-                currentStunMultiplier = stunMultiplier;
-                StopCoroutine(ApplyStun());
-                StartCoroutine(ApplyStun());
-                if (!isFrozen)
-                    StartCoroutine("ApplyDamageColor");
-            }
+                StunHandler(stunMultiplier);
 
             if(xForce != 0 && yForce != 0)
-            {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-                gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(xForce, yForce, 0));
-            }
+                ForceHandler(xForce, yForce);
         }
+    }
+
+    protected virtual void StunHandler(float stunMultiplier)
+    {
+        currentStunMultiplier = stunMultiplier;
+        StopCoroutine(ApplyStun());
+        StartCoroutine(ApplyStun());
+        if (!isFrozen)
+            StartCoroutine("ApplyDamageColor");
+    }
+
+    protected virtual void ForceHandler(float xForce, float yForce)
+    {
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+        gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(xForce, yForce, 0));
     }
 
     public virtual void SetPos(float x, float y)
@@ -208,13 +214,22 @@ public class Enemy : MonoBehaviour {
 
     IEnumerator ApplyDamageColor()
     {
-        GetComponent<SpriteRenderer>().material.color = Color.red;
+        SetColor(Color.red);
         yield return new WaitForSeconds(.075f);
-        GetComponent<SpriteRenderer>().material.color = default_color;
+        SetColor(default_color);
+    }
+
+    public virtual void SetColor(Color color)
+    {
+        if (mySprite != null)
+            mySprite.material.color = color;
     }
 
     public virtual void PlayDeath()
     {
+        StopAllCoroutines();
+        SetColor(default_color);
+
         foreach (Transform child in transform)
         {
             if (child.name == "Death Particles")
@@ -228,7 +243,7 @@ public class Enemy : MonoBehaviour {
         StopCoroutine("ApplyStun");
         if(anim)
             anim.SetTrigger("death");
-        GetComponent<SpriteRenderer>().color = default_color;
+        SetColor(default_color);
         dead = true;
         gameObject.layer = 14;
 
@@ -385,6 +400,7 @@ public class Enemy : MonoBehaviour {
         {
             return true;
         }
+
         return false;
     }
 
@@ -402,10 +418,11 @@ public class Enemy : MonoBehaviour {
 
     public IEnumerator ApplyDebuffFreeze(float duration)
     {
-        GetComponent<SpriteRenderer>().material.color = new Color(.5f, .8f, 1f,1f);
+
+        SetColor(new Color(.5f, .8f, 1f, 1f));
         isFrozen = true;
         yield return new WaitForSeconds(duration);
-        GetComponent<SpriteRenderer>().material.color = default_color;
+        SetColor(default_color);
         isFrozen = false;
     }
 
