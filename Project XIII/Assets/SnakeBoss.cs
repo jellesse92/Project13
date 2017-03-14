@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SnakeBoss : Enemy {
+public class SnakeBoss : Boss {
     [System.Serializable]
     public class TimeRange
     {

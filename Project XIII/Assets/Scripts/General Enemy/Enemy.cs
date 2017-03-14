@@ -168,7 +168,7 @@ public class Enemy : MonoBehaviour {
     }
 
     //Damage script to be applied when enemy takes damage
-    public virtual void Damage(int damage, float stunMultiplier = 0f, float xForce = 0, float yForce = 0)
+    public void Damage(int damage, float stunMultiplier = 0f, float xForce = 0, float yForce = 0)
     {
         if (!isInvincible)
         {
@@ -182,25 +182,29 @@ public class Enemy : MonoBehaviour {
 
             if (health <= 0)
             {
-                StopAllCoroutines();
-                SetColor(default_color);
                 PlayDeath();
             }
             else if (stunnable && stunMultiplier > 0)
-            {
-                currentStunMultiplier = stunMultiplier;
-                StopCoroutine(ApplyStun());
-                StartCoroutine(ApplyStun());
-                if (!isFrozen)
-                    StartCoroutine("ApplyDamageColor");
-            }
+                StunHandler(stunMultiplier);
 
             if(xForce != 0 && yForce != 0)
-            {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
-                gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(xForce, yForce, 0));
-            }
+                ForceHandler(xForce, yForce);
         }
+    }
+
+    protected virtual void StunHandler(float stunMultiplier)
+    {
+        currentStunMultiplier = stunMultiplier;
+        StopCoroutine(ApplyStun());
+        StartCoroutine(ApplyStun());
+        if (!isFrozen)
+            StartCoroutine("ApplyDamageColor");
+    }
+
+    protected virtual void ForceHandler(float xForce, float yForce)
+    {
+        GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+        gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector3(xForce, yForce, 0));
     }
 
     public virtual void SetPos(float x, float y)
@@ -223,6 +227,9 @@ public class Enemy : MonoBehaviour {
 
     public virtual void PlayDeath()
     {
+        StopAllCoroutines();
+        SetColor(default_color);
+
         foreach (Transform child in transform)
         {
             if (child.name == "Death Particles")
