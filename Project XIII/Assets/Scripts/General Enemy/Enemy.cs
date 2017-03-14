@@ -168,7 +168,7 @@ public class Enemy : MonoBehaviour {
     }
 
     //Damage script to be applied when enemy takes damage
-    public void Damage(int damage, float stunMultiplier = 0f, float xForce = 0, float yForce = 0)
+    public virtual void Damage(int damage, float stunMultiplier = 0f, float xForce = 0, float yForce = 0)
     {
         if (!isInvincible)
         {
