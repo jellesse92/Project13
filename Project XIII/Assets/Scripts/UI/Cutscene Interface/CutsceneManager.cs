@@ -150,12 +150,12 @@ public class CutsceneManager : MonoBehaviour {
     //Watches for input to activate or deactivate skip panel
     void WatchForSkipButton()
     {
-        if (Input.GetKeyDown(KeyCode.Return) && !skipUIPanel.activeSelf)
+        if ((Input.GetKeyDown(KeyCode.Return)|| Input.GetButtonDown("Any_Triangle")) && !skipUIPanel.activeSelf)
         {
             skipUIPanel.SetActive(true);
             Time.timeScale = 0.0f;
         }
-        else if (Input.GetKeyDown(KeyCode.Return) && skipUIPanel.activeSelf)
+        else if ((Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Any_Triangle")) && skipUIPanel.activeSelf)
         {
             CancelSkip();
         }
