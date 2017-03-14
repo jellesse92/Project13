@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class PauseMenu : MonoBehaviour
     GameController gc;
     AudioSource[] sfxObjects;
     List<float> maxSfxVolumes;
+    public GameObject[] characters;
+    public List<PlayerProperties> activePlayers;
     public bool sfxSound = true;
     public GameObject[] panels;
     public List<RectTransform> panelLocations;
@@ -28,11 +31,25 @@ public class PauseMenu : MonoBehaviour
         {
             panels[i].GetComponent<RectTransform>().anchoredPosition = panelLocations[i].anchoredPosition;
         }
+        SetActivePlayers();
         SetStats();
+    }
+
+    void SetActivePlayers()
+    {
+        //1 = Swordsman; 2 = Gunner; 3 = Mage; 4 = Mech
+        for(int i = 0; i < gc.PlayerCharacters.Length; i++)
+        {
+            if(gc.PlayerCharacters[i].player >= 1)
+            {
+                activePlayers.Add(characters[i].GetComponent<PlayerProperties>());
+            }
+        }
+        activePlayers = activePlayers.OrderBy(p => p.playerNumber).ToList();
     }
     void Awake()
     {
-        
+        activePlayers = new List<PlayerProperties>();
         panelLocations = new List<RectTransform>();
         maxSfxVolumes = new List<float>();
         anim = GetComponentInChildren<Animator>();
@@ -54,6 +71,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
+        
         if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") < 0)
         {
             selected = selected > 0 ? selected - 1 : MenuOptions.Length - 1;
@@ -76,6 +94,11 @@ public class PauseMenu : MonoBehaviour
     {
         leftTitle.GetComponent<Text>().text = MenuOptions[selected == 0? MenuOptions.Length - 1 : selected - 1];
         rightTitle.GetComponent<Text>().text = MenuOptions[selected == MenuOptions.Length - 1 ? 0 : selected + 1];
+        if (selected == 0)
+        {
+            Button[] options = panels[selected].GetComponentsInChildren<Button>();
+            options[0].Select();
+        }
     }
 
     void ResetTriggers()
@@ -86,18 +109,39 @@ public class PauseMenu : MonoBehaviour
 
     void SetStats()
     {
-        print("hi");
-        //int count = panels[1].transform.childCount;
-        //print(count);
-        //for (int i = 0; i < panels[1].transform.childCount; i++)
-        //{
-        //    var player = panels[1].transform.GetChild(i);
-        //    for(int j = 0; i < player.childCount; i++)
-        //    {
-        //        //HP = 0, ATTACK = 1, SPEED = 2
-        //        player.GetChild(j).GetComponent<Text>().text = "HP: :D";
-        //    }
-        //}
+        Transform playerStatPanel = panels[1].transform.GetChild(1);
+        for (int i = 0; i < playerStatPanel.childCount; i++)
+        {
+            
+            var player = playerStatPanel.GetChild(i);
+            if (gc.PlayerCount < 2 && i == 1)
+            {
+                player.gameObject.SetActive(false);
+                break;
+            }
+
+            print("Getting Player Stats");
+            var stats = activePlayers[i].GetPlayerStats();
+            for (int j = 0; i < player.childCount; j++)
+            {
+                if(j == 3) { break; }
+                var title = player.GetChild(j).name;
+                
+                switch (title)
+                {
+                    case "HP":
+                        player.GetChild(j).GetComponent<Text>().text = "HP: " + activePlayers[i].GetCurrentHealth() + "/" + activePlayers[i].GetMaxHealth();
+                        break;
+                    case "Attack":
+                        player.GetChild(j).GetComponent<Text>().text = "Attack: " + stats.quickAttackStrength + "/" + stats.heavyAttackStrength + " " + 
+                            stats.quickAirAttackStrength + "/" + stats.heavyAirAttackStrengh;
+                        break;
+                    case "Speed":
+                        player.GetChild(j).GetComponent<Text>().text = "Speed: " + stats.movementSpeed;
+                        break;
+                }
+            }
+        }
     }
     void DecreaseSound()
     {
