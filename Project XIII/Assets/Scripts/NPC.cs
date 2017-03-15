@@ -42,6 +42,8 @@ public class NPC : MonoBehaviour {
         int length = textAssetIndex.Length;
         if(length > 0)
         {
+            Debug.Log(textAssetIndex[count]);
+
             cutsceneScript.ActivateCutscene(textAssetIndex[count]);
             if (count < length - 1)
                 count++;
