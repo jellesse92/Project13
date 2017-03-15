@@ -13,7 +13,7 @@ public class CutsceneManager : MonoBehaviour {
     public enum Character { Swordsman, Gunner, Mage, Mech }     //Selectable characters to animate
     public enum Action { Run, Attack, SetPos, None,             //Actions characters can make during cutscene 
                          FaceRight, FaceLeft,                   //Turn character                       
-                         IntroSetPos, EndRun}                   //Actions character make if they're not an active player  
+                         IntroSetPos, EndRun, ActivateNPC}      //Actions character make if they're not an active player  
     public enum CameraOptions
     {
         Free,                                                   //Camera is free to move as it normally would
@@ -337,6 +337,7 @@ public class CutsceneManager : MonoBehaviour {
                 case Action.FaceRight: ActionFace(charAction.character, true); break;
                 case Action.IntroSetPos: ActionIntroSetPos(charAction.character, charAction.destination); break;
                 case Action.EndRun:ActionEndRun(charAction.character, charAction.destination); break;
+                case Action.ActivateNPC:ActionActivateNPC(charAction.character, charAction.destination);break;
                 default: break;
             }
         }
@@ -431,6 +432,13 @@ public class CutsceneManager : MonoBehaviour {
             ActionSetPos(c, dest);
         }
 
+    }
+
+    //For characters that should leave an npc behind because they aren't being played
+    void ActionActivateNPC(Character c, Transform npc)
+    {
+        if (!characterStatuses[GetCharEnumInt(c)].isActive)
+            npc.gameObject.SetActive(true);
     }
 
     void ActionEndRun(Character c, Transform dest)
