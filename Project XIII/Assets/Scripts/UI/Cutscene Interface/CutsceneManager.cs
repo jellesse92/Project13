@@ -153,7 +153,6 @@ public class CutsceneManager : MonoBehaviour {
     //Watches for input to activate or deactivate skip panel
     void WatchForSkipButton()
     {
-        Debug.Log(skipUIPanel.activeSelf);
         if (!skipUIPanel.activeSelf && ((Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Any_Triangle"))))
         {
             skipUIPanel.SetActive(true);
@@ -437,7 +436,6 @@ public class CutsceneManager : MonoBehaviour {
     //For characters that should leave an npc behind because they aren't being played
     void ActionActivateNPC(Character c, Transform npc)
     {
-        Debug.Log("what?!");
         if (!characterStatuses[GetCharEnumInt(c)].isActive)
             npc.gameObject.SetActive(true);
     }
