@@ -437,6 +437,7 @@ public class CutsceneManager : MonoBehaviour {
     //For characters that should leave an npc behind because they aren't being played
     void ActionActivateNPC(Character c, Transform npc)
     {
+        Debug.Log("what?!");
         if (!characterStatuses[GetCharEnumInt(c)].isActive)
             npc.gameObject.SetActive(true);
     }
