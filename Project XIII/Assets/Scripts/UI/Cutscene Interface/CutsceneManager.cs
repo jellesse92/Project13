@@ -99,6 +99,7 @@ public class CutsceneManager : MonoBehaviour {
     bool forcedHoldAction = false;                              //Overrides all other bools to stop next action from being played right away
     bool runTurnDelay = false;                                  //Delays actions based on turning delay
     bool dialoguePlaying = false;
+    bool yesSkipSelected = false;
 
     private void Start()
     {
@@ -152,9 +153,11 @@ public class CutsceneManager : MonoBehaviour {
     //Watches for input to activate or deactivate skip panel
     void WatchForSkipButton()
     {
-        if ((Input.GetKeyDown(KeyCode.Return)|| Input.GetButtonDown("Any_Triangle")) && !skipUIPanel.activeSelf)
+        Debug.Log(skipUIPanel.activeSelf);
+        if (!skipUIPanel.activeSelf && ((Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Any_Triangle"))))
         {
             skipUIPanel.SetActive(true);
+            yesSkipSelected = false;
             noSkipButton.Select();
             Time.timeScale = 0.0f;
         }
@@ -169,6 +172,17 @@ public class CutsceneManager : MonoBehaviour {
     {
         skipUIPanel.SetActive(false);
         Time.timeScale = 1.0f;
+    }
+
+    public void YesSkipSelected()
+    {
+        yesSkipSelected = true;
+    }
+
+    public void YesSkipDeselectd()
+    {
+        Debug.Log("testing");
+        yesSkipSelected = false;
     }
 
 

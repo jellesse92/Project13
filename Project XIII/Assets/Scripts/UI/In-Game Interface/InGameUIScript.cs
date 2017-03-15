@@ -5,7 +5,8 @@ public class InGameUIScript : MonoBehaviour {
 
     public GameObject pausePanel;               //Panel made to appear on pause
     public GameObject playerStatusPanel;        //Player status panel made to appear on combat
-
+    public GameObject dialoguePanel;            //Panel for playing dialogue
+    public GameObject skipPanel;                //Panel for skipping dialogue
 
 
     void Start()
@@ -38,12 +39,15 @@ public class InGameUIScript : MonoBehaviour {
             {
                 pausePanel.SetActive(true);
                 Time.timeScale = 0f;
+                dialoguePanel.SetActive(false);
+                skipPanel.SetActive(false);
             }
             else
             {
                 pausePanel.GetComponent<PauseMenu>().Reset();
                 pausePanel.SetActive(false);
                 Time.timeScale = 1.0f;
+                dialoguePanel.SetActive(true);
             }
         } 
     }
