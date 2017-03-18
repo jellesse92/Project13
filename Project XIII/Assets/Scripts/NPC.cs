@@ -15,6 +15,7 @@ public class NPC : MonoBehaviour {
     private void Start()
     {
         cutsceneScript = GameObject.FindGameObjectWithTag("In Game UI").GetComponentInChildren<CutsceneManager>();
+        interactionPrompt.SetActive(false);
     } 
 
     private void OnTriggerEnter2D(Collider2D collision)
