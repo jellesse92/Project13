@@ -321,6 +321,8 @@ public class DialogueControllerScript : MonoBehaviour {
     public void EndDialogue()
     {
         Reset();
+        leftPortrait.GetComponent<DialoguePortraitAnimTracker>().SetCurrentChar(0);
+        rightPortrait.GetComponent<DialoguePortraitAnimTracker>().SetCurrentChar(0);
         dialogueUI.SetActive(false);
         cutsceneManager.DeactivateDialogueMode();
     }
