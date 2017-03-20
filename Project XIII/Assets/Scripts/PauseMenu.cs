@@ -170,37 +170,40 @@ public class PauseMenu : MonoBehaviour
 
     void SetStats()
     {
-        Transform playerStatPanel = panels[1].transform.GetChild(1);
-        for (int i = 0; i < playerStatPanel.childCount; i++)
+        if (activePlayers.Count > 0)
         {
-            
-            var player = playerStatPanel.GetChild(i);
-            if (gc.PlayerCount < 2 && i == 1)
+            Transform playerStatPanel = panels[1].transform.GetChild(1);
+            for (int i = 0; i < playerStatPanel.childCount; i++)
             {
-                player.gameObject.SetActive(false);
-                break;
-            }
-            if (!testing)
-            {
-                print("Getting Player Stats");
-                var stats = activePlayers[i].GetPlayerStats();
-                for (int j = 0; i < player.childCount; j++)
-                {
-                    if (j == 3) { break; }
-                    var title = player.GetChild(j).name;
 
-                    switch (title)
+                var player = playerStatPanel.GetChild(i);
+                if (gc.PlayerCount < 2 && i == 1)
+                {
+                    player.gameObject.SetActive(false);
+                    break;
+                }
+                if (!testing)
+                {
+                    print("Getting Player Stats");
+                    var stats = activePlayers[i].GetPlayerStats();
+                    for (int j = 0; i < player.childCount; j++)
                     {
-                        case "HP":
-                            player.GetChild(j).GetComponent<Text>().text = "HP: " + activePlayers[i].GetCurrentHealth() + "/" + activePlayers[i].GetMaxHealth();
-                            break;
-                        case "Attack":
-                            player.GetChild(j).GetComponent<Text>().text = "Attack: " + stats.quickAttackStrength + "/" + stats.heavyAttackStrength + " " +
-                                stats.quickAirAttackStrength + "/" + stats.heavyAirAttackStrengh;
-                            break;
-                        case "Speed":
-                            player.GetChild(j).GetComponent<Text>().text = "Speed: " + stats.movementSpeed;
-                            break;
+                        if (j == 3) { break; }
+                        var title = player.GetChild(j).name;
+
+                        switch (title)
+                        {
+                            case "HP":
+                                player.GetChild(j).GetComponent<Text>().text = "HP: " + activePlayers[i].GetCurrentHealth() + "/" + activePlayers[i].GetMaxHealth();
+                                break;
+                            case "Attack":
+                                player.GetChild(j).GetComponent<Text>().text = "Attack: " + stats.quickAttackStrength + "/" + stats.heavyAttackStrength + " " +
+                                    stats.quickAirAttackStrength + "/" + stats.heavyAirAttackStrengh;
+                                break;
+                            case "Speed":
+                                player.GetChild(j).GetComponent<Text>().text = "Speed: " + stats.movementSpeed;
+                                break;
+                        }
                     }
                 }
             }
