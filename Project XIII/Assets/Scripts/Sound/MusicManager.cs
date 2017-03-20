@@ -22,11 +22,13 @@ public class MusicManager : MonoBehaviour {
 
     private void Awake()
     {
+        /*
         DontDestroyOnLoad(transform.gameObject);
 
         //Destroys copy of this on scene
         if (FindObjectsOfType(GetType()).Length > 1)
             Destroy(gameObject);
+            */
     }
 
     // Use this for initialization
