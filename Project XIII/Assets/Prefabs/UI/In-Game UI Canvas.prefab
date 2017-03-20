@@ -276,6 +276,7 @@ GameObject:
   - component: {fileID: 114000012137025290}
   - component: {fileID: 225000012774640386}
   - component: {fileID: 95000010452426808}
+  - component: {fileID: 114114448977955580}
   m_Layer: 5
   m_Name: Right Portrait
   m_TagString: Untagged
@@ -368,6 +369,7 @@ GameObject:
   - component: {fileID: 114000010977415686}
   - component: {fileID: 225000012211508734}
   - component: {fileID: 95000013949572006}
+  - component: {fileID: 114026924964445860}
   m_Layer: 5
   m_Name: Left Portrait
   m_TagString: Untagged
@@ -3246,6 +3248,17 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'Music:'
+--- !u!114 &114026924964445860
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013114296942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1dfc84fdc5b7ff4786caff50f675459, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114027967534110384
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3375,6 +3388,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -146154839, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114114448977955580
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012055977280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1dfc84fdc5b7ff4786caff50f675459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114117171942575196
@@ -6134,6 +6158,17 @@ MonoBehaviour:
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
       delayNextAction: 1
+    - characterActions:
+      - character: 1
+        action: 8
+        destination: {fileID: 0}
+      cameraActions: []
+      function:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      delayNextAction: 0
     characterEndLocations:
     - {fileID: 0}
     - {fileID: 0}
@@ -6224,6 +6259,51 @@ MonoBehaviour:
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
       delayNextAction: 1.5
+    - characterActions:
+      - character: 1
+        action: 8
+        destination: {fileID: 0}
+      cameraActions: []
+      function:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 0}
+            m_MethodName: ToggleOn
+            m_Mode: 1
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      delayNextAction: 1.5
+    characterEndLocations:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    endEvents:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_MethodName: ToggleOn
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    playNext: 0
+  - actionEntries:
     - characterActions: []
       cameraActions: []
       function:
@@ -6235,14 +6315,76 @@ MonoBehaviour:
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-              m_IntArgument: 7
+              m_IntArgument: 13
               m_FloatArgument: 0
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
         m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
           PublicKeyToken=null
-      delayNextAction: 1.5
+      delayNextAction: 0
+    characterEndLocations:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    endEvents:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    playNext: 0
+  - actionEntries:
+    - characterActions: []
+      cameraActions: []
+      function:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 114000013910520946}
+            m_MethodName: LoadTextAsset
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 14
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      delayNextAction: 0
+    characterEndLocations:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    endEvents:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+        PublicKeyToken=null
+    playNext: 0
+  - actionEntries:
+    - characterActions: []
+      cameraActions: []
+      function:
+        m_PersistentCalls:
+          m_Calls:
+          - m_Target: {fileID: 114000013910520946}
+            m_MethodName: LoadTextAsset
+            m_Mode: 3
+            m_Arguments:
+              m_ObjectArgument: {fileID: 0}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+              m_IntArgument: 15
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      delayNextAction: 0
     characterEndLocations:
     - {fileID: 0}
     - {fileID: 0}
