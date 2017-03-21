@@ -20,7 +20,7 @@ public class SnakeBoss : Boss {
 
     void Start()
     {
-        frozen = true;                                                  //Boss should not attack until unfrozen to allow cutscene to play
+        frozen = false;                                                  //Boss should not attack until unfrozen to allow cutscene to play
         StartCoroutine(AttackWaitTime(timeBeforeFirstAttack));
     }
 
