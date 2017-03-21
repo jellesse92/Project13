@@ -24,6 +24,7 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
     HashSet<GameObject> players = new HashSet<GameObject>();
 
     public bool in2DMode = true;
+    public bool staticMode = false;                             //Camera set not to change positions
     public float lowestPointX = 0f;                             //Leftmost point of the map the camera should be able to show
 
     float lastOrthographicSize = 0f;                            //Keeps track of the last orthographic size
@@ -56,6 +57,8 @@ public class MultiplayerCamFollowScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
+        if (staticMode)
+            return;
         int activePlayers = ActivePlayerCount();
         if (forcingMovement)
             CutsceneCamera();
