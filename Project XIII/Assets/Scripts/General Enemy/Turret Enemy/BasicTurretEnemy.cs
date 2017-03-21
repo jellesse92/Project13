@@ -74,7 +74,6 @@ public class BasicTurretEnemy : EnemyPhysics
 
     protected virtual void Turn()
     {
-        Debug.Log("what");
         Flip();
         turning = true;
     }

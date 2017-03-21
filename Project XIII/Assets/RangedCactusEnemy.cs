@@ -18,7 +18,6 @@ public class RangedCactusEnemy : BasicTurretEnemy
 
     public override void ApproachTarget()
     {
-        Debug.Log("what");
         if (myAnim.enabled == false)
             myAnim.enabled = true;
         base.ApproachTarget();
@@ -27,7 +26,6 @@ public class RangedCactusEnemy : BasicTurretEnemy
 
     protected override void Turn()
     {
-        Debug.Log("what");
         Vector3 scale = sprite.transform.localScale;
         scale.x *= -1;
         sprite.localScale = scale;
