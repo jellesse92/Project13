@@ -185,7 +185,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
         {
             if (target.CompareTag("Enemy"))
             {
-                target.transform.position = new Vector3(transform.position.x + HEAVY_X_OFFSET * GetDir(), target.transform.position.y, target.transform.position.z);
+                target.GetComponent<Enemy>().SetPos(transform.position.x + HEAVY_X_OFFSET * GetDir(), target.transform.position.y);
                 target.GetComponent<Enemy>().Damage(0, .2f);
             }
 
