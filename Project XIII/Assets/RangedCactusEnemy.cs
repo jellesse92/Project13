@@ -12,6 +12,7 @@ public class RangedCactusEnemy : BasicTurretEnemy
 
     protected override void Start()
     {
+        takesKnockback = false;
         base.Start();
         myAnim = GetComponent<Animator>();
     }

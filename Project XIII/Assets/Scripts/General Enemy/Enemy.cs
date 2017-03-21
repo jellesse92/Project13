@@ -21,7 +21,8 @@ public class Enemy : MonoBehaviour {
     protected Animator anim;
     SpriteRenderer mySprite;
 
-    //In-Game information                 
+    //In-Game information      
+    public bool takesKnockback;           
     public int health;                                  //Enemy health
     protected int fullHealth;                           //Health at full health to restore to
     public int coinDropAmount;
@@ -76,6 +77,7 @@ public class Enemy : MonoBehaviour {
     // Use this for initialization
     void Awake()
     {
+        takesKnockback = true;
         frozen = false;
         isVisible = true;
         anim = GetComponent<Animator>();
@@ -187,7 +189,7 @@ public class Enemy : MonoBehaviour {
             else if (stunnable && stunMultiplier > 0)
                 StunHandler(stunMultiplier);
 
-            if(xForce != 0 && yForce != 0)
+            if(xForce != 0 && yForce != 0 && takesKnockback)
                 ForceHandler(xForce, yForce);
         }
     }
