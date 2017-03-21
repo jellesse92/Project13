@@ -908,8 +908,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1809398014667870}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 226.1, y: 6.66, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4137920576179642}
@@ -1059,7 +1059,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!60 &60125170175289964
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -1156,15 +1156,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundedOffset: -1
   health: 100
-  coinDropAmount: 0
+  coinDropAmount: 7
   speed: 0.15
   attackPower: 20
   stunnable: 1
   stunEffectiveness: 1
   grounded: 0
   flyingEnemy: 0
-  magShakeDeath: 0.5
-  durShakeDeath: 1.5
+  magShakeDeath: 2
+  durShakeDeath: 0.5
   facingRight: 0
   attProjectionTime: 0
   hasAttackProjection: 1

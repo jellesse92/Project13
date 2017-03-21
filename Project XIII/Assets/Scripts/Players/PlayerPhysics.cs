@@ -431,7 +431,10 @@ public class PlayerPhysics : MonoBehaviour {
 
     public void AddForceX(float forceX)
     {
-        myRigidbody.AddForce(new Vector2(forceX * transform.localScale.x, 0f));
+        float xDir = 1f;
+        if (transform.localScale.x < 0f)
+            xDir = -1f;
+        myRigidbody.AddForce(new Vector2(forceX * xDir, 0f));
     }
 
     public void AddForceY(float forceY)

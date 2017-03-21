@@ -42,6 +42,7 @@ public class BasicTurretEnemy : EnemyPhysics
 
     public override void ApproachTarget()
     {
+        Debug.Log("why not?");
         if (target.transform.position.x > transform.position.x)
         {
             if (!facingRight)
@@ -73,7 +74,6 @@ public class BasicTurretEnemy : EnemyPhysics
 
     protected virtual void Turn()
     {
-        Debug.Log("what");
         Flip();
         turning = true;
     }

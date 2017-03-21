@@ -36,7 +36,10 @@ public class EnemyPhysics : Enemy{
                 target = GetRandomTarget();
 
             if (target != null && GetVisibleState() && !stunned && !frozen && !turning)
+            {
                 RunEngagedBehavior();
+            }
+
         }
 
         EnemySpecificUpdate();

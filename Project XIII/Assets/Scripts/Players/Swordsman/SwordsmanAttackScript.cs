@@ -172,13 +172,20 @@ public class SwordsmanAttackScript : MonoBehaviour {
         OtherHitsManage(col);
     }
 
+    float GetDir()
+    {
+        if (transform.parent.localScale.x < 0f)
+            return -1f;
+        return 1f;
+    }
+
     void UpdateHeavyAttack()
     {
         foreach (GameObject target in enemyHash)
         {
             if (target.CompareTag("Enemy"))
             {
-                target.transform.position = new Vector3(transform.position.x + HEAVY_X_OFFSET * transform.parent.localScale.x, target.transform.position.y, target.transform.position.z);
+                target.transform.position = new Vector3(transform.position.x + HEAVY_X_OFFSET * GetDir(), target.transform.position.y, target.transform.position.z);
                 target.GetComponent<Enemy>().Damage(0, .2f);
             }
 
@@ -202,7 +209,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             if (target.CompareTag("Enemy"))
             {
                 HitEffect(HitType.normal, target.GetComponent<Enemy>().GetCenter());
-                target.GetComponent<Enemy>().Damage(damage, HEAVY_STUN_MULTI,HEAVY_X_LAUNCH_FORCE * transform.parent.localScale.x, HEAVY_Y_LAUNCH_FORCE);
+                target.GetComponent<Enemy>().Damage(damage, HEAVY_STUN_MULTI,HEAVY_X_LAUNCH_FORCE * GetDir(), HEAVY_Y_LAUNCH_FORCE);
             }
         }
 
@@ -269,7 +276,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             //HEAVY ATTACK AIR EFFECTS STUFF
             HitEffect(HitType.normal, col.GetComponent<Enemy>().GetCenter());
 
-            col.gameObject.GetComponent<Enemy>().Damage(damage, HEAVY_AIR_STUN_MULTI,HEAVY_AIR_X_FORCE * transform.parent.localScale.x, HEAVY_AIR_Y_FORCE);
+            col.gameObject.GetComponent<Enemy>().Damage(damage, HEAVY_AIR_STUN_MULTI,HEAVY_AIR_X_FORCE * GetDir(), HEAVY_AIR_Y_FORCE);
         }
         OtherHitsManage(col);
     }
@@ -289,7 +296,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             //QUICK ATTACK EFFECTS STUFF
             HitEffect(HitType.normal, col.GetComponent<Enemy>().GetCenter());
 
-            col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI, QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE);
+            col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI, QUICK_X_FORCE * GetDir(), QUICK_Y_FORCE);
         }
         OtherHitsManage(col);
     }
@@ -301,7 +308,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             //QUICK ATTACK 2 EFFECTS STUFF
             HitEffect(HitType.normal, col.GetComponent<Enemy>().GetCenter());
 
-            col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI, QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE);
+            col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI, QUICK_X_FORCE * GetDir(), QUICK_Y_FORCE);
         }
         OtherHitsManage(col);
     }
@@ -313,7 +320,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             //QUICK ATTACK AIR EFFECTS STUFF
             HitEffect(HitType.normal, col.GetComponent<Enemy>().GetCenter());
             
-            col.GetComponent<Enemy>().Damage(damage, QUICK_AIR_STUN_MULTI, QUICK_AIR_X_FORCE * transform.parent.localScale.x, QUICK_AIR_Y_FORCE);
+            col.GetComponent<Enemy>().Damage(damage, QUICK_AIR_STUN_MULTI, QUICK_AIR_X_FORCE * GetDir(), QUICK_AIR_Y_FORCE);
         }
         OtherHitsManage(col);
     }
@@ -346,7 +353,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     {
         foreach (GameObject target in enemyHash)
             if (target.CompareTag("Enemy"))
-                target.transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+                target.GetComponent<Enemy>().SetPos(target.transform.position.x, transform.position.y);
     }
 
     void DragAttackApplyDamage()
@@ -395,7 +402,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
             transform.parent.parent.GetComponent<PlayerEffectsManager>().ScreenShake(magShakefinisherAttack, durShakefinisherAttack);
             transform.parent.parent.GetComponent<PlayerEffectsManager>().FlashScreen();
 
-            col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI, QUICK_X_FORCE * transform.parent.localScale.x, QUICK_Y_FORCE);
+            col.GetComponent<Enemy>().Damage(damage, QUICK_STUN_MULTI, QUICK_X_FORCE * GetDir(), QUICK_Y_FORCE);
         }
         OtherHitsManage(col);        
     }
