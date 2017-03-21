@@ -6,7 +6,7 @@ public class BasicTurretEnemy : EnemyPhysics
 {
     const int AMMO_AMOUNT = 20;                             //Amount of ammo to be created
     const float BULLET_SPEED = 10f;                         //Speed of bullet
-    const float RANGED_ATTACK_COOLDOWN = 1f;              //Cooldown for attack
+    const float RANGED_ATTACK_COOLDOWN = 3.0f;              //Cooldown for attack
     const float TARGETING_DELAY = .15f;                      //Delay for attacking after targetting
 
     public GameObject rangedProjectile;                     //Projectiles to be shot
@@ -73,6 +73,7 @@ public class BasicTurretEnemy : EnemyPhysics
 
     protected virtual void Turn()
     {
+        Debug.Log("what");
         Flip();
         turning = true;
     }

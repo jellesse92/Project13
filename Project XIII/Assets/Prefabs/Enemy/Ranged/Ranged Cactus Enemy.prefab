@@ -35,7 +35,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 224317084371783544}
-  m_Layer: 9
+  - component: {fileID: 61725736856756562}
+  - component: {fileID: 114357036488455032}
+  m_Layer: 12
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,23 +105,6 @@ GameObject:
   - component: {fileID: 4188580020821430}
   m_Layer: 9
   m_Name: Ranged Cactus Enemy
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1429208767920024
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4980212961394228}
-  - component: {fileID: 61569922288296422}
-  - component: {fileID: 114673732640757494}
-  m_Layer: 12
-  m_Name: Attack Range
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -354,7 +339,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1329332256673852}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -404,7 +389,7 @@ Transform:
   - {fileID: 4030675820532582}
   - {fileID: 4489132405734358}
   m_Father: {fileID: 4718046094808026}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4560840574083418
 Transform:
@@ -417,7 +402,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4718046094808026}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4587913114208368
 Transform:
@@ -443,7 +428,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224810681186642748}
-  - {fileID: 4980212961394228}
   - {fileID: 4560840574083418}
   - {fileID: 4494661338448494}
   - {fileID: 4881455333037410}
@@ -474,7 +458,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4718046094808026}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4885045002826066
 Transform:
@@ -528,19 +512,6 @@ Transform:
   m_Father: {fileID: 224317084371783544}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4980212961394228
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1429208767920024}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4718046094808026}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &50644812036837508
 Rigidbody2D:
   serializedVersion: 4
@@ -575,18 +546,18 @@ BoxCollider2D:
   m_Offset: {x: 0, y: -2}
   serializedVersion: 2
   m_Size: {x: 3, y: 5.5}
---- !u!61 &61569922288296422
+--- !u!61 &61725736856756562
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1429208767920024}
+  m_GameObject: {fileID: 1140882344476534}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 7, y: 0}
+  m_Offset: {x: -7, y: 0}
   serializedVersion: 2
   m_Size: {x: 15, y: 20}
 --- !u!61 &61819219277444580
@@ -700,17 +671,18 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114673732640757494
+--- !u!114 &114357036488455032
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1429208767920024}
+  m_GameObject: {fileID: 1140882344476534}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e1665bd2963be004881a29da36ec7146, type: 3}
+  m_Script: {fileID: 11500000, guid: 72ef5ca30a229784a91ee65309966435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyScript: {fileID: 114778348906622886}
 --- !u!114 &114732974206125818
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -754,6 +726,7 @@ MonoBehaviour:
   projectileList: {fileID: 4375780889622592}
   bulletArray: []
   projectileOrigin: {fileID: 4560840574083418}
+  sprite: {fileID: 224317084371783544}
 --- !u!114 &114959861059939196
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10696,7 +10669,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: 731761444
+  randomSeed: -1925560689
   InitialModule:
     serializedVersion: 3
     enabled: 1
