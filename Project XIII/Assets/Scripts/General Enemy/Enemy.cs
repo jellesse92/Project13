@@ -210,6 +210,7 @@ public class Enemy : MonoBehaviour {
     public virtual void SetPos(float x, float y)
     {
         transform.position = new Vector2(x, y);
+        Debug.Log("moving");
     }
 
     IEnumerator ApplyDamageColor()

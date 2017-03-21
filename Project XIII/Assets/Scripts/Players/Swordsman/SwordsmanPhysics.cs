@@ -138,7 +138,10 @@ public class SwordsmanPhysics : PlayerPhysics{
 
         if (Mathf.Abs(xMove) < .01 && Mathf.Abs(yMove) < .01f)
         {
-            xInputAxis = transform.localScale.x;
+            float xDir = 1f;
+            if (transform.localScale.x < 0f)
+                xDir = -1f;
+            xInputAxis = xDir;
             yInputAxis = 0f;
         }
         else
@@ -273,7 +276,10 @@ public class SwordsmanPhysics : PlayerPhysics{
 
         if(Mathf.Abs(xInputAxis) < INPUT_SOFT_THRESHOLD && Mathf.Abs(yInputAxis) < INPUT_SOFT_THRESHOLD)
         {
-            xInputAxis = 1f * transform.localScale.x;
+            float xDir = 1f;
+            if (transform.localScale.x < 0f)
+                xDir = -1f;
+            xInputAxis = 1f * xDir;
             yInputAxis = 0f;
         }
 
@@ -449,7 +455,10 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     public void AttackCAnimationAdjustment()
     {
-        myRigidbody.velocity = new Vector2(14f * transform.localScale.x / Mathf.Abs(transform.localScale.x), myRigidbody.velocity.y);
+        float xDir = 1f;
+        if (transform.localScale.x < 0)
+            xDir = -1f;
+        myRigidbody.velocity = new Vector2(14f * xDir / Mathf.Abs(transform.localScale.x), myRigidbody.velocity.y);
         //Vector3 newPosition = transform.position;
         //newPosition.x += (1.5f * transform.localScale.x / Mathf.Abs(transform.localScale.x));
         //transform.position = newPosition;
