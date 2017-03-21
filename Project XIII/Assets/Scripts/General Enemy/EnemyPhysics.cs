@@ -35,8 +35,13 @@ public class EnemyPhysics : Enemy{
             if (target != null && !target.GetComponent<PlayerProperties>().alive)
                 target = GetRandomTarget();
 
+            Debug.Log(!stunned);
             if (target != null && GetVisibleState() && !stunned && !frozen && !turning)
+            {
+                Debug.Log("made it?");
                 RunEngagedBehavior();
+            }
+
         }
 
         EnemySpecificUpdate();

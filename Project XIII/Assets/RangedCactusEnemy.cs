@@ -18,6 +18,7 @@ public class RangedCactusEnemy : BasicTurretEnemy
 
     public override void ApproachTarget()
     {
+        Debug.Log("what");
         if (myAnim.enabled == false)
             myAnim.enabled = true;
         base.ApproachTarget();

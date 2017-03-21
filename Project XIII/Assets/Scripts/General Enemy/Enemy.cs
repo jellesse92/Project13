@@ -337,6 +337,8 @@ public class Enemy : MonoBehaviour {
     //Sets the target player
     public void SetTarget(GameObject tar)
     {
+        if (GetComponent<Animator>() != null && GetComponent<Animator>().enabled == false)
+            GetComponent<Animator>().enabled = true;
         target = tar;
     }
     
