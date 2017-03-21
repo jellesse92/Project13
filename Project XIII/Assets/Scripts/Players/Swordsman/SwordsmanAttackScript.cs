@@ -346,7 +346,7 @@ public class SwordsmanAttackScript : MonoBehaviour {
     {
         foreach (GameObject target in enemyHash)
             if (target.CompareTag("Enemy"))
-                target.transform.position = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+                target.GetComponent<Enemy>().SetPos(target.transform.position.x, target.transform.position.y);
     }
 
     void DragAttackApplyDamage()
