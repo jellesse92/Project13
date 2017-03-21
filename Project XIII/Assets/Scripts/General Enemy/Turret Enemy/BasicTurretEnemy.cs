@@ -71,7 +71,7 @@ public class BasicTurretEnemy : EnemyPhysics
         targetLocation = new Vector3();
     }
 
-    public void Turn()
+    protected virtual void Turn()
     {
         Flip();
         turning = true;
