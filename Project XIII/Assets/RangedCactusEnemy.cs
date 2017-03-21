@@ -25,4 +25,8 @@ public class RangedCactusEnemy : BasicTurretEnemy
         transform.localScale = scale;
         facingRight = !facingRight;
     }
+
+    protected override void ForceHandler(float xForce, float yForce){}
+
+    public override void SetPos(float x, float y){}
 }
