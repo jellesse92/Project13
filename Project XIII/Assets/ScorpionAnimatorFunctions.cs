@@ -6,6 +6,8 @@ public class ScorpionAnimatorFunctions : MonoBehaviour {
 
     MeleeScorpionEnemy enemyScript;
 
+    public ParticleSystem deathParticles;
+
 
 	// Use this for initialization
 	void Start () {
@@ -31,5 +33,10 @@ public class ScorpionAnimatorFunctions : MonoBehaviour {
     void ApplyDamage()
     {
         enemyScript.ApplyDamage();
+    }
+
+    void StopDeathParticles()
+    {
+        deathParticles.loop = false;
     }
 }
