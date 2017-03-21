@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class RangedCactusEnemy : BasicTurretEnemy
 {
+    const float TURN_TIME = .5f;
+
     public Transform sprite;
     Animator myAnim;
 
@@ -29,6 +31,9 @@ public class RangedCactusEnemy : BasicTurretEnemy
         scale.x *= -1;
         sprite.localScale = scale;
         facingRight = !facingRight;
+
+        turning = true;
+        Invoke("EndTurn", TURN_TIME);
     }
 
     protected override void ForceHandler(float xForce, float yForce){}
