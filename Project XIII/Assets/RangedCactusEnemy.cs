@@ -6,8 +6,9 @@ public class RangedCactusEnemy : BasicTurretEnemy
 {
     Animator myAnim;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         myAnim = GetComponent<Animator>();
     }
 
