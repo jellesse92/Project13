@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class RangedCactusEnemy : BasicTurretEnemy
 {
+    public Transform sprite;
     Animator myAnim;
+
 
     protected override void Start()
     {
@@ -19,11 +21,13 @@ public class RangedCactusEnemy : BasicTurretEnemy
         base.ApproachTarget();
     }
 
+
     protected override void Turn()
     {
-        Vector3 scale = transform.localScale;
+        Debug.Log("what");
+        Vector3 scale = sprite.transform.localScale;
         scale.x *= -1;
-        transform.localScale = scale;
+        sprite.localScale = scale;
         facingRight = !facingRight;
     }
 
