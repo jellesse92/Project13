@@ -20,7 +20,7 @@ public class BasicTurretEnemy : EnemyPhysics
     Vector3 targetLocation = new Vector3();                 //Player's last known position
 
     // Use this for initialization
-    void Start()
+    protected virtual void Start()
     {
         currentAmmo = AMMO_AMOUNT;
         bulletArray = new EnemyProjectile[AMMO_AMOUNT];
