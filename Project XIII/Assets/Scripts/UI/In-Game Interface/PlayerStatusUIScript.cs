@@ -28,6 +28,7 @@ public class PlayerStatusUIScript : MonoBehaviour {
     public void ApplyHealthDamage(int index, int damageAmount)
     {
         index -= 1;
+        Debug.Log(index);
 
         if (index < 0)  //For when testing characters unassigned to player
             index = 0;

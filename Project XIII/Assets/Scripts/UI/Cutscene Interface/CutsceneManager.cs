@@ -180,7 +180,6 @@ public class CutsceneManager : MonoBehaviour {
 
     public void YesSkipDeselectd()
     {
-        Debug.Log("testing");
         yesSkipSelected = false;
     }
 
