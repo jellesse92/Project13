@@ -49,7 +49,10 @@ public class PlayerSoundEffects : MonoBehaviour {
 
     public void playSound(AudioClip clip)
     {
-        myAudio.PlayOneShot(clip);
+        if (clip.name == "Dash")
+            myAudio.PlayOneShot(clip, .1f);
+        else
+            myAudio.PlayOneShot(clip);
     }
 
     public void PlayHeal()
