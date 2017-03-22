@@ -94,7 +94,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1037579340420130
 GameObject:
   m_ObjectHideFlags: 1
@@ -182,7 +182,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012488714336}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -39.106342, y: -9.918597, z: 41.59375}
+  m_LocalPosition: {x: 94.1, y: -12.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4000012330882620}
@@ -211,7 +211,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010100880700}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.8, z: 0}
+  m_LocalPosition: {x: 0, y: -4.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4497134120051648}
@@ -359,7 +359,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
-  m_Pitch: 1
+  m_Pitch: 0.7
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -452,7 +452,7 @@ MonoBehaviour:
   returnDelay: 1
   magShake: 0.4
   durShake: 0.5
-  impact: {fileID: 8300000, guid: 2cdfcd23733905848bfb1389b80aaf67, type: 3}
+  impact: {fileID: 8300000, guid: 63237010fd903b34387c6b5fc0b4f24c, type: 3}
 --- !u!114 &114000013283446508
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -519,9 +519,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   centerToShadowOffSet: 0
   shadowSpriteOffSet: 0
+  skewToOffsetRatio: 2.9
   changingSprite: 0
   enableShadowSprite: 0
   changingHeight: 1
+  lightInteraction: 1
   shadow: {fileID: 1343280353636662}
   shadowSprite: {fileID: 1030863570944516}
 --- !u!212 &212000010468699646
