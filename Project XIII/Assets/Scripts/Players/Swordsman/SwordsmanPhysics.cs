@@ -35,6 +35,8 @@ public class SwordsmanPhysics : PlayerPhysics{
     int dashCount = 0;                          //Checks how many dashes have been chained
     bool checkGroundForDash = false;            //Bool that determines to check for grounded before resetting dash count
     bool disableDash = false;
+    float myXScale = 0f;                        //Gets x scale for sprites not appropriately sized
+
 
     //Combo Variable
     bool inCombo = false;                       //Checks if swordsman able to combo
@@ -67,8 +69,10 @@ public class SwordsmanPhysics : PlayerPhysics{
         playerSoundEffects = GetComponent<SwordsmanSoundEffects>();
 
         playerEffectsManager = transform.parent.GetComponent<PlayerEffectsManager>();
-        defaultMat = GetComponent<SpriteRenderer>().material;
+        if(GetComponent<SpriteRenderer>()!= null)
+            defaultMat = GetComponent<SpriteRenderer>().material;
 
+        myXScale = transform.localScale.x;
 
     }
 
