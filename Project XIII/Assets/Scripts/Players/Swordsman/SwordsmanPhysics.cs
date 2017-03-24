@@ -25,6 +25,8 @@ public class SwordsmanPhysics : PlayerPhysics{
     const int MAX_COMBO = 3;                    //Maximum combo hit types
     const float COMBO_GRACE_TIME = 0.4f;        //Time after finishing a combo hit's animation before the next combo hit no longer continues the chain
 
+    
+
     //Attack box
     public GameObject attackBox;                //Collider for dealing all melee attacks
     public SwordsmanAttackScript attackScript;  //Script for managing attack
@@ -287,7 +289,19 @@ public class SwordsmanPhysics : PlayerPhysics{
             yInputAxis = 0f;
         }
 
-        GetComponent<Rigidbody2D>().AddForce(new Vector2(xInputAxis, yInputAxis).normalized * DASH_FORCE);
+        //Something is wrong with the warrior that prevents it from X dash distance but not enough time to debug
+        //Bandage fix
+        Vector2 quickFixForce = new Vector2();
+
+        if (myXScale < 1f)
+        {
+            quickFixForce = new Vector2(xInputAxis, 0f).normalized * 24000;
+
+        }
+
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(xInputAxis, yInputAxis).normalized * DASH_FORCE + quickFixForce);
+
+
         yield return new WaitForSeconds(.1f);
 
         VelocityX(0);
@@ -402,6 +416,8 @@ public class SwordsmanPhysics : PlayerPhysics{
 
     void FlashColor(Material mat)
     {
+        if (GetComponent<SpriteRenderer>() == null)
+            return;
         if (GetComponent<SpriteRenderer>().material == defaultMat)
             GetComponent<SpriteRenderer>().material = mat;
         else

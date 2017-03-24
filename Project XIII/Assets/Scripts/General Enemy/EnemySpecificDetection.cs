@@ -15,7 +15,6 @@ public class EnemySpecificDetection : MonoBehaviour {
     {
         if (collision.tag == "Player")
         {
-            Debug.Log(collision.name);
             enemyScript.SetTarget(collision.gameObject);
             enemyScript.AddTargetList(collision.gameObject);
         }
