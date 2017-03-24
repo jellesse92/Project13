@@ -295,7 +295,7 @@ public class SwordsmanPhysics : PlayerPhysics{
 
         if (myXScale < 1f)
         {
-            quickFixForce = new Vector2(xInputAxis, 0f).normalized * 240000;
+            quickFixForce = new Vector2(xInputAxis, 0f).normalized * 24000;
 
         }
 
