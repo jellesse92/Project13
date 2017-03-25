@@ -293,17 +293,24 @@ public class PlayerProperties : MonoBehaviour{
     {
         isInvincibile = true;
 
-        for (int i = 0; i < 5; i++)
+        if (GetComponent<SpriteRenderer>() != null)
         {
-            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .75f);
-            yield return new WaitForSeconds(damageImmuneTime/7f);
-            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .50f);
-            yield return new WaitForSeconds(damageImmuneTime / 7f);
-        }
+            for (int i = 0; i < 5; i++)
+            {
+                GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .75f);
+                yield return new WaitForSeconds(damageImmuneTime / 7f);
+                GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .50f);
+                yield return new WaitForSeconds(damageImmuneTime / 7f);
+            }
 
-        GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .75f);
-        yield return new WaitForSeconds(damageImmuneTime / 7f);
-        GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, .75f);
+            yield return new WaitForSeconds(damageImmuneTime / 7f);
+            GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
+        }
+        else
+            yield return new WaitForSeconds(damageImmuneTime);
+
+
 
         isInvincibile = false;
     }
