@@ -486,7 +486,7 @@ public class GunnerPhysics : PlayerPhysics{
     {
         CancelInvoke("ChargingFlashTier1");
         CancelInvoke("ChargingFlashMax");
-        GetComponent<SpriteRenderer>().material = defaultMat;
+        //GetComponent<SpriteRenderer>().material = defaultMat;
         isFlashingTier1 = false;
         isFlashingMax = false;
     }
