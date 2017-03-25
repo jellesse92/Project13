@@ -96,7 +96,8 @@ public class GunnerPhysics : PlayerPhysics{
         layermask = (LayerMask.GetMask("Default", "Enemy", "Item"));
         meleeAttackBox.GetComponent<GunnerMeleeAttackScript>().enabled = false;
         myAnimator.SetBool("gunner", true);
-        defaultMat = GetComponent<SpriteRenderer>().material;
+        if(GetComponent<SpriteRenderer>() != null)
+            defaultMat = GetComponent<SpriteRenderer>().material;
         InstantiateBullets();
         myXScale = transform.localScale.x;
     }
@@ -466,6 +467,8 @@ public class GunnerPhysics : PlayerPhysics{
 
     void FlashColor(Material mat)
     {
+        if (GetComponent<SpriteRenderer>() == null)
+            return;
         if (GetComponent<SpriteRenderer>().material == defaultMat)
             GetComponent<SpriteRenderer>().material = mat;
         else
