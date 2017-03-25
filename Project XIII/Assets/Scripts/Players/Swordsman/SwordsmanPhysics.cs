@@ -381,7 +381,12 @@ public class SwordsmanPhysics : PlayerPhysics{
         GetComponent<SwordsmanParticleEffects>().PlayChargingTrail(true);
         checkChargeTime = false;
         attackScript.SetHeavyTier(chargeLevel);
-        AddForceX(CHARGE_FORCE_MULTIPLIER * chargeMultiplier);
+
+        float quickFix = 1f;
+        if (Mathf.Abs(transform.localScale.x) < 1f)
+            quickFix = 15f;
+
+        AddForceX(CHARGE_FORCE_MULTIPLIER * chargeMultiplier*quickFix);
     }
 
     float GetChargeMod()
@@ -438,7 +443,8 @@ public class SwordsmanPhysics : PlayerPhysics{
     {
         CancelInvoke("ChargingFlashWhite");
         CancelInvoke("ChargingFlashGold");
-        GetComponent<SpriteRenderer>().material = defaultMat;
+        if(GetComponent<SpriteRenderer>() != null)
+            GetComponent<SpriteRenderer>().material = defaultMat;
         isFlashingWhite = false;
         isFlashingGold = false;
     }

@@ -287,7 +287,10 @@ public class PlayerPhysics : MonoBehaviour {
     protected void Landing()
     {
         if (isGrounded())
+        {
             isJumping = false;
+        }
+
         else
         {
             isJumping = true;
@@ -473,7 +476,7 @@ public class PlayerPhysics : MonoBehaviour {
 
             if (!moveSkillDelayCheck)
                 moveSkillPerformed = false;
-
+            Debug.Log("true");
             return true;
         }
         else if (!groundedGraceTimeInvoked)
@@ -484,7 +487,7 @@ public class PlayerPhysics : MonoBehaviour {
 
         if (wasGrounded && !jumpSpent && !moveSkillPerformed)
             return true;
-
+        Debug.Log("false");
         return false;
     }
     

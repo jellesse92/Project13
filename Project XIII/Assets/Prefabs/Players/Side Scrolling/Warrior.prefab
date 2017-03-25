@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: 114454366494525316}
   - component: {fileID: 114539715285665588}
   - component: {fileID: 114091472592404724}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Warrior
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1213,21 +1213,21 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1621659398670524}
-  m_Mesh: {fileID: 43172191415795652, guid: eb783ec94302f0847984937516e80019, type: 2}
+  m_Mesh: {fileID: 0}
 --- !u!33 &33327411271395334
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1685561310846124}
-  m_Mesh: {fileID: 43015587461534716, guid: afb2954a081e9d84d8cc94ce64bffaee, type: 2}
+  m_Mesh: {fileID: 0}
 --- !u!33 &33697665897547102
 MeshFilter:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1008201750738998}
-  m_Mesh: {fileID: 43878156628162324, guid: 7ad9f367e00ea4842aedc3a6f9361fc3, type: 2}
+  m_Mesh: {fileID: 0}
 --- !u!50 &50659253973565026
 Rigidbody2D:
   serializedVersion: 4
@@ -1441,14 +1441,14 @@ MonoBehaviour:
   quickAttackVoiceList: []
   heavyAttackVoiceList: []
   receiveDamageVoiceList:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 9dbd43fe42e7c0343a05c7cdb818b64d, type: 3}
   deathVoiceList:
   - {fileID: 8300000, guid: fbb3c98074983be44aa35b6ba1855271, type: 3}
   hitSparkList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 95f905cb96b2cd64e804fb5770d990f8, type: 3}
+  - {fileID: 8300000, guid: 7b8f3cf236dd98d44a86e523cb5d5375, type: 3}
+  - {fileID: 8300000, guid: 24d1e1123c7c49f48ae2e98e51138b28, type: 3}
+  - {fileID: 8300000, guid: 57dca7b19b7437742855ef791dd6b4f8, type: 3}
   heal: {fileID: 8300000, guid: 70a138d41b788de4d9272e4ce745d0fa, type: 3}
   chargingFirstCharge: {fileID: 8300000, guid: 65db46c2762238943aad526adb238a65, type: 3}
   chargingSecondCharge: {fileID: 8300000, guid: bca9135f41c476440999f2687b2f4d42,
@@ -1760,7 +1760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0ad9525394549345b6bc33ea1fb8c63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundCheckingOffset: 2
+  groundCheckingOffset: 1
   attackBox: {fileID: 1298141571652558}
   attackScript: {fileID: 114198998493801982}
   flashWhiteMat: {fileID: 2100000, guid: 32ca144c3968a994ba36bca47b900b62, type: 2}
@@ -2182,7 +2182,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 43324226574994546, guid: 7f4718c831a50a44fa713c390b733d62, type: 2}
+  m_Mesh: {fileID: 0}
   m_Bones:
   - {fileID: 4168321807532870}
   m_BlendShapeWeights: []
@@ -2226,7 +2226,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 43360463804717886, guid: 0f556bfd9646b6b41a8012b940daab76, type: 2}
+  m_Mesh: {fileID: 0}
   m_Bones:
   - {fileID: 4496718535849514}
   - {fileID: 4201030706575476}
@@ -2273,7 +2273,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 43927281073273270, guid: 7f054847dd656b046ae11d11d8510553, type: 2}
+  m_Mesh: {fileID: 0}
   m_Bones:
   - {fileID: 4915069245289608}
   - {fileID: 4862584247046374}
@@ -2320,7 +2320,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 43016471173944466, guid: 5ad9575e5abf73d4a8e8dc56151f9271, type: 2}
+  m_Mesh: {fileID: 0}
   m_Bones:
   - {fileID: 4642254602293504}
   - {fileID: 4016868243157290}
@@ -2367,7 +2367,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 43727680597727566, guid: d733d2c2fbf00ff44a7320603f1c410b, type: 2}
+  m_Mesh: {fileID: 0}
   m_Bones:
   - {fileID: 4970519429106824}
   - {fileID: 4996355950020248}
@@ -2413,7 +2413,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 43511727482404154, guid: 13f136084c977b641ba4b345d22443f5, type: 2}
+  m_Mesh: {fileID: 0}
   m_Bones:
   - {fileID: 4733469683592412}
   - {fileID: 4473291821477116}
@@ -2460,7 +2460,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 43847135225547014, guid: 4e7f187587f18194dae77b90da6959a0, type: 2}
+  m_Mesh: {fileID: 0}
   m_Bones:
   - {fileID: 4609182857822258}
   - {fileID: 4144315425912536}
