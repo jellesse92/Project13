@@ -53,6 +53,7 @@ public class GunnerPhysics : PlayerPhysics{
     int dashCount = 0;                                      //Checks how many dashes have been chained
     bool checkGroundForDash = false;                        //Bool that determines to check for grounded before resetting dash count
     bool disableDash = false;
+    float myXScale = 0;                                     // axis for scaled sprites.
 
     //Variables for quick and heavy attack raycasting
     LayerMask layermask;                                    //Prevent raycast from hitting unimportant layers
@@ -97,6 +98,7 @@ public class GunnerPhysics : PlayerPhysics{
         myAnimator.SetBool("gunner", true);
         defaultMat = GetComponent<SpriteRenderer>().material;
         InstantiateBullets();
+        myXScale = transform.localScale.x;
     }
 
     void InstantiateBullets()
@@ -222,7 +224,6 @@ public class GunnerPhysics : PlayerPhysics{
         CancelInvoke("ResetDashCount");
 
         StartCoroutine("Dashing");
-
         playerParticleEffects.PlayDashAfterImage(true);
         //playerParticleEffects.PlayDashTrail(true);
         gameObject.layer = 14;
@@ -243,7 +244,17 @@ public class GunnerPhysics : PlayerPhysics{
             yInputAxis = 0f;
         }
 
-        GetComponent<Rigidbody2D>().AddForce(new Vector2(xInputAxis, yInputAxis).normalized * DASH_FORCE);
+
+        //Copy of Arielles Dash Fix from warrior.
+        //Bandage fix
+        Vector2 quickFixForce = new Vector2();
+
+        if (myXScale < 1f)
+        {
+            quickFixForce = new Vector2(xInputAxis, 0f).normalized * 24000;
+
+        }
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(xInputAxis, yInputAxis).normalized * DASH_FORCE + quickFixForce);
         yield return new WaitForSeconds(.1f);
         VelocityX(0);
         VelocityY(0);
